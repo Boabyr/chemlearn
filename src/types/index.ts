@@ -11,6 +11,38 @@ export interface Course {
   estimatedHours: number
 }
 
+export interface MechanismStage {
+  id: number
+  label: string
+  description: string
+  hint1: string
+  hint2: string
+  atoms: {
+    id: string
+    label: string
+    x: number
+    y: number
+    color: string
+    r: number
+    charge?: string
+    sub?: string
+  }[]
+  bonds: {
+    a: string
+    b: string
+    dash: boolean
+    color: string
+  }[]
+  correctArrow: { from: string; to: string }
+}
+
+export interface Mechanism {
+  type: 'builder' | 'static' | 'animation' | 'video'
+  title?: string
+  description?: string
+  stages?: MechanismStage[]
+}
+
 export interface Topic {
   id: string
   title: string
@@ -18,6 +50,7 @@ export interface Topic {
   icon: string
   estimatedMinutes: number
   theory: string
+  mechanism?: Mechanism
   quiz: QuizQuestion[]
   flashcards: Flashcard[]
 }

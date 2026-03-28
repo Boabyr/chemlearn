@@ -31,7 +31,7 @@ export async function loadAllTopics(courseId: string) {
   const loaders = courseTopicLoaders[courseId];
   if (!loaders) throw new Error(`Kurs nicht gefunden: ${courseId}`);
   const topics = await Promise.all(
-    Object.entries(loaders).map(async ([id, loader]) => {
+    Object.entries(loaders).map(async ([_id, loader]) => {
       const module = await loader();
       return module.topic ?? module.default;
     })

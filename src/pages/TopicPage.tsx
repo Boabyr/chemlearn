@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { loadTopic } from '../lib/courseRegistry'
 import type { Topic } from '../types/index'
+import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
 
 export default function TopicPage() {
   const { courseId, topicId } = useParams()
@@ -45,7 +46,7 @@ export default function TopicPage() {
   }
 
   function nextQuestion() {
-    if (quizIdx < topic.quiz.length - 1) {
+    if (topic && quizIdx < topic.quiz.length - 1) {
       setQuizIdx(i => i + 1)
       setSelected(null)
       setAnswered(false)
@@ -122,6 +123,18 @@ export default function TopicPage() {
                 )
               })}
             </div>
+{topic.mechanism && topic.mechanism.type === 'builder' && topic.mechanism.stages && (
+  <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
+    <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">
+      🎬 Interaktiver Mechanismus
+    </p>
+    <MechanismBuilder
+      title={topic.mechanism.title ?? topic.title}
+      description={topic.mechanism.description ?? ''}
+      stages={topic.mechanism.stages}
+    />
+  </div>
+)}
           </div>
         )}
 
