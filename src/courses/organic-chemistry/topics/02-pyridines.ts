@@ -81,28 +81,72 @@ Pyridin + mCPBA → Pyridin-N-Oxid
 - Lithiierung möglich → Weiterreaktion mit Elektrophilen
   `,
 
-  mechanism: {
-    type: "builder",
-    title: "Kröhnke-Reaktion – Mechanismus",
-    description:
-      "Zeige den Elektronenfluss bei der Cyclisierung zum Pyridin-Ring",
+mechanism: {
+    type: 'builder',
+    title: 'Kröhnke-Reaktion – Mechanismus',
+    description: 'Zeichne die Elektronenfluss-Pfeile Schritt für Schritt.',
     stages: [
       {
         id: 0,
-        label: "Schritt 1: Aldol-Kondensation",
-        description:
-          "Das aktivierte CH₂ des Pyridinium-Salzes greift den Aldehyd nucleophil an (Knoevenagel-artig).",
+        label: 'Nucleophiler Angriff',
+        description: 'Das Pyridinium-Ylid greift nucleophil den β-Kohlenstoff des Enons an (Michael-Addition). Ziehe vom Ylid-C zum β-C des Enons.',
+        hint1: 'Das Ylid-C ist nucleophil (carbanionisch). Es greift das elektrophile β-C der α,β-ungesättigten Carbonylverbindung an.',
+        hint2: 'Ziehe von C(Ylid) → C(β) des Enons.',
         atoms: [
-          { id: "c1", label: "C", x: 80, y: 130, color: "#2dd4bf", r: 22, sub: "δ−" },
-          { id: "c2", label: "C=O", x: 280, y: 130, color: "#f87171", r: 28, sub: "δ+" },
-          { id: "c3", label: "C", x: 400, y: 130, color: "#e2e8f0", r: 20 },
+          { id: 'cyl',  label: 'C⁻',  x: 80,  y: 130, color: '#2dd4bf', r: 24 },
+          { id: 'cbeta',label: 'Cβ',  x: 280, y: 130, color: '#e2e8f0', r: 22, sub: 'δ+' },
+          { id: 'co',   label: 'C=O', x: 390, y: 130, color: '#f87171', r: 26 },
+          { id: 'py',   label: 'Py⁺', x: 80,  y: 60,  color: '#a78bfa', r: 20 },
+          { id: 'h1',   label: 'H',   x: 195, y: 90,  color: '#64748b', r: 14 },
+          { id: 'h2',   label: 'H',   x: 195, y: 170, color: '#64748b', r: 14 },
         ],
         bonds: [
-          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
+          { a: 'cyl',  b: 'py',   dash: false, color: '#a78bfa' },
+          { a: 'cbeta',b: 'co',   dash: false, color: '#f87171' },
+          { a: 'cbeta',b: 'h1',   dash: false, color: '#64748b' },
+          { a: 'cbeta',b: 'h2',   dash: false, color: '#64748b' },
         ],
-        correctArrow: { from: "c1", to: "c2" },
-        hint1: "Das nucleophile Kohlenstoffatom greift den elektrophilen Carbonylkohlenstoff an.",
-        hint2: "Ziehe von C(δ−) → C=O(δ+).",
+        correctArrow: { from: 'cyl', to: 'cbeta' },
+      },
+      {
+        id: 1,
+        label: 'Cyclisierung',
+        description: 'Das Stickstoffatom des NH₃ greift intramolekular das Carbonyl-C an. Ziehe von N → C=O.',
+        hint1: 'NH₃ (oder NH₄OAc) liefert das Amin. Der nucleophile N greift das elektrophile Carbonyl-C an → Hemiaminal.',
+        hint2: 'Ziehe von N(H₃) → C(=O). Das Carbonyl ist δ+ und electrophil.',
+        atoms: [
+          { id: 'n',   label: 'N',   x: 80,  y: 200, color: '#2dd4bf', r: 22, charge: 'H₃' },
+          { id: 'co1', label: 'C=O', x: 200, y: 130, color: '#f87171', r: 26, sub: 'δ+' },
+          { id: 'co2', label: 'C=O', x: 380, y: 130, color: '#f87171', r: 26 },
+          { id: 'cm',  label: 'C',   x: 290, y: 130, color: '#e2e8f0', r: 20 },
+          { id: 'h1',  label: 'H',   x: 290, y: 70,  color: '#64748b', r: 14 },
+        ],
+        bonds: [
+          { a: 'co1', b: 'cm',  dash: false, color: '#e2e8f0' },
+          { a: 'cm',  b: 'co2', dash: false, color: '#e2e8f0' },
+          { a: 'cm',  b: 'h1',  dash: false, color: '#64748b' },
+        ],
+        correctArrow: { from: 'n', to: 'co1' },
+      },
+      {
+        id: 2,
+        label: 'Aromatisierung',
+        description: 'Nach Dehydratisierung wird der Dihydropyridin-Ring aromatisiert. Ziehe vom H zum Oxidationsmittel [O].',
+        hint1: 'Aromatisierung = Oxidation des Dihydropyridins. Ein H⁺ und 2 Elektronen werden abgegeben.',
+        hint2: 'Ziehe von H(Dihydroring) → [O] (Oxidationsmittel). Das Produkt ist das aromatische Pyridin.',
+        atoms: [
+          { id: 'h',  label: 'H',   x: 240, y: 60,  color: '#64748b', r: 16 },
+          { id: 'c1', label: 'C',   x: 240, y: 130, color: '#e2e8f0', r: 22 },
+          { id: 'ox', label: '[O]', x: 390, y: 60,  color: '#f87171', r: 24 },
+          { id: 'n',  label: 'N',   x: 130, y: 130, color: '#2dd4bf', r: 22 },
+          { id: 'c2', label: 'C',   x: 350, y: 130, color: '#e2e8f0', r: 22 },
+        ],
+        bonds: [
+          { a: 'c1', b: 'h',  dash: false, color: '#64748b' },
+          { a: 'n',  b: 'c1', dash: false, color: '#e2e8f0' },
+          { a: 'c1', b: 'c2', dash: false, color: '#e2e8f0' },
+        ],
+        correctArrow: { from: 'h', to: 'ox' },
       },
     ],
   },
