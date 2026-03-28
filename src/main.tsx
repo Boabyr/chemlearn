@@ -7,6 +7,13 @@ import LoginPage  from './pages/LoginPage'
 import CoursePage from './pages/CoursePage'
 import TopicPage  from './pages/TopicPage'
 
+// Service Worker registrieren
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+  })
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
