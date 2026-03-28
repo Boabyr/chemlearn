@@ -5,84 +5,115 @@ export const topic = {
   icon: "🔬",
   estimatedMinutes: 90,
   theory: `
-## Übersicht: Prüfungsrelevante Mechanismen
- 
-Die folgenden Mechanismen werden in den Exercises und dem Exam geprüft.
-Jeder Mechanismus muss mit korrekten Elektronenfluss-Pfeilen dargestellt werden.
- 
-## 1. Kondrat'eva-Pyridinsynthese (Oxazol + Alkin)
- 
-**Reaktion:** Oxazol + DMAD (oder anderes Alkin) → Pyridin
- 
-**Schritte:**
-1. **[4+2]-Cycloaddition:** Oxazol (Azadien, 4π) + Alkin (2π) → Bicyclisches Intermediat (7-Oxabicyclo[2.2.1]heptadien-System)
-2. **Retro-[4+2]:** Thermische Spaltung unter CO₂-Abspaltung → aromatisches Pyridin
-**Triebkraft:** Aromatisierung + Entropiegewinn (CO₂-Gas)
- 
-## 2. Boger-Reaktion (Triazin + Enamin → Pyridin + N₂)
- 
-**Reaktion:** 1,2,4,5-Tetrazin (oder Triazin) + Enamin → Pyridin/Pyridazin + N₂
- 
-**Schritte:**
-1. **[4+2]-Cycloaddition:** Tetrazin (azadien, 4π) + Enamin (2π) → Bicyclus
-2. **Retro-[4+2]:** N₂-Abspaltung (analog CO₂ bei Kondrat'eva) → Dihydropyridazin
-3. **Oxidation/Tautomerisierung** → aromatisches Pyridin
- 
-## 3. Methylierung + Cycloaddition (MeOTf + BnMe₃NCN)
- 
-**Aus Exam/Exercise:**
-Oxazol-Derivat → MeOTf → N-methyliertes Azomethin-Ylid → [3+2]-Cycloaddition mit dem Alkin im gleichen Molekül (intramolekular!) → Isoindol-Gerüst
- 
-**Schritte:**
-1. MeOTf methyliert N des Oxazols → kationisches Intermediat
-2. BnMe₃NCN deprotoniert → Azomethin-Ylid (1,3-Dipol in situ)
-3. Intramolekulare [3+2]-CA mit dem Alkin → bicyclisches Produkt
- 
-## 4. Paal-Knorr-Mechanismus (1,4-Dicarbonyl → Pyrrol)
- 
-**Detaillierter Mechanismus:**
-1. Protonierung eines Carbonyls → Oxocarbeniom
-2. Nucleophiler Angriff des NH₂ → Hemiaminal
-3. Dehydratisierung → Imin (erster Ring-N)
-4. Tautomerisierung + Cyclisierung des zweiten Amins
-5. Zweite Dehydratisierung → Dihydropyrrol
-6. Tautomerisierung → Pyrrol (aromatisch!)
- 
-## 5. Kröhnke-Reaktionsmechanismus
- 
-**Schritte:**
-1. α-Bromketon + Pyridin → Pyridinium-Ylid (Zwitterion)
-2. Michael-Addition des Ylids an α,β-unges. Carbonyl → Michael-Addukt
-3. Zugabe von NH₄OAc → intramolekulare Aldol-Cyclisierung
-4. Dehydratisierung + Oxidation → aromatisches Pyridin
- 
-## 6. N-Oxidierung + Boekelheide-Umlagerung
- 
-**Schritte:**
-1. 2-Methylpyridin + mCPBA → 2-Methylpyridin-N-Oxid (peracide oxidiert N)
-2. + Ac₂O, Δ → [1,2]-Acyl-Wanderung: O-Acylierung + [1,2]-Shift auf CH₃ → 2-(Acetoxymethyl)pyridin
-3. Alternativ: Elektrophile Amination möglich an aktivierter 4-Position
- 
-## 7. Intramolekulare [3+2] mit Münchnon/Oxadiazol
- 
-**Aus Exercise 1, Aufgabe 3 (drittes Beispiel):**
-Indol-Oxadiazol-Derivat + α,β-unges. Carbonylverbindung → Wärme → komplexes Polycyclus
-1. Oxadiazol generiert in situ ein Azomethin-Ylid (1,3-Dipol) durch thermische Ringöffnung + CO₂-Verlust
-2. [3+2] mit dem Dipolarophil → Cycloaddukt
-3. Weitere Cyclisierungen/Umlagerungen → Naturstoff-analoges Gerüst
-  `,
+## Prüfungsrelevante Mechanismen
+
+Alle folgenden Mechanismen werden mit korrekten Elektronenfluss-Pfeilen geprüft.
+
+## 1. Paal-Knorr (1,4-Dicarbonyl → Pyrrol)
+
+1. NH₂ greift Carbonyl-C → Hemiaminal
+2. Dehydratisierung → Imin
+3. Zweite Kondensation (intramolekular)
+4. Dehydratisierung → Dihydropyrrol
+5. Tautomerisierung → Pyrrol (aromatisch)
+
+## 2. Kröhnke-Mechanismus
+
+1. α-Bromketon + Pyridin → Pyridinium-Ylid
+2. Michael-Addition an α,β-unges. Carbonyl
+3. + NH₄OAc → Cyclisierung
+4. Dehydratisierung + Aromatisierung → Pyridin
+
+## 3. N-Oxidierung + Boekelheide
+
+1. 2-Methylpyridin + mCPBA → N-Oxid
+2. + Ac₂O, Δ → [1,2]-Acyl-Wanderung → 2-(Acetoxymethyl)pyridin
+
+## 4. Kondrat'eva (Oxazol + Alkin)
+
+1. [4+2]-Cycloaddition → Bicyclus
+2. Retro-[4+2] → CO₂-Abspaltung → Pyridin
+
+## 5. Intramolekulare [3+2]
+
+Oxadiazol generiert Azomethin-Ylid in situ → intramolekulare [3+2] mit Alkin → bicyclisches Produkt
+`,
+  mechanism: {
+    type: "builder",
+    title: "N-Oxidierung & Boekelheide-Umlagerung",
+    description: "2-Methylpyridin → N-Oxid → Boekelheide → 2-(Acetoxymethyl)pyridin.",
+    stages: [
+      {
+        id: 0,
+        label: "N-Oxidierung",
+        description: "mCPBA oxidiert den Pyridin-N. Das Sauerstoffatom der Persäure überträgt sich auf N. Ziehe von O(mCPBA) → N(Pyridin).",
+        hint1: "Peracide sind elektrophile O-Überträger. Das nucleophile N-Lone-Pair greift das elektrophile O der Persäure an.",
+        hint2: "Ziehe von N(Pyridin, nucleophil) → O(mCPBA, elektrophil). Es entsteht das N-Oxid (N→O).",
+        atoms: [
+          { id: "n",  label: "N",    x: 200, y: 130, color: "#60a5fa", r: 24 },
+          { id: "o",  label: "O",    x: 340, y: 100, color: "#f87171", r: 22, sub: "mCPBA" },
+          { id: "c2", label: "C",    x: 290, y: 170, color: "#e2e8f0", r: 20 },
+          { id: "c6", label: "C",    x: 110, y: 170, color: "#e2e8f0", r: 20 },
+          { id: "me", label: "CH₃",  x: 290, y: 240, color: "#64748b", r: 22 },
+        ],
+        bonds: [
+          { a: "n",  b: "c2", dash: false, color: "#60a5fa" },
+          { a: "n",  b: "c6", dash: false, color: "#60a5fa" },
+          { a: "c2", b: "me", dash: false, color: "#64748b" },
+        ],
+        correctArrow: { from: "n", to: "o" },
+      },
+      {
+        id: 1,
+        label: "Boekelheide: Acylierung",
+        description: "Ac₂O aktiviert das N-Oxid. Das O des N-Oxids greift Ac₂O an → O-Acetylierung. Ziehe von O(N-Oxid) → C(Ac₂O).",
+        hint1: "Das N-Oxid-O ist nucleophil und greift das Essigsäureanhydrid (Ac₂O) an → O-acyliertes Intermediat.",
+        hint2: "Ziehe von O(N-Oxid) → C(=O) des Ac₂O. Es entsteht ein aktiviertes N-Oxid-Acetat-Intermediat.",
+        atoms: [
+          { id: "no", label: "N→O", x: 160, y: 130, color: "#60a5fa", r: 28 },
+          { id: "ac", label: "Ac₂O",x: 340, y: 100, color: "#fbbf24", r: 28 },
+          { id: "me", label: "CH₃", x: 200, y: 220, color: "#64748b", r: 22 },
+          { id: "c2", label: "C",   x: 240, y: 170, color: "#e2e8f0", r: 18 },
+        ],
+        bonds: [
+          { a: "no", b: "c2", dash: false, color: "#60a5fa" },
+          { a: "c2", b: "me", dash: false, color: "#64748b" },
+        ],
+        correctArrow: { from: "no", to: "ac" },
+      },
+      {
+        id: 2,
+        label: "Boekelheide: [1,2]-Shift",
+        description: "Das Acetat wandert vom O auf das CH₃ der 2-Methylgruppe ([1,2]-O→C-Shift). Ziehe von C(CH₃) → O(Acetat).",
+        hint1: "Der [1,2]-Shift: Das Acetat wandert vom aktivierten N-O auf das benzylische CH₂ der Methylgruppe.",
+        hint2: "Ziehe von C(CH₂, benzylisch) → O(Acetat). Das Acetat migiert → 2-(Acetoxymethyl)pyridin entsteht.",
+        atoms: [
+          { id: "ch2",label: "CH₂", x: 160, y: 220, color: "#64748b", r: 22 },
+          { id: "oac",label: "OAc", x: 290, y: 100, color: "#fbbf24", r: 24 },
+          { id: "n",  label: "N",   x: 200, y: 140, color: "#60a5fa", r: 22 },
+          { id: "c2", label: "C",   x: 270, y: 180, color: "#e2e8f0", r: 18 },
+        ],
+        bonds: [
+          { a: "n",   b: "oac", dash: true,  color: "#fbbf24" },
+          { a: "n",   b: "c2",  dash: false, color: "#60a5fa" },
+          { a: "c2",  b: "ch2", dash: false, color: "#64748b" },
+        ],
+        correctArrow: { from: "ch2", to: "oac" },
+      },
+    ],
+  },
   quiz: [
-    { id: "q1", question: "Was ist der erste Schritt im Paal-Knorr-Mechanismus zur Pyrrol-Synthese?", options: ["Oxidation des 1,4-Dicarbonyls", "Nucleophiler Angriff des Amins auf ein protoniertes Carbonyl → Hemiaminal", "Diels-Alder-Reaktion", "Radikalische Initiierung"], correct: 1, explanation: "Im Paal-Knorr-Mechanismus greift das primäre Amin (RNH₂) nucleophil das protonierte (Lewis-Säure aktivierte) Carbonyl an → Hemiaminal. Dann Dehydratisierung → Imin. Zweites Imin → Cyclisierung → Dihydropyrrol → Tautomerisierung → Pyrrol." },
-    { id: "q2", question: "Wozu dient BnMe₃NCN in der Reaktion mit dem Oxazol-Derivat (Exam Exercise 6)?", options: ["Als Oxidationsmittel", "Als Base zur Deprotonierung → generiert in-situ ein 1,3-Dipol (Azomethin-Ylid)", "Als Alkylierungsmittel", "Als Lösungsmittel"], correct: 1, explanation: "BnMe₃NCN (Benzyl-trimethylammonium-cyanid) ist eine Cyanid-Quelle / Base. Es deprotoniert das durch MeOTf methylierte Oxazolium-Intermediat → Azomethin-Ylid (1,3-Dipol) entsteht in situ → dann [3+2]-Cycloaddition." },
-    { id: "q3", question: "Was ist die Triebkraft der Kondrat'eva-Pyridinsynthese?", options: ["Säurekatalyse", "Aromatisierung zum Pyridin + Entropiegewinn durch CO₂-Gasentwicklung", "Reduktion des Azadiens", "Keine – sie ist endotherm"], correct: 1, explanation: "Zwei Triebkräfte: 1. Aromatisierung (Pyridin stabiler als bicyclisches Intermediat, ΔG < 0). 2. Entropiegewinn durch Freisetzung von CO₂ als Gas (TΔS > 0). Zusammen → günstige Thermodynamik." },
-    { id: "q4", question: "Welches Intermediat entsteht bei der mCPBA-Oxidation von Pyridin?", options: ["Pyridinon", "Pyridin-N-Oxid", "Hydroxypyridin", "Pyridinium-Ion"], correct: 1, explanation: "mCPBA (meta-Chlorperbenzoesäure) ist ein Peracid, das N-Atome oxidiert. Pyridin + mCPBA → Pyridin-N-Oxid. Das N-Oxid ist wichtig als aktivierter Vorläufer für SNAr (an C-4 aktiviert) und die Boekelheide-Umlagerung." },
-    { id: "q5", question: "Im Kröhnke-Mechanismus: Was ist die Rolle des Pyridins im ersten Schritt?", options: ["Pyridin ist das Nucleophil das das α-Bromketon alkyliert → Pyridinium-Ylid", "Pyridin ist der Katalysator", "Pyridin wird als Lösungsmittel verwendet", "Pyridin ist das Oxidationsmittel"], correct: 0, explanation: "Im Kröhnke-Schritt 1 alkyliert das α-Bromketon das Pyridin-N → Pyridinium-Salz. Dieses Salz ist ein aktiviertes Enolat-Äquivalent (Ylid-Charakter am α-C). Das Ylid macht dann die Michael-Addition an das α,β-unges. Carbonyl." },
+    { id: "q1", question: "Was ist der erste Schritt im Paal-Knorr-Mechanismus?", options: ["Oxidation des 1,4-Dicarbonyls", "Nucleophiler Angriff des Amins auf Carbonyl-C → Hemiaminal", "Diels-Alder-Reaktion", "Radikalische Initiierung"], correct: 1, explanation: "Paal-Knorr: RNH₂ greift Carbonyl-C (Lewis-Säure aktiviert) an → Hemiaminal. Dann Dehydratisierung → Imin → Cyclisierung → Pyrrol." },
+    { id: "q2", question: "Welches Intermediat entsteht bei mCPBA-Oxidation von Pyridin?", options: ["Pyridinon", "Pyridin-N-Oxid", "Hydroxypyridin", "Pyridinium-Ion"], correct: 1, explanation: "mCPBA (Peracid) oxidiert N → Pyridin-N-Oxid (N→O). Wichtig für SNAr (C-4 aktiviert) und Boekelheide-Umlagerung." },
+    { id: "q3", question: "Was ist die Triebkraft der Kondrat'eva-Pyridinsynthese?", options: ["Säurekatalyse", "Aromatisierung + Entropiegewinn durch CO₂-Gasentwicklung", "Reduktion", "Keine – endotherm"], correct: 1, explanation: "Zwei Triebkräfte: Aromatisierung (Pyridin stabil) + Entropiegewinn durch CO₂-Gas (TΔS > 0)." },
+    { id: "q4", question: "Im Kröhnke-Mechanismus: Was ist die Rolle des Pyridins im ersten Schritt?", options: ["Pyridin ist Nucleophil → alkyliert α-Bromketon → Pyridinium-Ylid", "Pyridin ist Katalysator", "Pyridin ist Lösungsmittel", "Pyridin ist Oxidationsmittel"], correct: 0, explanation: "Schritt 1: α-Bromketon + Pyridin-N → Pyridinium-Salz. Dieses hat Ylid-Charakter am α-C → Michael-Addition an Enon." },
+    { id: "q5", question: "Was ist die Boekelheide-Umlagerung?", options: ["Pyrrol → Pyridin", "2-Methylpyridin-N-Oxid + Ac₂O → 2-(Acetoxymethyl)pyridin durch [1,2]-O→C-Acyl-Wanderung", "Indol → Chinolin", "Cyclopropan → Pyrrol"], correct: 1, explanation: "Boekelheide: N-Oxid + Ac₂O, Δ → Acetat-Migration vom O auf CH₂ der 2-Methylgruppe → 2-(AcOCH₂)pyridin." },
   ],
   flashcards: [
-    { front: "Paal-Knorr-Mechanismus", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. Dehydratisierung → Imin; 3. Cyclisierung (2. N greift 2. Carbonyl); 4. Dehydratisierung → Dihydropyrrol; 5. Tautomerisierung → Pyrrol." },
-    { front: "Kröhnke-Pyridinsynthese – Schritte", back: "1. α-BrCO + Pyridin → Pyridinium-Ylid. 2. Michael-Addition an Enon. 3. + NH₄OAc → Cyclisierung. 4. Dehydratisierung + Aromatisierung → Pyridin." },
-    { front: "Azomethin-Ylid (1,3-Dipol)", back: "Form: C=N⁺-C⁻ ↔ C⁻-N=C. Generierung: aus N-Oxiden, Münchnonen, thermisch aus bestimmten Aziridinen, oder durch Deprotonierung von Iminium-Ionen. Reaktion: [3+2] mit Alkenen/Alkinen." },
-    { front: "N-Oxid-Chemie (Pyridin)", back: "Pyridin + mCPBA → Pyridin-N-Oxid. N-Oxide sind: a) elektrophiler an C-4 (SNAr); b) Vorstufe für Boekelheide: + Ac₂O,Δ → 2-AcOCH₂-Pyridin. c) können reduziert werden → zurück zu Pyridin." },
-    { front: "Mechanismus: [4+2] + Retro-[4+2]", back: "Cycloaddition → bicyclisches Intermediat. Dann thermische Retro-[4+2] eliminiert XY (CO₂, N₂, SO₂, etc.) → neuer Aromat. Triebkraft: Aromatisierung + Gasentwicklung." },
+    { front: "Paal-Knorr-Mechanismus", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. -H₂O → Imin; 3. Cyclisierung (2. Carbonyl); 4. -H₂O → Dihydropyrrol; 5. Tautomerisierung → Pyrrol." },
+    { front: "Kröhnke-Schritte", back: "1. α-BrCO + Py → Pyridinium-Ylid. 2. Michael an Enon. 3. + NH₄OAc → Cyclisierung. 4. -H₂O + Aromatisierung → Pyridin." },
+    { front: "Azomethin-Ylid", back: "C=N⁺-C⁻ ↔ C⁻-N=C. Generierung: N-Oxide, Münchnone, thermisch aus Aziridinen, Deprotonierung von Iminium-Ionen. [3+2] mit Alkenen/Alkinen." },
+    { front: "N-Oxid-Chemie", back: "Pyridin + mCPBA → N-Oxid. Aktiviert C-4 für SNAr. Boekelheide: + Ac₂O, Δ → 2-AcOCH₂-Pyridin. Reduzierbar → zurück zu Pyridin." },
+    { front: "[4+2] + Retro-[4+2]", back: "Cycloaddition → Bicyclus → thermische Retro-[4+2] eliminiert XY (CO₂, N₂, SO₂) → Aromat. Triebkraft: Aromatisierung + Gas." },
   ],
 };
