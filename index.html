@@ -11,6 +11,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ChemLearn">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <script>
+      window.onerror = function(msg, src, line, col, err) {
+        document.body.innerHTML = '<pre style="color:red;padding:20px;font-size:12px">' + msg + '\n' + src + ':' + line + '\n' + (err ? err.stack : '') + '</pre>';
+      };
+</script>
   </head>
   <body>
     <div id="root"></div>
