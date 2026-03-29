@@ -1,100 +1,69 @@
 export const topic = {
   id: "06-cyclocondensations",
-  title: "Cyclocondensations-Reaktionen",
-  subtitle: "Regioselektive Synthese von Heterocyclen",
+  title: "Cyclocondensation Reactions",
+  subtitle: "Regioselective Synthesis of Heterocycles",
   icon: "⚡",
   estimatedMinutes: 80,
   theory: `
-## Was ist eine Cyclocondensation?
+## What is a Cyclocondensation?
 
-Ringschlussreaktion unter Abspaltung kleiner Moleküle (H₂O, ROH, NH₃). Involviert nucleophile/elektrophile Schritte (nicht pericyclisch).
+A **cyclocondensation** is a ring-closure reaction with loss of small molecules (H₂O, ROH, NH₃). Unlike cycloadditions, it involves nucleophilic/electrophilic steps (not pericyclic).
 
-## Wichtige Reaktionen
+## Regioselectivity Problem
 
-### Hantzsch-Dihydropyridin [3+3]
-Enamin + 1,3-Dicarbonyl + NH₃ → 1,4-Dihydropyridin → Oxidation → Pyridin
+With unsymmetrical components A + B → P1 + P2 (regioisomers)
 
-### Bohlmann-Rahtz [3+3]
-Enaminon + β-Ketoester → Pyridin
+**Strategies for regioselectivity:**
+1. **Pre-formed enamines** with defined geometry
+2. **Unsymmetrical dicarbonyl** instead of symmetrical
+3. **Conjugate addition – conjugate elimination** route
 
-### Guareschi-Thorpe [3+3]
-Cyanoacetamid + 1,3-Dicarbonyl → 2-Pyridinon-3-carbonitril
+## Important Cyclocondensation Reactions (exam-relevant)
 
-### Kröhnke [3+2+1]
-Pyridinium-Ylid + α,β-unges. Carbonyl + NH₄OAc → Pyridin
+### Hantzsch Dihydropyridine [3+3]:
+Enamine + 1,3-dicarbonyl (+ NH₃) → 1,4-dihydropyridine → oxidation → pyridine
+Regioselective when enamine is pre-synthesised!
 
-### Biginelli-Reaktion [3-Komponenten]
-Aldehyd + β-Ketoester + Harnstoff → DHPM (Dihydropyrimidinon)
+### Bohlmann-Rahtz Reaction [3+3]:
+Enaminone + β-ketoester → condensed pyridine
+Selective: enaminone dictates regiochemistry
 
-### Pyrazol-Synthese
-1,3-Dicarbonyl + Hydrazin → Pyrazol
+### Guareschi-Thorpe [3+3]:
+Cyanoacetamide + 1,3-dicarbonyl → 2-pyridinone-3-carbonitrile
 
-### Isoxazol-Synthese
-β-Enolketon + NH₂OH → Isoxazol
+### Kröhnke [3+2+1]:
+Pyridinium ylide + unsaturated dicarbonyl + NH₄OAc → pyridine
+Mechanism: 1. Alkylation → pyridinium salt; 2. Knoevenagel + Michael; 3. cyclisation; 4. aromatisation
+
+### Synthesis of substituted pyrimidines [3+3]:
+1,3-Dicarbonyl + urea/guanidine/amidinate → pyrimidines/pyrimidinones
+**Biginelli reaction:** Aldehyde + β-ketoester + urea → dihydropyrimidinone (DHPM)
+
+### Synthesis of pyrazoles [3+2]:
+1,3-Dicarbonyl + hydrazine (H₂N-NH₂) → pyrazole
+Regioselectivity: with unsymmetrical dicarbonyls → two possible regioisomers
+Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
+
+### Synthesis of isoxazoles:
+β-Enolketone + NH₂OH (hydroxylamine) → isoxazole (+ H₂O)
+
+### Imidazole synthesis:
+1,2-Dicarbonyl + NH₃ + aldehyde → imidazole (van Leusen: TosMIC)
 `,
-  mechanism: {
-    type: "builder",
-    title: "Hantzsch-Dihydropyridin-Synthese",
-    description: "Enamin greift 1,3-Dicarbonyl nucleophil an → Cyclisierung → Dihydropyridin.",
-    stages: [
-      {
-        id: 0,
-        label: "Michael-Addition",
-        description: "Das nucleophile α-C des Enamins greift den β-C der Dicarbonylverbindung an (Michael-Addition). Ziehe von C(Enamin) → C(β-Dicarbonyl).",
-        hint1: "Das α-C des Enamins ist nucleophil (vinyl-amin-aktiviert). Es greift das elektrophile β-C der 1,3-Dicarbonylverbindung an.",
-        hint2: "Ziehe von C(α, Enamin) → C(β) des 1,3-Dicarbonyls. Das ist eine 1,4-Addition (Michael).",
-        atoms: [
-          { id: "n",  label: "N",  x: 80,  y: 80,  color: "#2dd4bf", r: 20 },
-          { id: "ce", label: "C",  x: 160, y: 130, color: "#2dd4bf", r: 22, sub: "α" },
-          { id: "cb", label: "C",  x: 300, y: 130, color: "#e2e8f0", r: 22, sub: "β" },
-          { id: "co", label: "C=O",x: 390, y: 80,  color: "#f87171", r: 24 },
-          { id: "co2",label: "C=O",x: 390, y: 180, color: "#f87171", r: 24 },
-          { id: "h",  label: "H",  x: 160, y: 60,  color: "#64748b", r: 14 },
-        ],
-        bonds: [
-          { a: "n",  b: "ce", dash: false, color: "#2dd4bf" },
-          { a: "ce", b: "h",  dash: false, color: "#64748b" },
-          { a: "cb", b: "co", dash: false, color: "#f87171" },
-          { a: "cb", b: "co2",dash: false, color: "#f87171" },
-        ],
-        correctArrow: { from: "ce", to: "cb" },
-      },
-      {
-        id: 1,
-        label: "Cyclisierung (NH₃)",
-        description: "NH₃ greift eine Carbonylgruppe an → Iminbildung → Ringschluss. Ziehe von N(H₃) → C(=O).",
-        hint1: "NH₃ ist der nucleophile N-Lieferant für den Ringschluss. Es greift eine der Carbonylgruppen an.",
-        hint2: "Ziehe von N(H₃) → C(=O) links. Nach Kondensation und Dehydratisierung entsteht der Dihydropyridinring.",
-        atoms: [
-          { id: "nh3",label: "NH₃",x: 80,  y: 200, color: "#2dd4bf", r: 24 },
-          { id: "co1",label: "C=O",x: 200, y: 130, color: "#f87171", r: 24, sub: "δ+" },
-          { id: "cm", label: "C",  x: 300, y: 130, color: "#e2e8f0", r: 20 },
-          { id: "co2",label: "C=O",x: 400, y: 130, color: "#f87171", r: 24 },
-          { id: "h1", label: "H",  x: 300, y: 70,  color: "#64748b", r: 14 },
-        ],
-        bonds: [
-          { a: "co1",b: "cm", dash: false, color: "#e2e8f0" },
-          { a: "cm", b: "co2",dash: false, color: "#e2e8f0" },
-          { a: "cm", b: "h1", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "nh3", to: "co1" },
-      },
-    ],
-  },
   quiz: [
-    { id: "q1", question: "Welche Komponenten braucht die Hantzsch-Dihydropyridin-Synthese?", options: ["Azid + Alkin", "Enamin + 1,3-Dicarbonyl + NH₃", "Dien + Dienophil", "Hydrazin + 1,3-Dicarbonyl"], correct: 1, explanation: "Hantzsch [3+3]: Enamin (3C) + 1,3-Dicarbonyl (3C) + NH₃ (1N) → 1,4-Dihydropyridin → Oxidation → Pyridin." },
-    { id: "q2", question: "Wie wird Regioselektivität bei der Hantzsch-Synthese gesichert?", options: ["Temperaturkontrolle", "Vorsynthese des Enamins mit definierter Regiochemie", "Lösungsmittelwahl", "Überschuss einer Komponente"], correct: 1, explanation: "Vorsynthetisiertes Enamin → definierte Regiochemie → regioselektives Pyridin. Sonst: Gemisch zweier Regioisomere." },
-    { id: "q3", question: "Was ist das Produkt der Biginelli-Reaktion?", options: ["Pyrimidin", "1,4-Dihydropyridin", "3,4-Dihydropyrimidin-2(1H)-on (DHPM)", "Pyrazol"], correct: 2, explanation: "Biginelli (3 Komponenten): Aldehyd + β-Ketoester + Harnstoff → DHPM. Säurekatalysiert. Pharmakologisch aktiv (Ca-Kanal-Blocker)." },
-    { id: "q4", question: "Welche Komponenten liefern ein Pyrazol?", options: ["1,3-Dicarbonyl + NH₂OH", "1,3-Dicarbonyl + H₂N-NHR", "1,4-Dicarbonyl + NH₃", "Enamin + Diazoniumsalz"], correct: 1, explanation: "1,3-Dicarbonyl + Hydrazin → Pyrazol. Mit monosubstit. Hydrazin: definiertes N-subst. Pyrazol (regioselektiv)." },
-    { id: "q5", question: "Welches Reagenz liefert ein Isoxazol aus β-Enolketon?", options: ["Hydroxylamin (NH₂OH)", "1,4-Dicarbonyl + NH₃", "Azid + Alkin", "Malonitril"], correct: 0, explanation: "β-Enolketon + NH₂OH → Isoxazol. Mechanismus: Oximbildung → intramolekulare Cyclisierung → Dehydratisierung." },
-    { id: "q6", question: "Was ist die van-Leusen-Synthese?", options: ["Pyridin aus Triazin", "Imidazol aus TosMIC + Aldehyd + Amin", "Furan aus 1,4-Dicarbonyl", "Oxazol aus Isocyanid"], correct: 1, explanation: "van Leusen: Aldehyd + RNH₂ → Imin, dann + TosMIC → 4-Tosyl-imidazol → Tosyl-Eliminierung → Imidazol." },
+    { id: "q1", question: "Which components does the Hantzsch dihydropyridine synthesis require?", options: ["Azide + alkyne", "Enamine (or aldehyde) + 1,3-dicarbonyl + NH₃", "Diene + dienophile", "Hydrazine + 1,3-dicarbonyl"], correct: 1, explanation: "Hantzsch synthesis [3+3]: enamine (3C unit) + 1,3-dicarbonyl compound (3C unit) + NH₃ (1N unit). Alternative: aldehyde + 2× β-ketoester + NH₃. Product: 1,4-dihydropyridine; after oxidation: pyridine." },
+    { id: "q2", question: "How can regioselectivity in the Hantzsch synthesis with unsymmetrical components be ensured?", options: ["By temperature control", "By pre-synthesising the enamine with defined regiochemistry", "By solvent choice", "By excess of one component"], correct: 1, explanation: "When the enamine is prepared separately beforehand (from ketone + primary amine), its regiochemistry is fixed. The subsequent reaction with the 1,3-dicarbonyl then gives regioselectively only one pyridine isomer." },
+    { id: "q3", question: "What is the product of the Biginelli reaction?", options: ["Pyrimidine", "1,4-Dihydropyridine", "3,4-Dihydropyrimidin-2(1H)-one (DHPM)", "Pyrazole"], correct: 2, explanation: "The Biginelli reaction (3-component): aldehyde + β-ketoester + urea → 3,4-dihydropyrimidin-2(1H)-one (DHPM). Acid-catalysed. DHPMs are pharmacologically active (Ca channel blockers, hypertension)." },
+    { id: "q4", question: "Which components give a pyrazole in cyclocondensation?", options: ["1,3-Dicarbonyl + NH₂OH", "1,3-Dicarbonyl + H₂N-NHR (hydrazine)", "1,4-Dicarbonyl + NH₃", "Enamine + diazonium salt"], correct: 1, explanation: "1,3-Dicarbonyl + hydrazine (H₂N-NH₂ or H₂N-NHR) → pyrazole. With hydrazine itself: mixture of two regioisomers (if 1,3-dicarbonyl unsymmetrical). With monosubstituted hydrazine: defined N-substituted pyrazole." },
+    { id: "q5", question: "Which reagent combination gives an isoxazole?", options: ["β-Enolketone + H₂N-OH (hydroxylamine)", "1,4-Dicarbonyl + NH₃", "Azide + alkyne", "Aldehyde + malononitrile"], correct: 0, explanation: "β-Enolketone + hydroxylamine (H₂N-OH) → isoxazole. Mechanism: condensation (oxime formation at ketone), cyclisation (intramolecular Michael addition), dehydration. Regioselective when 1,3-dicarbonyl is unsymmetrical." },
+    { id: "q6", question: "What is the van Leusen synthesis and what does it produce?", options: ["Pyridine from triazine", "Imidazole from tosylmethyl isocyanide (TosMIC) + aldehyde + amine", "Furan from 1,4-dicarbonyl", "Oxazole from isocyanide + carbonyl compound"], correct: 1, explanation: "Van Leusen reaction: aldehyde + R-NH₂ → imine, then + TosMIC (tosylmethyl isocyanide, TosCH₂NC) → 4-tosylimidazole (after tosyl elimination → imidazole). Mild conditions, broad applicability." },
   ],
   flashcards: [
-    { front: "Hantzsch-Dihydropyridin", back: "[3+3]: Enamin + 1,3-Dicarbonyl + NH₃ → 1,4-Dihydropyridin → [O] → Pyridin. Regioselektiv durch vorsynthetisiertes Enamin." },
-    { front: "Biginelli-Reaktion", back: "Aldehyd + β-Ketoester + Harnstoff → DHPM. Säurekatalysiert. Produkte: Calciumkanalblocker." },
-    { front: "Kröhnke-Reaktion", back: "[3+2+1]: α-BrCO + Pyridin → Pyridinium-Ylid → Michael → + NH₄OAc → Cyclisierung → Aromatisierung → Pyridin." },
-    { front: "Pyrazol-Synthese", back: "1,3-Dicarbonyl + H₂N-NH-R → N-subst. Pyrazol. Mit H₂N-NH₂ → Gemisch. 1,3-Diketone → 3(5)-subst. Pyrazol." },
-    { front: "Bohlmann-Rahtz", back: "[3+3]: Enaminon + β-Ketoester → Pyridin. Regiochemie durch Enaminon definiert." },
-    { front: "Retrosynthese Cyclocondensation", back: "Welche Bindungen C-N oder C-O wurden neu geknüpft? Retrosynthetisch schneiden. H₂O/NH₃ ergänzen → A und B." },
+    { front: "Hantzsch Dihydropyridine Synthesis", back: "[3+3] cyclocondensation: enamine + 1,3-dicarbonyl + NH₃ → 1,4-dihydropyridine → [O] → pyridine. Regioselective: use pre-synthesised enamine." },
+    { front: "Biginelli Reaction", back: "3-component reaction: aldehyde + β-ketoester + urea → DHPM (dihydropyrimidinone). Acid-catalysed. Products: calcium channel blockers." },
+    { front: "Kröhnke Reaction", back: "[3+2+1] cyclocondensation. Steps: 1. α-Br-ketone + pyridine → pyridinium salt. 2. + α,β-unsaturated ketone (Michael). 3. + NH₄OAc → cyclisation + aromatisation → pyridine." },
+    { front: "Pyrazole Synthesis", back: "1,3-Dicarbonyl + H₂N-NH-R → N-substituted pyrazole (regioselective). With H₂N-NH₂ → mixture. Important: 1,3-diketones prefer 3(5)-substituted pyrazole." },
+    { front: "Bohlmann-Rahtz Reaction", back: "[3+3] cyclocondensation: enaminone + β-ketoester → pyridine. Regiochemistry dictated by the enaminone. Propargylamine as alternative." },
+    { front: "Retrosynthesis: Cyclocondensation", back: "Identify: which C-N or C-O bonds were newly formed? Cut them retrosynthetically. Add H₂O (or NH₃, ROH) that was eliminated. That gives A and B." },
   ],
 };

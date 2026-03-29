@@ -1,119 +1,81 @@
 export const topic = {
   id: "08-mechanisms",
-  title: "Reaktionsmechanismen",
-  subtitle: "Detaillierte Mechanismen ausgewählter Transformationen",
+  title: "Reaction Mechanisms",
+  subtitle: "Detailed Mechanisms of Selected Transformations",
   icon: "🔬",
   estimatedMinutes: 90,
   theory: `
-## Prüfungsrelevante Mechanismen
+## Overview: Exam-Relevant Mechanisms
 
-Alle folgenden Mechanismen werden mit korrekten Elektronenfluss-Pfeilen geprüft.
+The following mechanisms are tested in exercises and the exam.
+Each mechanism must be represented with correct electron-flow arrows (curly arrows).
 
-## 1. Paal-Knorr (1,4-Dicarbonyl → Pyrrol)
+## 1. Kondrat'eva Pyridine Synthesis (Oxazole + Alkyne)
 
-1. NH₂ greift Carbonyl-C → Hemiaminal
-2. Dehydratisierung → Imin
-3. Zweite Kondensation (intramolekular)
-4. Dehydratisierung → Dihydropyrrol
-5. Tautomerisierung → Pyrrol (aromatisch)
+**Reaction:** Oxazole + DMAD (or other alkyne) → pyridine
 
-## 2. Kröhnke-Mechanismus
+**Steps:**
+1. **[4+2] cycloaddition:** Oxazole (azadiene, 4π) + alkyne (2π) → bicyclic intermediate (7-oxabicyclo[2.2.1]heptadiene system)
+2. **Retro-[4+2]:** Thermal cleavage with CO₂ loss → aromatic pyridine
+**Driving force:** Aromatisation + entropy gain (CO₂ gas)
 
-1. α-Bromketon + Pyridin → Pyridinium-Ylid
-2. Michael-Addition an α,β-unges. Carbonyl
-3. + NH₄OAc → Cyclisierung
-4. Dehydratisierung + Aromatisierung → Pyridin
+## 2. Boger Reaction (Triazine + Enamine → Pyridine + N₂)
 
-## 3. N-Oxidierung + Boekelheide
+**Reaction:** 1,2,4,5-Tetrazine (or triazine) + enamine → pyridine/pyridazine + N₂
 
-1. 2-Methylpyridin + mCPBA → N-Oxid
-2. + Ac₂O, Δ → [1,2]-Acyl-Wanderung → 2-(Acetoxymethyl)pyridin
+**Steps:**
+1. **[4+2] cycloaddition:** Tetrazine (azadiene, 4π) + enamine (2π) → bicyclus
+2. **Retro-[4+2]:** N₂ loss (analogous to CO₂ in Kondrat'eva) → dihydropyridazine
+3. **Oxidation/tautomerisation** → aromatic pyridine
 
-## 4. Kondrat'eva (Oxazol + Alkin)
+## 3. Paal-Knorr Mechanism (1,4-Dicarbonyl → Pyrrole)
 
-1. [4+2]-Cycloaddition → Bicyclus
-2. Retro-[4+2] → CO₂-Abspaltung → Pyridin
+**Detailed mechanism:**
+1. Protonation of a carbonyl → oxocarbenium
+2. Nucleophilic attack of NH₂ → hemiaminal
+3. Dehydration → imine (first ring N)
+4. Tautomerisation + cyclisation of the second amine
+5. Second dehydration → dihydropyrrole
+6. Tautomerisation → pyrrole (aromatic!)
 
-## 5. Intramolekulare [3+2]
+## 4. Kröhnke Reaction Mechanism
 
-Oxadiazol generiert Azomethin-Ylid in situ → intramolekulare [3+2] mit Alkin → bicyclisches Produkt
+**Steps:**
+1. α-Bromoketone + pyridine → pyridinium ylide (zwitterion)
+2. Michael addition of ylide to α,β-unsaturated carbonyl → Michael adduct
+3. Addition of NH₄OAc → intramolecular aldol cyclisation
+4. Dehydration + oxidation → aromatic pyridine
+
+## 5. N-Oxidation + Boekelheide Rearrangement
+
+**Steps:**
+1. 2-Methylpyridine + mCPBA → 2-methylpyridine N-oxide (peracid oxidises N)
+2. + Ac₂O, Δ → [1,2]-acyl migration: O-acylation + [1,2]-shift onto CH₃ → 2-(acetoxymethyl)pyridine
+3. Alternative: electrophilic amination possible at activated 4-position
+
+## 6. N-oxide Chemistry Summary
+
+N-oxides can be:
+a) More electrophilic at C-4 (SNAr activated)
+b) Boekelheide precursor: + Ac₂O, Δ → 2-AcOCH₂-pyridine
+c) Reduced back to pyridine
+
+## 7. Mechanism: [4+2] + Retro-[4+2]
+
+Cycloaddition → bicyclic intermediate. Then thermal retro-[4+2] eliminates XY (CO₂, N₂, SO₂, etc.) → new aromatic compound. Driving force: aromatisation + gas evolution.
 `,
-  mechanism: {
-    type: "builder",
-    title: "N-Oxidierung & Boekelheide-Umlagerung",
-    description: "2-Methylpyridin → N-Oxid → Boekelheide → 2-(Acetoxymethyl)pyridin.",
-    stages: [
-      {
-        id: 0,
-        label: "N-Oxidierung",
-        description: "mCPBA oxidiert den Pyridin-N. Das Sauerstoffatom der Persäure überträgt sich auf N. Ziehe von O(mCPBA) → N(Pyridin).",
-        hint1: "Peracide sind elektrophile O-Überträger. Das nucleophile N-Lone-Pair greift das elektrophile O der Persäure an.",
-        hint2: "Ziehe von N(Pyridin, nucleophil) → O(mCPBA, elektrophil). Es entsteht das N-Oxid (N→O).",
-        atoms: [
-          { id: "n",  label: "N",    x: 200, y: 130, color: "#60a5fa", r: 24 },
-          { id: "o",  label: "O",    x: 340, y: 100, color: "#f87171", r: 22, sub: "mCPBA" },
-          { id: "c2", label: "C",    x: 290, y: 170, color: "#e2e8f0", r: 20 },
-          { id: "c6", label: "C",    x: 110, y: 170, color: "#e2e8f0", r: 20 },
-          { id: "me", label: "CH₃",  x: 290, y: 240, color: "#64748b", r: 22 },
-        ],
-        bonds: [
-          { a: "n",  b: "c2", dash: false, color: "#60a5fa" },
-          { a: "n",  b: "c6", dash: false, color: "#60a5fa" },
-          { a: "c2", b: "me", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "n", to: "o" },
-      },
-      {
-        id: 1,
-        label: "Boekelheide: Acylierung",
-        description: "Ac₂O aktiviert das N-Oxid. Das O des N-Oxids greift Ac₂O an → O-Acetylierung. Ziehe von O(N-Oxid) → C(Ac₂O).",
-        hint1: "Das N-Oxid-O ist nucleophil und greift das Essigsäureanhydrid (Ac₂O) an → O-acyliertes Intermediat.",
-        hint2: "Ziehe von O(N-Oxid) → C(=O) des Ac₂O. Es entsteht ein aktiviertes N-Oxid-Acetat-Intermediat.",
-        atoms: [
-          { id: "no", label: "N→O", x: 160, y: 130, color: "#60a5fa", r: 28 },
-          { id: "ac", label: "Ac₂O",x: 340, y: 100, color: "#fbbf24", r: 28 },
-          { id: "me", label: "CH₃", x: 200, y: 220, color: "#64748b", r: 22 },
-          { id: "c2", label: "C",   x: 240, y: 170, color: "#e2e8f0", r: 18 },
-        ],
-        bonds: [
-          { a: "no", b: "c2", dash: false, color: "#60a5fa" },
-          { a: "c2", b: "me", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "no", to: "ac" },
-      },
-      {
-        id: 2,
-        label: "Boekelheide: [1,2]-Shift",
-        description: "Das Acetat wandert vom O auf das CH₃ der 2-Methylgruppe ([1,2]-O→C-Shift). Ziehe von C(CH₃) → O(Acetat).",
-        hint1: "Der [1,2]-Shift: Das Acetat wandert vom aktivierten N-O auf das benzylische CH₂ der Methylgruppe.",
-        hint2: "Ziehe von C(CH₂, benzylisch) → O(Acetat). Das Acetat migiert → 2-(Acetoxymethyl)pyridin entsteht.",
-        atoms: [
-          { id: "ch2",label: "CH₂", x: 160, y: 220, color: "#64748b", r: 22 },
-          { id: "oac",label: "OAc", x: 290, y: 100, color: "#fbbf24", r: 24 },
-          { id: "n",  label: "N",   x: 200, y: 140, color: "#60a5fa", r: 22 },
-          { id: "c2", label: "C",   x: 270, y: 180, color: "#e2e8f0", r: 18 },
-        ],
-        bonds: [
-          { a: "n",   b: "oac", dash: true,  color: "#fbbf24" },
-          { a: "n",   b: "c2",  dash: false, color: "#60a5fa" },
-          { a: "c2",  b: "ch2", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "ch2", to: "oac" },
-      },
-    ],
-  },
   quiz: [
-    { id: "q1", question: "Was ist der erste Schritt im Paal-Knorr-Mechanismus?", options: ["Oxidation des 1,4-Dicarbonyls", "Nucleophiler Angriff des Amins auf Carbonyl-C → Hemiaminal", "Diels-Alder-Reaktion", "Radikalische Initiierung"], correct: 1, explanation: "Paal-Knorr: RNH₂ greift Carbonyl-C (Lewis-Säure aktiviert) an → Hemiaminal. Dann Dehydratisierung → Imin → Cyclisierung → Pyrrol." },
-    { id: "q2", question: "Welches Intermediat entsteht bei mCPBA-Oxidation von Pyridin?", options: ["Pyridinon", "Pyridin-N-Oxid", "Hydroxypyridin", "Pyridinium-Ion"], correct: 1, explanation: "mCPBA (Peracid) oxidiert N → Pyridin-N-Oxid (N→O). Wichtig für SNAr (C-4 aktiviert) und Boekelheide-Umlagerung." },
-    { id: "q3", question: "Was ist die Triebkraft der Kondrat'eva-Pyridinsynthese?", options: ["Säurekatalyse", "Aromatisierung + Entropiegewinn durch CO₂-Gasentwicklung", "Reduktion", "Keine – endotherm"], correct: 1, explanation: "Zwei Triebkräfte: Aromatisierung (Pyridin stabil) + Entropiegewinn durch CO₂-Gas (TΔS > 0)." },
-    { id: "q4", question: "Im Kröhnke-Mechanismus: Was ist die Rolle des Pyridins im ersten Schritt?", options: ["Pyridin ist Nucleophil → alkyliert α-Bromketon → Pyridinium-Ylid", "Pyridin ist Katalysator", "Pyridin ist Lösungsmittel", "Pyridin ist Oxidationsmittel"], correct: 0, explanation: "Schritt 1: α-Bromketon + Pyridin-N → Pyridinium-Salz. Dieses hat Ylid-Charakter am α-C → Michael-Addition an Enon." },
-    { id: "q5", question: "Was ist die Boekelheide-Umlagerung?", options: ["Pyrrol → Pyridin", "2-Methylpyridin-N-Oxid + Ac₂O → 2-(Acetoxymethyl)pyridin durch [1,2]-O→C-Acyl-Wanderung", "Indol → Chinolin", "Cyclopropan → Pyrrol"], correct: 1, explanation: "Boekelheide: N-Oxid + Ac₂O, Δ → Acetat-Migration vom O auf CH₂ der 2-Methylgruppe → 2-(AcOCH₂)pyridin." },
+    { id: "q1", question: "What is the first step in the Paal-Knorr mechanism for pyrrole synthesis?", options: ["Oxidation of the 1,4-dicarbonyl", "Nucleophilic attack of the amine on a protonated carbonyl → hemiaminal", "Diels-Alder reaction", "Radical initiation"], correct: 1, explanation: "In the Paal-Knorr mechanism the primary amine (RNH₂) attacks the protonated (Lewis-acid-activated) carbonyl nucleophilically → hemiaminal. Then dehydration → imine. Second imine → cyclisation → dihydropyrrole → tautomerisation → pyrrole." },
+    { id: "q2", question: "What is the driving force of the Kondrat'eva pyridine synthesis?", options: ["Acid catalysis", "Aromatisation to pyridine + entropy gain from CO₂ gas evolution", "Reduction of the azadiene", "None – it is endothermic"], correct: 1, explanation: "Two driving forces: 1. Aromatisation (pyridine more stable than bicyclic intermediate, ΔG < 0). 2. Entropy gain from release of CO₂ as gas (TΔS > 0). Together → favourable thermodynamics." },
+    { id: "q3", question: "Which intermediate forms in the mCPBA oxidation of pyridine?", options: ["Pyridinone", "Pyridine N-oxide", "Hydroxypyridine", "Pyridinium ion"], correct: 1, explanation: "mCPBA (meta-chloroperoxybenzoic acid) is a peracid that oxidises N atoms. Pyridine + mCPBA → pyridine N-oxide. The N-oxide is important as an activated precursor for SNAr (activated at C-4) and the Boekelheide rearrangement." },
+    { id: "q4", question: "In the Kröhnke mechanism: what is the role of pyridine in the first step?", options: ["Pyridine is the nucleophile that alkylates the α-bromoketone → pyridinium ylide", "Pyridine is the catalyst", "Pyridine is used as solvent", "Pyridine is the oxidant"], correct: 0, explanation: "In Kröhnke step 1 the α-bromoketone alkylates the pyridine N → pyridinium salt. This salt is an activated enolate equivalent (ylide character at α-C). The ylide then performs the Michael addition to the α,β-unsaturated carbonyl." },
+    { id: "q5", question: "What makes the [4+2] + retro-[4+2] sequence so useful for heterocycle synthesis?", options: ["It requires no reagents", "It allows loss of a small stable molecule (CO₂, N₂) driving formation of a new aromatic ring", "It only works at room temperature", "It always gives 5-membered rings"], correct: 1, explanation: "The retro-[4+2] step releases a stable gas (CO₂, N₂, SO₂) – this entropy gain plus the aromatisation energy makes the overall transformation thermodynamically highly favourable. The approach is used in Kondrat'eva (CO₂) and Boger (N₂) syntheses." },
   ],
   flashcards: [
-    { front: "Paal-Knorr-Mechanismus", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. -H₂O → Imin; 3. Cyclisierung (2. Carbonyl); 4. -H₂O → Dihydropyrrol; 5. Tautomerisierung → Pyrrol." },
-    { front: "Kröhnke-Schritte", back: "1. α-BrCO + Py → Pyridinium-Ylid. 2. Michael an Enon. 3. + NH₄OAc → Cyclisierung. 4. -H₂O + Aromatisierung → Pyridin." },
-    { front: "Azomethin-Ylid", back: "C=N⁺-C⁻ ↔ C⁻-N=C. Generierung: N-Oxide, Münchnone, thermisch aus Aziridinen, Deprotonierung von Iminium-Ionen. [3+2] mit Alkenen/Alkinen." },
-    { front: "N-Oxid-Chemie", back: "Pyridin + mCPBA → N-Oxid. Aktiviert C-4 für SNAr. Boekelheide: + Ac₂O, Δ → 2-AcOCH₂-Pyridin. Reduzierbar → zurück zu Pyridin." },
-    { front: "[4+2] + Retro-[4+2]", back: "Cycloaddition → Bicyclus → thermische Retro-[4+2] eliminiert XY (CO₂, N₂, SO₂) → Aromat. Triebkraft: Aromatisierung + Gas." },
+    { front: "Paal-Knorr Mechanism", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. Dehydration → imine; 3. Cyclisation (2nd N attacks 2nd carbonyl); 4. Dehydration → dihydropyrrole; 5. Tautomerisation → pyrrole." },
+    { front: "Kröhnke Pyridine Synthesis – Steps", back: "1. α-BrCO + pyridine → pyridinium ylide. 2. Michael addition to enone. 3. + NH₄OAc → cyclisation. 4. Dehydration + aromatisation → pyridine." },
+    { front: "Azomethine Ylide (1,3-Dipole)", back: "Form: C=N⁺-C⁻ ↔ C⁻-N=C. Generation: from N-oxides, münchnones, thermally from certain aziridines, or by deprotonation of iminium ions. Reaction: [3+2] with alkenes/alkynes." },
+    { front: "N-oxide Chemistry (Pyridine)", back: "Pyridine + mCPBA → pyridine N-oxide. N-oxides: a) more electrophilic at C-4 (SNAr); b) Boekelheide precursor: + Ac₂O, Δ → 2-AcOCH₂-pyridine; c) can be reduced back to pyridine." },
+    { front: "Mechanism: [4+2] + Retro-[4+2]", back: "Cycloaddition → bicyclic intermediate. Thermal retro-[4+2] eliminates XY (CO₂, N₂, SO₂ etc.) → new aromatic. Driving force: aromatisation + gas evolution." },
   ],
 };

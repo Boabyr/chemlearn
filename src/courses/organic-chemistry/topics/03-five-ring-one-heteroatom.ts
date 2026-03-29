@@ -1,124 +1,165 @@
 export const topic = {
   id: "03-five-ring-one-heteroatom",
-  title: "5-Ring-Heteroaromaten (1 Heteroatom)",
-  subtitle: "Pyrrol, Furan & Thiophen",
+  title: "5-Membered Heteroaromatics (1 Heteroatom)",
+  subtitle: "Pyrrole, Furan & Thiophene",
   icon: "🟡",
   estimatedMinutes: 75,
+
   theory: `
-## Überblick: Pyrrol, Furan, Thiophen
+## Overview: Pyrrole, Furan, Thiophene
 
-Alle drei sind 5-gliedrige aromatische Heterocyclen mit 6 π-Elektronen.
+All three are 5-membered aromatic heterocycles with **6 π electrons**:
+- 4 electrons from 2 C=C double bonds
+- 2 electrons from the heteroatom lone pair
 
-| Eigenschaft | Pyrrol | Furan | Thiophen |
+| Property | Pyrrole | Furan | Thiophene |
 |---|---|---|---|
 | Heteroatom | N | O | S |
-| Reaktivität SEAr | sehr hoch | hoch | hoch |
-| Bevorzugte Position | C-2 (α) | C-2 (α) | C-2 (α) |
+| pKa (N-H acidity) | 17.5 (N-H acidic!) | – | – |
+| Aromaticity | high | medium | high |
+| SEAr reactivity | very high | high | high |
+| Preferred position | C-2 (α) | C-2 (α) | C-2 (α) |
 
-## Elektronische Eigenschaften
+## Electronic Properties
 
-Das Heteroatom-Lone-Pair ist ins π-System eingebunden → System ist elektronenreich → aktiviert für SEAr.
+The heteroatom lone pair is incorporated into the π system in all three compounds:
+- → System is **electron-rich** → activated for SEAr
+- → **Not basic** (lone pair not available for protonation – would destroy aromaticity)
+- **Pyrrole**: N-H is acidic! (pKa 17.5) → deprotonatable with strong bases → pyrrolide anion aromatic and stable
 
-## Reaktivität: SEAr – immer C-2 (α) bevorzugt!
+## Reactivity: SEAr
 
-**Begründung:** Angriff an C-2 gibt 3 Resonanzstrukturen (inkl. Heteroatom⁺), Angriff an C-3 nur 2.
+All three react more readily than benzene with electrophiles.
 
-**Ausnahme Indol:** C-3 bevorzugt (Benzol-Aromatizität bleibt erhalten).
+**Regioselectivity: always position C-2 (α) preferred!**
 
-## Paal-Knorr-Synthese
+**Rationale via resonance structures:**
+- Attack at C-2: 3 resonance structures for arenium ion, including one where the **heteroatom is positively charged**
+- Attack at C-3: only 2 resonance structures → less stabilised
 
-- 1,4-Dicarbonyl + RNH₂ → **Pyrrol**
-- 1,4-Dicarbonyl + H⁺ → **Furan**
-- 1,4-Dicarbonyl + P₄S₁₀ → **Thiophen**
+**Exception:** When C-2 is blocked → reaction at C-3
 
-Mechanismus: Doppelkondensation → Cyclisierung → Dehydratisierung → Aromat
+**Concrete examples:**
+- Indole + Br⁺ → bromination at C-3 of the pyrrole ring → 3-bromoindole
+- Furan + Br⁺ → 2-bromofuran
+- Thiophene + Br⁺ → 2-bromothiophene
+
+## Synthesis of Pyrrole Derivatives
+
+### Paal-Knorr Synthesis:
+1,4-Dicarbonyl compound + NH₃ (or primary amine) → pyrrole
+Mechanism: double condensation (2× imine formation) + cyclisation + dehydration
+
+### Knorr Pyrrole Synthesis:
+α-Aminoketone + β-ketoester → pyrrole (classical)
+
+## Synthesis of Furan Derivatives
+
+### Paal-Knorr Synthesis (O variant):
+1,4-Dicarbonyl compound + H⁺ (Lewis acid) → furan
+Mechanism: double condensation (hemi-acetal) + cyclisation + dehydration
+
+## Synthesis of Thiophene Derivatives
+
+### Paal-Knorr (S variant):
+1,4-Dicarbonyl compound + P₄S₁₀ or H₂S/H⁺ → thiophene
+
+## Special Features
+
+### Indole (benzo[b]pyrrole):
+- Bicyclic aromatic: benzene + pyrrole fused
+- C-3 is the most reactive position for SEAr (not C-2!)
+  → Rationale: attack at C-3 gives arenium ion delocalised onto benzene ring and N; aromaticity of benzene ring is preserved
+
+### Benzofuran, Benzothiophene:
+- Analogous to indole, but with O or S
+- SEAr preferred at C-2 of the 5-membered ring part
 `,
-  mechanism: {
-    type: "builder",
-    title: "Paal-Knorr-Synthese – Pyrrol aus 1,4-Dicarbonyl",
-    description: "Zeichne die Elektronenfluss-Pfeile der Paal-Knorr-Synthese Schritt für Schritt.",
-    stages: [
-      {
-        id: 0,
-        label: "1. Kondensation",
-        description: "Das primäre Amin (NH₂) greift nucleophil das erste Carbonyl-C an (Hemiaminal-Bildung). Ziehe von N → C=O.",
-        hint1: "Der nucleophile N des Amins greift das elektrophile Carbonyl-C (δ+) an.",
-        hint2: "Ziehe von N(H₂) → C(=O). Es entsteht ein Hemiaminal als Zwischenstufe.",
-        atoms: [
-          { id: "n",  label: "NH₂", x: 80,  y: 130, color: "#2dd4bf", r: 24 },
-          { id: "c1", label: "C=O", x: 240, y: 130, color: "#f87171", r: 26, sub: "δ+" },
-          { id: "c2", label: "C",   x: 350, y: 130, color: "#e2e8f0", r: 20 },
-          { id: "c3", label: "C=O", x: 420, y: 130, color: "#f87171", r: 26 },
-          { id: "h1", label: "H",   x: 240, y: 60,  color: "#64748b", r: 14 },
-          { id: "h2", label: "H",   x: 350, y: 60,  color: "#64748b", r: 14 },
-        ],
-        bonds: [
-          { a: "c1", b: "c2", dash: false, color: "#e2e8f0" },
-          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
-          { a: "c1", b: "h1", dash: false, color: "#64748b" },
-          { a: "c2", b: "h2", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "n", to: "c1" },
-      },
-      {
-        id: 1,
-        label: "2. Dehydratisierung",
-        description: "Das Hemiaminal verliert Wasser. Ziehe vom O-H des Hemiaminals zum Proton-Akzeptor (H₂O als Base).",
-        hint1: "Das OH des Hemiaminals wird protoniert und verlässt als Wasser → Iminiumion.",
-        hint2: "Ziehe von O(H) → H⁺ Akzeptor. Das O verlässt als H₂O, es entsteht C=N (Imin).",
-        atoms: [
-          { id: "oh", label: "OH", x: 240, y: 60,  color: "#f87171", r: 20 },
-          { id: "c1", label: "C",  x: 240, y: 130, color: "#e2e8f0", r: 22 },
-          { id: "n",  label: "N",  x: 120, y: 130, color: "#2dd4bf", r: 22 },
-          { id: "w",  label: "H₂O",x: 390, y: 60,  color: "#64748b", r: 22 },
-          { id: "c2", label: "C",  x: 360, y: 130, color: "#e2e8f0", r: 20 },
-        ],
-        bonds: [
-          { a: "c1", b: "oh", dash: false, color: "#f87171" },
-          { a: "c1", b: "n",  dash: false, color: "#2dd4bf" },
-          { a: "c1", b: "c2", dash: false, color: "#e2e8f0" },
-        ],
-        correctArrow: { from: "oh", to: "w" },
-      },
-      {
-        id: 2,
-        label: "3. Cyclisierung",
-        description: "Das zweite N-Lone-Pair greift das zweite Carbonyl-C an → Ringschluss. Ziehe von N → C=O.",
-        hint1: "Der N des Imins hat noch ein freies Elektronenpaar das intramolekular das zweite Carbonyl angreifen kann.",
-        hint2: "Ziehe von N → C(=O) rechts. Ringschluss bildet den 5-Ring.",
-        atoms: [
-          { id: "n",  label: "N",   x: 130, y: 180, color: "#2dd4bf", r: 22 },
-          { id: "c1", label: "C",   x: 200, y: 120, color: "#e2e8f0", r: 20 },
-          { id: "c2", label: "C",   x: 300, y: 120, color: "#e2e8f0", r: 20 },
-          { id: "c3", label: "C=O", x: 370, y: 180, color: "#f87171", r: 24, sub: "δ+" },
-          { id: "h1", label: "H",   x: 200, y: 60,  color: "#64748b", r: 14 },
-          { id: "h2", label: "H",   x: 300, y: 60,  color: "#64748b", r: 14 },
-        ],
-        bonds: [
-          { a: "n",  b: "c1", dash: false, color: "#e2e8f0" },
-          { a: "c1", b: "c2", dash: false, color: "#e2e8f0" },
-          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
-          { a: "c1", b: "h1", dash: false, color: "#64748b" },
-          { a: "c2", b: "h2", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "n", to: "c3" },
-      },
-    ],
-  },
+
   quiz: [
-    { id: "q1", question: "Warum reagiert Indol bei der SEAr bevorzugt an C-3?", options: ["C-2 ist sterisch gehindert", "Angriff an C-3 liefert Arenium-Ion das auf Benzolring und N delokalisierbar ist – Benzol-Aromatizität bleibt erhalten", "C-3 hat höhere π-Elektronendichte", "N stabilisiert C-3 induktiv"], correct: 1, explanation: "Bei C-3-Angriff bleibt Benzol-Aromatizität erhalten, Ladung auf N delokalisiert. Bei C-2-Angriff müsste Ladung auf Benzolring → ungünstiger." },
-    { id: "q2", question: "Welche Verbindung entsteht bei Paal-Knorr aus 1,4-Dicarbonyl + primärem Amin?", options: ["Furan", "Pyrrol", "Thiophen", "Pyridin"], correct: 1, explanation: "Paal-Knorr: 1,4-Dicarbonyl + RNH₂ → N-substituiertes Pyrrol. Mit H₂O/H⁺ → Furan, mit H₂S → Thiophen." },
-    { id: "q3", question: "Pyrrol-N-H ist acide (pKa 17.5) weil…", options: ["N-H ist generell acide", "Das Pyrrolid-Anion aromatisch ist (6 π-e⁻)", "Pyrrol kein Lone-Pair hat", "Die Acidität durch Induktion erhöht wird"], correct: 1, explanation: "Das Pyrrolid-Anion hat 6 π-e⁻ und ist aromatisch → stabil → Deprotonierung begünstigt." },
-    { id: "q4", question: "Furan + Br⁺: Welche Position wird bevorzugt bromiert?", options: ["C-2", "C-3", "C-4", "O-Atom"], correct: 0, explanation: "C-2 (α): 3 Resonanzstrukturen für Arenium-Ion (inkl. O⁺). C-3: nur 2 → C-2 bevorzugt." },
-    { id: "q5", question: "Welcher Heteroaromat ist am reaktivsten für SEAr?", options: ["Benzol", "Thiophen", "Pyrrol", "Furan"], correct: 2, explanation: "Pyrrol: N am wenigsten elektronegativ → LP am stärksten in Ring → höchstes HOMO → reaktivster." },
-    { id: "q6", question: "α-Selektivität bei 5-Ring-Heteroaromaten erklärt sich durch…", options: ["Sterik bevorzugt C-2", "Mehr Resonanzstrukturen bei α-Angriff als bei β-Angriff", "O/N/S stabilisiert C-2 induktiv", "C-2 hat niedrigeren LUMO-Beitrag"], correct: 1, explanation: "α-Angriff (C-2): 3 Resonanzstrukturen. β-Angriff (C-3): 2 Resonanzstrukturen → α bevorzugt." },
+    {
+      id: "q1",
+      question: "Why does indole react preferentially at C-3 rather than C-2 in electrophilic aromatic substitution?",
+      options: [
+        "C-2 is sterically hindered",
+        "Attack at C-3 gives an arenium ion that can be delocalised onto the benzene ring and N – aromaticity of the benzene ring is preserved",
+        "C-3 has higher π electron density in the ground state",
+        "N stabilises the transition state at C-3 by inversion",
+      ],
+      correct: 1,
+      explanation: "Attack at C-3: the arenium ion can be delocalised onto N WITHOUT disturbing the aromaticity of the benzene ring. Attack at C-2 would require the charge to be transferred to the benzene ring → loss of benzene aromaticity → energetically unfavourable.",
+    },
+    {
+      id: "q2",
+      question: "Which compound is formed in the Paal-Knorr synthesis from a 1,4-dicarbonyl with a primary amine?",
+      options: ["Furan", "Pyrrole", "Thiophene", "Pyridine"],
+      correct: 1,
+      explanation: "The Paal-Knorr synthesis gives N-substituted pyrroles from 1,4-dicarbonyl compounds + primary amine (R-NH₂). With NH₃ → NH-pyrrole, with H₂O/H⁺ → furan, with H₂S/H⁺ or P₄S₁₀ → thiophene.",
+    },
+    {
+      id: "q3",
+      question: "What property fundamentally distinguishes pyrrole from pyridine regarding the N-H bond?",
+      options: [
+        "Pyrrole has no N-H",
+        "Pyrrole N-H is acidic (pKa 17.5) and can be deprotonated, since the pyrrolide anion is aromatic",
+        "Pyrrole N-H is strongly basic",
+        "Pyrrole N-H cannot be deprotonated",
+      ],
+      correct: 1,
+      explanation: "Pyrrole N-H is acidic (pKa ~17.5) because the resulting pyrrolide anion is aromatic (6 π e⁻). Deprotonation with strong bases (NaH, BuLi) is possible → N-metalation → further reaction with electrophiles.",
+    },
+    {
+      id: "q4",
+      question: "Furan + Br⁺: at which position does bromination preferentially occur?",
+      options: ["C-2", "C-3", "C-4", "O atom"],
+      correct: 0,
+      explanation: "Furan is brominated preferentially at C-2 (α position). Attack at C-2 gives 3 resonance structures for the arenium ion (including one with O⁺); attack at C-3 gives only 2 → C-2 energetically favoured.",
+    },
+    {
+      id: "q5",
+      question: "Which heteroaromatic is most strongly activated for SEAr (most reactive)?",
+      options: ["Benzene", "Thiophene", "Pyrrole", "Furan"],
+      correct: 2,
+      explanation: "Pyrrole is most reactive for SEAr. The N atom is less electronegative than O or S, so the lone pair in pyrrole-N is more strongly donated into the ring → highest π electron density → highest HOMO.",
+    },
+    {
+      id: "q6",
+      question: "Which mechanism explains the α selectivity (C-2) in SEAr of furan?",
+      options: [
+        "C-2 is more sterically accessible",
+        "Attack at C-2 gives more resonance structures for the arenium ion than attack at C-3",
+        "The O atom stabilises C-2 inductively",
+        "C-2 has a lower LUMO contribution",
+      ],
+      correct: 1,
+      explanation: "Attack at C-2: 3 resonance structures (incl. one with O⁺). Attack at C-3: only 2 resonance structures. More resonance = more stable arenium ion = lower activation energy → C-2 preferred (kinetic control).",
+    },
   ],
+
   flashcards: [
-    { front: "Paal-Knorr-Synthese", back: "1,4-Dicarbonyl + NH₃/RNH₂ → Pyrrol. + H⁺ → Furan. + H₂S/P₄S₁₀ → Thiophen. Mechanismus: Doppelkondensation + Cyclisierung + Dehydratisierung." },
-    { front: "α-Selektivität bei 5-Ring-Heteroaromaten", back: "C-2 (α) bevorzugt für SEAr. Mehr Resonanzstrukturen bei α-Angriff (inkl. Heteroatom⁺). Ausnahme: Indol → C-3." },
-    { front: "Indol – SEAr-Regioselektivität", back: "C-3 bevorzugt. Bei C-3-Angriff bleibt Benzol-Aromatizität erhalten. Ladung auf N delokalisiert ohne Benzol-Ring zu stören." },
-    { front: "Pyrrol: Acidität vs. Basizität", back: "Nicht basisch (LP im π). N-H acide! pKa = 17.5. Pyrrolid-Anion aromatisch → stabil. Deprotonierung mit NaH, BuLi." },
-    { front: "Furan vs. Pyrrol vs. Thiophen – Reaktivitätsreihe", back: "Pyrrol > Furan > Thiophen > Benzol für SEAr. N am wenigsten elektronegativ → gibt LP am stärksten ab → höchstes HOMO." },
-    { front: "Knorr-Pyrrol-Synthese", back: "α-Aminoketon + β-Ketoester → Pyrrol. Klassisch für 2,3,4,5-substituierte Pyrrole (z.B. Porphyrin-Vorstufen)." },
+    {
+      front: "Paal-Knorr Synthesis",
+      back: "1,4-Dicarbonyl + NH₃/RNH₂ → pyrrole. 1,4-Dicarbonyl + H⁺ → furan. 1,4-Dicarbonyl + H₂S/P₄S₁₀ → thiophene. Mechanism: double condensation + cyclisation + dehydration.",
+    },
+    {
+      front: "α Selectivity in 5-Membered Heteroaromatics",
+      back: "Pyrrole, furan and thiophene react preferentially at C-2 (α position) with electrophiles. Reason: more resonance structures for arenium ion at α attack than at β attack (C-3).",
+    },
+    {
+      front: "Indole – SEAr Regioselectivity",
+      back: "C-3 (not C-2!) is preferred. At C-3 attack benzene aromaticity is preserved, charge is delocalised onto N. At C-2 attack the charge would have to be on the benzene ring.",
+    },
+    {
+      front: "Pyrrole: Acidity vs. Basicity",
+      back: "Not basic (LP in π system). BUT: N-H is acidic! pKa = 17.5. Pyrrolide anion is aromatic → stable. Deprotonation with NaH, BuLi possible → N-metalation.",
+    },
+    {
+      front: "Furan vs. Pyrrole vs. Thiophene – Reactivity Series",
+      back: "Pyrrole > Furan > Thiophene > Benzene for SEAr reactivity. Reason: N (least electronegative) donates lone pair most strongly → highest HOMO in pyrrole.",
+    },
+    {
+      front: "Knorr Pyrrole Synthesis",
+      back: "α-Aminoketone + β-ketoester → pyrrole. Classical method for synthesis of 2,3,4,5-substituted pyrroles (e.g. for porphyrin precursors).",
+    },
   ],
 };

@@ -1,107 +1,86 @@
 export const topic = {
   id: "09-bioisosteres-skeletal-editing",
-  title: "Bioisostere & Skeletal Editing",
-  subtitle: "Moderne Konzepte in der Wirkstoffchemie",
+  title: "Bioisosteres & Skeletal Editing",
+  subtitle: "Modern Concepts in Medicinal Chemistry",
   icon: "💊",
   estimatedMinutes: 60,
   theory: `
-## Bioisostere
+## Bioisosteres
 
-**Definition:** Atome/Gruppen mit ähnlicher Größe, Gestalt und Elektronenverteilung mit ähnlicher biologischer Aktivität aber unterschiedlichen chemischen Eigenschaften.
+**Definition:** Bioisosteres are atoms, ions or molecules with similar size, shape and electron distribution that exhibit similar biological activity but different chemical properties.
 
-### Klassische bioisostere Ersetzungen
+**Goals of bioisosteric replacement:**
+- Improved metabolic stability
+- Altered solubility / lipophilicity
+- Altered pKa values
+- Better membrane permeability
+- Improved selectivity
 
-| Original | Bioisoster | Vorteil |
+### Classic bioisosteric replacements:
+
+| Original | Bioisostere | Advantage |
 |---|---|---|
-| -COOH | Tetrazol | Ähnlicher pKa, metabolisch stabiler |
-| -COOH | -SO₂NH₂ | Saurer, wasserlöslicher |
-| Benzol | Pyridin | Wasserlöslichkeit ↑, Metabolismus ↓ |
-| Benzol | Thiophen | Pharmakophor-Erhalt |
+| -COOH | Tetrazole | Similar pKa, metabolically more stable |
+| -COOH | -SO₂NH₂ (sulfonamide) | More acidic, more water-soluble |
+| -COOH | -P(O)(OH)₂ | Phosphonic acid mimetic |
+| -COOH | Isoxazol-3-ol | Planar, H-bond donor/acceptor |
+| -OH | -NH₂, -CH₂OH, F | Polarity, metabolism |
+| Benzene | Pyridine | Water solubility ↑, metabolism ↓ |
+| Benzene | Thiophene, furan | Pharmacophore retention |
+
+**Exam example:**
+Nurr1 ligand with COOH → propose bioisostere:
+- Tetrazole: similar pKa (~4-5), bioisosteric to COOH
+- Synthesis: nitrile (from R-CN) + NaN₃ → [3+2] cycloaddition → 5-tetrazole
 
 ## Skeletal Editing
 
-**Definition:** Direkte Transformation des Ring-Grundgerüsts in 1-3 Stufen ohne vollständigen Neuaufbau.
+**Definition:** Direct transformation of the carbon or heteroatom skeleton of a molecule in one or a few steps – without classical multi-step construction.
 
-### Ciamician-Dennstedt-Umlagerung
-Pyrrol + Dibromcarben (CHBr₃/Base) → 3-Brompyridin
-Mechanismus: [2+1] Cyclopropanierung → Ringerweiterung → Pyridin
+**Concept:** Instead of re-synthesising a target molecule from scratch, the skeleton of a similar, easily accessible molecule is directly modified.
 
-## Bioisostere in FDA-Wirkstoffen
+### Most important reactions:
 
-- **Losartan:** COOH → Tetrazol (AT₁-Antagonist)
-- **Atorvastatin:** Pyrrole-Grundgerüst
-- **Apixaban:** Pyrazol-Grundgerüst
+**Ciamician-Dennstedt Rearrangement:**
+Pyrrole + dibromocarbene (from CHBr₃/base) → 3-bromopyridine
+Mechanism:
+1. Cyclopropanation of pyrrole with carbene → 2H-azirine intermediate (strained 3-membered ring)
+2. Ring opening + ring expansion → chloro/bromopyridine
+
+**Exam example – Pindolol:**
+Indole → 3-chloroquinoline derivative:
+- Reaction: Ciamician-Dennstedt-type or Beckmann rearrangement + CHCl₃/base
+- Mechanism: indole-N attacks dibromocarbene → strained intermediate → ring opening of pyrrole part → quinoline scaffold
+
+**Further skeletal editing concepts:**
+- **Nitrogen insertion into benzene:** Rh-catalysed, gives pyridine directly
+- **Carbon excision:** Removal of a C atom from the ring
+- **Ring expansion/contraction**
+
+## Modern Drug Design Concepts
+
+**Bioisosteres in approved drugs:**
+- **Losartan:** COOH → tetrazole (angiotensin II antagonist)
+- **Atorvastatin:** Pyrrole scaffold (bioisostere of the acrylate side chain)
+- **Apixaban:** Pyrazole scaffold
+
+**Skeletal editing in medicinal chemistry:**
+- Scaffold hopping: scaffold exchange without loss of activity
+- Bioisosteric ring replacement: e.g. benzene → pyridine increases water solubility
 `,
-  mechanism: {
-    type: "builder",
-    title: "Tetrazol-Synthese – Bioisoster der Carbonsäure",
-    description: "[3+2]-Cycloaddition: Nitril + Azidanion → 5-substituiertes Tetrazol.",
-    stages: [
-      {
-        id: 0,
-        label: "1,3-Dipol-Angriff",
-        description: "Das Azidanion (N₃⁻, 1,3-Dipol) greift das Nitril (Dipolarophil) an. Ziehe von N(terminal, Azid) → C(Nitril).",
-        hint1: "Das Azidanion ist der 1,3-Dipol (N=N⁺=N⁻). Das Nitril ist das Dipolarophil (C≡N).",
-        hint2: "Ziehe von N(terminal, δ−) → C des Nitrils (δ+). Das ist der erste Bindungsschluss der [3+2]-CA.",
-        atoms: [
-          { id: "na", label: "N",  x: 80,  y: 130, color: "#2dd4bf", r: 22, charge: "δ−" },
-          { id: "nb", label: "N⁺", x: 155, y: 130, color: "#2dd4bf", r: 20 },
-          { id: "nc", label: "N",  x: 230, y: 130, color: "#2dd4bf", r: 20 },
-          { id: "r",  label: "R",  x: 80,  y: 60,  color: "#64748b", r: 18 },
-          { id: "cn", label: "C",  x: 360, y: 130, color: "#fbbf24", r: 22 },
-          { id: "nn", label: "N",  x: 440, y: 130, color: "#60a5fa", r: 20 },
-          { id: "rr", label: "R'", x: 440, y: 60,  color: "#64748b", r: 18 },
-        ],
-        bonds: [
-          { a: "r",  b: "na", dash: false, color: "#64748b" },
-          { a: "na", b: "nb", dash: false, color: "#2dd4bf" },
-          { a: "nb", b: "nc", dash: false, color: "#2dd4bf" },
-          { a: "cn", b: "nn", dash: false, color: "#fbbf24" },
-          { a: "nn", b: "rr", dash: false, color: "#64748b" },
-        ],
-        correctArrow: { from: "na", to: "cn" },
-      },
-      {
-        id: 1,
-        label: "Ringschluss → Tetrazol",
-        description: "Der zweite Bindungsschluss: N(Azid, Ende) verbindet sich mit N(Nitril) → 5-Ring geschlossen. Ziehe von N(Nitril) → N(Azid, Ende).",
-        hint1: "Nach dem ersten Bindungsschluss (Na→CN) folgt der zweite intramolekular: N des Nitrils und N des Azids verbinden sich.",
-        hint2: "Ziehe von N(Nitril, blau) → N(Azid, Ende, grün). Der 5-Ring schließt → Dihydrotetrazol → Aromatisierung → Tetrazol.",
-        atoms: [
-          { id: "na", label: "N",  x: 130, y: 200, color: "#2dd4bf", r: 20 },
-          { id: "nb", label: "N⁺", x: 195, y: 130, color: "#2dd4bf", r: 18 },
-          { id: "nc", label: "N",  x: 280, y: 130, color: "#2dd4bf", r: 18 },
-          { id: "cn", label: "C",  x: 350, y: 200, color: "#fbbf24", r: 22 },
-          { id: "nn", label: "N",  x: 290, y: 250, color: "#60a5fa", r: 20 },
-          { id: "r",  label: "R",  x: 80,  y: 250, color: "#64748b", r: 18 },
-          { id: "rr", label: "R'", x: 410, y: 240, color: "#64748b", r: 18 },
-        ],
-        bonds: [
-          { a: "r",  b: "na", dash: false, color: "#64748b" },
-          { a: "na", b: "nb", dash: false, color: "#2dd4bf" },
-          { a: "nb", b: "nc", dash: false, color: "#2dd4bf" },
-          { a: "nc", b: "cn", dash: true,  color: "#fbbf24" },
-          { a: "cn", b: "nn", dash: false, color: "#fbbf24" },
-          { a: "cn", b: "rr", dash: false, color: "#64748b" },
-          { a: "nn", b: "na", dash: true,  color: "#2dd4bf" },
-        ],
-        correctArrow: { from: "nn", to: "nc" },
-      },
-    ],
-  },
   quiz: [
-    { id: "q1", question: "Was ist ein Bioisoster und warum ist Tetrazol ein Bioisoster der Carbonsäure?", options: ["Identische Verbindung", "Gruppe mit ähnlicher Größe, Polarität und pKa aber anderen metabolischen Eigenschaften; Tetrazol pKa ~4-5 ≈ COOH, aber metabolisch stabiler", "Verbindung mit gleicher Löslichkeit", "Prodrug das zu COOH hydrolysiert wird"], correct: 1, explanation: "Bioisostere: ähnliche pKa, Sterik, H-Brücken. Tetrazol (pKa ~4-5) ≈ RCOOH, aber resistent gegen Hydrolyse → längere Wirkdauer." },
-    { id: "q2", question: "Was ist Skeletal Editing?", options: ["Klassischer Aufbau", "Direkte Transformation des Ringgerüsts (z.B. Pyrrol → Pyridin) in wenigen Schritten", "Schutzgruppenmanipulation", "FGI ohne Ringänderung"], correct: 1, explanation: "Skeletal Editing: direkter Ringumbau. Ciamician-Dennstedt: Pyrrol + CHBr₃/Base → 3-Brompyridin. Modern: Rh-katalysierte N-Insertion in Benzol → Pyridin." },
-    { id: "q3", question: "Welches Reagenz ist für die Ciamician-Dennstedt-Umlagerung entscheidend?", options: ["mCPBA", "NaNH₂", "Dibromcarben (CHBr₃/Base)", "BuLi"], correct: 2, explanation: "Dibromcarben (aus CHBr₃ + starke Base) cyclopropaniert Pyrrol-Ring [2+1] → gespanntes Bicyclus → Ringerweiterung → Brompyridin." },
-    { id: "q4", question: "Welcher Wirkstoff enthält Tetrazol als bioisosteren COOH-Ersatz?", options: ["Atorvastatin", "Apixaban", "Losartan", "Pindolol"], correct: 2, explanation: "Losartan (AT₁-Rezeptorblocker): COOH durch Tetrazol ersetzt → bessere Bioverfügbarkeit, metabolische Stabilität, ähnliche Affinität." },
-    { id: "q5", question: "Welches Heterocyclus-Bioisoster erhöht Wasserlöslichkeit beim Ersatz von Benzol?", options: ["Thiophen", "Furan", "Cyclopentyl", "Pyridin"], correct: 3, explanation: "Benzol → Pyridin: N erhöht Dipolmoment und H-Brücken-Akzeptor-Kapazität → bessere Wasserlöslichkeit. Klassisches Scaffold-Hopping." },
+    { id: "q1", question: "What is a bioisostere and why is tetrazole a classic bioisostere of carboxylic acid?", options: ["An identical compound; tetrazole has the same molecular formula as COOH", "A group with similar size, polarity and pKa but different metabolic properties; tetrazole has pKa ~4-5 similar to COOH, but is metabolically more stable", "A compound with the same solubility; tetrazole is equally water-soluble", "A prodrug; tetrazole is hydrolysed to COOH in the body"], correct: 1, explanation: "Bioisosteres: similar physicochemical properties (size, geometry, pKa, H-bonds) → similar biological activity. Tetrazole pKa ~4-5 ≈ RCOOH pKa ~4-5. Advantage: tetrazole resistant to hydrolysis/oxidation → longer duration of action, better oral bioavailability." },
+    { id: "q2", question: "What is 'skeletal editing' in modern synthetic chemistry?", options: ["Classical multi-step construction of a scaffold", "Direct transformation of the ring skeleton of an existing molecule (e.g. pyrrole → pyridine) in few steps without complete rebuilding", "Protecting group manipulation", "Functional group interconversion (FGI) without ring change"], correct: 1, explanation: "Skeletal editing enables direct ring modification. Example: Ciamician-Dennstedt: pyrrole + CHBr₃/base → 3-bromopyridine. The indole scaffold can be directly edited to quinoline. Modern: Rh-catalysed N-insertion into benzene → pyridine without retrosynthesis." },
+    { id: "q3", question: "Which reagent is decisive for the Ciamician-Dennstedt rearrangement (pyrrole → pyridine)?", options: ["mCPBA", "NaNH₂", "Dibromocarbene (from CHBr₃ + base)", "BuLi"], correct: 2, explanation: "Dibromocarbene (generated from CHBr₃ + strong base) cyclopropanates the pyrrole ring → strained bicyclic intermediate. Ring opening + rearrangement → pyridine with halogen substituent at C-3. Mechanism: electron-poor carbene + π system → [2+1] cycloaddition." },
+    { id: "q4", question: "Which FDA-approved drug contains a tetrazole as bioisosteric replacement for COOH?", options: ["Atorvastatin", "Apixaban", "Losartan", "Pindolol"], correct: 2, explanation: "Losartan (Cozaar) is an angiotensin II AT₁ receptor blocker. The COOH group of the original candidate was replaced by tetrazole → better oral bioavailability, metabolic stability, similar affinity. First sartan on the market (1995)." },
+    { id: "q5", question: "Which heterocycle bioisostere typically increases water solubility when replacing a benzene ring?", options: ["Thiophene", "Furan", "Cyclopentyl", "Pyridine"], correct: 3, explanation: "Benzene → pyridine: The N atom increases the dipole moment and H-bond acceptor capacity → better water solubility. Simultaneously: pyridine metabolically more stable toward CYP oxidation (N makes ring electron-poor → oxidised more slowly). Classic scaffold hop." },
   ],
   flashcards: [
-    { front: "Bioisoster – Definition", back: "Atom/Gruppe mit ähnlicher Sterik, Elektronik und physikochemischen Eigenschaften wie Original, aber anderen metabolischen Eigenschaften." },
-    { front: "Tetrazol als COOH-Bioisoster", back: "pKa ~4-5 (≈ COOH). Metabolisch stabil. Synthese: R-CN + NaN₃ → [3+2] → 5-R-Tetrazol. Beispiel: Losartan." },
-    { front: "Ciamician-Dennstedt", back: "Pyrrol + CHBr₃/Base (Dibromcarben) → 3-Brompyridin. [2+1] + Ringerweiterung. Skeletal Editing: 5-Ring → 6-Ring." },
-    { front: "Skeletal Editing", back: "Direkte Ringgerüst-Transformation in 1-3 Stufen. Pyrrol→Pyridin, Indol→Chinolin, Benzol+N→Pyridin (Rh-kat.). Schneller Zugang zu Analoga." },
-    { front: "Benzol → Pyridin Scaffold Hop", back: "Erhöht Wasserlöslichkeit (polarer N), metabolische Stabilität. Verändert Basizität (pKa 5.2), H-Brücken. Klassisch im Drug Design." },
-    { front: "Nurr1-Ligand Bioisoster (Exam)", back: "Nurr1-Ligand mit COOH → Tetrazol (pKa ähnlich, stabiler). Synthese: Entsprechendes Nitril → + NaN₃/[3+2] → Tetrazol-Derivat." },
+    { front: "Bioisostere – Definition", back: "Atom/group with similar sterics, electronics and physicochemical properties to the original, but different metabolic/pharmacokinetic properties. Goal: improvement of stability, solubility, selectivity." },
+    { front: "Tetrazole as COOH Bioisostere", back: "pKa ~4-5 (similar to COOH). Metabolically stable (no ester/amide hydrolysis). Synthesis: R-CN + NaN₃ → [3+2] → 5-R-tetrazole. Example: losartan. Planar, H-bond donor + acceptor." },
+    { front: "Ciamician-Dennstedt Rearrangement", back: "Pyrrole + dibromocarbene (CHBr₃/base) → 3-bromopyridine. Skeletal editing: pyrrole (5-ring) → pyridine (6-ring). Mechanism: [2+1] + ring expansion. Important for exam (pindolol → chloroquinoline)." },
+    { front: "Skeletal Editing", back: "Direct transformation of ring skeleton in 1-3 steps. Examples: pyrrole→pyridine, indole→quinoline, benzene+N-source→pyridine (Rh-cat.). Advantage: rapid access to analogues, library synthesis." },
+    { front: "Benzene → Pyridine Scaffold Hop", back: "Increases: water solubility (polar N), metabolic stability (electron-poor). Changes: basicity (N, pKa 5.2), H-bond capacity. Classic trick in drug design. Example: many kinase inhibitors." },
+    { front: "Nurr1 Ligand – Bioisostere Example (Exam)", back: "Nurr1 ligand A has COOH. Bioisosteric replacement: tetrazole (similar pKa, more stable). Synthesis of tetrazole analogue: prepare corresponding nitrile (R-CN), then + NaN₃/[3+2] → tetrazole derivative." },
   ],
 };

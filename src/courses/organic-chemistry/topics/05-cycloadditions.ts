@@ -1,99 +1,70 @@
 export const topic = {
   id: "05-cycloadditions",
-  title: "Cycloadditions-Reaktionen",
-  subtitle: "1,3-dipolare CA & Diels-Alder zur Heterocyclensynthese",
+  title: "Cycloaddition Reactions",
+  subtitle: "1,3-Dipolar CA & Diels-Alder for Heterocycle Synthesis",
   icon: "🔄",
   estimatedMinutes: 75,
   theory: `
-## Überblick
+## Overview of Cycloaddition Reactions
 
-Cycloadditionen sind pericyclische Reaktionen bei denen zwei π-Systeme unter Bildung eines Rings reagieren. Konzertiert, kein Intermediat.
+Cycloadditions are pericyclic reactions in which **two π systems** react to form a ring. No catalyst, no intermediate (concerted).
 
-## [4+2] Diels-Alder (Aza-Varianten)
+## [4+2] Diels-Alder Reaction (Aza Variants)
 
-- **Kondrat'eva:** Oxazol (Azadien) + Alkin → [4+2] → -CO₂ → Pyridin
-- **Boger:** Triazin + Enamin → [4+2] → -N₂ → Pyridin
+**Diene + dienophile → 6-membered ring**
 
-## [3+2] 1,3-Dipolare Cycloaddition
+For heterocycle synthesis:
+- **Azadiene** (at least 1 N in the diene) + dienophile → N-containing 6-membered ring
+- **Hetero-Diels-Alder:** C=O or C=N as dienophile → pyrans, dihydropyrimidines
 
-| 1,3-Dipol | Produkt mit Alkin | Produkt mit Alken |
+**Important examples:**
+| Diene | Dienophile | Product |
 |---|---|---|
-| Azid R-N₃ | 1,2,3-Triazol | – |
-| Nitriloxid R-C≡N⁺-O⁻ | Isoxazol | Isoxazolin |
-| Nitron R-CH=N⁺(R')-O⁻ | – | Isoxazolin |
-| Nitrilimine | Pyrazol | Pyrazolin |
+| Oxazole | Alkyne | Pyridine (+ CO₂ loss) → Kondrat'eva |
+| Triazine | Enamine | Pyridine (+ N₂ loss) → Boger |
+| 1-Azadiene | Dienophile CO₂Me | Dihydropyridine → pyridine |
+| Pyridine N-oxide | Alkyne | Isoxazole + CO loss |
 
-## Retrosynthese
+## [3+2] 1,3-Dipolar Cycloaddition (Huisgen)
 
-- 5-Ring → [3+2]: schneide 1,2 und 4,5-Bindung → 1,3-Dipol + Dipolarophil
-- 6-Ring → [4+2]: schneide 1,6 und 3,4-Bindung → Dien + Dienophil
+**1,3-Dipole + dipolarophile → 5-membered heterocycle**
+
+### The most important 1,3-dipoles:
+| 1,3-Dipole | Structure | Product with alkyne | Product with alkene |
+|---|---|---|---|
+| Nitrile oxide R-C≡N⁺-O⁻ | 3 atoms, allene structure | Isoxazole | Isoxazoline |
+| Nitrone R-CH=N⁺(R')-O⁻ | | Isoxazoline | |
+| Azide R-N=N⁺=N⁻ | | 1,2,3-Triazole | |
+| Nitrilimines R-C≡N⁺-N⁻R' | | Pyrazole | Pyrazoline |
+| Diazoalkane R₂C=N⁺=N⁻ | | Pyrazole | |
+
+### Regioselectivity of [3+2] CA:
+- Electronic control: FMO theory (HOMO-dipole / LUMO-dipolarophile)
+- Steric: larger substituents determine orientation
+- Exam-relevant: know the regioisomeric products for each dipole!
+
+## Retrosynthesis P → A + B
+
+**Scheme for exam:**
+1. Identify the ring in product P
+2. Determine ring type (5- or 6-membered)
+3. Recognise 1,3-dipole or diene/dienophile bonding pattern
+4. Perform retrosynthetic cut
+5. Write A and B
 `,
-  mechanism: {
-    type: "builder",
-    title: "Kondrat'eva-Pyridinsynthese",
-    description: "Oxazol als Azadien + Alkin → [4+2] → Bicyclus → -CO₂ → Pyridin.",
-    stages: [
-      {
-        id: 0,
-        label: "[4+2] Cycloaddition",
-        description: "Das Oxazol (als 1-Oxa-1,3-dien, 4π) greift das Alkin (2π) an. Ziehe vom O des Oxazols zum terminalen C des Alkins.",
-        hint1: "Im Diels-Alder reagiert das terminale Atom des Diens mit dem terminalen Atom des Dienophils.",
-        hint2: "Ziehe von O(Oxazol, Position 1) → C(terminal des Alkins). Das ist der erste neue C-O-Bindungsschluss.",
-        atoms: [
-          { id: "o",  label: "O",  x: 80,  y: 130, color: "#f87171", r: 22 },
-          { id: "c2", label: "C",  x: 150, y: 80,  color: "#e2e8f0", r: 20 },
-          { id: "n",  label: "N",  x: 230, y: 80,  color: "#60a5fa", r: 20 },
-          { id: "c4", label: "C",  x: 280, y: 130, color: "#e2e8f0", r: 20 },
-          { id: "c5", label: "C",  x: 230, y: 180, color: "#e2e8f0", r: 20 },
-          { id: "ca", label: "C",  x: 380, y: 100, color: "#fbbf24", r: 22 },
-          { id: "cb", label: "C",  x: 450, y: 100, color: "#fbbf24", r: 22 },
-        ],
-        bonds: [
-          { a: "o",  b: "c2", dash: false, color: "#f87171" },
-          { a: "c2", b: "n",  dash: false, color: "#e2e8f0" },
-          { a: "n",  b: "c4", dash: false, color: "#60a5fa" },
-          { a: "c4", b: "c5", dash: false, color: "#e2e8f0" },
-          { a: "c5", b: "o",  dash: false, color: "#f87171" },
-          { a: "ca", b: "cb", dash: false, color: "#fbbf24" },
-        ],
-        correctArrow: { from: "o", to: "ca" },
-      },
-      {
-        id: 1,
-        label: "Retro-[4+2]: CO₂-Abspaltung",
-        description: "Das bicyclische Intermediat verliert CO₂ in einer Retro-[4+2]. Ziehe von der C-O-Bindung zum CO₂ (Abspaltung).",
-        hint1: "Triebkraft: Aromatisierung zum Pyridin + Entropiegewinn durch CO₂-Gasentwicklung.",
-        hint2: "Ziehe von C(Ring) → O(CO₂). Die C-O-Bindung des Brücken-O bricht → CO₂ verlässt als Gas → Pyridin entsteht.",
-        atoms: [
-          { id: "c1", label: "C",   x: 160, y: 180, color: "#e2e8f0", r: 20 },
-          { id: "o",  label: "O",   x: 240, y: 240, color: "#f87171", r: 20 },
-          { id: "c2", label: "C",   x: 320, y: 180, color: "#e2e8f0", r: 20 },
-          { id: "n",  label: "N",   x: 240, y: 100, color: "#60a5fa", r: 20 },
-          { id: "co2",label: "CO₂", x: 420, y: 240, color: "#f87171", r: 26 },
-        ],
-        bonds: [
-          { a: "c1", b: "n",  dash: false, color: "#e2e8f0" },
-          { a: "n",  b: "c2", dash: false, color: "#60a5fa" },
-          { a: "c1", b: "o",  dash: false, color: "#f87171" },
-          { a: "o",  b: "c2", dash: false, color: "#f87171" },
-        ],
-        correctArrow: { from: "c2", to: "co2" },
-      },
-    ],
-  },
   quiz: [
-    { id: "q1", question: "Welcher 1,3-Dipol reagiert mit terminalem Alkin zu 1,2,3-Triazol?", options: ["Nitron", "Organisches Azid", "Nitriloxid", "Nitrilimine"], correct: 1, explanation: "Organische Azide (R-N₃) reagieren mit Alkinen in [3+2] zum 1,2,3-Triazol. Cu-katalysiert: selektiv 1,4; thermisch: Gemisch." },
-    { id: "q2", question: "Welches Regioisomer bildet sich bevorzugt bei [3+2]-CA eines Nitriloxids mit terminal-substit. Alken?", options: ["5-substituiertes Isoxazolin (bevorzugt)", "4-substituiertes Isoxazolin", "3-substituiertes Isoxazolin", "Beide zu gleichen Teilen"], correct: 0, explanation: "FMO-Kontrolle: größter HOMO-Koeffizient am Nitriloxid-C, größter LUMO-Koeffizient am β-C des Alkens → 5-substituiertes Isoxazolin bevorzugt." },
-    { id: "q3", question: "Was passiert beim Diels-Alder des Oxazols mit einem Alkin (Kondrat'eva)?", options: ["Direkte Addition ohne Zwischenstufe", "[4+2] → Bicyclus → Retro-[4+2] mit CO₂-Abspaltung → Pyridin", "SNAr am Oxazol", "Ringöffnung des Oxazols"], correct: 1, explanation: "Kondrat'eva: Oxazol (1-Oxa-1,3-dien) + Alkin → [4+2] → Bicyclus → Retro-[4+2] mit CO₂ → Pyridin. CO₂-Abspaltung ist Triebkraft." },
-    { id: "q4", question: "Was ist die Triebkraft der Kondrat'eva-Pyridinsynthese?", options: ["Säurekatalyse", "Aromatisierung + Entropiegewinn durch CO₂-Gasentwicklung", "Reduktion des Azadiens", "Keine – sie ist endotherm"], correct: 1, explanation: "Zwei Triebkräfte: Aromatisierung (Pyridin stabil) + Entropiegewinn durch CO₂-Gas (TΔS > 0)." },
-    { id: "q5", question: "Welche Reaktion gibt Dihydropyridinon aus 1-Azadien + Dienophil?", options: ["[2+2]", "[4+2]", "[3+2]", "[2+2+2]"], correct: 1, explanation: "[4+2]-Diels-Alder: 1-Azadien (4π) + Dienophil (2π) → 6-gliedriges N-haltiges Produkt." },
+    { id: "q1", question: "Which 1,3-dipole reacts regioselectively with a terminal alkyne to give a 1,2,3-triazole?", options: ["Nitrone", "Organic azide", "Nitrile oxide", "Nitrilimines"], correct: 1, explanation: "Organic azides (R-N₃ = R-N=N⁺=N⁻) react with alkynes in [3+2] cycloaddition to give 1,2,3-triazoles. Thermally: mixture of 1,4 and 1,5-isomers. Cu-catalysed: selectively 1,4." },
+    { id: "q2", question: "Which regioisomer forms preferentially in the [3+2] CA of an unsymmetrical nitrile oxide with a terminally substituted alkene?", options: ["5-substituted isoxazoline (nitrile oxide-C at C-5)", "4-substituted isoxazoline", "3-substituted isoxazoline (nitrile oxide-C at C-3)", "Both isomers in equal parts"], correct: 0, explanation: "FMO control: HOMO of nitrile oxide and LUMO of alkene. The largest HOMO coefficient is at the nitrile oxide C (terminal), the largest LUMO coefficient at the β-C of the alkene → 5-substituted isoxazoline preferred." },
+    { id: "q3", question: "What happens in the Diels-Alder reaction of oxazole with an alkyne (Kondrat'eva)?", options: ["Direct addition without intermediate → isoxazole", "[4+2] cycloaddition → bicyclic intermediate → retro-[4+2] with CO₂ loss → pyridine", "SNAr at oxazole", "Ring opening of oxazole, then recyclisation"], correct: 1, explanation: "Kondrat'eva pyridine synthesis: oxazole (as 1-oxa-1,3-diene) + alkyne → [4+2] → bicyclus → retro-[4+2] with CO₂ loss → aromatic pyridine. The CO₂ loss is the driving force (aromatisation + entropy)." },
+    { id: "q4", question: "A furan ring in a product points retrosynthetically to which reaction?", options: ["[4+2] with azadiene", "[3+2] with nitrile oxide or azide", "Paal-Knorr synthesis from 1,4-dicarbonyl", "SNAr"], correct: 2, explanation: "A furan ring is most simply made from 1,4-dicarbonyl compounds via the Paal-Knorr synthesis (acid-catalysed double condensation + dehydration). Paal-Knorr is the most common retrosynthetic approach." },
+    { id: "q5", question: "Which reaction gives a dihydropyridinone from a 1-azadiene and a dienophile?", options: ["[2+2]", "[4+2]", "[3+2]", "[2+2+2]"], correct: 1, explanation: "[4+2] Diels-Alder: 1-azadiene (4π) + dienophile (2π) → 6-membered N-containing product (dihydropyridine or, after oxidation, pyridine)." },
   ],
   flashcards: [
-    { front: "Huisgen 1,3-Dipolare Cycloaddition", back: "[3+2]: 1,3-Dipol + Dipolarophil → 5-Ring. Thermisch: Gemisch. CuAAC: regioselektiv 1,4-Triazol. Dipole: Azide, Nitriloxide, Nitrone." },
-    { front: "Kondrat'eva-Synthese", back: "Oxazol (Azadien) + Alkin → [4+2] → Bicyclus → −CO₂ → Pyridin. Triebkraft: Aromatisierung + Entropie." },
-    { front: "Boger-Reaktion", back: "Triazin (Azadien) + Enamin → [4+2] → Bicyclus → −N₂ → Pyridin." },
-    { front: "Retrosynthese 5-Ring", back: "→ 1,3-Dipol + Dipolarophil. Schneide 1,2- und 4,5-Bindung." },
-    { front: "Retrosynthese 6-Ring", back: "→ Dien + Dienophil. Schneide 1,6- und 3,4-Bindung." },
-    { front: "Nitriloxid als 1,3-Dipol", back: "R-C≡N⁺-O⁻. Mit Alkin → Isoxazol. Mit Alken → Isoxazolin. Herstellung: Hydroxamsäure + Base oder Chloroxim + Base." },
+    { front: "Huisgen 1,3-Dipolar Cycloaddition", back: "[3+2]: 1,3-dipole + dipolarophile → 5-membered ring. Thermally: mixture. Cu-catalysed (CuAAC): regioselective 1,4-triazole. Important dipoles: azides, nitrile oxides, nitrones, nitrilimines." },
+    { front: "Kondrat'eva Synthesis", back: "Oxazole (azadiene) + alkyne → [4+2] → bicyclus → −CO₂ → pyridine. Azadienes: compounds with C=N or N=N as part of the 4π system." },
+    { front: "Boger Reaction", back: "Triazine (azadiene) + enamine → [4+2] → bicyclus → −N₂ → pyridine. N₂ is the 'XY' that leaves in retro-[4+2]." },
+    { front: "Retrosynthesis 5-membered ring", back: "5-ring → find 1,3-dipole (azide, nitrile oxide, nitrone) + dipolarophile (alkyne/alkene). Cut at the 1,2-bond pair and the 4,5-bond pair." },
+    { front: "Retrosynthesis 6-membered ring", back: "6-ring → diene [4C or 3C+N] + dienophile [2C or 1C+heteroatom]. Cut the 1,6- and 3,4-bonds (product bonds in DA)." },
+    { front: "Nitrile oxide as 1,3-dipole", back: "R-C≡N⁺-O⁻ ↔ R-C=N=O. Allene structure. Reaction with alkyne → isoxazole. With alkene → isoxazoline. Preparation: hydroxamic acid + base or chloroxime + base." },
   ],
 };

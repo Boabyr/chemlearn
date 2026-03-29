@@ -1,16 +1,11 @@
-// src/courses/organic-chemistry/index.ts
-// Kurs-Metadaten – Organische Chemie / Heterocyclic Chemistry and Drug Synthesis
-// Vorlesung: VO 270280, Dr. Saad Shaaban, Institute of Organic Chemistry
-
 export const course = {
   id: "organic-chemistry",
-  title: "Heterocyclische Chemie & Wirkstoffsynthese",
-  subtitle: "VO 270280 – Dr. Saad Shaaban",
-  icon: "⚗️",
-  color: "#2dd4bf",
+  title: "Heterocyclic Chemistry & Drug Synthesis",
+  subtitle: "Synthesis, Reactivity & Medicinal Chemistry",
+  icon: "🧬",
+  color: "#8b5cf6",
   level: "Uni",
-  description:
-    "Aromatische Heterocyclen – Nomenklatur, Elektronik, Synthese und Reaktivität. Fokus auf 5- und 6-Ring-Heteroaromaten, Reaktionsmechanismen und Wirkstoffsynthese.",
+  description: "Aromatic heterocycles, cycloadditions, cyclocondensations, SEAr regioselectivity, reaction mechanisms, bioisosteres and skeletal editing.",
   topics: [
     "01-introduction",
     "02-pyridines",
@@ -23,10 +18,5 @@ export const course = {
     "09-bioisosteres-skeletal-editing",
   ],
   totalTopics: 9,
-  estimatedHours: 18,
-  exam: {
-    duration: "2h",
-    points: 100,
-    grading: { 1: "90-100", 2: "77-89", 3: "63-76", 4: "50-62" },
-  },
+  estimatedHours: 25,
 };

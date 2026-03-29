@@ -1,152 +1,102 @@
-// src/courses/organic-chemistry/topics/02-pyridines.ts
-// Quelle: 02-Pyridines: Synthesis and Reactivity (Vorlesung VO 270280)
-
 export const topic = {
   id: "02-pyridines",
-  title: "Pyridine",
-  subtitle: "Synthese & Reaktivität",
+  title: "Pyridines",
+  subtitle: "Synthesis & Reactivity",
   icon: "🔵",
   estimatedMinutes: 90,
 
   theory: `
-## Bedeutung von Pyridinen in der Pharmazie
+## Importance of Pyridines in Pharmacy
 
-Pyridin-Grundgerüste finden sich in zahlreichen FDA-zugelassenen Wirkstoffen (General uses: Base, Lösungsmittel, Synthesebaustein).
+Pyridine scaffolds are found in numerous FDA-approved drugs (general uses: base, solvent, synthetic building block).
 
-## I. Synthese von Pyridin-Derivaten
+## I. Synthesis of Pyridine Derivatives
 
-### A. Cyclocondensation [3+3] – Hantzsch-Dihydropyridin-Synthese
-**Reagenzien:** Enamin + 1,3-Dicarbonylverbindung (oder Aldehyd + β-Ketoester + NH₃)
+### A. Cyclocondensation [3+3] – Hantzsch Dihydropyridine Synthesis
+**Reagents:** Enamine + 1,3-dicarbonyl compound (or aldehyde + β-ketoester + NH₃)
 
-**Problem:** Bei unsymmetrischen Enaminen + unsymmetrischen 1,3-Dicarbonylen entstehen zwei Regioisomere (P1 + P2).
+**Problem:** With unsymmetrical enamines + unsymmetrical 1,3-dicarbonyls, two regioisomers form (P1 + P2).
 
-**Lösung für Regioselektivität:** 
-- Vorsynthetisiertes Enamin mit definierter Regiochemie verwenden
-- Oder: Reaktion über konjugate Addition–konjugate Eliminierung leiten
+**Solution for regioselectivity:**
+- Use a pre-synthesised enamine with defined regiochemistry
+- Or: direct the reaction via conjugate addition–conjugate elimination
 
-**Wichtige Reaktionen des [3+3]-Typs:**
-- **Guareschi-Thorpe-Reaktion:** Cyanoacetyl-Derivate + 1,3-Dicarbonyl → 2-Pyridinon
-- **Bohlmann-Rahtz-Reaktion:** Enaminon + β-Ketoester → Pyridin
+**Important [3+3]-type reactions:**
+- **Guareschi-Thorpe reaction:** Cyanoacetyl derivatives + 1,3-dicarbonyl → 2-pyridinone
+- **Bohlmann-Rahtz reaction:** Enaminone + β-ketoester → pyridine
 
 ### B. Cyclocondensation [5+1]
-Reaktion einer 1,5-Dicarbonylverbindung mit NH₃ → Pyridin (nach Oxidation)
+Reaction of a 1,5-dicarbonyl compound with NH₃ → pyridine (after oxidation)
 
 ### C. Cyclocondensation [3+2+1]
-**Kröhnke-Reaktion:** 1,5-Dicarbonylverbindung + NH₃
-Mechanismus: Aldol-Kondensation → Michael-Addition → Cyclisierung → Aromatisierung
+**Kröhnke reaction:** 1,5-dicarbonyl compound + NH₃
+Mechanism: aldol condensation → Michael addition → cyclisation → aromatisation
 
 ### D. Cyclocondensation [2+2+1+1]
-Kombination verschiedener Baugruppen für funktionalisierte Pyridine
+Combination of various building blocks for functionalised pyridines
 
-### E. Cycloaddition [4+2] – Diels-Alder-artige Reaktionen
-**Azadien + Dienophil:**
-- Cyclisches Azadien + Alkin (Dienophil: z.B. CO₂-Reste)
-- **Boger-Reaktion:** Triazin als Azadien + Enamin (XY = N₂, Retro-DA eliminiert N₂)
-- **Kondrat'eva-Pyridinsynthese:** Oxazol als Azadien + Dienophil → Pyridin
+### E. Cycloaddition [4+2] – Diels-Alder type reactions
+**Azadiene + dienophile:**
+- **Boger reaction:** Triazine as azadiene + enamine (XY = N₂, retro-DA eliminates N₂)
+- **Kondrat'eva pyridine synthesis:** Oxazole as azadiene + dienophile → pyridine
 
-**Mechanismus Kondrat'eva:**
-1. [4+2]-Cycloaddition des Oxazols (als 1-Oxa-1,3-butadien) mit Alkin
-2. Bicyclischer Übergangszustand
-3. Retro-[4+2]: Eliminierung von CO₂
-4. Aromatisches Pyridin als Produkt
+**Kondrat'eva mechanism:**
+1. [4+2] cycloaddition of oxazole (as 1-oxa-1,3-butadiene) with alkyne
+2. Bicyclic transition state
+3. Retro-[4+2]: elimination of CO₂
+4. Aromatic pyridine as product
 
 ### F. Cycloaddition [2+2+2]
-**Bönnemann-Reppe-Synthese:** Trimerisation eines Nitrils mit zwei Äquivalenten Alkin (Cobalt-Katalyse)
+**Bönnemann-Reppe synthesis:** Trimerisation of a nitrile with two equivalents of alkyne (cobalt catalysis)
 
-### G. Umlagerungen
-**Ciamician-Dennstedt-Umlagerung:** Pyrrol + Cyclopropan → Pyridin-Derivat
+### G. Rearrangements
+**Ciamician-Dennstedt rearrangement:** Pyrrole + cyclopropane → pyridine derivative
 
-## II. Reaktivität von Pyridinen
+## II. Reactivity of Pyridines
 
-### Elektrophile aromatische Substitution (SEAr)
-Pyridin ist **deaktiviert** gegenüber SEAr (N zieht Elektronendichte ab):
-- Reaktion sehr langsam, erfordert harte Bedingungen
-- Bevorzugte Position: **C-3** (meta-artig zum N)
-- Bromierung nur unter drastischen Bedingungen möglich
+### Electrophilic Aromatic Substitution (SEAr)
+Pyridine is **deactivated** toward SEAr (N withdraws electron density):
+- Reaction very slow, requires harsh conditions
+- Preferred position: **C-3** (meta-like to N)
+- Bromination only possible under drastic conditions
 
-### Nucleophile aromatische Substitution (SNAr)
-Pyridin ist **aktiviert** gegenüber SNAr:
-- Bevorzugte Positionen: **C-2 und C-4** (para/ortho zum N)
-- Wichtige Reaktionen:
-  - **Chichibabin-Reaktion:** Pyridin + NaNH₂ → 2-Aminopyridin
-  - **Meisenheimer-Komplex** als Zwischenstufe
+### Nucleophilic Aromatic Substitution (SNAr)
+Pyridine is **activated** toward SNAr:
+- Preferred positions: **C-2 and C-4** (para/ortho to N)
+- Important reactions:
+  - **Chichibabin reaction:** Pyridine + NaNH₂ → 2-aminopyridine
+  - **Meisenheimer complex** as intermediate
 
-### N-Oxidierung
-Pyridin + mCPBA → Pyridin-N-Oxid
-- N-Oxide: Aktivierung für SEAr (Position 4) und SNAr
-- **Boekelheide-Umlagerung:** N-Oxid + Ac₂O, Δ → 2-Acetoxymethylpyridin
+### N-Oxidation
+Pyridine + mCPBA → pyridine N-oxide
+- N-oxides: activation for SEAr (position 4) and SNAr
+- **Boekelheide rearrangement:** N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine
 
-### Seitenkettenreaktionen
-2-Methylpyridin: α-Methylen stark acide (analog zu Ketonen)
-- Lithiierung möglich → Weiterreaktion mit Elektrophilen
-  `,
+### Side-chain reactions
+2-Methylpyridine: α-methylene strongly acidic (analogous to ketones)
+- Lithiation possible → further reaction with electrophiles
+`,
 
-mechanism: {
-    type: 'builder',
-    title: 'Kröhnke-Reaktion – Mechanismus',
-    description: 'Zeichne die Elektronenfluss-Pfeile Schritt für Schritt.',
+  mechanism: {
+    type: "builder",
+    title: "Kröhnke Reaction – Mechanism",
+    description: "Show the electron flow during cyclisation to the pyridine ring",
     stages: [
       {
         id: 0,
-        label: 'Nucleophiler Angriff',
-        description: 'Das Pyridinium-Ylid greift nucleophil den β-Kohlenstoff des Enons an (Michael-Addition). Ziehe vom Ylid-C zum β-C des Enons.',
-        hint1: 'Das Ylid-C ist nucleophil (carbanionisch). Es greift das elektrophile β-C der α,β-ungesättigten Carbonylverbindung an.',
-        hint2: 'Ziehe von C(Ylid) → C(β) des Enons.',
+        label: "Step 1: Aldol Condensation",
+        description: "The activated CH₂ of the pyridinium salt attacks the aldehyde nucleophilically (Knoevenagel-type).",
         atoms: [
-          { id: 'cyl',  label: 'C⁻',  x: 80,  y: 130, color: '#2dd4bf', r: 24 },
-          { id: 'cbeta',label: 'Cβ',  x: 280, y: 130, color: '#e2e8f0', r: 22, sub: 'δ+' },
-          { id: 'co',   label: 'C=O', x: 390, y: 130, color: '#f87171', r: 26 },
-          { id: 'py',   label: 'Py⁺', x: 80,  y: 60,  color: '#a78bfa', r: 20 },
-          { id: 'h1',   label: 'H',   x: 195, y: 90,  color: '#64748b', r: 14 },
-          { id: 'h2',   label: 'H',   x: 195, y: 170, color: '#64748b', r: 14 },
+          { id: "c1", label: "C", x: 80, y: 130, color: "#2dd4bf", r: 22, sub: "δ−" },
+          { id: "c2", label: "C=O", x: 280, y: 130, color: "#f87171", r: 28, sub: "δ+" },
+          { id: "c3", label: "C", x: 400, y: 130, color: "#e2e8f0", r: 20 },
         ],
         bonds: [
-          { a: 'cyl',  b: 'py',   dash: false, color: '#a78bfa' },
-          { a: 'cbeta',b: 'co',   dash: false, color: '#f87171' },
-          { a: 'cbeta',b: 'h1',   dash: false, color: '#64748b' },
-          { a: 'cbeta',b: 'h2',   dash: false, color: '#64748b' },
+          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
         ],
-        correctArrow: { from: 'cyl', to: 'cbeta' },
-      },
-      {
-        id: 1,
-        label: 'Cyclisierung',
-        description: 'Das Stickstoffatom des NH₃ greift intramolekular das Carbonyl-C an. Ziehe von N → C=O.',
-        hint1: 'NH₃ (oder NH₄OAc) liefert das Amin. Der nucleophile N greift das elektrophile Carbonyl-C an → Hemiaminal.',
-        hint2: 'Ziehe von N(H₃) → C(=O). Das Carbonyl ist δ+ und electrophil.',
-        atoms: [
-          { id: 'n',   label: 'N',   x: 80,  y: 200, color: '#2dd4bf', r: 22, charge: 'H₃' },
-          { id: 'co1', label: 'C=O', x: 200, y: 130, color: '#f87171', r: 26, sub: 'δ+' },
-          { id: 'co2', label: 'C=O', x: 380, y: 130, color: '#f87171', r: 26 },
-          { id: 'cm',  label: 'C',   x: 290, y: 130, color: '#e2e8f0', r: 20 },
-          { id: 'h1',  label: 'H',   x: 290, y: 70,  color: '#64748b', r: 14 },
-        ],
-        bonds: [
-          { a: 'co1', b: 'cm',  dash: false, color: '#e2e8f0' },
-          { a: 'cm',  b: 'co2', dash: false, color: '#e2e8f0' },
-          { a: 'cm',  b: 'h1',  dash: false, color: '#64748b' },
-        ],
-        correctArrow: { from: 'n', to: 'co1' },
-      },
-      {
-        id: 2,
-        label: 'Aromatisierung',
-        description: 'Nach Dehydratisierung wird der Dihydropyridin-Ring aromatisiert. Ziehe vom H zum Oxidationsmittel [O].',
-        hint1: 'Aromatisierung = Oxidation des Dihydropyridins. Ein H⁺ und 2 Elektronen werden abgegeben.',
-        hint2: 'Ziehe von H(Dihydroring) → [O] (Oxidationsmittel). Das Produkt ist das aromatische Pyridin.',
-        atoms: [
-          { id: 'h',  label: 'H',   x: 240, y: 60,  color: '#64748b', r: 16 },
-          { id: 'c1', label: 'C',   x: 240, y: 130, color: '#e2e8f0', r: 22 },
-          { id: 'ox', label: '[O]', x: 390, y: 60,  color: '#f87171', r: 24 },
-          { id: 'n',  label: 'N',   x: 130, y: 130, color: '#2dd4bf', r: 22 },
-          { id: 'c2', label: 'C',   x: 350, y: 130, color: '#e2e8f0', r: 22 },
-        ],
-        bonds: [
-          { a: 'c1', b: 'h',  dash: false, color: '#64748b' },
-          { a: 'n',  b: 'c1', dash: false, color: '#e2e8f0' },
-          { a: 'c1', b: 'c2', dash: false, color: '#e2e8f0' },
-        ],
-        correctArrow: { from: 'h', to: 'ox' },
+        correctArrow: { from: "c1", to: "c2" },
+        hint1: "The nucleophilic carbon attacks the electrophilic carbonyl carbon.",
+        hint2: "Draw arrow from C(δ−) → C=O(δ+).",
       },
     ],
   },
@@ -154,126 +104,112 @@ mechanism: {
   quiz: [
     {
       id: "q1",
-      question:
-        "Bei der Kondrat'eva-Pyridinsynthese wird welche Verbindung als Azadien eingesetzt?",
-      options: ["Triazin", "Oxazol", "Pyrimidin", "Imidazol"],
+      question: "In the Kondrat'eva pyridine synthesis, which compound acts as the azadiene?",
+      options: ["Triazine", "Oxazole", "Pyrimidine", "Imidazole"],
       correct: 1,
-      explanation:
-        "In der Kondrat'eva-Synthese fungiert das Oxazol als 1-Oxa-1,3-dien (Azadien). Es reagiert mit einem Dienophil (Alkin) in einer [4+2]-Cycloaddition. Das bicyclische Intermediat verliert dann CO₂ (Retro-[4+2]) zum aromatischen Pyridin.",
+      explanation: "In the Kondrat'eva synthesis the oxazole acts as a 1-oxa-1,3-diene (azadiene). It reacts with a dienophile (alkyne) in a [4+2] cycloaddition. The bicyclic intermediate then loses CO₂ (retro-[4+2]) to give the aromatic pyridine.",
     },
     {
       id: "q2",
-      question:
-        "Welche Position in Pyridin ist bevorzugt für elektrophile aromatische Substitution (SEAr)?",
-      options: ["C-2 (ortho zu N)", "C-3 (meta zu N)", "C-4 (para zu N)", "SEAr findet praktisch nicht statt"],
+      question: "Which position in pyridine is preferred for electrophilic aromatic substitution (SEAr)?",
+      options: ["C-2 (ortho to N)", "C-3 (meta to N)", "C-4 (para to N)", "SEAr barely occurs"],
       correct: 1,
-      explanation:
-        "Falls SEAr am Pyridin überhaupt abläuft (es ist stark deaktiviert), erfolgt sie bevorzugt an C-3. Dies ist die Position, an der der kationische Übergangszustand am wenigsten durch das elektronenarme N destabilisiert wird.",
+      explanation: "If SEAr occurs on pyridine at all (it is strongly deactivated), it proceeds preferentially at C-3. This is the position where the cationic transition state is least destabilised by the electron-deficient N.",
     },
     {
       id: "q3",
-      question:
-        "Was ist das Besondere an der Boger-Reaktion zur Pyridin-Synthese?",
+      question: "What is special about the Boger reaction for pyridine synthesis?",
       options: [
-        "Ein Triazin reagiert als Azadien mit einem Enamin; N₂ wird retro-[4+2] eliminiert",
-        "Zwei Alkinmoleküle und ein Nitril trimerisieren katalytisch",
-        "Ein Pyrrol lagert über Cyclopropan zum Pyridin um",
-        "Ein 1,5-Dicarbonyl reagiert mit NH₃",
+        "A triazine reacts as azadiene with an enamine; N₂ is eliminated retro-[4+2]",
+        "Two alkyne molecules and a nitrile trimerise catalytically",
+        "A pyrrole rearranges via cyclopropane to a pyridine",
+        "A 1,5-dicarbonyl reacts with NH₃",
       ],
       correct: 0,
-      explanation:
-        "Bei der Boger-Reaktion fungiert ein Triazin als Aza-Dien und reagiert mit einem elektronenreichen Dienophil (z.B. Enamin) in einer [4+2]-Cycloaddition. Das bicyclische Intermediat zerfällt sofort unter Abspaltung von N₂ (Retro-DA, XY = N₂) zum substituierten Pyridin.",
+      explanation: "In the Boger reaction a triazine acts as aza-diene and reacts with an electron-rich dienophile (e.g. enamine) in a [4+2] cycloaddition. The bicyclic intermediate collapses immediately with loss of N₂ (retro-DA, XY = N₂) to give the substituted pyridine.",
     },
     {
       id: "q4",
-      question:
-        "Was versteht man unter der Chichibabin-Reaktion?",
+      question: "What is the Chichibabin reaction?",
       options: [
-        "Bromierung von Pyridin an C-3",
-        "Nucleophile Aminierung von Pyridin mit NaNH₂ → 2-Aminopyridin",
-        "Oxidation von Pyridin zum N-Oxid",
-        "Cycloaddition von Pyridin mit Dienophilen",
+        "Bromination of pyridine at C-3",
+        "Nucleophilic amination of pyridine with NaNH₂ → 2-aminopyridine",
+        "Oxidation of pyridine to the N-oxide",
+        "Cycloaddition of pyridine with dienophiles",
       ],
       correct: 1,
-      explanation:
-        "Die Chichibabin-Reaktion ist eine nucleophile aromatische Substitution: Pyridin + NaNH₂ → 2-Aminopyridin + NaH. Das Amidanion greift C-2 nucleophil an (ortho zu N, aktiviert). Der Meisenheimer-Komplex ist das Zwischenprodukt.",
+      explanation: "The Chichibabin reaction is a nucleophilic aromatic substitution: pyridine + NaNH₂ → 2-aminopyridine + NaH. The amide anion attacks C-2 nucleophilically (ortho to N, activated). The Meisenheimer complex is the intermediate.",
     },
     {
       id: "q5",
-      question:
-        "Die Boekelheide-Umlagerung von Pyridin-N-Oxid mit Ac₂O (Δ) liefert...",
+      question: "The Boekelheide rearrangement of pyridine N-oxide with Ac₂O (Δ) gives…",
       options: [
-        "2-Acetoxymethyl-pyridin",
-        "4-Acetoxy-pyridin",
-        "Pyridin-2-carbonsäure",
-        "N-Acetyl-pyridin",
+        "2-(Acetoxymethyl)pyridine",
+        "4-Acetoxypyridine",
+        "Pyridine-2-carboxylic acid",
+        "N-Acetylpyridine",
       ],
       correct: 0,
-      explanation:
-        "Bei der Boekelheide-Umlagerung reagiert ein 2-Methylpyridin-N-Oxid mit Ac₂O unter Hitze. Das Acetat migriert vom aktivierten O zum Benzyl-C der Methylgruppe → 2-(Acetoxymethyl)pyridin. Nützlich zur Funktionalisierung der 2-Position.",
+      explanation: "In the Boekelheide rearrangement a 2-methylpyridine N-oxide reacts with Ac₂O under heat. The acetate migrates from the activated O to the benzylic C of the methyl group → 2-(acetoxymethyl)pyridine. Useful for functionalising the 2-position.",
     },
     {
       id: "q6",
-      question:
-        "Welche Eigenschaft macht die 2- und 4-Positionen von Pyridin bevorzugt für SNAr?",
+      question: "Why are the 2- and 4-positions of pyridine preferred for SNAr?",
       options: [
-        "Dort ist die π-Elektronendichte am höchsten",
-        "Das Stickstoffatom stabilisiert dort den negativen Meisenheimer-Komplex induktiv",
-        "Dort finden thermodynamisch kontrollierte Reaktionen statt",
-        "Das N-Atom wirkt an diesen Positionen als σ-Donor",
+        "π electron density is highest there",
+        "The nitrogen atom stabilises the negative Meisenheimer complex inductively there",
+        "Thermodynamically controlled reactions occur at those positions",
+        "The N atom acts as a σ-donor at those positions",
       ],
       correct: 1,
-      explanation:
-        "Bei SNAr an C-2 oder C-4 des Pyridins kann die negative Ladung des Meisenheimer-Komplexes direkt auf das elektronenarme N-Atom delokalisiert werden → Stabilisierung → niedrigere Aktivierungsenergie. An C-3 ist diese Delokalisierung nicht möglich.",
+      explanation: "In SNAr at C-2 or C-4 of pyridine the negative charge of the Meisenheimer complex can be directly delocalised onto the electron-deficient N atom → stabilisation → lower activation energy. At C-3 this delocalisation is not possible.",
     },
     {
       id: "q7",
-      question:
-        "Für die Hantzsch-Dihydropyridin-Synthese ([3+3]) gilt: Welches Problem tritt bei unsymmetrischen Komponenten auf?",
+      question: "For the Hantzsch dihydropyridine synthesis ([3+3]): what problem arises with unsymmetrical components?",
       options: [
-        "Die Reaktion läuft gar nicht ab",
-        "Es bildet sich ein Gemisch von zwei Regioisomeren (P1 und P2)",
-        "Das Produkt ist nicht aromatisch",
-        "NH₃ greift an der falschen Position an",
+        "The reaction does not proceed",
+        "A mixture of two regioisomers (P1 and P2) forms",
+        "The product is not aromatic",
+        "NH₃ attacks at the wrong position",
       ],
       correct: 1,
-      explanation:
-        "Wenn Enamin und 1,3-Dicarbonylverbindung unsymmetrisch sind, können zwei strukturisomere Pyridine entstehen (P1 und P2), da Cyclisierung in beide Richtungen möglich ist. Lösung: Vorsynthese eines definierten Enamins für Regioselektivität.",
+      explanation: "When enamine and 1,3-dicarbonyl compound are unsymmetrical, two structural isomers (P1 and P2) can form since cyclisation is possible in both directions. Solution: pre-synthesise a defined enamine for regioselectivity.",
     },
   ],
 
   flashcards: [
     {
-      front: "Kondrat'eva-Pyridinsynthese",
-      back: "[4+2]-Cycloaddition: Oxazol (als Azadien) + Dienophil (Alkin) → bicyclisches Intermediat → -CO₂ (Retro-[4+2]) → Pyridin. Oxazol dient als 1-Oxa-1,3-dien.",
+      front: "Kondrat'eva Pyridine Synthesis",
+      back: "[4+2] cycloaddition: oxazole (as azadiene) + dienophile (alkyne) → bicyclic intermediate → −CO₂ (retro-[4+2]) → pyridine. Oxazole serves as 1-oxa-1,3-diene.",
     },
     {
-      front: "Boger-Reaktion",
-      back: "Triazin (Azadien) + Enamin (Dienophil) → [4+2]-Cycloaddition → Intermediat verliert N₂ (Retro-DA) → substituiertes Pyridin. Besonderheit: XY = N₂ wird eliminiert.",
+      front: "Boger Reaction",
+      back: "Triazine (azadiene) + enamine (dienophile) → [4+2] cycloaddition → intermediate loses N₂ (retro-DA) → substituted pyridine. Key feature: XY = N₂ is eliminated.",
     },
     {
-      front: "Kröhnke-Reaktion",
-      back: "[3+2+1]-Cyclocondensation: 1,5-Dicarbonylverbindung + NH₃ → Pyridin. Mechanismus: Aldol → Michael → Cyclisierung → Aromatisierung.",
+      front: "Kröhnke Reaction",
+      back: "[3+2+1] cyclocondensation: 1,5-dicarbonyl compound + NH₃ → pyridine. Mechanism: aldol → Michael → cyclisation → aromatisation.",
     },
     {
-      front: "Chichibabin-Reaktion",
-      back: "Pyridin + NaNH₂ → 2-Aminopyridin + NaH. SNAr an C-2 (aktiviert durch N). Meisenheimer-Komplex als Zwischenstufe. Klassische Methode zur Aminierung.",
+      front: "Chichibabin Reaction",
+      back: "Pyridine + NaNH₂ → 2-aminopyridine + NaH. SNAr at C-2 (activated by N). Meisenheimer complex as intermediate. Classic method for amination.",
     },
     {
-      front: "Guareschi-Thorpe-Reaktion",
-      back: "[3+3]-Cyclocondensation: Cyanoacetamid/Cyanoacetylderivat + 1,3-Dicarbonyl (+ NH₃) → 2-Pyridinon mit CN-Gruppe. Bildung von Cyanopyridonen.",
+      front: "Guareschi-Thorpe Reaction",
+      back: "[3+3] cyclocondensation: cyanoacetamide/cyanoacetyl derivative + 1,3-dicarbonyl (+ NH₃) → 2-pyridinone with CN group. Formation of cyanopyridones.",
     },
     {
-      front: "Bönnemann-Reppe-Synthese",
-      back: "[2+2+2]-Cycloaddition: 1 Nitril + 2 Alkine, Cobalt-Katalyse → Pyridin. Trimerisation unter metallikatalysierten Bedingungen.",
+      front: "Bönnemann-Reppe Synthesis",
+      back: "[2+2+2] cycloaddition: 1 nitrile + 2 alkynes, cobalt catalysis → pyridine. Trimerisation under metal-catalysed conditions.",
     },
     {
-      front: "Boekelheide-Umlagerung",
-      back: "2-Methylpyridin-N-Oxid + Ac₂O, Δ → 2-(Acetoxymethyl)pyridin. [1,2]-O→C-Acyl-Wanderung. Nützlich zur Einführung von Funktionalität an der 2-Methylgruppe.",
+      front: "Boekelheide Rearrangement",
+      back: "2-Methylpyridine N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine. [1,2]-O→C acyl migration. Useful for introducing functionality at the 2-methyl group.",
     },
     {
-      front: "SEAr vs. SNAr bei Pyridin",
-      back: "SEAr: sehr langsam, deaktiviert, bevorzugt C-3. SNAr: aktiviert an C-2 und C-4 (Meisenheimer-Komplex auf N delokalisierbar). Pyridin bevorzugt SNAr!",
+      front: "SEAr vs. SNAr at Pyridine",
+      back: "SEAr: very slow, deactivated, preferred C-3. SNAr: activated at C-2 and C-4 (Meisenheimer complex delocalised onto N). Pyridine prefers SNAr!",
     },
   ],
 };
