@@ -1,21 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>chemlearn</title>
+    <title>ChemLearn</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0d9488">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ChemLearn">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.svg">
     <script>
-      window.onerror = function(msg, src, line, col, err) {
-        document.body.innerHTML = '<pre style="color:red;padding:20px;font-size:12px">' + msg + '\n' + src + ':' + line + '\n' + (err ? err.stack : '') + '</pre>';
-      };
-</script>
+      window.addEventListener('error', function(e) {
+        document.body.style.background = '#0b0f1a';
+        document.body.style.color = '#f87171';
+        document.body.style.padding = '20px';
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.fontSize = '12px';
+        document.body.innerHTML = '<h2>Fehler:</h2><pre>' + (e.message || 'Unbekannt') + '\n\n' + (e.filename || '') + ':' + (e.lineno || '') + '</pre>';
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        document.body.style.background = '#0b0f1a';
+        document.body.style.color = '#f87171';
+        document.body.style.padding = '20px';
+        document.body.style.fontFamily = 'monospace';
+        document.body.style.fontSize = '12px';
+        document.body.innerHTML = '<h2>Promise Fehler:</h2><pre>' + (e.reason || 'Unbekannt') + '</pre>';
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
