@@ -7,6 +7,8 @@ import type { Topic } from '../types/index'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
+// import ReportButton from '../components/Reports/ReportButton'
+// import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
 
 export default function TopicPage() {

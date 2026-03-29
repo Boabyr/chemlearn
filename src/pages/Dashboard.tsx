@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useRole } from '../hooks/useRole'
 import { supabase } from '../lib/supabase'
 import { allCourses } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
+  const { isTutor, isAdmin } = useRole()
   const navigate = useNavigate()
   const { streak, progress } = useProgress()
 
@@ -42,6 +44,12 @@ export default function Dashboard() {
               <span className="text-sm">🔥</span>
               <span className="text-amber-400 text-xs font-bold">{streak.currentStreak}</span>
             </div>
+          )}
+          {isTutor && (
+            <button onClick={() => navigate('/tutor')}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-900/40 border border-purple-700/50 hover:border-purple-500 text-purple-400 text-xs font-medium rounded-xl transition-colors">
+              🎓 {isAdmin ? 'Admin' : 'Tutor'}
+            </button>
           )}
           <span className="text-slate-400 text-sm hidden sm:block">{user.email}</span>
           <button onClick={handleLogout} className="text-slate-400 hover:text-white text-sm transition-colors">
