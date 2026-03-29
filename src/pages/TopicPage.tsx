@@ -4,6 +4,9 @@ import { useAuth } from '../hooks/useAuth'
 import { loadTopic } from '../lib/courseRegistry'
 import type { Topic } from '../types/index'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
+import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
+import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
+import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
 
 export default function TopicPage() {
   const { courseId, topicId } = useParams()
@@ -63,31 +66,24 @@ export default function TopicPage() {
     setQuizDone(false)
   }
 
+  const interactive = (topic as any).interactive
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center gap-4 sticky top-0 z-10">
-        <button
-          onClick={() => navigate(`/course/${courseId}`)}
-          className="text-slate-400 hover:text-white transition-colors"
-        >
+        <button onClick={() => navigate(`/course/${courseId}`)}
+          className="text-slate-400 hover:text-white transition-colors">
           ← Zurück
         </button>
-        <span className="text-teal-400 font-mono text-xs uppercase tracking-widest">
-          {topic.title}
-        </span>
+        <span className="text-teal-400 font-mono text-xs uppercase tracking-widest">{topic.title}</span>
       </nav>
 
       <div className="bg-slate-800 border-b border-slate-700 px-6 flex gap-1">
         {(['theory', 'quiz', 'flashcards'] as const).map(t => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
+          <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-              tab === t
-                ? 'border-teal-400 text-teal-400'
-                : 'border-transparent text-slate-400 hover:text-white'
-            }`}
-          >
+              tab === t ? 'border-teal-400 text-teal-400' : 'border-transparent text-slate-400 hover:text-white'
+            }`}>
             {t === 'theory' ? '📖 Theorie' : t === 'quiz' ? '✅ Quiz' : '🃏 Karteikarten'}
           </button>
         ))}
@@ -102,39 +98,78 @@ export default function TopicPage() {
             <div className="space-y-2">
               {topic.theory.split('\n').map((line, i) => {
                 if (line.startsWith('## ')) return (
-                  <h2 key={i} className="text-xl font-semibold text-white mt-8 mb-3">
-                    {line.replace('## ', '')}
-                  </h2>
+                  <h2 key={i} className="text-xl font-semibold text-white mt-8 mb-3">{line.replace('## ', '')}</h2>
                 )
                 if (line.startsWith('### ')) return (
-                  <h3 key={i} className="text-lg font-medium text-teal-400 mt-6 mb-2">
-                    {line.replace('### ', '')}
-                  </h3>
+                  <h3 key={i} className="text-lg font-medium text-teal-400 mt-6 mb-2">{line.replace('### ', '')}</h3>
+                )
+                if (line.startsWith('| ')) return (
+                  <p key={i} className="text-slate-300 text-sm font-mono pl-2">{line}</p>
                 )
                 if (line.startsWith('- ')) return (
                   <p key={i} className="text-slate-300 pl-4">
-                    <span className="text-teal-400 mr-2">•</span>
-                    {line.replace('- ', '')}
+                    <span className="text-teal-400 mr-2">•</span>{line.replace('- ', '')}
                   </p>
                 )
                 if (line.trim() === '') return <div key={i} className="h-2" />
-                return (
-                  <p key={i} className="text-slate-300 leading-relaxed">{line}</p>
-                )
+                return <p key={i} className="text-slate-300 leading-relaxed">{line}</p>
               })}
             </div>
-{topic.mechanism && topic.mechanism.type === 'builder' && topic.mechanism.stages && (
-  <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
-    <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">
-      🎬 Interaktiver Mechanismus
-    </p>
-    <MechanismBuilder
-      title={topic.mechanism.title ?? topic.title}
-      description={topic.mechanism.description ?? ''}
-      stages={topic.mechanism.stages}
-    />
-  </div>
-)}
+
+            {/* Interaktive Komponenten */}
+            {interactive && (
+              <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">
+                  🎬 Interaktiv
+                </p>
+                {interactive.type === 'builder' && interactive.stages && (
+                  <MechanismBuilder
+                    title={interactive.title ?? topic.title}
+                    description={interactive.description ?? ''}
+                    stages={interactive.stages}
+                  />
+                )}
+                {interactive.type === 'formula-calculator' && interactive.formula && (
+                  <FormulaCalculator formula={interactive.formula} />
+                )}
+                {interactive.type === 'apparatus-quiz' && (
+                  <ApparatusQuiz
+                    question={interactive.question}
+                    mode={interactive.mode}
+                    targetId={interactive.targetId}
+                    options={interactive.options}
+                    explanation={interactive.explanation}
+                    hint1={interactive.hint1}
+                    hint2={interactive.hint2}
+                  />
+                )}
+                {interactive.type === 'spectrum-assignment' && (
+                  <SpectrumAssignment
+                    title={interactive.title}
+                    description={interactive.description}
+                    xLabel={interactive.xLabel}
+                    yLabel={interactive.yLabel}
+                    peaks={interactive.peaks}
+                    hint1={interactive.hint1}
+                    hint2={interactive.hint2}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* MechanismBuilder (organische Chemie, altes Format) */}
+            {(topic as any).mechanism?.type === 'builder' && (topic as any).mechanism?.stages && (
+              <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">
+                  🎬 Interaktiver Mechanismus
+                </p>
+                <MechanismBuilder
+                  title={(topic as any).mechanism.title ?? topic.title}
+                  description={(topic as any).mechanism.description ?? ''}
+                  stages={(topic as any).mechanism.stages}
+                />
+              </div>
+            )}
           </div>
         )}
 
@@ -150,10 +185,8 @@ export default function TopicPage() {
                 }}>
                   {Math.round(score / topic.quiz.length * 100)}%
                 </div>
-                <button
-                  onClick={resetQuiz}
-                  className="bg-teal-500 hover:bg-teal-400 text-black font-semibold px-6 py-3 rounded-xl transition-colors"
-                >
+                <button onClick={resetQuiz}
+                  className="bg-teal-500 hover:bg-teal-400 text-black font-semibold px-6 py-3 rounded-xl transition-colors">
                   Nochmal versuchen
                 </button>
               </div>
@@ -164,10 +197,8 @@ export default function TopicPage() {
                   <span>{score} richtig</span>
                 </div>
                 <div className="h-1.5 bg-slate-700 rounded-full mb-8">
-                  <div
-                    className="h-full bg-teal-400 rounded-full transition-all"
-                    style={{ width: `${(quizIdx / topic.quiz.length) * 100}%` }}
-                  />
+                  <div className="h-full bg-teal-400 rounded-full transition-all"
+                    style={{ width: `${(quizIdx / topic.quiz.length) * 100}%` }} />
                 </div>
                 <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-4">
                   <h2 className="text-lg font-light leading-relaxed mb-6">{q.question}</h2>
@@ -182,13 +213,9 @@ export default function TopicPage() {
                         cls = 'border-teal-400 bg-teal-900/30 text-teal-300'
                       }
                       return (
-                        <button
-                          key={i}
-                          onClick={() => !answered && setSelected(i)}
-                          className={`w-full text-left px-4 py-3 rounded-xl border transition-all text-sm ${cls}`}
-                        >
-                          <span className="opacity-50 mr-2">{String.fromCharCode(65 + i)}.</span>
-                          {opt}
+                        <button key={i} onClick={() => !answered && setSelected(i)}
+                          className={`w-full text-left px-4 py-3 rounded-xl border transition-all text-sm ${cls}`}>
+                          <span className="opacity-50 mr-2">{String.fromCharCode(65 + i)}.</span>{opt}
                         </button>
                       )
                     })}
@@ -196,24 +223,19 @@ export default function TopicPage() {
                 </div>
                 {answered && (
                   <div className="bg-teal-900/20 border border-teal-800 rounded-xl px-5 py-4 mb-4 text-sm text-slate-300 leading-relaxed">
-                    <span className="text-teal-400 font-semibold">Erklärung: </span>
-                    {q.explanation}
+                    <span className="text-teal-400 font-semibold">Erklärung: </span>{q.explanation}
                   </div>
                 )}
                 <div className="flex gap-3">
                   {!answered && selected !== null && (
-                    <button
-                      onClick={handleAnswer}
-                      className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors"
-                    >
+                    <button onClick={handleAnswer}
+                      className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors">
                       Antwort prüfen
                     </button>
                   )}
                   {answered && (
-                    <button
-                      onClick={nextQuestion}
-                      className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors"
-                    >
+                    <button onClick={nextQuestion}
+                      className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors">
                       {quizIdx < topic.quiz.length - 1 ? 'Nächste Frage →' : 'Ergebnis anzeigen'}
                     </button>
                   )}
@@ -228,28 +250,17 @@ export default function TopicPage() {
             <div className="mb-6 text-center text-sm text-slate-500">
               Karte {cardIdx + 1} von {topic.flashcards.length} – antippen zum Umdrehen
             </div>
-            <div
-              onClick={() => setFlipped(f => !f)}
-              className="cursor-pointer"
-              style={{ perspective: '1000px' }}
-            >
+            <div onClick={() => setFlipped(f => !f)} className="cursor-pointer" style={{ perspective: '1000px' }}>
               <div style={{
-                position: 'relative',
-                height: '220px',
-                transition: 'transform 0.5s',
-                transformStyle: 'preserve-3d',
-                transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                position: 'relative', height: '220px', transition: 'transform 0.5s',
+                transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
               }}>
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   className="absolute inset-0 bg-slate-800 border border-teal-500 rounded-2xl flex flex-col items-center justify-center p-8">
                   <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">Begriff</p>
                   <p className="text-xl font-light text-center">{topic.flashcards[cardIdx].front}</p>
                 </div>
-                <div style={{
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  transform: 'rotateY(180deg)'
-                }}
+                <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                   className="absolute inset-0 bg-teal-900/30 border border-teal-500 rounded-2xl flex flex-col items-center justify-center p-8">
                   <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">Erklärung</p>
                   <p className="text-sm text-slate-300 text-center leading-relaxed">{topic.flashcards[cardIdx].back}</p>
@@ -257,33 +268,25 @@ export default function TopicPage() {
               </div>
             </div>
             <div className="flex justify-center gap-4 mt-8">
-              <button
-                onClick={() => { setCardIdx(i => Math.max(0, i - 1)); setFlipped(false) }}
+              <button onClick={() => { setCardIdx(i => Math.max(0, i - 1)); setFlipped(false) }}
                 disabled={cardIdx === 0}
-                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors"
-              >
+                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors">
                 ← Zurück
               </button>
-              <button
-                onClick={() => { setCardIdx(i => Math.min(topic.flashcards.length - 1, i + 1)); setFlipped(false) }}
+              <button onClick={() => { setCardIdx(i => Math.min(topic.flashcards.length - 1, i + 1)); setFlipped(false) }}
                 disabled={cardIdx === topic.flashcards.length - 1}
-                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors"
-              >
+                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors">
                 Weiter →
               </button>
             </div>
             <div className="flex justify-center gap-1.5 mt-4">
               {topic.flashcards.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setCardIdx(i); setFlipped(false) }}
-                  className={`w-2 h-2 rounded-full transition-colors ${i === cardIdx ? 'bg-teal-400' : 'bg-slate-600'}`}
-                />
+                <button key={i} onClick={() => { setCardIdx(i); setFlipped(false) }}
+                  className={`w-2 h-2 rounded-full transition-colors ${i === cardIdx ? 'bg-teal-400' : 'bg-slate-600'}`} />
               ))}
             </div>
           </div>
         )}
-
       </div>
     </div>
   )

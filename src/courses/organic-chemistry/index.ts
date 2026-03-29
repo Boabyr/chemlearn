@@ -4,8 +4,8 @@
 
 export const course = {
   id: "organic-chemistry",
-  title: "Organische Chemie",
-  subtitle: "Heterocyclic Chemistry and Drug Synthesis",
+  title: "Heterocyclische Chemie & Wirkstoffsynthese",
+  subtitle: "VO 270280 – Dr. Saad Shaaban",
   icon: "⚗️",
   color: "#2dd4bf",
   level: "Uni",

@@ -75,3 +75,68 @@ export interface Progress {
   quizScore: number
   lastSeen: string
 }
+
+export interface FormulaVariable {
+  id: string
+  label: string
+  symbol: string
+  unit: string
+  description: string
+}
+
+export interface FormulaData {
+  id: string
+  name: string
+  equation: string
+  variables: FormulaVariable[]
+  solve: (inputs: Record<string, number>) => Record<string, number>
+  hints: string[]
+}
+
+export interface ApparatusOption {
+  id: string
+  label: string
+  description: string
+  svg: string
+}
+
+export interface ApparatusQuizData {
+  type: 'apparatus-quiz'
+  question: string
+  mode: 'name-to-image' | 'image-to-name'
+  targetId: string
+  options: ApparatusOption[]
+  explanation: string
+  hint1?: string
+  hint2?: string
+}
+
+export interface FormulaCalculatorData {
+  type: 'formula-calculator'
+  formula: FormulaData
+}
+
+export interface SpectrumPeak {
+  id: string
+  position: number
+  yTop: number
+  yBottom: number
+  correctLabel: string
+  options: string[]
+}
+
+export interface SpectrumAssignmentData {
+  type: 'spectrum-assignment'
+  title: string
+  description: string
+  xLabel: string
+  yLabel: string
+  peaks: SpectrumPeak[]
+  hint1?: string
+  hint2?: string
+}
+
+export type InteractiveElement =
+  | ApparatusQuizData
+  | FormulaCalculatorData
+  | SpectrumAssignmentData
