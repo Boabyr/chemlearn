@@ -23,13 +23,19 @@ const courseTopicLoaders: Record<string, Record<string, () => Promise<any>>> = {
     "07-potentiometrie-nernst":       () => import("../courses/analytical-chemistry-1/topics/07-potentiometrie-nernst"),
     "08-voltammetrie-coulometrie":    () => import("../courses/analytical-chemistry-1/topics/08-voltammetrie-coulometrie"),
     "09-chemosensoren":               () => import("../courses/analytical-chemistry-1/topics/09-chemosensoren"),
+    "10-statistik-qualitaet":         () => import("../courses/analytical-chemistry-1/topics/10-statistik-qualitaet"),
+    "11-saeurebase-ph":               () => import("../courses/analytical-chemistry-1/topics/11-saeurebase-ph"),
+    "12-faellungsreaktionen":         () => import("../courses/analytical-chemistry-1/topics/12-faellungsreaktionen"),
+    "13-chromatographie-grundlagen":  () => import("../courses/analytical-chemistry-1/topics/13-chromatographie-grundlagen"),
+    "14-trennverfahren-gc-hplc":      () => import("../courses/analytical-chemistry-1/topics/14-trennverfahren-gc-hplc"),
+    "15-kalibrierung-standardaddition": () => import("../courses/analytical-chemistry-1/topics/15-kalibrierung-standardaddition"),
+    "16-atomspektrometrie":           () => import("../courses/analytical-chemistry-1/topics/16-atomspektrometrie"),
+    "17-elektroden-faellungstitration": () => import("../courses/analytical-chemistry-1/topics/17-elektroden-faellungstitration"),
+    "18-fehlerrechnung":              () => import("../courses/analytical-chemistry-1/topics/18-fehlerrechnung"),
   },
 };
 
-export const allCourses = [
-  heterocyclicChemistry,
-  analyticalChemistry1,
-];
+export const allCourses = [heterocyclicChemistry, analyticalChemistry1];
 
 export async function loadTopic(courseId: string, topicId: string) {
   const loaders = courseTopicLoaders[courseId];
