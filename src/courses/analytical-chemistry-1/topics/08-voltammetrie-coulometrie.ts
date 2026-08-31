@@ -87,69 +87,21 @@ m = (M · Q)/(n · F) = (M · I · t)/(n · F)
         id: "three-electrode",
         label: "Drei-Elektroden-Voltammetrie-Zelle",
         description: "WE + RE + CE + Potentiostat",
-        svg: `<svg viewBox="0 0 300 170" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="80" y="60" width="140" height="80" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="150" y="115" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe</text>
-          <rect x="95" y="30" width="30" height="30" rx="3" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="110" y="48" textAnchor="middle" fill="#60a5fa" fontSize="6">WE</text>
-          <line x1="110" y1="60" x2="110" y2="90" stroke="#60a5fa" strokeWidth="1.5"/>
-          <rect x="135" y="25" width="30" height="35" rx="3" fill="#312e81" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="150" y="45" textAnchor="middle" fill="#a78bfa" fontSize="6">RE</text>
-          <line x1="150" y1="60" x2="150" y2="85" stroke="#a78bfa" strokeWidth="1.5"/>
-          <rect x="175" y="30" width="30" height="30" rx="3" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="190" y="48" textAnchor="middle" fill="#f87171" fontSize="6">CE</text>
-          <line x1="190" y1="60" x2="190" y2="90" stroke="#f87171" strokeWidth="1.5"/>
-          <rect x="10" y="5" width="80" height="25" rx="3" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="50" y="20" textAnchor="middle" fill="#fbbf24" fontSize="7">Potentiostat</text>
-          <line x1="90" y1="17" x2="110" y2="30" stroke="#60a5fa" strokeWidth="1"/>
-          <line x1="90" y1="17" x2="150" y2="25" stroke="#a78bfa" strokeWidth="1"/>
-          <line x1="90" y1="17" x2="190" y2="30" stroke="#f87171" strokeWidth="1"/>
-        </svg>`
       },
       {
         id: "two-electrode",
         label: "Zwei-Elektroden-Zelle",
         description: "Nur Mess- und Referenzelektrode",
-        svg: `<svg viewBox="0 0 300 150" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="80" y="55" width="140" height="75" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="150" y="100" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe</text>
-          <rect x="100" y="25" width="35" height="30" rx="3" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="117" y="43" textAnchor="middle" fill="#60a5fa" fontSize="6">WE</text>
-          <line x1="117" y1="55" x2="117" y2="85" stroke="#60a5fa" strokeWidth="1.5"/>
-          <rect x="165" y="25" width="35" height="30" rx="3" fill="#312e81" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="182" y="43" textAnchor="middle" fill="#a78bfa" fontSize="6">RE</text>
-          <line x1="182" y1="55" x2="182" y2="85" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="150" y="135" textAnchor="middle" fill="#64748b" fontSize="7">Problem: RE führt Strom!</text>
-        </svg>`
       },
       {
         id: "coulometry",
         label: "Coulometrische Zelle",
         description: "Vollständiger Umsatz, Ladungsmessung",
-        svg: `<svg viewBox="0 0 300 150" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="60" y="50" width="180" height="80" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="150" y="95" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe (vollst. Umsatz)</text>
-          <rect x="70" y="20" width="40" height="30" rx="3" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="90" y="38" textAnchor="middle" fill="#60a5fa" fontSize="6">Anode</text>
-          <rect x="190" y="20" width="40" height="30" rx="3" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="210" y="38" textAnchor="middle" fill="#f87171" fontSize="6">Kathode</text>
-          <rect x="120" y="5" width="60" height="15" rx="3" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="150" y="15" textAnchor="middle" fill="#fbbf24" fontSize="6">Coulometer Q=I·t</text>
-        </svg>`
       },
       {
         id: "conductivity",
         label: "Leitfähigkeitsmesszelle",
         description: "Zwei Pt-Elektroden, Wechselstrom",
-        svg: `<svg viewBox="0 0 300 140" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="60" y="45" width="180" height="75" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="150" y="90" textAnchor="middle" fill="#2dd4bf" fontSize="8">Elektrolytlösung</text>
-          <rect x="80" y="30" width="15" height="70" rx="2" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="2"/>
-          <text x="87" y="20" textAnchor="middle" fill="#60a5fa" fontSize="6">Pt</text>
-          <rect x="205" y="30" width="15" height="70" rx="2" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="2"/>
-          <text x="212" y="20" textAnchor="middle" fill="#60a5fa" fontSize="6">Pt</text>
-          <text x="150" y="130" textAnchor="middle" fill="#64748b" fontSize="7">AC-Signal, κ = 1/(R·Z)</text>
-        </svg>`
       },
     ],
   },

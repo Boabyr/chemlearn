@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { loadTopic } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
+import { useAttempts } from '../hooks/useAttempts'
+import { useReviews, cardItemId } from '../hooks/useReviews'
+import { GRADES, type Grade } from '../lib/learning/sm2'
 import type { Topic } from '../types/index'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
@@ -16,6 +19,8 @@ export default function TopicPage() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
   const { markTopicSeen, markTopicComplete } = useProgress(courseId)
+  const { logAttempt, flush } = useAttempts(courseId)
+  const { gradeItem } = useReviews(courseId)
   const [topic, setTopic] = useState<Topic | null>(null)
   const [tab, setTab] = useState<'theory' | 'quiz' | 'flashcards'>('theory')
   const [quizIdx, setQuizIdx] = useState(0)
@@ -25,6 +30,8 @@ export default function TopicPage() {
   const [quizDone, setQuizDone] = useState(false)
   const [cardIdx, setCardIdx] = useState(0)
   const [flipped, setFlipped] = useState(false)
+  const [gradedCards, setGradedCards] = useState<Record<number, Grade>>({})
+  const [questionStart, setQuestionStart] = useState(() => Date.now())
 
   useEffect(() => {
     if (!loading && !user) navigate('/login')
@@ -50,9 +57,19 @@ export default function TopicPage() {
   const q = topic.quiz[quizIdx]
 
   function handleAnswer() {
-    if (selected === null) return
+    if (selected === null || !courseId || !topicId) return
+    const richtig = selected === q.correct
     setAnswered(true)
-    if (selected === q.correct) setScore(s => s + 1)
+    if (richtig) setScore(s => s + 1)
+
+    logAttempt({
+      courseId,
+      topicId,
+      questionId: `${topicId}:${q.id}`,
+      source: 'topic-quiz',
+      correct: richtig,
+      msTaken: Date.now() - questionStart,
+    })
   }
 
   function nextQuestion() {
@@ -60,8 +77,10 @@ export default function TopicPage() {
       setQuizIdx(i => i + 1)
       setSelected(null)
       setAnswered(false)
+      setQuestionStart(Date.now())
     } else {
       setQuizDone(true)
+      void flush()
       if (courseId && topicId) {
         const finalScore = topic ? (score + (selected === q.correct ? 1 : 0)) : 0
         markTopicComplete(topicId, courseId, topic ? Math.round(finalScore / topic.quiz.length * 100) : 0)
@@ -75,6 +94,21 @@ export default function TopicPage() {
     setAnswered(false)
     setScore(0)
     setQuizDone(false)
+    setQuestionStart(Date.now())
+  }
+
+  /** Karteikarte bewerten und die naechste aufschlagen. */
+  function gradeCard(grade: Grade) {
+    if (!courseId || !topicId || !topic) return
+    setGradedCards(g => ({ ...g, [cardIdx]: grade }))
+    void gradeItem(
+      { itemType: 'card', itemId: cardItemId(topicId, cardIdx), topicId, courseId },
+      grade,
+    )
+    if (cardIdx < topic.flashcards.length - 1) {
+      setCardIdx(i => i + 1)
+      setFlipped(false)
+    }
   }
 
   const interactive = (topic as any).interactive
@@ -238,7 +272,36 @@ export default function TopicPage() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center gap-4 mt-8">
+            {/* Bewertung steuert, wann die Karte wiederkommt */}
+            {flipped ? (
+              <div className="mt-8">
+                <p className="text-center text-xs text-slate-500 mb-3">Wie gut saß das?</p>
+                <div className="grid grid-cols-4 gap-2">
+                  {([
+                    [GRADES.NOCHMAL, 'Nochmal', 'border-red-700 text-red-400 hover:bg-red-900/30'],
+                    [GRADES.SCHWER, 'Schwer', 'border-amber-700 text-amber-400 hover:bg-amber-900/30'],
+                    [GRADES.GUT, 'Gut', 'border-teal-700 text-teal-400 hover:bg-teal-900/30'],
+                    [GRADES.LEICHT, 'Leicht', 'border-green-700 text-green-400 hover:bg-green-900/30'],
+                  ] as const).map(([grade, label, cls]) => (
+                    <button key={label} onClick={() => gradeCard(grade)}
+                      className={`py-2.5 bg-slate-800 border rounded-xl text-xs font-medium transition-colors ${cls}`}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                {gradedCards[cardIdx] !== undefined && (
+                  <p className="text-center text-xs text-slate-600 mt-3">
+                    Bewertet – nächster Termin gespeichert.
+                  </p>
+                )}
+              </div>
+            ) : (
+              <p className="text-center text-xs text-slate-600 mt-8">
+                Karte umdrehen, um zu bewerten
+              </p>
+            )}
+
+            <div className="flex justify-center gap-4 mt-6">
               <button onClick={() => { setCardIdx(i => Math.max(0, i-1)); setFlipped(false) }} disabled={cardIdx === 0}
                 className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors">
                 ← Zurück
@@ -252,7 +315,11 @@ export default function TopicPage() {
             <div className="flex justify-center gap-1.5 mt-4">
               {topic.flashcards.map((_, i) => (
                 <button key={i} onClick={() => { setCardIdx(i); setFlipped(false) }}
-                  className={`w-2 h-2 rounded-full transition-colors ${i === cardIdx ? 'bg-teal-400' : 'bg-slate-600'}`} />
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    i === cardIdx ? 'bg-teal-400'
+                    : gradedCards[i] !== undefined ? 'bg-teal-800'
+                    : 'bg-slate-600'
+                  }`} />
               ))}
             </div>
           </div>

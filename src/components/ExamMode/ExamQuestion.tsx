@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { ExamQuestion } from '../../data/examQuestions'
+import type { ExamQuestion } from '../../data/exams'
 
 interface Props {
   question: ExamQuestion

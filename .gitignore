@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 .env.local
 .vercel
+
+# Quellmaterial für den Import: Rohskripten bleiben lokal,
+# nur die Beispieldatei ist versioniert.
+.source/*
+!.source/beispiel/
+.source/**/report.md

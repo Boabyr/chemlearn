@@ -1,14 +1,36 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { examQuestions, examStructures } from '../data/examQuestions'
+import { useAttempts } from '../hooks/useAttempts'
+import { examQuestionsFor, examStructuresFor, professorLabel } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 
 type Mode = 'select' | 'exam' | 'result'
 
+const DEFAULT_COURSE = 'analytical-chemistry-1'
+
+// Vollstaendige Klassennamen: zusammengesetzte Tailwind-Klassen werden nicht erzeugt.
+const PROF_STYLE: Record<string, { chip: string; panel: string; text: string; bar: string }> = {
+  lieberzeit:     { chip: 'bg-teal-900/40 text-teal-400',     panel: 'bg-teal-900/20 border-teal-800',     text: 'text-teal-400',   bar: 'bg-teal-500' },
+  koellensperger: { chip: 'bg-blue-900/40 text-blue-400',     panel: 'bg-blue-900/20 border-blue-800',     text: 'text-blue-400',   bar: 'bg-blue-500' },
+  gerner:         { chip: 'bg-purple-900/40 text-purple-400', panel: 'bg-purple-900/20 border-purple-800', text: 'text-purple-400', bar: 'bg-purple-500' },
+}
+const FALLBACK_STYLE = { chip: 'bg-slate-700 text-slate-300', panel: 'bg-slate-800 border-slate-700', text: 'text-slate-300', bar: 'bg-slate-500' }
+const styleFor = (p: string) => PROF_STYLE[p] ?? FALLBACK_STYLE
+
+const PROF_ICONS: Record<string, string> = { lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪' }
+const labelFor = (p: string) => `${PROF_ICONS[p] ?? '📘'} ${professorLabel(p)}`
+
 export default function ExamSimulator() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const courseId = params.get('course') ?? DEFAULT_COURSE
+
+  const examQuestions = useMemo(() => examQuestionsFor(courseId), [courseId])
+  const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
+  const { logAttempt, flush } = useAttempts(courseId)
+
   const [mode, setMode] = useState<Mode>('select')
   const [selectedExam, setSelectedExam] = useState(examStructures[0])
   const [sectionIdx, setSectionIdx] = useState(0)
@@ -32,6 +54,19 @@ export default function ExamSimulator() {
   function onAnswer(qId: string, correct: boolean, pts: number) {
     setScores(s => ({ ...s, [qId]: correct ? pts : 0 }))
     setAnswered(a => ({ ...a, [qId]: true }))
+
+    const frage = examQuestions.find(q => q.id === qId)
+    if (frage) {
+      logAttempt({
+        courseId,
+        topicId: frage.topicId,
+        questionId: frage.id,
+        source: 'exam-sim',
+        correct,
+        pointsEarned: correct ? pts : 0,
+        pointsPossible: frage.points,
+      })
+    }
   }
 
   const currentSection = selectedExam.sections[sectionIdx]
@@ -45,6 +80,7 @@ export default function ExamSimulator() {
       setSectionIdx(i => i + 1)
       setQIdx(0)
     } else {
+      void flush()
       setMode('result')
     }
   }
@@ -64,8 +100,6 @@ export default function ExamSimulator() {
 
   if (loading) return <div className="min-h-screen bg-slate-900 flex items-center justify-center"><div className="text-teal-400">Laden...</div></div>
 
-  const profColors = { lieberzeit: 'teal', koellensperger: 'blue', gerner: 'purple' }
-  const profLabels = { lieberzeit: '🔭 Lieberzeit', koellensperger: '📊 Köllensperger', gerner: '🧪 Gerner' }
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -76,7 +110,7 @@ export default function ExamSimulator() {
         </div>
         {mode === 'exam' && (
           <div className="text-xs text-slate-400">
-            {profLabels[currentSection.professor]} · Frage {qIdx+1}/{currentSection.questionIds.length}
+            {labelFor(currentSection.professor)} · Frage {qIdx+1}/{currentSection.questionIds.length}
           </div>
         )}
       </nav>
@@ -106,8 +140,8 @@ export default function ExamSimulator() {
                   </div>
                   <div className="flex gap-2">
                     {exam.sections.map(sec => (
-                      <span key={sec.professor} className={`text-xs px-3 py-1 rounded-full bg-${profColors[sec.professor]}-900/40 text-${profColors[sec.professor]}-400`}>
-                        {profLabels[sec.professor]} ({sec.points}P)
+                      <span key={sec.professor} className={`text-xs px-3 py-1 rounded-full ${styleFor(sec.professor).chip}`}>
+                        {labelFor(sec.professor)} ({sec.points}P)
                       </span>
                     ))}
                   </div>
@@ -147,12 +181,12 @@ export default function ExamSimulator() {
         {mode === 'exam' && currentQ && (
           <div>
             {/* Abschnitts-Header */}
-            <div className={`mb-6 px-5 py-4 rounded-xl bg-${profColors[currentSection.professor]}-900/20 border border-${profColors[currentSection.professor]}-800`}>
-              <p className={`text-sm font-semibold text-${profColors[currentSection.professor]}-400`}>
-                {profLabels[currentSection.professor]} – Teil {sectionIdx+1} von {selectedExam.sections.length}
+            <div className={`mb-6 px-5 py-4 rounded-xl border ${styleFor(currentSection.professor).panel}`}>
+              <p className={`text-sm font-semibold ${styleFor(currentSection.professor).text}`}>
+                {labelFor(currentSection.professor)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
               </p>
               <div className="mt-2 h-1.5 bg-slate-700 rounded-full">
-                <div className={`h-full bg-${profColors[currentSection.professor]}-500 rounded-full transition-all`}
+                <div className={`h-full ${styleFor(currentSection.professor).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
               </div>
             </div>
@@ -167,7 +201,7 @@ export default function ExamSimulator() {
               disabled={!answered[currentQId]}
               className="mt-4 w-full py-3 bg-slate-700 border border-slate-600 hover:border-slate-400 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 font-semibold rounded-xl text-sm transition-colors">
               {qIdx < currentSection.questionIds.length - 1 ? 'Nächste Frage →' :
-               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${profLabels[selectedExam.sections[sectionIdx+1].professor]} →` :
+               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${labelFor(selectedExam.sections[sectionIdx+1].professor)} →` :
                'Prüfung abschließen →'}
             </button>
           </div>
@@ -196,8 +230,8 @@ export default function ExamSimulator() {
                   sec.passed ? 'border-green-700 bg-green-900/10' : 'border-red-700 bg-red-900/10'
                 }`}>
                   <div>
-                    <span className={`font-semibold text-${profColors[sec.professor]}-400`}>
-                      {profLabels[sec.professor]}
+                    <span className={`font-semibold ${styleFor(sec.professor).text}`}>
+                      {labelFor(sec.professor)}
                     </span>
                     <span className="text-slate-500 text-xs ml-2">(min. {sec.passing}P)</span>
                   </div>
