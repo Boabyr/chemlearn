@@ -103,76 +103,21 @@ N_A/N_A100 = (μ_A · c_A)/(μ_A · c_A + μ_M · c_M)
         id: "rfa",
         label: "Röntgenfluoreszenzspektrometer (RFA)",
         description: "Röntgenröhre + Probe + Analysatorkristall + Detektor",
-        svg: `<svg viewBox="0 0 320 150" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="5" y="55" width="55" height="40" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="32" y="72" textAnchor="middle" fill="#fbbf24" fontSize="7">Röntgen-</text>
-          <text x="32" y="82" textAnchor="middle" fill="#fbbf24" fontSize="7">röhre</text>
-          <line x1="60" y1="75" x2="110" y2="75" stroke="#f87171" strokeWidth="2" strokeDasharray="3,2"/>
-          <rect x="110" y="55" width="50" height="40" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="135" y="72" textAnchor="middle" fill="#60a5fa" fontSize="7">Probe</text>
-          <text x="135" y="83" textAnchor="middle" fill="#60a5fa" fontSize="6">(emittiert XFS)</text>
-          <line x1="160" y1="75" x2="200" y2="100" stroke="#f87171" strokeWidth="2" strokeDasharray="3,2"/>
-          <rect x="200" y="90" width="60" height="35" rx="4" fill="#312e81" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="230" y="105" textAnchor="middle" fill="#a78bfa" fontSize="7">Kristall</text>
-          <text x="230" y="116" textAnchor="middle" fill="#a78bfa" fontSize="6">nλ=2d·sinθ</text>
-          <line x1="260" y1="100" x2="295" y2="75" stroke="#f87171" strokeWidth="2" strokeDasharray="3,2"/>
-          <rect x="280" y="55" width="35" height="30" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="297" y="72" textAnchor="middle" fill="#f87171" fontSize="7">Det.</text>
-        </svg>`
       },
       {
         id: "xrd",
         label: "Röntgendiffraktometer (XRD)",
         description: "Für Kristallstrukturbestimmung, θ-2θ-Geometrie",
-        svg: `<svg viewBox="0 0 320 150" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="55" width="50" height="35" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="35" y="75" textAnchor="middle" fill="#fbbf24" fontSize="7">X-Ray</text>
-          <line x1="60" y1="72" x2="140" y2="90" stroke="#f87171" strokeWidth="2"/>
-          <rect x="135" y="80" width="50" height="35" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="160" y="100" textAnchor="middle" fill="#60a5fa" fontSize="7">Kristall-</text>
-          <text x="160" y="110" textAnchor="middle" fill="#60a5fa" fontSize="7">probe</text>
-          <line x1="185" y1="90" x2="265" y2="72" stroke="#f87171" strokeWidth="2"/>
-          <rect x="255" y="55" width="50" height="35" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="280" y="72" textAnchor="middle" fill="#f87171" fontSize="7">Detektor</text>
-          <text x="160" y="135" textAnchor="middle" fill="#64748b" fontSize="7">θ – 2θ Geometrie</text>
-        </svg>`
       },
       {
         id: "esca",
         label: "ESCA / XPS Spektrometer",
         description: "Misst kinetische Energie der Photoelektronen",
-        svg: `<svg viewBox="0 0 320 150" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="50" width="55" height="40" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="37" y="67" textAnchor="middle" fill="#fbbf24" fontSize="7">Röntgen-</text>
-          <text x="37" y="77" textAnchor="middle" fill="#fbbf24" fontSize="7">quelle</text>
-          <line x1="65" y1="70" x2="120" y2="70" stroke="#f87171" strokeWidth="2"/>
-          <rect x="120" y="50" width="50" height="40" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="145" y="70" textAnchor="middle" fill="#60a5fa" fontSize="7">Probe</text>
-          <line x1="145" y1="50" x2="145" y2="15" stroke="#2dd4bf" strokeWidth="2"/>
-          <rect x="110" y="5" width="70" height="20" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="145" y="17" textAnchor="middle" fill="#2dd4bf" fontSize="6">e⁻ Analysator</text>
-          <text x="145" y="130" textAnchor="middle" fill="#64748b" fontSize="6">E_kin = hν - E_B</text>
-        </svg>`
       },
       {
         id: "ftir",
         label: "FT-IR Spektrometer",
         description: "Infrarot, Michelson-Interferometer",
-        svg: `<svg viewBox="0 0 320 130" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="45" width="45" height="35" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="32" y="65" textAnchor="middle" fill="#60a5fa" fontSize="7">IR-Quelle</text>
-          <line x1="55" y1="62" x2="90" y2="62" stroke="#f87171" strokeWidth="2"/>
-          <rect x="90" y="40" width="70" height="45" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="125" y="60" textAnchor="middle" fill="#fbbf24" fontSize="7">Michelson</text>
-          <text x="125" y="72" textAnchor="middle" fill="#fbbf24" fontSize="7">Interferometer</text>
-          <line x1="160" y1="62" x2="195" y2="62" stroke="#f87171" strokeWidth="2"/>
-          <rect x="195" y="45" width="45" height="35" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="217" y="65" textAnchor="middle" fill="#2dd4bf" fontSize="7">Probe</text>
-          <line x1="240" y1="62" x2="270" y2="62" stroke="#f87171" strokeWidth="2"/>
-          <rect x="270" y="45" width="40" height="35" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="290" y="60" textAnchor="middle" fill="#f87171" fontSize="6">Det.</text>
-          <text x="290" y="70" textAnchor="middle" fill="#f87171" fontSize="6">+FT</text>
-        </svg>`
       },
     ],
   },

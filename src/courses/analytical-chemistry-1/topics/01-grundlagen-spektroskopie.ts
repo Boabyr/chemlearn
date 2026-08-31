@@ -72,69 +72,21 @@ A = ε · c · d
         id: "fluorescence",
         label: "Fluoreszenzspektrometer",
         description: "Detektor im 90°-Winkel, misst Emission",
-        svg: `<svg viewBox="0 0 300 160" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="20" y="65" width="50" height="30" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="45" y="83" textAnchor="middle" fill="#60a5fa" fontSize="8">Quelle</text>
-          <line x1="70" y1="80" x2="120" y2="80" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="120" y="60" width="40" height="40" rx="4" fill="#1e3a5f" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="140" y="83" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe</text>
-          <line x1="140" y1="60" x2="140" y2="25" stroke="#f87171" strokeWidth="2" strokeDasharray="4,2"/>
-          <rect x="110" y="5" width="60" height="20" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="140" y="17" textAnchor="middle" fill="#f87171" fontSize="8">Detektor (90°)</text>
-          <text x="155" y="83" fill="#64748b" fontSize="7">→ transmittiert</text>
-        </svg>`
       },
       {
         id: "uv-vis",
         label: "UV/Vis-Absorptionsspektrometer",
         description: "Detektor hinter der Probe, misst Transmission",
-        svg: `<svg viewBox="0 0 300 120" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="45" width="50" height="30" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="35" y="63" textAnchor="middle" fill="#60a5fa" fontSize="8">Quelle</text>
-          <line x1="60" y1="60" x2="90" y2="60" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="90" y="45" width="40" height="30" rx="4" fill="#312e81" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="110" y="63" textAnchor="middle" fill="#a78bfa" fontSize="7">Mono-chromator</text>
-          <line x1="130" y1="60" x2="160" y2="60" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="160" y="45" width="40" height="30" rx="4" fill="#1e3a5f" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="180" y="63" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe</text>
-          <line x1="200" y1="60" x2="230" y2="60" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="230" y="45" width="50" height="30" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="255" y="63" textAnchor="middle" fill="#f87171" fontSize="8">Detektor</text>
-        </svg>`
       },
       {
         id: "chemoluminescence",
         label: "Chemolumineszenz-Detektor",
         description: "Einfachster Aufbau: nur Probe und Detektor",
-        svg: `<svg viewBox="0 0 300 120" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="100" y="40" width="60" height="40" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="130" y="62" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe+Reagenz</text>
-          <text x="130" y="72" textAnchor="middle" fill="#2dd4bf" fontSize="7">(emittiert Licht)</text>
-          <line x1="160" y1="60" x2="210" y2="60" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="210" y="45" width="60" height="30" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="240" y="63" textAnchor="middle" fill="#f87171" fontSize="8">Detektor</text>
-          <text x="130" y="100" textAnchor="middle" fill="#64748b" fontSize="7">Keine separate Lichtquelle!</text>
-        </svg>`
       },
       {
         id: "ftir",
         label: "FT-IR Spektrometer",
         description: "Mit Michelson-Interferometer",
-        svg: `<svg viewBox="0 0 300 140" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="55" width="40" height="30" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="30" y="73" textAnchor="middle" fill="#60a5fa" fontSize="7">IR-Quelle</text>
-          <line x1="50" y1="70" x2="80" y2="70" stroke="#f87171" strokeWidth="2"/>
-          <rect x="80" y="50" width="60" height="50" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="110" y="73" textAnchor="middle" fill="#fbbf24" fontSize="7">Michelson</text>
-          <text x="110" y="83" textAnchor="middle" fill="#fbbf24" fontSize="7">Interferometer</text>
-          <line x1="140" y1="70" x2="170" y2="70" stroke="#f87171" strokeWidth="2"/>
-          <rect x="170" y="55" width="40" height="30" rx="4" fill="#1e3a5f" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="190" y="73" textAnchor="middle" fill="#2dd4bf" fontSize="7">Probe</text>
-          <line x1="210" y1="70" x2="240" y2="70" stroke="#f87171" strokeWidth="2"/>
-          <rect x="240" y="55" width="50" height="30" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="265" y="68" textAnchor="middle" fill="#f87171" fontSize="7">Detektor</text>
-          <text x="265" y="78" textAnchor="middle" fill="#f87171" fontSize="7">+ FT</text>
-        </svg>`
       },
     ],
   },

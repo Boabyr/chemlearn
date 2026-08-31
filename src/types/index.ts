@@ -94,10 +94,10 @@ export interface FormulaData {
 }
 
 export interface ApparatusOption {
+  /** Schlüssel in der Apparatur-Registry (src/components/Apparatus/registry.ts) */
   id: string
   label: string
   description: string
-  svg: string
 }
 
 export interface ApparatusQuizData {

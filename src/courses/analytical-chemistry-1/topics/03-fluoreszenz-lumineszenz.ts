@@ -81,66 +81,21 @@ Chemolumineszenz in biologischen Systemen:
         id: "chemoluminescence",
         label: "Chemolumineszenz-Detektor",
         description: "Keine externe Lichtquelle, nur Probe und Detektor",
-        svg: `<svg viewBox="0 0 300 130" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="80" y="35" width="80" height="60" rx="6" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="2"/>
-          <text x="120" y="58" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe+</text>
-          <text x="120" y="70" textAnchor="middle" fill="#2dd4bf" fontSize="8">Reagenz</text>
-          <text x="120" y="83" textAnchor="middle" fill="#fbbf24" fontSize="7">→ hν ←</text>
-          <line x1="160" y1="65" x2="200" y2="65" stroke="#fbbf24" strokeWidth="2.5"/>
-          <rect x="200" y="48" width="60" height="34" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="230" y="68" textAnchor="middle" fill="#f87171" fontSize="9">Detektor</text>
-          <text x="120" y="110" textAnchor="middle" fill="#64748b" fontSize="7">Keine externe Lichtquelle!</text>
-        </svg>`
       },
       {
         id: "fluorescence",
         label: "Fluoreszenzspektrometer",
         description: "Mit externer Lichtquelle, Detektor im 90°-Winkel",
-        svg: `<svg viewBox="0 0 300 160" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="20" y="65" width="50" height="30" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="45" y="83" textAnchor="middle" fill="#60a5fa" fontSize="8">Lichtquelle</text>
-          <line x1="70" y1="80" x2="115" y2="80" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="115" y="60" width="40" height="40" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="135" y="83" textAnchor="middle" fill="#2dd4bf" fontSize="8">Probe</text>
-          <line x1="135" y1="60" x2="135" y2="25" stroke="#f87171" strokeWidth="2" strokeDasharray="4,2"/>
-          <rect x="105" y="5" width="60" height="20" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="135" y="17" textAnchor="middle" fill="#f87171" fontSize="7">Detektor (90°)</text>
-        </svg>`
       },
       {
         id: "uv-vis",
         label: "UV/Vis-Spektrometer",
         description: "Detektor in Transmissionsrichtung",
-        svg: `<svg viewBox="0 0 300 100" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="35" width="45" height="30" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="32" y="53" textAnchor="middle" fill="#60a5fa" fontSize="7">Quelle</text>
-          <line x1="55" y1="50" x2="80" y2="50" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="80" y="35" width="40" height="30" rx="4" fill="#312e81" stroke="#a78bfa" strokeWidth="1.5"/>
-          <text x="100" y="53" textAnchor="middle" fill="#a78bfa" fontSize="7">Mono</text>
-          <line x1="120" y1="50" x2="150" y2="50" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="150" y="35" width="40" height="30" rx="4" fill="#0d2e2a" stroke="#2dd4bf" strokeWidth="1.5"/>
-          <text x="170" y="53" textAnchor="middle" fill="#2dd4bf" fontSize="7">Probe</text>
-          <line x1="190" y1="50" x2="220" y2="50" stroke="#fbbf24" strokeWidth="2"/>
-          <rect x="220" y="35" width="60" height="30" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="250" y="53" textAnchor="middle" fill="#f87171" fontSize="8">Detektor</text>
-        </svg>`
       },
       {
         id: "rfa",
         label: "Röntgenfluoreszenz (RFA)",
         description: "Röntgenröhre + Analysatorkristall + Detektor",
-        svg: `<svg viewBox="0 0 300 120" width="100%" style="display:block;background:#0f172a;border-radius:8px;padding:8px">
-          <rect x="10" y="40" width="55" height="40" rx="4" fill="#2d1f00" stroke="#fbbf24" strokeWidth="1.5"/>
-          <text x="37" y="58" textAnchor="middle" fill="#fbbf24" fontSize="7">Röntgen-</text>
-          <text x="37" y="68" textAnchor="middle" fill="#fbbf24" fontSize="7">röhre</text>
-          <line x1="65" y1="60" x2="120" y2="60" stroke="#f87171" strokeWidth="2" strokeDasharray="3,2"/>
-          <rect x="120" y="40" width="60" height="40" rx="4" fill="#1e3a5f" stroke="#60a5fa" strokeWidth="1.5"/>
-          <text x="150" y="63" textAnchor="middle" fill="#60a5fa" fontSize="7">Probe</text>
-          <line x1="180" y1="60" x2="230" y2="60" stroke="#f87171" strokeWidth="2" strokeDasharray="3,2"/>
-          <rect x="230" y="40" width="60" height="40" rx="4" fill="#2d0f0f" stroke="#f87171" strokeWidth="1.5"/>
-          <text x="260" y="58" textAnchor="middle" fill="#f87171" fontSize="7">Kristall+</text>
-          <text x="260" y="68" textAnchor="middle" fill="#f87171" fontSize="7">Detektor</text>
-        </svg>`
       },
     ],
   },

@@ -4,6 +4,8 @@ import { useRole } from '../hooks/useRole'
 import { supabase } from '../lib/supabase'
 import { allCourses } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
+import { courseIdsWithExams } from '../data/exams'
+import LearningStatus from '../components/Dashboard/LearningStatus'
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
@@ -69,6 +71,13 @@ export default function Dashboard() {
             </p>
           )}
         </div>
+
+        {/* Lernstand fuer Kurse mit Pruefungsdaten */}
+        {courseIdsWithExams().map(id => {
+          const kurs = allCourses.find(c => c.id === id)
+          if (!kurs) return null
+          return <LearningStatus key={id} courseId={id} courseTitle={kurs.title} />
+        })}
 
         <div className="grid gap-4 sm:grid-cols-2">
           {allCourses.map(course => {

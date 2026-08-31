@@ -6,7 +6,7 @@ export type QuestionType = 'mc-single' | 'mc-multi' | 'numeric' | 'order'
 export interface ExamQuestion {
   id: string
   source: string        // z.B. "2020-02-Lieberzeit"
-  professor: 'lieberzeit' | 'koellensperger' | 'gerner'
+  professor: string        // Nachname klein, ASCII
   topicId: string       // Verweis auf Kursthema
   points: number
   type: QuestionType
@@ -18,7 +18,7 @@ export interface ExamQuestion {
   unit?: string
 }
 
-export const examQuestions: ExamQuestion[] = [
+export const questions: ExamQuestion[] = [
 
   // ══════════════════════════════════════════════
   // LIEBERZEIT – Spektrometrie & Elektrochemie
@@ -576,14 +576,14 @@ export interface ExamStructure {
   totalPoints: number
   passingPoints: number
   sections: {
-    professor: 'lieberzeit' | 'koellensperger' | 'gerner'
+    professor: string        // Nachname klein, ASCII
     points: number
     passingPoints: number
     questionIds: string[]
   }[]
 }
 
-export const examStructures: ExamStructure[] = [
+export const structures: ExamStructure[] = [
   {
     id: "exam-2019-05",
     date: "27.05.2020",

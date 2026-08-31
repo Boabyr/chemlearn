@@ -1,59 +1,119 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { examQuestions } from '../data/examQuestions'
+import { useAttempts } from '../hooks/useAttempts'
+import { useReviews } from '../hooks/useReviews'
+import { examQuestionsFor, professorsFor, professorLabel } from '../data/exams'
+import type { ExamQuestion } from '../data/exams'
+import { buildSession } from '../lib/learning/sessionBuilder'
+import { GRADES } from '../lib/learning/sm2'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 
-type Filter = 'all' | 'lieberzeit' | 'koellensperger' | 'gerner'
+const DEFAULT_COURSE = 'analytical-chemistry-1'
+
+/** 'adaptive' zieht nach Fälligkeit und Schwäche, sonst wird nach Prüfer gefiltert. */
+type Filter = 'adaptive' | 'all' | string
+
+const PROF_ICONS: Record<string, string> = {
+  lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪',
+}
+
+/** Länge einer adaptiven Runde. */
+const SESSION_MINUTES = 15
 
 export default function PracticeMode() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
-  const [filter, setFilter] = useState<Filter>('all')
-  const [queue, setQueue] = useState<typeof examQuestions>([])
+  const [params] = useSearchParams()
+  const courseId = params.get('course') ?? DEFAULT_COURSE
+
+  const { attempts, logAttempt, flush } = useAttempts(courseId)
+  const { dueQuestions, gradeItem, dueCount } = useReviews(courseId)
+
+  const [filter, setFilter] = useState<Filter>('adaptive')
+  const [queue, setQueue] = useState<ExamQuestion[]>([])
   const [idx, setIdx] = useState(0)
   const [score, setScore] = useState(0)
-  const [total, setTotal] = useState(0)
   const [answered, setAnswered] = useState(0)
   const [sessionDone, setSessionDone] = useState(false)
+  const [startedAt, setStartedAt] = useState(() => Date.now())
+
+  const alleFragen = useMemo(() => examQuestionsFor(courseId), [courseId])
+  const professors = useMemo(() => professorsFor(courseId), [courseId])
 
   useEffect(() => {
     if (!loading && !user) navigate('/login')
-  }, [user, loading])
+  }, [user, loading, navigate])
 
-  const shuffle = useCallback((f: Filter) => {
-    const filtered = f === 'all' ? examQuestions : examQuestions.filter(q => q.professor === f)
-    const shuffled = [...filtered].sort(() => Math.random() - 0.5)
-    setQueue(shuffled)
+  const build = useCallback((f: Filter) => {
+    let next: ExamQuestion[]
+    if (f === 'adaptive') {
+      next = buildSession({
+        questions: alleFragen,
+        attempts,
+        due: dueQuestions,
+        minutes: SESSION_MINUTES,
+      })
+    } else {
+      const gefiltert = f === 'all' ? alleFragen : alleFragen.filter(q => q.professor === f)
+      next = [...gefiltert].sort(() => Math.random() - 0.5)
+    }
+    setQueue(next)
     setIdx(0)
     setScore(0)
-    setTotal(filtered.reduce((s, q) => s + q.points, 0))
     setAnswered(0)
     setSessionDone(false)
-  }, [])
+    setStartedAt(Date.now())
+  }, [alleFragen, attempts, dueQuestions])
 
-  useEffect(() => { shuffle('all') }, [shuffle])
+  // Erste Runde erst zusammenstellen, wenn die Historie geladen ist.
+  const [initialised, setInitialised] = useState(false)
+  useEffect(() => {
+    if (initialised || !user) return
+    build('adaptive')
+    setInitialised(true)
+  }, [initialised, user, build])
+
+  const total = useMemo(() => queue.reduce((s, q) => s + q.points, 0), [queue])
+  const pct = total > 0 ? Math.round((score / total) * 100) : 0
 
   function onAnswer(correct: boolean, pts: number) {
+    const q = queue[idx]
+    if (!q) return
     if (correct) setScore(s => s + pts)
     setAnswered(a => a + 1)
+
+    logAttempt({
+      courseId,
+      topicId: q.topicId,
+      questionId: q.id,
+      source: 'practice',
+      correct,
+      pointsEarned: pts,
+      pointsPossible: q.points,
+      msTaken: Date.now() - startedAt,
+    })
+
+    // Richtig beantwortet heisst später wieder vorlegen, falsch heisst bald wieder.
+    void gradeItem(
+      { itemType: 'question', itemId: q.id, topicId: q.topicId, courseId },
+      correct ? GRADES.GUT : GRADES.NOCHMAL,
+    )
   }
 
   function next() {
-    if (idx < queue.length - 1) {
-      setIdx(i => i + 1)
-    } else {
-      setSessionDone(true)
-    }
+    setStartedAt(Date.now())
+    if (idx < queue.length - 1) setIdx(i => i + 1)
+    else { void flush(); setSessionDone(true) }
   }
-
-  const pct = total > 0 ? Math.round(score / total * 100) : 0
 
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
       <div className="text-teal-400">Laden...</div>
     </div>
   )
+
+  const filters: Filter[] = ['adaptive', 'all', ...professors]
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -68,27 +128,36 @@ export default function PracticeMode() {
       </nav>
 
       <div className="max-w-2xl mx-auto px-4 py-8">
-        {/* Filter */}
+        {/* Auswahl der Runde */}
         <div className="flex gap-2 mb-6 flex-wrap">
-          {(['all', 'lieberzeit', 'koellensperger', 'gerner'] as Filter[]).map(f => (
-            <button key={f} onClick={() => { setFilter(f); shuffle(f) }}
+          {filters.map(f => (
+            <button key={f} onClick={() => { setFilter(f); build(f) }}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 filter === f ? 'bg-teal-600 text-white' : 'bg-slate-800 border border-slate-700 text-slate-400 hover:border-teal-500'
               }`}>
-              {f === 'all' ? 'Alle' : f === 'lieberzeit' ? '🔭 Lieberzeit' : f === 'koellensperger' ? '📊 Köllensperger' : '🧪 Gerner'}
+              {f === 'adaptive'
+                ? `✨ Für mich${dueCount > 0 ? ` (${dueCount} fällig)` : ''}`
+                : f === 'all' ? 'Alle'
+                : `${PROF_ICONS[f] ?? '📘'} ${professorLabel(f)}`}
             </button>
           ))}
         </div>
 
+        {filter === 'adaptive' && !sessionDone && queue.length > 0 && (
+          <p className="text-xs text-slate-500 mb-4">
+            Zusammengestellt aus fälligen Wiederholungen und deinen schwächsten Themen.
+          </p>
+        )}
+
         {/* Fortschritt */}
         <div className="mb-6">
           <div className="flex justify-between text-xs text-slate-500 mb-1">
-            <span>Frage {idx + 1} von {queue.length}</span>
+            <span>Frage {Math.min(idx + 1, queue.length)} von {queue.length}</span>
             <span>{score} von {total} Punkten</span>
           </div>
           <div className="h-2 bg-slate-700 rounded-full">
             <div className="h-full bg-teal-500 rounded-full transition-all"
-              style={{ width: `${(idx / queue.length) * 100}%` }} />
+              style={{ width: `${queue.length ? (idx / queue.length) * 100 : 0}%` }} />
           </div>
         </div>
 
@@ -101,7 +170,7 @@ export default function PracticeMode() {
               color: pct >= 75 ? '#4ade80' : pct >= 50 ? '#fbbf24' : '#f87171'
             }}>{pct}%</div>
             <div className="flex gap-3 justify-center">
-              <button onClick={() => shuffle(filter)}
+              <button onClick={() => build(filter)}
                 className="px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl text-sm transition-colors">
                 Neue Runde
               </button>
@@ -121,7 +190,7 @@ export default function PracticeMode() {
             />
             <button onClick={next}
               className="w-full py-3 bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-300 font-semibold rounded-xl text-sm transition-colors">
-              Nächste Frage →
+              {idx < queue.length - 1 ? 'Nächste Frage →' : 'Runde abschließen'}
             </button>
           </div>
         ) : (
