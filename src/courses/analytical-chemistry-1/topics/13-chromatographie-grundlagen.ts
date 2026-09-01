@@ -128,28 +128,30 @@ der GC liegt sie höher als in der HPLC, weil Gase deutlich schneller diffundier
 
 {{abbildung:van-deemter}}
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "aufloesung",
-      name: "Chromatographische Auflösung",
-      equation: "Rs = 2·(tR2 - tR1) / (w1 + w2)",
-      variables: [
-        { id: "Rs", label: "Auflösung", symbol: "Rs", unit: "—", description: "Chromatographische Auflösung" },
-        { id: "dtR", label: "Δ Retentionszeit", symbol: "tR2-tR1", unit: "min", description: "Differenz der Retentionszeiten" },
-        { id: "wsum", label: "Summe Peakbreiten", symbol: "w1+w2", unit: "min", description: "Summe der Basispeakbreiten" },
-      ],
-      umstellungen: [
-        { solveFor: "Rs", expr: "2 * dtR / wsum" },
-        { solveFor: "dtR", expr: "Rs * wsum / 2" },
-        { solveFor: "wsum", expr: "2 * dtR / Rs" },
-      ],
-      hints: [
-        "Rs = 2·ΔtR/(w1+w2). Rs < 1.0: ungenügend. Rs = 1.0: ~98%. Rs = 1.5: Basislinie. Peakbreiten w in gleichen Einheiten wie Retentionszeiten!",
-        "Trennstufenzahl: N = 16·(tR/w)². Trennstufenhöhe H = L/N. Rs ∝ √N ∝ √L. Säule verdoppeln → Rs×√2 = 1.41×Rs."
-      ],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "aufloesung",
+        name: "Chromatographische Auflösung",
+        equation: "Rs = 2·(tR2 - tR1) / (w1 + w2)",
+        variables: [
+          { id: "Rs", label: "Auflösung", symbol: "Rs", unit: "—", description: "Chromatographische Auflösung" },
+          { id: "dtR", label: "Δ Retentionszeit", symbol: "tR2-tR1", unit: "min", description: "Differenz der Retentionszeiten" },
+          { id: "wsum", label: "Summe Peakbreiten", symbol: "w1+w2", unit: "min", description: "Summe der Basispeakbreiten" },
+        ],
+        umstellungen: [
+          { solveFor: "Rs", expr: "2 * dtR / wsum" },
+          { solveFor: "dtR", expr: "Rs * wsum / 2" },
+          { solveFor: "wsum", expr: "2 * dtR / Rs" },
+        ],
+        hints: [
+          "Rs = 2·ΔtR/(w1+w2). Rs < 1.0: ungenügend. Rs = 1.0: ~98%. Rs = 1.5: Basislinie. Peakbreiten w in gleichen Einheiten wie Retentionszeiten!",
+          "Trennstufenzahl: N = 16·(tR/w)². Trennstufenhöhe H = L/N. Rs ∝ √N ∝ √L. Säule verdoppeln → Rs×√2 = 1.41×Rs."
+        ],
+      },
     },
-  },
+  ],
   abbildungen: [
     {
       "art": "diagramm",

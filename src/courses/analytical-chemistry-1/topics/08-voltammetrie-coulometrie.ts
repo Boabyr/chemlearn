@@ -116,36 +116,66 @@ ohne Kalibriergerade — deshalb ein Absolutverfahren. Voraussetzung ist eine
 **Stromausbeute von 100 %**: jedes Elektron muss den Analyten umsetzen und keine
 Nebenreaktion. Genau das prüft man mit einem Blindversuch.
 `,
-  interactive: {
-    type: "apparatus-quiz",
-    question: "Drei-Elektroden-Aufbau für Voltammetrie",
-    targetId: "three-electrode",
-    explanation: "Der Drei-Elektroden-Aufbau (Arbeitselektrode WE + Referenzelektrode RE + Gegenelektrode CE) ist notwendig, damit die Referenzelektrode keinen Strom führt und ihr Potential stabil bleibt. Der Strom fließt zwischen WE und CE, die Spannung wird zwischen WE und RE gemessen.",
-    hint1: "Zwei-Elektroden: RE führt Strom → Potential ändert sich. Drei-Elektroden: Potentiostat hält E(WE-RE) konstant, Strom fließt über CE.",
-    hint2: "Arbeitselektrode (WE): klein, Reaktion findet hier statt. Referenzelektrode (RE): konstantes Potential, kein Strom. Gegenelektrode (CE): groß, Strom fließt hier.",
-    options: [
+  interactives: [
+    {
+      type: "apparatus-quiz",
+      question: "Drei-Elektroden-Aufbau für Voltammetrie",
+      targetId: "three-electrode",
+      explanation: "Der Drei-Elektroden-Aufbau (Arbeitselektrode WE + Referenzelektrode RE + Gegenelektrode CE) ist notwendig, damit die Referenzelektrode keinen Strom führt und ihr Potential stabil bleibt. Der Strom fließt zwischen WE und CE, die Spannung wird zwischen WE und RE gemessen.",
+      hint1: "Zwei-Elektroden: RE führt Strom → Potential ändert sich. Drei-Elektroden: Potentiostat hält E(WE-RE) konstant, Strom fließt über CE.",
+      hint2: "Arbeitselektrode (WE): klein, Reaktion findet hier statt. Referenzelektrode (RE): konstantes Potential, kein Strom. Gegenelektrode (CE): groß, Strom fließt hier.",
+      options: [
+        {
+          id: "three-electrode",
+          label: "Drei-Elektroden-Voltammetrie-Zelle",
+          description: "WE + RE + CE + Potentiostat",
+        },
+        {
+          id: "two-electrode",
+          label: "Zwei-Elektroden-Zelle",
+          description: "Nur Mess- und Referenzelektrode",
+        },
+        {
+          id: "coulometry",
+          label: "Coulometrische Zelle",
+          description: "Vollständiger Umsatz, Ladungsmessung",
+        },
+        {
+          id: "conductivity",
+          label: "Leitfähigkeitsmesszelle",
+          description: "Zwei Pt-Elektroden, Wechselstrom",
+        },
+      ],
+    },
       {
-        id: "three-electrode",
-        label: "Drei-Elektroden-Voltammetrie-Zelle",
-        description: "WE + RE + CE + Potentiostat",
-      },
-      {
-        id: "two-electrode",
-        label: "Zwei-Elektroden-Zelle",
-        description: "Nur Mess- und Referenzelektrode",
-      },
-      {
-        id: "coulometry",
-        label: "Coulometrische Zelle",
-        description: "Vollständiger Umsatz, Ladungsmessung",
-      },
-      {
-        id: "conductivity",
-        label: "Leitfähigkeitsmesszelle",
-        description: "Zwei Pt-Elektroden, Wechselstrom",
-      },
-    ],
-  },
+      "type": "apparatus-matching",
+      "title": "Vier elektrochemische Zellen",
+      "description": "Zähle die Elektroden und schau, was gemessen wird.",
+      "explanation": "Die Zwei-Elektroden-Anordnung genügt, solange kein Strom fließt — sobald er fließt, polarisiert sich die Referenz. Deshalb die Drei-Elektroden-Zelle: Arbeits-, Referenz- und Gegenelektrode teilen sich die Aufgaben. Die Coulometrie misst die Ladung bis zum vollständigen Umsatz, die Leitfähigkeitsmessung arbeitet mit Wechselstrom zwischen zwei inerten Platten, damit sich nichts abscheidet.",
+      "paare": [
+        {
+          "apparaturId": "two-electrode",
+          "label": "Zwei-Elektroden-Anordnung",
+          "hinweis": "Nur sinnvoll, wenn kein Strom fließt."
+        },
+        {
+          "apparaturId": "three-electrode",
+          "label": "Drei-Elektroden-Zelle",
+          "hinweis": "Referenz bleibt stromlos."
+        },
+        {
+          "apparaturId": "coulometry",
+          "label": "Coulometrische Zelle",
+          "hinweis": "Gemessen wird die Ladung."
+        },
+        {
+          "apparaturId": "conductivity",
+          "label": "Leitfähigkeitsmesszelle",
+          "hinweis": "Zwei Platten, Wechselstrom."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Warum verwendet man in der Voltammetrie drei Elektroden statt zwei?", options: ["Drei Elektroden sind in der Anschaffung günstiger", "Damit die Referenzelektrode stromlos bleibt", "Um einen höheren Messstrom zu erreichen", "Aus Gründen des Arbeitsschutzes"], correct: 1, explanation: "In der Voltammetrie fließt Strom, und eine stromdurchflossene Referenzelektrode polarisiert sich und verliert ihr Potential. Deshalb die Aufteilung: Die Arbeitselektrode trägt die Reaktion, die Gegenelektrode nimmt den gesamten Strom auf, und die Referenz bleibt praktisch stromlos und behält ihren Bezugswert." },
     { id: "q2", question: "Was ist das Halbstufenpotential E_1/2 in der Polarographie?", options: ["Das Potential, bei dem der Strom null wird", "Das Potential beim halben Grenzstrom", "Das Standardpotential der Redoxreaktion", "Das Potential der Referenzelektrode"], correct: 1, explanation: "Auf der polarographischen Stufe ist E₁/₂ der Punkt, an dem der Strom die Hälfte des Diffusionsgrenzstroms erreicht. Der Wert hängt vom Analyten ab, nicht von seiner Konzentration — deshalb dient er der qualitativen Identifizierung, während die Stufenhöhe die Menge angibt." },

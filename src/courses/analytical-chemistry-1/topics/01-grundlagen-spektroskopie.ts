@@ -100,20 +100,50 @@ wo Lichtquellen stark und Detektoren empfindlich sind — dispersive Geräte und
 Dioden-Array-Detektoren weiterhin genügen.
 
 `,
-  interactive: {
-    type: "apparatus-quiz",
-    question: "Fluoreszenzspektrometer",
-    targetId: "fluorescence",
-    explanation: "Das Fluoreszenzspektrometer hat einen sehr einfachen Aufbau: Die Probe selbst emittiert Licht nach Anregung. Daher wird nur die Probe und ein Detektor (senkrecht zur Anregungsrichtung) benötigt – kein Referenzstrahl nötig. Das macht die Methode sehr empfindlich (kein Hintergrundsignal).",
-    hint1: "Fluoreszenzspektrometer messen emittiertes Licht, nicht transmittiertes. Der Detektor steht daher im 90°-Winkel zur Anregungsquelle.",
-    hint2: "Beim Fluoreszenzspektrometer: Lichtquelle → Probe → Detektor (90°). Kein Referenzstrahl nötig, weil kein Licht durch die Probe 'hindurchgeht'.",
-    options: [
-      { id: "fluorescence", label: "Fluoreszenzspektrometer", description: "Detektor im 90°-Winkel, misst Emission" },
-      { id: "uv-vis", label: "UV/Vis-Absorptionsspektrometer", description: "Detektor hinter der Probe, misst Transmission" },
-      { id: "chemoluminescence", label: "Chemolumineszenz-Detektor", description: "Einfachster Aufbau: nur Probe und Detektor" },
-      { id: "ftir", label: "FT-IR Spektrometer", description: "Mit Michelson-Interferometer" },
-    ],
-  },
+  interactives: [
+    {
+      type: "apparatus-quiz",
+      question: "Fluoreszenzspektrometer",
+      targetId: "fluorescence",
+      explanation: "Das Fluoreszenzspektrometer hat einen sehr einfachen Aufbau: Die Probe selbst emittiert Licht nach Anregung. Daher wird nur die Probe und ein Detektor (senkrecht zur Anregungsrichtung) benötigt – kein Referenzstrahl nötig. Das macht die Methode sehr empfindlich (kein Hintergrundsignal).",
+      hint1: "Fluoreszenzspektrometer messen emittiertes Licht, nicht transmittiertes. Der Detektor steht daher im 90°-Winkel zur Anregungsquelle.",
+      hint2: "Beim Fluoreszenzspektrometer: Lichtquelle → Probe → Detektor (90°). Kein Referenzstrahl nötig, weil kein Licht durch die Probe 'hindurchgeht'.",
+      options: [
+        { id: "fluorescence", label: "Fluoreszenzspektrometer", description: "Detektor im 90°-Winkel, misst Emission" },
+        { id: "uv-vis", label: "UV/Vis-Absorptionsspektrometer", description: "Detektor hinter der Probe, misst Transmission" },
+        { id: "chemoluminescence", label: "Chemolumineszenz-Detektor", description: "Einfachster Aufbau: nur Probe und Detektor" },
+        { id: "ftir", label: "FT-IR Spektrometer", description: "Mit Michelson-Interferometer" },
+      ],
+    },
+      {
+      "type": "apparatus-matching",
+      "title": "Vier Spektrometer, vier Aufbauten",
+      "description": "Ordne jedem Gerät seine Skizze zu. Achte darauf, wo der Detektor steht und ob es überhaupt eine Lichtquelle gibt.",
+      "explanation": "Die drei Merkmale, an denen man die Aufbauten auseinanderhält: Das UV/Vis-Photometer setzt den Detektor hinter die Probe — gemessen wird, was durchkommt. Das Fluoreszenzspektrometer stellt ihn im rechten Winkel dazu, damit der Anregungsstrahl nicht mitgemessen wird. Die Chemolumineszenz braucht gar keine Lichtquelle, das Licht entsteht in der Probe. Das FT-IR ersetzt den Monochromator durch ein Interferometer und misst alle Wellenlängen gleichzeitig.",
+      "paare": [
+        {
+          "apparaturId": "uv-vis",
+          "label": "UV/Vis-Photometer",
+          "hinweis": "Detektor direkt hinter der Probe."
+        },
+        {
+          "apparaturId": "fluorescence",
+          "label": "Fluoreszenzspektrometer",
+          "hinweis": "Detektor im 90°-Winkel."
+        },
+        {
+          "apparaturId": "chemoluminescence",
+          "label": "Chemolumineszenz-Detektor",
+          "hinweis": "Keine Lichtquelle im Bild."
+        },
+        {
+          "apparaturId": "ftir",
+          "label": "FT-IR-Spektrometer",
+          "hinweis": "Interferometer statt Monochromator."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Welche Gleichung beschreibt den Zusammenhang zwischen Energie eines Photons und seiner Frequenz?", options: ["E = mc²", "E = h · ν", "E = ε · c · d", "E = λ · ν"], correct: 1, explanation: "E = h · ν (Planck'sche Gleichung). h = 6.626×10⁻³⁴ J·s (Planck'sches Wirkungsquantum), ν = Frequenz. Höhere Frequenz = höhere Energie = kürzere Wellenlänge." },
     { id: "q2", question: "IR-Strahlung regt in Molekülen welche Art von Übergängen an?", options: ["Elektronenübergänge in inneren Schalen", "Kernspinübergänge", "Rotations- und Schwingungsübergänge", "Kernübergänge"], correct: 2, explanation: "IR (400–4000 cm⁻¹) regt Rotations- und Schwingungsübergänge in Molekülen an. UV/Vis regt Valenzelektronen an, Röntgen innere Elektronen, NMR den Kernspin." },

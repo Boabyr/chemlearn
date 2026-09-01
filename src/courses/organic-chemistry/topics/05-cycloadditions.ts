@@ -76,87 +76,331 @@ reaction gives a mixture of the 1,4 and 1,5 isomers.
 A five-membered ring with two or three adjacent heteroatoms almost always points to a
 [3+2]; a six-membered ring with one nitrogen and no obvious carbonyl origin points to an
 aza-Diels-Alder with loss of N₂ or CO₂.
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Nitrile oxide — making the dipole, then using it",
-    description: "Eine [3+2]-Cycloaddition braucht erst einmal ein 1,3-Dipol. Zeichne, wie es entsteht und wie es zuschlägt.",
-    stages: [
-      {
-        id: 0, titel: "Das Dipol entsteht",
-        aufgabe: "Eine Base nimmt dem Hydroximoylchlorid den Wasserstoff ab und Chlorid geht weg. Zeichne alle drei Pfeile.",
-        erklaerung: "Das 1,3-Dipol fällt nicht vom Himmel. Aus R–CCl=N–OH macht eine Base in einem Zug das Nitriloxid R–C≡N⁺–O⁻: der Wasserstoff geht an die Base, das Elektronenpaar der O–H-Bindung wandert in die C=N-Bindung, und das Chlorid tritt aus. Danach liegen drei Atome mit vier Elektronen in einer Reihe — genau das, was eine [3+2]-Addition braucht.",
-        hinweise: ["Drei Pfeile in einer Kette: Base holt den Wasserstoff, dessen Bindungselektronen schieben weiter, und am Ende muss etwas den Platz räumen.", "Was am Kohlenstoff wegmuss, damit dort eine Dreifachbindung Platz hat, ist das Chlorid."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Nitrile oxide — making the dipole, then using it",
+      description: "Eine [3+2]-Cycloaddition braucht erst einmal ein 1,3-Dipol. Zeichne, wie es entsteht und wie es zuschlägt.",
+      stages: [
+        {
+          id: 0,
+          titel: "Das Dipol entsteht",
+          aufgabe: "Eine Base nimmt dem Hydroximoylchlorid den Wasserstoff ab und Chlorid geht weg. Zeichne alle drei Pfeile.",
+          erklaerung: "Das 1,3-Dipol fällt nicht vom Himmel. Aus R–CCl=N–OH macht eine Base in einem Zug das Nitriloxid R–C≡N⁺–O⁻: der Wasserstoff geht an die Base, das Elektronenpaar der O–H-Bindung wandert in die C=N-Bindung, und das Chlorid tritt aus. Danach liegen drei Atome mit vier Elektronen in einer Reihe — genau das, was eine [3+2]-Addition braucht.",
+          hinweise: [
+            "Drei Pfeile in einer Kette: Base holt den Wasserstoff, dessen Bindungselektronen schieben weiter, und am Ende muss etwas den Platz räumen.",
+            "Was am Kohlenstoff wegmuss, damit dort eine Dreifachbindung Platz hat, ist das Chlorid."
+          ],
+          atome: [
+            {
+              id: "cc",
+              element: "C",
+              x: 150,
+              y: 170
+            },
+            {
+              id: "nn",
+              element: "N",
+              x: 215,
+              y: 140
+            },
+            {
+              id: "oo",
+              element: "O",
+              x: 280,
+              y: 170,
+              freiePaare: 2,
+              wasserstoffe: 1
+            },
+            {
+              id: "ho",
+              element: "H",
+              x: 330,
+              y: 210
+            },
+            {
+              id: "cl1",
+              element: "Cl",
+              x: 100,
+              y: 235,
+              freiePaare: 3
+            },
+            {
+              id: "rr",
+              element: "R",
+              x: 90,
+              y: 120
+            },
+            {
+              id: "base",
+              element: "N",
+              x: 390,
+              y: 100,
+              ladung: -1,
+              freiePaare: 2,
+              wasserstoffe: 2,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "d1",
+              von: "cc",
+              nach: "nn",
+              ordnung: 2
+            },
+            {
+              id: "d2",
+              von: "nn",
+              nach: "oo",
+              ordnung: 1
+            },
+            {
+              id: "d3",
+              von: "oo",
+              nach: "ho",
+              ordnung: 1
+            },
+            {
+              id: "d4",
+              von: "cc",
+              nach: "cl1",
+              ordnung: 1
+            },
+            {
+              id: "d5",
+              von: "cc",
+              nach: "rr",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "base"
+              },
+              nach: {
+                art: "atom",
+                id: "ho"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "d3"
+              },
+              nach: {
+                art: "bindung",
+                id: "d1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "d4"
+              },
+              nach: {
+                art: "atom",
+                id: "cl1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Die Cycloaddition",
+          aufgabe: "Das Nitriloxid trifft auf ein Alken. Zeichne die drei Pfeile, die den Fünfring in einem Zug schließen.",
+          erklaerung: "Beide neuen Bindungen entstehen gleichzeitig — es gibt kein Zwischenprodukt und keine Ladung unterwegs. Der Sauerstoff des Dipols bindet an das eine Alken-Kohlenstoffatom, der Kohlenstoff des Dipols an das andere. Aus C≡N wird C=N, und der Ring ist geschlossen. Mit einem Alkin an dieser Stelle entstünde statt des Isoxazolins ein Isoxazol.",
+          hinweise: [
+            "Drei Pfeile im Kreis: Dipol-Ende, Alken-Doppelbindung, Dipol-Mitte. Reihenfolge egal.",
+            "Der Sauerstoff trägt die negative Ladung — er ist das nucleophile Ende des Dipols."
+          ],
+          atome: [
+            {
+              id: "cc",
+              element: "C",
+              x: 150,
+              y: 120
+            },
+            {
+              id: "nn",
+              element: "N",
+              x: 210,
+              y: 100,
+              ladung: 1
+            },
+            {
+              id: "oo",
+              element: "O",
+              x: 270,
+              y: 120,
+              ladung: -1,
+              freiePaare: 3
+            },
+            {
+              id: "rr",
+              element: "R",
+              x: 100,
+              y: 85
+            },
+            {
+              id: "ca",
+              element: "C",
+              x: 160,
+              y: 215
+            },
+            {
+              id: "cb",
+              element: "C",
+              x: 265,
+              y: 215
+            }
+          ],
+          bindungen: [
+            {
+              id: "d1",
+              von: "cc",
+              nach: "nn",
+              ordnung: 3
+            },
+            {
+              id: "d2",
+              von: "nn",
+              nach: "oo",
+              ordnung: 1
+            },
+            {
+              id: "d5",
+              von: "cc",
+              nach: "rr",
+              ordnung: 1
+            },
+            {
+              id: "alken",
+              von: "ca",
+              nach: "cb",
+              ordnung: 2
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "oo"
+              },
+              nach: {
+                art: "atom",
+                id: "cb"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "alken"
+              },
+              nach: {
+                art: "atom",
+                id: "ca"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "d1"
+              },
+              nach: {
+                art: "atom",
+                id: "cc"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "Isoxazolin",
+        beschreibung: "Der Fünfring mit Sauerstoff und Stickstoff nebeneinander. Die schwache N–O-Bindung lässt sich später reduktiv spalten — deshalb dient das Isoxazolin oft als maskiertes β-Hydroxyketon.",
         atome: [
-          { id: "cc", element: "C", x: 150, y: 170 },
-          { id: "nn", element: "N", x: 215, y: 140 },
-          { id: "oo", element: "O", x: 280, y: 170, freiePaare: 2, wasserstoffe: 1 },
-          { id: "ho", element: "H", x: 330, y: 210 },
-          { id: "cl1", element: "Cl", x: 100, y: 235, freiePaare: 3 },
-          { id: "rr", element: "R", x: 90, y: 120 },
-          { id: "base", element: "N", x: 390, y: 100, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
+          {
+            id: "oo",
+            element: "O",
+            x: 150,
+            y: 220,
+            freiePaare: 2
+          },
+          {
+            id: "nn",
+            element: "N",
+            x: 202,
+            y: 182
+          },
+          {
+            id: "cc",
+            element: "C",
+            x: 182,
+            y: 121
+          },
+          {
+            id: "ca",
+            element: "C",
+            x: 118,
+            y: 121
+          },
+          {
+            id: "cb",
+            element: "C",
+            x: 98,
+            y: 182
+          },
+          {
+            id: "rr",
+            element: "R",
+            x: 215,
+            y: 65
+          }
         ],
         bindungen: [
-          { id: "d1", von: "cc", nach: "nn", ordnung: 2 },
-          { id: "d2", von: "nn", nach: "oo", ordnung: 1 },
-          { id: "d3", von: "oo", nach: "ho", ordnung: 1 },
-          { id: "d4", von: "cc", nach: "cl1", ordnung: 1 },
-          { id: "d5", von: "cc", nach: "rr", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "ho" } },
-          { von: { art: "bindung", id: "d3" }, nach: { art: "bindung", id: "d1" } },
-          { von: { art: "bindung", id: "d4" }, nach: { art: "atom", id: "cl1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Die Cycloaddition",
-        aufgabe: "Das Nitriloxid trifft auf ein Alken. Zeichne die drei Pfeile, die den Fünfring in einem Zug schließen.",
-        erklaerung: "Beide neuen Bindungen entstehen gleichzeitig — es gibt kein Zwischenprodukt und keine Ladung unterwegs. Der Sauerstoff des Dipols bindet an das eine Alken-Kohlenstoffatom, der Kohlenstoff des Dipols an das andere. Aus C≡N wird C=N, und der Ring ist geschlossen. Mit einem Alkin an dieser Stelle entstünde statt des Isoxazolins ein Isoxazol.",
-        hinweise: ["Drei Pfeile im Kreis: Dipol-Ende, Alken-Doppelbindung, Dipol-Mitte. Reihenfolge egal.", "Der Sauerstoff trägt die negative Ladung — er ist das nucleophile Ende des Dipols."],
-        atome: [
-          { id: "cc", element: "C", x: 150, y: 120 },
-          { id: "nn", element: "N", x: 210, y: 100, ladung: 1 },
-          { id: "oo", element: "O", x: 270, y: 120, ladung: -1, freiePaare: 3 },
-          { id: "rr", element: "R", x: 100, y: 85 },
-          { id: "ca", element: "C", x: 160, y: 215 },
-          { id: "cb", element: "C", x: 265, y: 215 },
-        ],
-        bindungen: [
-          { id: "d1", von: "cc", nach: "nn", ordnung: 3 },
-          { id: "d2", von: "nn", nach: "oo", ordnung: 1 },
-          { id: "d5", von: "cc", nach: "rr", ordnung: 1 },
-          { id: "alken", von: "ca", nach: "cb", ordnung: 2 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "oo" }, nach: { art: "atom", id: "cb" } },
-          { von: { art: "bindung", id: "alken" }, nach: { art: "atom", id: "ca" } },
-          { von: { art: "bindung", id: "d1" }, nach: { art: "atom", id: "cc" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "Isoxazolin",
-      beschreibung: "Der Fünfring mit Sauerstoff und Stickstoff nebeneinander. Die schwache N–O-Bindung lässt sich später reduktiv spalten — deshalb dient das Isoxazolin oft als maskiertes β-Hydroxyketon.",
-      atome: [
-        { id: "oo", element: "O", x: 150, y: 220, freiePaare: 2 },
-        { id: "nn", element: "N", x: 202, y: 182 },
-        { id: "cc", element: "C", x: 182, y: 121 },
-        { id: "ca", element: "C", x: 118, y: 121 },
-        { id: "cb", element: "C", x: 98, y: 182 },
-        { id: "rr", element: "R", x: 215, y: 65 },
-      ],
-      bindungen: [
-        { id: "e1", von: "oo", nach: "nn", ordnung: 1 },
-        { id: "e2", von: "nn", nach: "cc", ordnung: 2 },
-        { id: "e3", von: "cc", nach: "ca", ordnung: 1 },
-        { id: "e4", von: "ca", nach: "cb", ordnung: 1 },
-        { id: "e5", von: "cb", nach: "oo", ordnung: 1 },
-        { id: "e6", von: "cc", nach: "rr", ordnung: 1 },
-      ],
+          {
+            id: "e1",
+            von: "oo",
+            nach: "nn",
+            ordnung: 1
+          },
+          {
+            id: "e2",
+            von: "nn",
+            nach: "cc",
+            ordnung: 2
+          },
+          {
+            id: "e3",
+            von: "cc",
+            nach: "ca",
+            ordnung: 1
+          },
+          {
+            id: "e4",
+            von: "ca",
+            nach: "cb",
+            ordnung: 1
+          },
+          {
+            id: "e5",
+            von: "cb",
+            nach: "oo",
+            ordnung: 1
+          },
+          {
+            id: "e6",
+            von: "cc",
+            nach: "rr",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Which 1,3-dipole reacts regioselectively with a terminal alkyne to give a 1,2,3-triazole?", options: ["Nitrone", "Organic azide", "Nitrile oxide", "Nitrilimines"], correct: 1, explanation: "Organic azides (R-N₃ = R-N=N⁺=N⁻) react with alkynes in [3+2] cycloaddition to give 1,2,3-triazoles. Thermally: mixture of 1,4 and 1,5-isomers. Cu-catalysed: selectively 1,4." },
     { id: "q2", question: "Which regioisomer forms preferentially in the [3+2] CA of an unsymmetrical nitrile oxide with a terminally substituted alkene?", options: ["5-substituted isoxazoline (nitrile oxide-C at C-5)", "4-substituted isoxazoline", "3-substituted isoxazoline (nitrile oxide-C at C-3)", "Both isomers in equal parts"], correct: 0, explanation: "FMO control: HOMO of nitrile oxide and LUMO of alkene. The largest HOMO coefficient is at the nitrile oxide C (terminal), the largest LUMO coefficient at the β-C of the alkene → 5-substituted isoxazoline preferred." },

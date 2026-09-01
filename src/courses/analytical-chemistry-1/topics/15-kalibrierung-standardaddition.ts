@@ -105,25 +105,27 @@ Zugabevolumina hoch konzentrierter Standards, oder man rechnet die Verdünnung s
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "standardaddition",
-      name: "Standardaddition (einfach)",
-      equation: "cx = cS · y0 / (y1 - y0)",
-      variables: [
-        { id: "cx", label: "Konzentration Probe", symbol: "cx", unit: "ppb", description: "Gesuchte Konzentration" },
-        { id: "cS", label: "Zugabe-Konzentration", symbol: "cS", unit: "ppb", description: "Konzentration des zugefügten Standards" },
-        { id: "y0", label: "Signal ohne Standard", symbol: "y0", unit: "mV", description: "Messsignal der Originalprobe" },
-        { id: "y1", label: "Signal mit Standard", symbol: "y1", unit: "mV", description: "Messsignal nach Standardzugabe" },
-      ],
-      umstellungen: [
-        { solveFor: "cx", expr: "cS * y0 / (y1 - y0)" },
-        { solveFor: "cS", expr: "cx * (y1 - y0) / y0" },
-      ],
-      hints: ["Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!", "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "standardaddition",
+        name: "Standardaddition (einfach)",
+        equation: "cx = cS · y0 / (y1 - y0)",
+        variables: [
+          { id: "cx", label: "Konzentration Probe", symbol: "cx", unit: "ppb", description: "Gesuchte Konzentration" },
+          { id: "cS", label: "Zugabe-Konzentration", symbol: "cS", unit: "ppb", description: "Konzentration des zugefügten Standards" },
+          { id: "y0", label: "Signal ohne Standard", symbol: "y0", unit: "mV", description: "Messsignal der Originalprobe" },
+          { id: "y1", label: "Signal mit Standard", symbol: "y1", unit: "mV", description: "Messsignal nach Standardzugabe" },
+        ],
+        umstellungen: [
+          { solveFor: "cx", expr: "cS * y0 / (y1 - y0)" },
+          { solveFor: "cS", expr: "cx * (y1 - y0) / y0" },
+        ],
+        hints: ["Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!", "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."],
+      },
     },
-  },
+  ],
   abbildungen: [
     {
       "art": "diagramm",

@@ -120,36 +120,61 @@ Verschiebung.
 Netzebenenabstand d. Häufigster Rechenfehler in der Prüfung: das Diffraktogramm ist gegen
 2θ aufgetragen, in die Gleichung gehört aber θ.
 `,
-  interactive: {
-    type: "apparatus-quiz",
-    question: "Röntgenfluoreszenzspektrometer (RFA/XFS)",
-    targetId: "rfa",
-    explanation: "Das RFA-Spektrometer besteht aus: Röntgenröhre (erzeugt Primärstrahlung) → Probe (emittiert charakteristische Röntgenstrahlung) → Analysatorkristall (Monochromator via Bragg'sches Gesetz) → Detektor. Der Analysatorkristall ermöglicht die wellenlängenselektive Detektion.",
-    hint1: "RFA = Röntgenfluoreszenzanalyse. Röntgenröhre regt Probe an, Probe emittiert charakteristische Röntgenstrahlung, Analysatorkristall selektiert Wellenlängen via Bragg'schem Gesetz.",
-    hint2: "Schlüsselelement: Analysatorkristall mit Bragg-Bedingung nλ = 2d·sin(θ). Verschiedene d-Werte für verschiedene Elementbereiche (LiF, PG, PE).",
-    options: [
+  interactives: [
+    {
+      type: "apparatus-quiz",
+      question: "Röntgenfluoreszenzspektrometer (RFA/XFS)",
+      targetId: "rfa",
+      explanation: "Das RFA-Spektrometer besteht aus: Röntgenröhre (erzeugt Primärstrahlung) → Probe (emittiert charakteristische Röntgenstrahlung) → Analysatorkristall (Monochromator via Bragg'sches Gesetz) → Detektor. Der Analysatorkristall ermöglicht die wellenlängenselektive Detektion.",
+      hint1: "RFA = Röntgenfluoreszenzanalyse. Röntgenröhre regt Probe an, Probe emittiert charakteristische Röntgenstrahlung, Analysatorkristall selektiert Wellenlängen via Bragg'schem Gesetz.",
+      hint2: "Schlüsselelement: Analysatorkristall mit Bragg-Bedingung nλ = 2d·sin(θ). Verschiedene d-Werte für verschiedene Elementbereiche (LiF, PG, PE).",
+      options: [
+        {
+          id: "rfa",
+          label: "Röntgenfluoreszenzspektrometer (RFA)",
+          description: "Röntgenröhre + Probe + Analysatorkristall + Detektor",
+        },
+        {
+          id: "xrd",
+          label: "Röntgendiffraktometer (XRD)",
+          description: "Für Kristallstrukturbestimmung, θ-2θ-Geometrie",
+        },
+        {
+          id: "esca",
+          label: "ESCA / XPS Spektrometer",
+          description: "Misst kinetische Energie der Photoelektronen",
+        },
+        {
+          id: "ftir",
+          label: "FT-IR Spektrometer",
+          description: "Infrarot, Michelson-Interferometer",
+        },
+      ],
+    },
       {
-        id: "rfa",
-        label: "Röntgenfluoreszenzspektrometer (RFA)",
-        description: "Röntgenröhre + Probe + Analysatorkristall + Detektor",
-      },
-      {
-        id: "xrd",
-        label: "Röntgendiffraktometer (XRD)",
-        description: "Für Kristallstrukturbestimmung, θ-2θ-Geometrie",
-      },
-      {
-        id: "esca",
-        label: "ESCA / XPS Spektrometer",
-        description: "Misst kinetische Energie der Photoelektronen",
-      },
-      {
-        id: "ftir",
-        label: "FT-IR Spektrometer",
-        description: "Infrarot, Michelson-Interferometer",
-      },
-    ],
-  },
+      "type": "apparatus-matching",
+      "title": "Drei Röntgenmethoden",
+      "description": "Alle drei arbeiten mit Röntgenstrahlung, messen aber Verschiedenes.",
+      "explanation": "RFA misst das emittierte Photon und sagt, welches Element vorliegt. ESCA misst das herausgelöste Elektron; dessen Bindungsenergie verschiebt sich mit dem Oxidationszustand, deshalb Ultrahochvakuum. XRD misst gar keine Emission, sondern den Beugungswinkel am Kristallgitter — daraus folgt der Netzebenenabstand über die Bragg-Gleichung.",
+      "paare": [
+        {
+          "apparaturId": "rfa",
+          "label": "Röntgenfluoreszenz (RFA)",
+          "hinweis": "Misst das emittierte Photon."
+        },
+        {
+          "apparaturId": "esca",
+          "label": "ESCA / XPS",
+          "hinweis": "Misst das Photoelektron, im Vakuum."
+        },
+        {
+          "apparaturId": "xrd",
+          "label": "Röntgenbeugung (XRD)",
+          "hinweis": "Misst einen Winkel, keine Emission."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Was besagt das Moseley'sche Gesetz?", options: ["Die Absorption wächst mit der Schichtdicke", "Die Emissionswellenlänge hängt an der Ordnungszahl", "Röntgenstrahlung wird an Kristallen gebeugt", "Die Grenzwellenlänge folgt der Anodenspannung"], correct: 1, explanation: "Moseley: 1/√λ = K·(Z − σ). Die Wellenlänge der charakteristischen Linien ist eindeutig mit der Ordnungszahl verknüpft und nicht mit der chemischen Bindung. Genau das macht die Röntgenfluoreszenz zur Elementanalyse. Die Beugung am Kristall beschreibt Bragg, die Grenzwellenlänge das Duane-Hunt-Gesetz." },
     { id: "q2", question: "Was beschreibt das Bragg'sche Gesetz?", options: ["Wechselwirkung von Röntgenstrahlung mit freien Elektronen der Probe", "nλ = 2d·sin(θ): Bedingung für konstruktive Interferenz am Kristallgitter", "Emission von Augerelektronen aus kernnahen Schalen", "Zusammenhang zwischen Anodenspannung und minimaler Wellenlänge"], correct: 1, explanation: "nλ = 2d·sin(θ). n = Beugungsordnung, d = Netzebenenabstand des Analysatorkristalls, θ = Glanzwinkel. Der Analysatorkristall im RFA-Spektrometer nutzt dies zur wellenlängenselektiven Messung." },

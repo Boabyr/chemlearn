@@ -171,6 +171,29 @@ hinweis2: ...
 `position` = 0–100, Position auf der x-Achse von links. `hoehe`: `klein`|`mittel`|`gross`.
 3–5 Peaks. Jeder Peak: 4 Optionen, `richtig` muss wörtlich in `optionen` vorkommen.
 
+**5. `apparatus-matching`** — Geräte ihren Skizzen zuordnen. Links der Name,
+rechts das Bild.
+
+```
+typ: apparatus-matching
+titel: Drei Wege, Atome zu erzeugen
+beschreibung: Alle drei atomisieren die Probe — bei sehr verschiedenen Temperaturen.
+erklaerung: Die Flammen-AAS lässt die Lampe quer durch die Flamme strahlen ...
+- apparatur: flame-aas | label: Flammen-AAS | hinweis: Lampe strahlt quer durch die Flamme.
+- apparatur: graphite-furnace | label: Graphitrohr-AAS | hinweis: Rohr längs im Strahlengang.
+- apparatur: icp-oes | label: ICP-OES | hinweis: Keine Lampe — das Plasma strahlt selbst.
+```
+
+Drei bis sechs Paare; darüber wird das Bild unlesbar. `apparatur` ist der Schlüssel
+aus der Zeichnungs-Registry — gibt es dazu keine Zeichnung, bricht der Import ab.
+Der `hinweis` erscheint erst nach dem Prüfen, und nur bei einer falschen Zuordnung.
+
+> **Ein Thema darf mehrere Interaktivteile haben.** Ein Formelrechner schließt eine
+> Gerätezuordnung nicht aus. Je Quelldatei steht weiterhin ein `# INTERAKTIV`-Block;
+> ein zweiter kommt über eine eigene Ergänzungsdatei dazu. Trägt die META-Zeile
+> `interaktiv: ersetzen`, tritt der neue an die Stelle des vorhandenen **gleichen
+> Typs**; sonst wird er angehängt.
+
 **4. `mechanism`** — Reaktionsmechanismen mit Elektronenpfeilen.
 
 **Erzeuge diesen Typ nicht.** Ein Mechanismus ist eine Strukturformel mit

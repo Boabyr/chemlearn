@@ -118,28 +118,30 @@ werden. Zwei Größen entscheiden über seine Güte:
 Beim Verdünnen ändert sich der pH eines Puffers deshalb kaum — das Verhältnis
 [A⁻]/[HA] bleibt gleich —, seine Kapazität aber sehr wohl.
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "henderson-hasselbalch",
-      name: "Henderson-Hasselbalch (Puffer)",
-      equation: "pH = pKs + log([A⁻]/[HA])",
-      variables: [
-        { id: "pH", label: "pH-Wert", symbol: "pH", unit: "—", description: "Gesuchter pH-Wert" },
-        { id: "pKs", label: "pKs der Säure", symbol: "pKs", unit: "—", description: "z.B. Essigsäure: 4.76" },
-        { id: "ratio", label: "log([A⁻]/[HA])", symbol: "log(c_B/c_S)", unit: "—", description: "log(Konzentration Base / Konzentration Säure)" },
-      ],
-      umstellungen: [
-        { solveFor: "pH", expr: "pKs + ratio" },
-        { solveFor: "pKs", expr: "pH - ratio" },
-        { solveFor: "ratio", expr: "pH - pKs" },
-      ],
-      hints: [
-        "Henderson-Hasselbalch: pH = pKs + log([A⁻]/[HA]). Bei gleichen Konzentrationen: log(1)=0 → pH = pKs. Pufferoptimum bei pH = pKs.",
-        "Beispiel Acetat-Puffer: pKs(Essigsäure) = 4,76. Gleiche Teile Essigsäure und NaAcetat → pH = 4,76. 10:1 Acetat:Essigsäure → pH = 4,76 + 1 = 5,76."
-      ],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "henderson-hasselbalch",
+        name: "Henderson-Hasselbalch (Puffer)",
+        equation: "pH = pKs + log([A⁻]/[HA])",
+        variables: [
+          { id: "pH", label: "pH-Wert", symbol: "pH", unit: "—", description: "Gesuchter pH-Wert" },
+          { id: "pKs", label: "pKs der Säure", symbol: "pKs", unit: "—", description: "z.B. Essigsäure: 4.76" },
+          { id: "ratio", label: "log([A⁻]/[HA])", symbol: "log(c_B/c_S)", unit: "—", description: "log(Konzentration Base / Konzentration Säure)" },
+        ],
+        umstellungen: [
+          { solveFor: "pH", expr: "pKs + ratio" },
+          { solveFor: "pKs", expr: "pH - ratio" },
+          { solveFor: "ratio", expr: "pH - pKs" },
+        ],
+        hints: [
+          "Henderson-Hasselbalch: pH = pKs + log([A⁻]/[HA]). Bei gleichen Konzentrationen: log(1)=0 → pH = pKs. Pufferoptimum bei pH = pKs.",
+          "Beispiel Acetat-Puffer: pKs(Essigsäure) = 4,76. Gleiche Teile Essigsäure und NaAcetat → pH = 4,76. 10:1 Acetat:Essigsäure → pH = 4,76 + 1 = 5,76."
+        ],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Wie berechnet man den pH einer 0,01 M HCl-Lösung?", options: ["pH = -log(0,01) = 2", "pH = 0,01", "pH = log(0,01) = -2", "pH = 14 - log(0,01) = 12"], correct: 0, explanation: "HCl ist eine starke Säure (vollständige Dissoziation). [H⁺] = c(HCl) = 0,01 mol/L = 10⁻² mol/L. pH = -log(10⁻²) = 2." },
     { id: "q2", question: "Was beschreibt die Henderson-Hasselbalch-Gleichung?", options: ["Den pH einer starken Säure aus ihrer Konzentration", "pH = pKs + log([A⁻]/[HA]) – pH eines Puffersystems", "Das Löslichkeitsprodukt einer Fällungsreaktion", "Die Nernst-Gleichung für Elektrodenpotentiale"], correct: 1, explanation: "Henderson-Hasselbalch: pH = pKs + log([Konjugierte Base]/[Säure]). Gilt für Pufferlösungen. Bei [A⁻]=[HA]: pH = pKs. Pufferwirkung optimal bei pH = pKs ± 1." },

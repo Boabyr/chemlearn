@@ -7,9 +7,6 @@ export const topic = {
   icon: "🟠",
   estimatedMinutes: 80,
   theory: `
-
-
-
 ## Overview: 5-Membered Rings with Two or More Heteroatoms
 
 | Compound | Heteroatoms | Special feature |
@@ -91,89 +88,325 @@ The same trend read backwards gives the acidity: the more pyridine-type nitrogen
 better the anion is stabilised. Pyrrole has pKa 17.5, imidazole 14.5, 1,2,4-triazole
 around 10, and tetrazole about 4.9 — by then it is as acidic as acetic acid, and that is
 the property the medicinal chemist is after.
-
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Imidazole — two nitrogens, two roles",
-    description: "Nur eines der beiden Stickstoffatome ist basisch. Zeichne die Protonierung und die Tautomerie, die daraus folgt.",
-    stages: [
-      {
-        id: 0, titel: "Protonierung an N-3",
-        aufgabe: "HCl protoniert das Imidazol. Zeichne beide Pfeile: das freie Elektronenpaar von N-3 zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
-        erklaerung: "N-1 trägt bereits ein Wasserstoffatom und steckt sein Elektronenpaar ins aromatische System — es steht nicht zur Verfügung. Das Paar von N-3 liegt dagegen in der Ringebene und ist frei. Mit einem pKs von etwa 7 ist Imidazol bei physiologischem pH halb protoniert, und genau deshalb arbeitet Histidin in Enzymen als Säure und als Base.",
-        hinweise: ["Zwei Stickstoffatome, aber nur eines hat ein Elektronenpaar zu vergeben. Schau, welches schon ein H trägt.", "Wie bei jeder Protonierung: die neue Bindung entsteht, die alte H–Cl-Bindung muss brechen."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Imidazole — two nitrogens, two roles",
+      description: "Nur eines der beiden Stickstoffatome ist basisch. Zeichne die Protonierung und die Tautomerie, die daraus folgt.",
+      stages: [
+        {
+          id: 0,
+          titel: "Protonierung an N-3",
+          aufgabe: "HCl protoniert das Imidazol. Zeichne beide Pfeile: das freie Elektronenpaar von N-3 zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
+          erklaerung: "N-1 trägt bereits ein Wasserstoffatom und steckt sein Elektronenpaar ins aromatische System — es steht nicht zur Verfügung. Das Paar von N-3 liegt dagegen in der Ringebene und ist frei. Mit einem pKs von etwa 7 ist Imidazol bei physiologischem pH halb protoniert, und genau deshalb arbeitet Histidin in Enzymen als Säure und als Base.",
+          hinweise: [
+            "Zwei Stickstoffatome, aber nur eines hat ein Elektronenpaar zu vergeben. Schau, welches schon ein H trägt.",
+            "Wie bei jeder Protonierung: die neue Bindung entsteht, die alte H–Cl-Bindung muss brechen."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220,
+              wasserstoffe: 1
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "n3",
+              element: "N",
+              x: 182,
+              y: 121,
+              freiePaare: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "h1",
+              element: "H",
+              x: 320,
+              y: 90,
+              frei: true
+            },
+            {
+              id: "cl1",
+              element: "Cl",
+              x: 385,
+              y: 90,
+              freiePaare: 3,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "i1",
+              von: "n1",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "i2",
+              von: "c5",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "i3",
+              von: "c4",
+              nach: "n3",
+              ordnung: 1
+            },
+            {
+              id: "i4",
+              von: "n3",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "i5",
+              von: "c2",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "hcl",
+              von: "h1",
+              nach: "cl1",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "n3"
+              },
+              nach: {
+                art: "atom",
+                id: "h1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "hcl"
+              },
+              nach: {
+                art: "atom",
+                id: "cl1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Tautomerie",
+          aufgabe: "Eine Base nimmt dem Imidazolium den Wasserstoff an N-1 ab. Zeichne beide Pfeile.",
+          erklaerung: "Das Imidazolium-Kation ist symmetrisch: beide Stickstoffatome tragen jetzt ein Wasserstoffatom und sind gleichwertig. Wird eines abgenommen, entsteht wieder neutrales Imidazol — aber der Wasserstoff kann nun am anderen Stickstoff sitzen. Genau dieser rasche Wechsel macht die beiden Tautomere im unsubstituierten Imidazol ununterscheidbar.",
+          hinweise: [
+            "Nimm den Wasserstoff von N-1 weg, nicht den gerade angelagerten.",
+            "Das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — sonst wäre das Ergebnis nicht neutral."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "n3",
+              element: "N",
+              x: 182,
+              y: 121,
+              ladung: 1,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "h2",
+              element: "H",
+              x: 150,
+              y: 275
+            },
+            {
+              id: "o1",
+              element: "O",
+              x: 330,
+              y: 240,
+              ladung: -1,
+              freiePaare: 3,
+              wasserstoffe: 1,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "i1",
+              von: "n1",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "i2",
+              von: "c5",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "i3",
+              von: "c4",
+              nach: "n3",
+              ordnung: 1
+            },
+            {
+              id: "i4",
+              von: "n3",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "i5",
+              von: "c2",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "nh",
+              von: "n1",
+              nach: "h2",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "o1"
+              },
+              nach: {
+                art: "atom",
+                id: "h2"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "nh"
+              },
+              nach: {
+                art: "atom",
+                id: "n1"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "Das andere Tautomer",
+        beschreibung: "Derselbe Ring, der Wasserstoff sitzt jetzt an N-3. Im unsubstituierten Imidazol sind beide Formen gleichwertig und wandeln sich in Lösung rasch ineinander um.",
         atome: [
-          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "n3", element: "N", x: 182, y: 121, freiePaare: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "h1", element: "H", x: 320, y: 90, frei: true },
-          { id: "cl1", element: "Cl", x: 385, y: 90, freiePaare: 3, frei: true },
+          {
+            id: "n1",
+            element: "N",
+            x: 150,
+            y: 220,
+            freiePaare: 1
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 98,
+            y: 182
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 118,
+            y: 121
+          },
+          {
+            id: "n3",
+            element: "N",
+            x: 182,
+            y: 121,
+            wasserstoffe: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 202,
+            y: 182
+          }
         ],
         bindungen: [
-          { id: "i1", von: "n1", nach: "c5", ordnung: 1 },
-          { id: "i2", von: "c5", nach: "c4", ordnung: 2 },
-          { id: "i3", von: "c4", nach: "n3", ordnung: 1 },
-          { id: "i4", von: "n3", nach: "c2", ordnung: 2 },
-          { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
-          { id: "hcl", von: "h1", nach: "cl1", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "n3" }, nach: { art: "atom", id: "h1" } },
-          { von: { art: "bindung", id: "hcl" }, nach: { art: "atom", id: "cl1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Tautomerie",
-        aufgabe: "Eine Base nimmt dem Imidazolium den Wasserstoff an N-1 ab. Zeichne beide Pfeile.",
-        erklaerung: "Das Imidazolium-Kation ist symmetrisch: beide Stickstoffatome tragen jetzt ein Wasserstoffatom und sind gleichwertig. Wird eines abgenommen, entsteht wieder neutrales Imidazol — aber der Wasserstoff kann nun am anderen Stickstoff sitzen. Genau dieser rasche Wechsel macht die beiden Tautomere im unsubstituierten Imidazol ununterscheidbar.",
-        hinweise: ["Nimm den Wasserstoff von N-1 weg, nicht den gerade angelagerten.", "Das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — sonst wäre das Ergebnis nicht neutral."],
-        atome: [
-          { id: "n1", element: "N", x: 150, y: 220 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "n3", element: "N", x: 182, y: 121, ladung: 1, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "h2", element: "H", x: 150, y: 275 },
-          { id: "o1", element: "O", x: 330, y: 240, ladung: -1, freiePaare: 3, wasserstoffe: 1, frei: true },
-        ],
-        bindungen: [
-          { id: "i1", von: "n1", nach: "c5", ordnung: 1 },
-          { id: "i2", von: "c5", nach: "c4", ordnung: 2 },
-          { id: "i3", von: "c4", nach: "n3", ordnung: 1 },
-          { id: "i4", von: "n3", nach: "c2", ordnung: 2 },
-          { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
-          { id: "nh", von: "n1", nach: "h2", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "o1" }, nach: { art: "atom", id: "h2" } },
-          { von: { art: "bindung", id: "nh" }, nach: { art: "atom", id: "n1" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "Das andere Tautomer",
-      beschreibung: "Derselbe Ring, der Wasserstoff sitzt jetzt an N-3. Im unsubstituierten Imidazol sind beide Formen gleichwertig und wandeln sich in Lösung rasch ineinander um.",
-      atome: [
-        { id: "n1", element: "N", x: 150, y: 220, freiePaare: 1 },
-        { id: "c5", element: "C", x: 98, y: 182 },
-        { id: "c4", element: "C", x: 118, y: 121 },
-        { id: "n3", element: "N", x: 182, y: 121, wasserstoffe: 1 },
-        { id: "c2", element: "C", x: 202, y: 182 },
-      ],
-      bindungen: [
-        { id: "i1", von: "n1", nach: "c5", ordnung: 2 },
-        { id: "i2", von: "c5", nach: "c4", ordnung: 1 },
-        { id: "i3", von: "c4", nach: "n3", ordnung: 2 },
-        { id: "i4", von: "n3", nach: "c2", ordnung: 1 },
-        { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
-      ],
+          {
+            id: "i1",
+            von: "n1",
+            nach: "c5",
+            ordnung: 2
+          },
+          {
+            id: "i2",
+            von: "c5",
+            nach: "c4",
+            ordnung: 1
+          },
+          {
+            id: "i3",
+            von: "c4",
+            nach: "n3",
+            ordnung: 2
+          },
+          {
+            id: "i4",
+            von: "n3",
+            nach: "c2",
+            ordnung: 1
+          },
+          {
+            id: "i5",
+            von: "c2",
+            nach: "n1",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Why does imidazole have a pKa of 7.0 despite containing two N atoms?", options: ["Both nitrogen atoms are equally basic and share the proton", "One nitrogen is pyrrole-like, the other pyridine-like", "An oxygen atom raises the basicity", "The ring carries eight π electrons"], correct: 1, explanation: "N-1 carries the hydrogen and donates its lone pair to the aromatic sextet — it is not basic. N-3 keeps its lone pair in the ring plane and is freely available, so that is where protonation happens. The resulting pKa of about 7 puts imidazole right at physiological pH, which is why histidine works as an acid-base catalyst in enzymes." },
     { id: "q2", question: "Why can an isoxazole be regarded as a masked β-enaminone?", options: ["Because acid tautomerises it to the enol", "Because the weak N–O bond can be cleaved to release it", "Because it loses CO₂ on heating", "Because the ring is not aromatic and opens spontaneously"], correct: 1, explanation: "The N–O bond is the weakest bond in the ring and can be cleaved reductively or under base, which unmasks a β-enaminone. The ring therefore acts as a protecting group: build it, run reactions the open enaminone would not survive, then open it again at the end." },

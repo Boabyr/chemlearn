@@ -30,12 +30,17 @@ describe('Apparatur-Registry', () => {
     const used: string[] = []
 
     for (const topic of topics) {
-      const interactive = (topic as { interactive?: { type?: string; options?: { id: string }[] } }).interactive
-      if (interactive?.type !== 'apparatus-quiz') continue
-      for (const opt of interactive.options ?? []) used.push(opt.id)
+      for (const teil of topic.interactives ?? []) {
+        if (teil.type === 'apparatus-quiz') {
+          for (const opt of teil.options) used.push(opt.id)
+        }
+        if (teil.type === 'apparatus-matching') {
+          for (const paar of teil.paare) used.push(paar.apparaturId)
+        }
+      }
     }
 
-    expect(used.length, 'keine Apparatur-Quizze gefunden – Test prüft nichts').toBeGreaterThan(0)
+    expect(used.length, 'keine Apparatur-Aufgaben gefunden – Test prüft nichts').toBeGreaterThan(0)
 
     const fehlend = [...new Set(used)].filter(id => !(id in apparatusRegistry))
     expect(fehlend, `Apparatur-IDs ohne Zeichnung: ${fehlend.join(', ')}`).toEqual([])

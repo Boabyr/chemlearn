@@ -17,8 +17,9 @@ async function alleMechanismen(): Promise<{ thema: string; mechanismus: Mechanis
   const gefunden: { thema: string; mechanismus: Mechanismus }[] = []
   for (const kurs of allCourses) {
     for (const thema of await loadAllTopics(kurs.id)) {
-      if (thema.interactive?.type === 'mechanism') {
-        gefunden.push({ thema: thema.id, mechanismus: thema.interactive })
+      for (const teil of thema.interactives ?? []) {
+        if (teil.type !== 'mechanism') continue
+        gefunden.push({ thema: thema.id, mechanismus: teil })
       }
     }
   }

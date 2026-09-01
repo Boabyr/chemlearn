@@ -7,9 +7,6 @@ export const topic = {
   icon: "🟡",
   estimatedMinutes: 75,
   theory: `
-
-
-
 ## Overview: Pyrrole, Furan, Thiophene
 
 All three are 5-membered aromatic heterocycles with **6 π electrons**:
@@ -103,90 +100,324 @@ The heteroatom simply says which reagent was used.
   ring plane, but protonating it would still cost aromaticity.
 - Deprotonating pyrrole gives the **pyrrolide anion**, which is aromatic, stable and a
   good nucleophile at nitrogen — the entry point to N-substituted pyrroles.
-
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "SEAr on pyrrole — why C-2 wins",
-    description: "Pyrrol ist elektronenreich und reagiert bereitwillig mit Elektrophilen. Zeichne den Angriff und die Rückkehr zur Aromatizität.",
-    stages: [
-      {
-        id: 0, titel: "Angriff der π-Bindung",
-        aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Bromkation.",
-        erklaerung: "Der Nucleophil ist hier der Ring selbst — deshalb beginnt der Pfeil an der π-Bindung, nicht am Stickstoff. C-2 wird bevorzugt, weil das entstehende Areniumion drei Grenzstrukturen hat, darunter eine mit der positiven Ladung am Stickstoff, wo jedes Atom ein volles Oktett behält. Ein Angriff an C-3 böte nur zwei.",
-        hinweise: ["Wer greift an? Nicht der Stickstoff, sondern die Doppelbindung zwischen C-2 und C-3.", "Zähle für beide Angriffsstellen die Grenzstrukturen des Kations — die Stelle mit mehr gewinnt."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "SEAr on pyrrole — why C-2 wins",
+      description: "Pyrrol ist elektronenreich und reagiert bereitwillig mit Elektrophilen. Zeichne den Angriff und die Rückkehr zur Aromatizität.",
+      stages: [
+        {
+          id: 0,
+          titel: "Angriff der π-Bindung",
+          aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Bromkation.",
+          erklaerung: "Der Nucleophil ist hier der Ring selbst — deshalb beginnt der Pfeil an der π-Bindung, nicht am Stickstoff. C-2 wird bevorzugt, weil das entstehende Areniumion drei Grenzstrukturen hat, darunter eine mit der positiven Ladung am Stickstoff, wo jedes Atom ein volles Oktett behält. Ein Angriff an C-3 böte nur zwei.",
+          hinweise: [
+            "Wer greift an? Nicht der Stickstoff, sondern die Doppelbindung zwischen C-2 und C-3.",
+            "Zähle für beide Angriffsstellen die Grenzstrukturen des Kations — die Stelle mit mehr gewinnt."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 182,
+              y: 121
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "br",
+              element: "Br",
+              x: 350,
+              y: 150,
+              ladung: 1,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "p1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "p2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 2
+            },
+            {
+              id: "p3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 1
+            },
+            {
+              id: "p4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 2
+            },
+            {
+              id: "p5",
+              von: "c5",
+              nach: "n1",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "bindung",
+                id: "p2"
+              },
+              nach: {
+                art: "atom",
+                id: "br"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Rearomatisierung",
+          aufgabe: "Eine Base nimmt das Proton von C-2 ab. Zeichne beide Pfeile: das freie Elektronenpaar der Base zum Wasserstoff, und die C2–H-Bindung in den Ring.",
+          erklaerung: "Das Areniumion ist nicht das Produkt — an C-2 sitzt jetzt ein sp³-Kohlenstoff, der Ring hat sein Sextett verloren, und die positive Ladung liegt am Stickstoff. Die Deprotonierung kostet fast nichts gegenüber der zurückgewonnenen Aromatizität. Deshalb ist die Substitution und nicht die Addition das Ergebnis.",
+          hinweise: [
+            "Am Ende muss C-2 wieder drei Bindungen im Ring haben — der Wasserstoff ist einer zu viel.",
+            "Das Elektronenpaar der C–H-Bindung wandert nicht zur Base, sondern in den Ring."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220,
+              ladung: 1,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 182,
+              y: 121
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "br",
+              element: "Br",
+              x: 268,
+              y: 205
+            },
+            {
+              id: "h2",
+              element: "H",
+              x: 250,
+              y: 145
+            },
+            {
+              id: "base",
+              element: "N",
+              x: 370,
+              y: 90,
+              ladung: -1,
+              freiePaare: 2,
+              wasserstoffe: 2,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "p1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "p2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "p3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "p4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "p5",
+              von: "c5",
+              nach: "n1",
+              ordnung: 2
+            },
+            {
+              id: "cbr",
+              von: "c2",
+              nach: "br",
+              ordnung: 1
+            },
+            {
+              id: "ch",
+              von: "c2",
+              nach: "h2",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "base"
+              },
+              nach: {
+                art: "atom",
+                id: "h2"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "ch"
+              },
+              nach: {
+                art: "bindung",
+                id: "p2"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "2-Brompyrrol",
+        beschreibung: "Das Brom sitzt an C-2, der Ring ist wieder aromatisch. Substitution, nicht Addition.",
         atome: [
-          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "c3", element: "C", x: 182, y: 121 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "br", element: "Br", x: 350, y: 150, ladung: 1, frei: true },
+          {
+            id: "n1",
+            element: "N",
+            x: 150,
+            y: 220,
+            wasserstoffe: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 202,
+            y: 182
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 182,
+            y: 121
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 118,
+            y: 121
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 98,
+            y: 182
+          },
+          {
+            id: "br",
+            element: "Br",
+            x: 268,
+            y: 205
+          }
         ],
         bindungen: [
-          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
-          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
-          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
-          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "br" } },
-        ],
-      },
-      {
-        id: 1, titel: "Rearomatisierung",
-        aufgabe: "Eine Base nimmt das Proton von C-2 ab. Zeichne beide Pfeile: das freie Elektronenpaar der Base zum Wasserstoff, und die C2–H-Bindung in den Ring.",
-        erklaerung: "Das Areniumion ist nicht das Produkt — an C-2 sitzt jetzt ein sp³-Kohlenstoff, der Ring hat sein Sextett verloren, und die positive Ladung liegt am Stickstoff. Die Deprotonierung kostet fast nichts gegenüber der zurückgewonnenen Aromatizität. Deshalb ist die Substitution und nicht die Addition das Ergebnis.",
-        hinweise: ["Am Ende muss C-2 wieder drei Bindungen im Ring haben — der Wasserstoff ist einer zu viel.", "Das Elektronenpaar der C–H-Bindung wandert nicht zur Base, sondern in den Ring."],
-        atome: [
-          { id: "n1", element: "N", x: 150, y: 220, ladung: 1, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "c3", element: "C", x: 182, y: 121 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "br", element: "Br", x: 268, y: 205 },
-          { id: "h2", element: "H", x: 250, y: 145 },
-          { id: "base", element: "N", x: 370, y: 90, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
-        ],
-        bindungen: [
-          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "p2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "p3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "p4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "p5", von: "c5", nach: "n1", ordnung: 2 },
-          { id: "cbr", von: "c2", nach: "br", ordnung: 1 },
-          { id: "ch", von: "c2", nach: "h2", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "h2" } },
-          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "p2" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "2-Brompyrrol",
-      beschreibung: "Das Brom sitzt an C-2, der Ring ist wieder aromatisch. Substitution, nicht Addition.",
-      atome: [
-        { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-        { id: "c2", element: "C", x: 202, y: 182 },
-        { id: "c3", element: "C", x: 182, y: 121 },
-        { id: "c4", element: "C", x: 118, y: 121 },
-        { id: "c5", element: "C", x: 98, y: 182 },
-        { id: "br", element: "Br", x: 268, y: 205 },
-      ],
-      bindungen: [
-        { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
-        { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
-        { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
-        { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
-        { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
-        { id: "cbr", von: "c2", nach: "br", ordnung: 1 },
-      ],
+          {
+            id: "p1",
+            von: "n1",
+            nach: "c2",
+            ordnung: 1
+          },
+          {
+            id: "p2",
+            von: "c2",
+            nach: "c3",
+            ordnung: 2
+          },
+          {
+            id: "p3",
+            von: "c3",
+            nach: "c4",
+            ordnung: 1
+          },
+          {
+            id: "p4",
+            von: "c4",
+            nach: "c5",
+            ordnung: 2
+          },
+          {
+            id: "p5",
+            von: "c5",
+            nach: "n1",
+            ordnung: 1
+          },
+          {
+            id: "cbr",
+            von: "c2",
+            nach: "br",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Why does indole react preferentially at C-3 rather than C-2 in electrophilic aromatic substitution?", options: ["C-2 is too hindered for the electrophile", "Attack at C-3 leaves the benzene ring aromatic", "C-3 carries more π density in the ground state", "Nitrogen inverts and stabilises the C-3 adduct"], correct: 1, explanation: "Attack at C-3 puts the positive charge on nitrogen while the fused benzene ring keeps its own sextet. Attack at C-2 would have to delocalise the charge into the benzene ring and break its aromaticity — far more expensive. Ground-state electron density does not decide this; the stability of the arenium ion does." },
     { id: "q2", question: "Which compound is formed in the Paal-Knorr synthesis from a 1,4-dicarbonyl with a primary amine?", options: ["Furan", "Pyrrole", "Thiophene", "Pyridine"], correct: 1, explanation: "The Paal-Knorr synthesis gives N-substituted pyrroles from 1,4-dicarbonyl compounds + primary amine (R-NH₂). With NH₃ → NH-pyrrole, with H₂O/H⁺ → furan, with H₂S/H⁺ or P₄S₁₀ → thiophene." },

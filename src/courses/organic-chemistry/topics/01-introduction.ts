@@ -7,8 +7,6 @@ export const topic = {
   icon: "📖",
   estimatedMinutes: 60,
   theory: `
-
-
 ## What is a Heterocyclic Compound?
 
 A **heterocycle** is a ring molecule that contains at least one atom other than carbon – typically N, O or S – alongside carbon.
@@ -88,94 +86,358 @@ For electrophilic aromatic substitution (SEAr):
 - HOMO energy is decisive
 - Pyrrole, furan, thiophene: higher HOMO → more reactive than benzene
 - Pyridine: lower HOMO → less reactive than benzene (deactivated by N)
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Pyridine as a base — protonation and back",
-    description: "Das freie Elektronenpaar am Stickstoff liegt in der Ringebene und steht zur Verfügung. Zeichne die Säure-Base-Reaktion in beide Richtungen.",
-    stages: [
-      {
-        id: 0, titel: "Protonierung",
-        aufgabe: "Pyridin greift HCl an. Zeichne beide Pfeile: das freie Elektronenpaar zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
-        erklaerung: "Das Elektronenpaar am Stickstoff sitzt in einem sp²-Orbital in der Ringebene und ist nicht Teil des aromatischen Sextetts. Es kann angreifen, ohne die Aromatizität zu zerstören — deshalb ist Pyridin mit pKs 5,2 der konjugierten Säure eine brauchbare Base. Gleichzeitig muss die H–Cl-Bindung brechen, sonst hätte der Wasserstoff fünf Bindungen.",
-        hinweise: ["Zwei Pfeile: einer bildet die neue Bindung, einer löst die alte. Ohne den zweiten bekäme der Wasserstoff zwei Bindungen.", "Der Pfeil zum Wasserstoff startet am freien Elektronenpaar des Stickstoffs, nicht am Ring."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Pyridine as a base — protonation and back",
+      description: "Das freie Elektronenpaar am Stickstoff liegt in der Ringebene und steht zur Verfügung. Zeichne die Säure-Base-Reaktion in beide Richtungen.",
+      stages: [
+        {
+          id: 0,
+          titel: "Protonierung",
+          aufgabe: "Pyridin greift HCl an. Zeichne beide Pfeile: das freie Elektronenpaar zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
+          erklaerung: "Das Elektronenpaar am Stickstoff sitzt in einem sp²-Orbital in der Ringebene und ist nicht Teil des aromatischen Sextetts. Es kann angreifen, ohne die Aromatizität zu zerstören — deshalb ist Pyridin mit pKs 5,2 der konjugierten Säure eine brauchbare Base. Gleichzeitig muss die H–Cl-Bindung brechen, sonst hätte der Wasserstoff fünf Bindungen.",
+          hinweise: [
+            "Zwei Pfeile: einer bildet die neue Bindung, einer löst die alte. Ohne den zweiten bekäme der Wasserstoff zwei Bindungen.",
+            "Der Pfeil zum Wasserstoff startet am freien Elektronenpaar des Stickstoffs, nicht am Ring."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 100,
+              y: 131,
+              freiePaare: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 150,
+              y: 102
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 200,
+              y: 131
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 200,
+              y: 189
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 150,
+              y: 218
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 100,
+              y: 189
+            },
+            {
+              id: "h1",
+              element: "H",
+              x: 320,
+              y: 120,
+              frei: true
+            },
+            {
+              id: "cl1",
+              element: "Cl",
+              x: 385,
+              y: 120,
+              freiePaare: 3,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "hcl",
+              von: "h1",
+              nach: "cl1",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "n1"
+              },
+              nach: {
+                art: "atom",
+                id: "h1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "hcl"
+              },
+              nach: {
+                art: "atom",
+                id: "cl1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Rückreaktion",
+          aufgabe: "Hydroxid nimmt dem Pyridinium den Wasserstoff wieder ab. Zeichne beide Pfeile.",
+          erklaerung: "Die Reaktion ist ein Gleichgewicht. Eine stärkere Base als Chlorid holt den Wasserstoff zurück, und das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — Pyridin ist wieder da. Genau dieses Hin und Her macht den pKs-Wert zur brauchbaren Kennzahl.",
+          hinweise: [
+            "Das Elektronenpaar des Hydroxids greift den Wasserstoff an; die N–H-Bindung muss dabei zum Stickstoff zurückklappen.",
+            "Wohin das Elektronenpaar der brechenden Bindung geht, entscheidet, wer am Ende die Ladung trägt."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 100,
+              y: 131,
+              ladung: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 150,
+              y: 102
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 200,
+              y: 131
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 200,
+              y: 189
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 150,
+              y: 218
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 100,
+              y: 189
+            },
+            {
+              id: "h1",
+              element: "H",
+              x: 60,
+              y: 90
+            },
+            {
+              id: "o1",
+              element: "O",
+              x: 300,
+              y: 60,
+              ladung: -1,
+              freiePaare: 3,
+              wasserstoffe: 1,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "nh",
+              von: "n1",
+              nach: "h1",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "o1"
+              },
+              nach: {
+                art: "atom",
+                id: "h1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "nh"
+              },
+              nach: {
+                art: "atom",
+                id: "n1"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "Pyridin, unverändert",
+        beschreibung: "Das Gleichgewicht steht wieder auf der Seite der freien Base — der Ring hat nie seine Aromatizität verloren.",
         atome: [
-          { id: "n1", element: "N", x: 100, y: 131, freiePaare: 1 },
-          { id: "c2", element: "C", x: 150, y: 102 },
-          { id: "c3", element: "C", x: 200, y: 131 },
-          { id: "c4", element: "C", x: 200, y: 189 },
-          { id: "c5", element: "C", x: 150, y: 218 },
-          { id: "c6", element: "C", x: 100, y: 189 },
-          { id: "h1", element: "H", x: 320, y: 120, frei: true },
-          { id: "cl1", element: "Cl", x: 385, y: 120, freiePaare: 3, frei: true },
+          {
+            id: "n1",
+            element: "N",
+            x: 130,
+            y: 131,
+            freiePaare: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 180,
+            y: 102
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 230,
+            y: 131
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 230,
+            y: 189
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 180,
+            y: 218
+          },
+          {
+            id: "c6",
+            element: "C",
+            x: 130,
+            y: 189
+          }
         ],
         bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "hcl", von: "h1", nach: "cl1", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "n1" }, nach: { art: "atom", id: "h1" } },
-          { von: { art: "bindung", id: "hcl" }, nach: { art: "atom", id: "cl1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Rückreaktion",
-        aufgabe: "Hydroxid nimmt dem Pyridinium den Wasserstoff wieder ab. Zeichne beide Pfeile.",
-        erklaerung: "Die Reaktion ist ein Gleichgewicht. Eine stärkere Base als Chlorid holt den Wasserstoff zurück, und das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — Pyridin ist wieder da. Genau dieses Hin und Her macht den pKs-Wert zur brauchbaren Kennzahl.",
-        hinweise: ["Das Elektronenpaar des Hydroxids greift den Wasserstoff an; die N–H-Bindung muss dabei zum Stickstoff zurückklappen.", "Wohin das Elektronenpaar der brechenden Bindung geht, entscheidet, wer am Ende die Ladung trägt."],
-        atome: [
-          { id: "n1", element: "N", x: 100, y: 131, ladung: 1 },
-          { id: "c2", element: "C", x: 150, y: 102 },
-          { id: "c3", element: "C", x: 200, y: 131 },
-          { id: "c4", element: "C", x: 200, y: 189 },
-          { id: "c5", element: "C", x: 150, y: 218 },
-          { id: "c6", element: "C", x: 100, y: 189 },
-          { id: "h1", element: "H", x: 60, y: 90 },
-          { id: "o1", element: "O", x: 300, y: 60, ladung: -1, freiePaare: 3, wasserstoffe: 1, frei: true },
-        ],
-        bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "nh", von: "n1", nach: "h1", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "o1" }, nach: { art: "atom", id: "h1" } },
-          { von: { art: "bindung", id: "nh" }, nach: { art: "atom", id: "n1" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "Pyridin, unverändert",
-      beschreibung: "Das Gleichgewicht steht wieder auf der Seite der freien Base — der Ring hat nie seine Aromatizität verloren.",
-      atome: [
-        { id: "n1", element: "N", x: 130, y: 131, freiePaare: 1 },
-        { id: "c2", element: "C", x: 180, y: 102 },
-        { id: "c3", element: "C", x: 230, y: 131 },
-        { id: "c4", element: "C", x: 230, y: 189 },
-        { id: "c5", element: "C", x: 180, y: 218 },
-        { id: "c6", element: "C", x: 130, y: 189 },
-      ],
-      bindungen: [
-        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-      ],
+          {
+            id: "r1",
+            von: "n1",
+            nach: "c2",
+            ordnung: 2
+          },
+          {
+            id: "r2",
+            von: "c2",
+            nach: "c3",
+            ordnung: 1
+          },
+          {
+            id: "r3",
+            von: "c3",
+            nach: "c4",
+            ordnung: 2
+          },
+          {
+            id: "r4",
+            von: "c4",
+            nach: "c5",
+            ordnung: 1
+          },
+          {
+            id: "r5",
+            von: "c5",
+            nach: "c6",
+            ordnung: 2
+          },
+          {
+            id: "r6",
+            von: "c6",
+            nach: "n1",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Which statement about the aromaticity of pyrrole is correct?", options: ["The lone pair of N is not part of the π system", "Pyrrole has 6 π electrons and is therefore aromatic (Hückel: n=1)", "Pyrrole is not aromatic, because a heteroatom interrupts the conjugation", "Pyrrole follows the 4n rule and is antiaromatic"], correct: 1, explanation: "Pyrrole has 6 π electrons (4 from the two double bonds + 2 from the N lone pair). The sp²-N lone pair lies in the ring plane and is part of the π system → pyrrole is aromatic (Hückel, n=1)." },
     { id: "q2", question: "Why is pyridine (pKa 5.2) significantly more basic than pyrrole (pKa ~0)?", options: ["Pyridine simply contains more carbon atoms", "In pyrrole the lone pair sits in the π system", "Pyridine forms a six- and pyrrole a five-ring", "The nitrogen of pyridine is sp³-hybridised"], correct: 1, explanation: "Pyrrole needs its nitrogen lone pair to reach the aromatic sextet. Protonating it would destroy the aromaticity, which is far too costly. In pyridine the lone pair sits in an sp² orbital in the ring plane, outside the π system, and is freely available — hence pKa 5.2 for the conjugate acid." },

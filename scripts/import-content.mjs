@@ -494,6 +494,25 @@ function leseInteraktiv(block, ort) {
     }
   }
 
+  if (typ === 'apparatus-matching') {
+    const paare = []
+    for (const line of block.split('\n')) {
+      if (!/^-\s*apparatur:/.test(line.trim())) continue
+      const f = inlineFields(line.replace(/^\s*-\s*/, ''))
+      if (f.apparatur) paare.push({ apparaturId: f.apparatur, label: f.label ?? f.apparatur, hinweis: f.hinweis })
+    }
+    if (paare.length < 3 || paare.length > 6) {
+      problem(ort, `apparatus-matching braucht drei bis sechs Paare, hat ${paare.length}`)
+      return null
+    }
+    for (const p2 of paare) warnungPruefeApparatur(p2.apparaturId, ort)
+    return {
+      art: 'apparatus-matching',
+      title: kv.titel ?? '', description: kv.beschreibung ?? '',
+      explanation: kv.erklaerung ?? '', paare,
+    }
+  }
+
   if (typ === 'mechanism') {
     return leseMechanismus(block, ort)
   }
@@ -692,6 +711,78 @@ function alsParserForm(interaktiv) {
 }
 
 /**
+ * Rückweg: Parserform → Endform, wie sie in der Themendatei steht.
+ *
+ * Seit ein Thema mehrere Interaktivteile trägt, wird die Liste zusammengeführt
+ * und danach als Ganzes geschrieben — dafür müssen alle Einträge in derselben
+ * Form vorliegen.
+ */
+/**
+ * Wert als TypeScript-Literal ausgeben — Schlüssel ohne Anführungszeichen.
+ *
+ * JSON.stringify liefert `"type": ...` und passt damit nicht zum übrigen
+ * erzeugten Bestand; der Unterschied wäre in jedem Diff zu sehen.
+ */
+function alsLiteral(wert, einzug) {
+  const tiefer = einzug + '  '
+  if (Array.isArray(wert)) {
+    if (wert.length === 0) return '[]'
+    return '[\n' + wert.map(w => tiefer + alsLiteral(w, tiefer)).join(',\n') + '\n' + einzug + ']'
+  }
+  if (wert && typeof wert === 'object') {
+    const paare = Object.entries(wert).filter(([, v]) => v !== undefined)
+    if (paare.length === 0) return '{}'
+    return '{\n' + paare.map(([k, v]) => {
+      const schluessel = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(k) ? k : str(k)
+      return tiefer + schluessel + ': ' + alsLiteral(v, tiefer)
+    }).join(',\n') + '\n' + einzug + '}'
+  }
+  if (typeof wert === 'string') return str(wert)
+  return String(wert)
+}
+
+function alsEndForm(teil) {
+  if (!teil) return null
+  switch (teil.art) {
+    case 'formula-calculator':
+      return {
+        type: 'formula-calculator',
+        formula: {
+          id: teil.formel.id, name: teil.formel.name, equation: teil.formel.equation,
+          variables: teil.formel.variablen, umstellungen: teil.formel.umstellungen,
+          hints: teil.formel.hints,
+        },
+      }
+    case 'apparatus-quiz':
+      return {
+        type: 'apparatus-quiz',
+        question: teil.question, targetId: teil.targetId, options: teil.optionen,
+        explanation: teil.explanation, hint1: teil.hint1, hint2: teil.hint2,
+      }
+    case 'apparatus-matching':
+      return {
+        type: 'apparatus-matching',
+        title: teil.title, description: teil.description,
+        explanation: teil.explanation, paare: teil.paare,
+      }
+    case 'spectrum-assignment':
+      return {
+        type: 'spectrum-assignment',
+        title: teil.title, description: teil.description,
+        xLabel: teil.xLabel, yLabel: teil.yLabel,
+        peaks: teil.peaks, hint1: teil.hint1, hint2: teil.hint2,
+      }
+    case 'mechanism':
+      return {
+        type: 'mechanism', title: teil.title, description: teil.description,
+        stages: teil.stufen, ergebnis: teil.ergebnis,
+      }
+    default:
+      return null
+  }
+}
+
+/**
  * Neue Fragen und Karten an ein vorhandenes Thema anhängen.
  * Doppelte Karten (gleiche Vorderseite) und doppelte Fragen fallen weg.
  */
@@ -719,11 +810,19 @@ function ergaenzeThema(vorhanden, zusatz, ort) {
   const neueKarten = zusatz.flashcards.filter(k => !bekannteKarten.has(kartenId(k.front)))
 
   // Nach dem ersten Auftrag liegt der Interaktivteil bereits in Parserform vor.
-  let interactive = vorhanden.interactive?.art ? vorhanden.interactive : alsParserForm(vorhanden.interactive)
-  const ersetzt = !!(interactive && zusatz.interactive && zusatz.interaktivErsetzen)
-  if (zusatz.interactive) {
-    if (!interactive || zusatz.interaktivErsetzen) interactive = zusatz.interactive
-    else warnung(ort, `${vorhanden.id} hat schon einen Interaktivteil — "interaktiv: ersetzen" setzen, um ihn abzulösen`)
+  // Ein Thema trägt mehrere Interaktivteile. Ein neuer kommt dazu; trägt die
+  // Quelle "interaktiv: ersetzen", tritt er an die Stelle des gleichen Typs.
+  const bestehende = [...(vorhanden.interactives ?? [])]
+  const neuerTeil = zusatz.interactive ? alsEndForm(zusatz.interactive) : null
+  let ersetzt = false
+  if (neuerTeil) {
+    const gleicherTyp = bestehende.findIndex(x => x.type === neuerTeil.type)
+    if (gleicherTyp >= 0 && zusatz.interaktivErsetzen) {
+      bestehende[gleicherTyp] = neuerTeil
+      ersetzt = true
+    } else if (gleicherTyp < 0) {
+      bestehende.push(neuerTeil)
+    }
   }
 
   const bekannteAbbildungen = new Set((vorhanden.abbildungen ?? []).map(a => a.id))
@@ -733,14 +832,15 @@ function ergaenzeThema(vorhanden, zusatz, ort) {
     thema: {
       ...vorhanden,
       abbildungen: [...(vorhanden.abbildungen ?? []), ...neueAbbildungen],
-      interactive,
+      interactive: null,
+      interactives: bestehende,
       quiz: [...vorhanden.quiz, ...neueFragen],
       flashcards: [...bleiben, ...neueKarten],
     },
     bilanz: {
       fragen: neueFragen.length,
       karten: neueKarten.length,
-      interaktiv: !vorhanden.interactive && !!zusatz.interactive,
+      interaktiv: bestehende.length > (vorhanden.interactives ?? []).length,
       ersetzt,
       entfernt,
     },
@@ -852,9 +952,12 @@ function themaAlsTypeScript(t) {
   zeilen.push(`  subtitle: ${str(t.subtitle)},`)
   zeilen.push(`  icon: ${str(t.icon)},`)
   zeilen.push(`  estimatedMinutes: ${t.estimatedMinutes},`)
-  zeilen.push(`  theory: ${tpl('\n' + t.theory + '\n')},`)
+  // Ohne trim() wächst der Theorietext bei jedem Lauf um eine Leerzeile:
+  // die gespeicherte Fassung trägt die Umbrüche des vorigen schon.
+  zeilen.push(`  theory: ${tpl('\n' + t.theory.trim() + '\n')},`)
 
   const i = t.interactive
+  const vorInteraktiv = zeilen.length
   if (i?.art === 'formula-calculator') {
     const f = i.formel
     zeilen.push('  interactive: {')
@@ -958,6 +1061,19 @@ function themaAlsTypeScript(t) {
     }
     zeilen.push('    ],')
     zeilen.push('  },')
+  }
+
+  // Aus dem einen Interaktivteil des Quellformats wird ein Eintrag der Liste.
+  if (zeilen.length > vorInteraktiv) {
+    const teil = zeilen.splice(vorInteraktiv).map(z => '  ' + z)
+    teil[0] = '    {'
+    zeilen.push('  interactives: [', ...teil, '  ],')
+  } else if (t.interactives?.length) {
+    zeilen.push('  interactives: [')
+    for (const vorhandenerTeil of t.interactives) {
+      zeilen.push('    ' + alsLiteral(vorhandenerTeil, '    ') + ',')
+    }
+    zeilen.push('  ],')
   }
 
   if (t.abbildungen?.length) {

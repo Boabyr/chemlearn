@@ -409,11 +409,40 @@ export const abbildungSchema = z.discriminatedUnion('art', [
   diagrammSchema,
 ])
 
+/**
+ * Geräte zuordnen: links der Name, rechts das Bild.
+ *
+ * Der Kurs hat 21 Apparaturzeichnungen, geübt wurden bisher fünf — je eine
+ * Frage mit vier Bildern. Hier kommen mehrere Geräte auf einmal ins Spiel.
+ */
+export const apparaturZuordnungSchema = z.object({
+  type: z.literal('apparatus-matching'),
+  title: nichtLeer,
+  description: z.string(),
+  explanation: nichtLeer,
+  paare: z.array(z.object({
+    /** Schlüssel in src/components/Apparatus/registry.ts */
+    apparaturId: nichtLeer,
+    label: nichtLeer,
+    hinweis: z.string().optional(),
+  })).min(3, 'Mindestens drei Paare').max(6, 'Höchstens sechs Paare — sonst wird das Bild unlesbar'),
+}).superRefine((z2, ctx) => {
+  const ids = z2.paare.map(p => p.apparaturId)
+  if (new Set(ids).size !== ids.length) {
+    ctx.addIssue({ code: 'custom', path: ['paare'], message: 'Dieselbe Apparatur steht zweimal' })
+  }
+  const namen = z2.paare.map(p => p.label)
+  if (new Set(namen).size !== namen.length) {
+    ctx.addIssue({ code: 'custom', path: ['paare'], message: 'Doppelte Beschriftung' })
+  }
+})
+
 export const interaktivSchema = z.discriminatedUnion('type', [
   apparaturQuizSchema,
   spektrumZuordnungSchema,
   formelRechnerSchema,
   mechanismusSchema,
+  apparaturZuordnungSchema,
 ])
 
 export const themaSchema = z.object({
@@ -423,17 +452,18 @@ export const themaSchema = z.object({
   icon: z.string(),
   estimatedMinutes: z.number().int().positive(),
   theory: z.string().min(50, 'Theorie ist zu dünn'),
-  interactive: z.unknown().optional(),
+  /** Mehrere Übungen je Thema — ein Formelrechner schließt eine Gerätezuordnung nicht aus. */
+  interactives: z.array(z.unknown()).default([]),
   /** Gezeichnete Strukturen, im Theorietext über {{abbildung:id}} gerufen. */
   abbildungen: z.array(abbildungSchema).default([]),
   quiz: z.array(quizFrageSchema).min(1),
   flashcards: z.array(karteikarteSchema).min(1),
 }).superRefine((thema, ctx) => {
-  if (thema.interactive !== undefined) {
-    const ergebnis = interaktivSchema.safeParse(thema.interactive)
+  for (const [i, teil] of thema.interactives.entries()) {
+    const ergebnis = interaktivSchema.safeParse(teil)
     if (!ergebnis.success) {
       for (const problem of ergebnis.error.issues) {
-        ctx.addIssue({ code: 'custom', path: ['interactive', ...problem.path], message: problem.message })
+        ctx.addIssue({ code: 'custom', path: ['interactives', i, ...problem.path], message: problem.message })
       }
     }
   }
@@ -509,14 +539,15 @@ export type StrukturBild = z.infer<typeof strukturBildSchema>
 export type StrukturAbbildung = z.infer<typeof strukturAbbildungSchema>
 export type Diagramm = z.infer<typeof diagrammSchema>
 export type Abbildung = z.infer<typeof abbildungSchema>
+export type ApparaturZuordnung = z.infer<typeof apparaturZuordnungSchema>
 export type Mechanismus = z.infer<typeof mechanismusSchema>
 export type MechanismusStufe = z.infer<typeof mechanismusStufeSchema>
 export type MechanismusAtom = z.infer<typeof atomSchema>
 export type MechanismusBindung = z.infer<typeof bindungSchema>
 export type MechanismusPfeil = z.infer<typeof pfeilSchema>
-export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus
+export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus | ApparaturZuordnung
 export type Pruefer = z.infer<typeof prueferSchema>
 
-export type Thema = Omit<z.infer<typeof themaSchema>, 'interactive' | 'abbildungen'>
-  & { interactive?: Interaktiv; abbildungen?: Abbildung[] }
+export type Thema = Omit<z.infer<typeof themaSchema>, 'interactives' | 'abbildungen'>
+  & { interactives?: Interaktiv[]; abbildungen?: Abbildung[] }
 export type Kurs = z.infer<typeof kursSchema>

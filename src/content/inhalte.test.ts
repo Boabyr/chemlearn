@@ -63,10 +63,19 @@ describe('Themen', () => {
     const unbekannt: string[] = []
     for (const kurs of allCourses) {
       for (const thema of await loadAllTopics(kurs.id)) {
-        if (thema.interactive?.type !== 'apparatus-quiz') continue
-        for (const option of thema.interactive.options) {
-          if (!(option.id in apparatusRegistry)) unbekannt.push(`${thema.id}: ${option.id}`)
+        for (const teil of thema.interactives ?? []) {
+          if (teil.type === 'apparatus-quiz') {
+            for (const option of teil.options) {
+              if (!(option.id in apparatusRegistry)) unbekannt.push(`${thema.id}: ${option.id}`)
+            }
+          }
+          if (teil.type === 'apparatus-matching') {
+            for (const paar of teil.paare) {
+              if (!(paar.apparaturId in apparatusRegistry)) unbekannt.push(`${thema.id}: ${paar.apparaturId}`)
+            }
+          }
         }
+
       }
     }
     expect(unbekannt).toEqual([])
@@ -90,8 +99,8 @@ describe('Mechanismen', () => {
     // 05 und 09 zeigten dieselbe Azid-Cycloaddition, nur mit anderem Partner.
     for (const kurs of allCourses) {
       const titel = (await loadAllTopics(kurs.id))
-        .map(t => t.interactive)
-        .filter(i => i?.type === 'mechanism')
+        .flatMap(t => t.interactives ?? [])
+        .filter(i => i.type === 'mechanism')
         .map(i => (i as { title: string }).title)
       expect(new Set(titel).size, `${kurs.id}: doppelter Mechanismus-Titel`).toBe(titel.length)
     }
@@ -101,9 +110,11 @@ describe('Mechanismen', () => {
     const duenn: string[] = []
     for (const kurs of allCourses) {
       for (const thema of await loadAllTopics(kurs.id)) {
-        if (thema.interactive?.type !== 'mechanism') continue
-        if (thema.interactive.stages.length < 2) duenn.push(`${thema.id}: nur ein Schritt`)
-        if (!thema.interactive.ergebnis) duenn.push(`${thema.id}: kein Ergebnisbild`)
+        for (const teil of thema.interactives ?? []) {
+          if (teil.type !== 'mechanism') continue
+          if (teil.stages.length < 2) duenn.push(`${thema.id}: nur ein Schritt`)
+          if (!teil.ergebnis) duenn.push(`${thema.id}: kein Ergebnisbild`)
+        }
       }
     }
     expect(duenn).toEqual([])
@@ -142,7 +153,7 @@ describe('Sollstärke der Themen', () => {
       const mangel: string[] = []
       if (thema.quiz.length < 6) mangel.push(`nur ${thema.quiz.length} Quizfragen`)
       if (thema.flashcards.length < 6) mangel.push(`nur ${thema.flashcards.length} Karten`)
-      if (!thema.interactive) mangel.push('kein Interaktivteil')
+      if ((thema.interactives ?? []).length === 0) mangel.push('kein Interaktivteil')
       if (!fragenJeThema.get(thema.id)) mangel.push('keine Prüfungsfrage')
       return mangel.length ? [`${thema.id}: ${mangel.join(', ')}`] : []
     })

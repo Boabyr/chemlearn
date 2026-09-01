@@ -108,36 +108,38 @@ die Schwingungsrelaxation im angeregten Zustand: ein Teil der aufgenommenen Ener
 als Wärme verloren, bevor das Photon abgegeben wird. Praktisch ist das der Grund, warum
 sich Anregungs- und Emissionslicht optisch trennen lassen.
 `,
-  interactive: {
-    type: "apparatus-quiz",
-    question: "Chemolumineszenz-Detektor",
-    targetId: "chemoluminescence",
-    explanation: "Der Chemolumineszenz-Detektor hat den einfachsten Aufbau aller Spektrometer: Da das Licht durch eine chemische Reaktion in der Probe selbst erzeugt wird, ist keine externe Lichtquelle nötig. Nur Probe (Reaktionskammer) und Detektor sind erforderlich.",
-    hint1: "Chemolumineszenz erzeugt Licht durch eine chemische Reaktion (A + B → C*). Daher braucht man keine Lichtquelle von außen.",
-    hint2: "Aufbau: nur Probenmischer + Detektor. Das macht die Methode so empfindlich – de facto kein Hintergrundrauschen.",
-    options: [
-      {
-        id: "chemoluminescence",
-        label: "Chemolumineszenz-Detektor",
-        description: "Keine externe Lichtquelle, nur Probe und Detektor",
-      },
-      {
-        id: "fluorescence",
-        label: "Fluoreszenzspektrometer",
-        description: "Mit externer Lichtquelle, Detektor im 90°-Winkel",
-      },
-      {
-        id: "uv-vis",
-        label: "UV/Vis-Spektrometer",
-        description: "Detektor in Transmissionsrichtung",
-      },
-      {
-        id: "rfa",
-        label: "Röntgenfluoreszenz (RFA)",
-        description: "Röntgenröhre + Analysatorkristall + Detektor",
-      },
-    ],
-  },
+  interactives: [
+    {
+      type: "apparatus-quiz",
+      question: "Chemolumineszenz-Detektor",
+      targetId: "chemoluminescence",
+      explanation: "Der Chemolumineszenz-Detektor hat den einfachsten Aufbau aller Spektrometer: Da das Licht durch eine chemische Reaktion in der Probe selbst erzeugt wird, ist keine externe Lichtquelle nötig. Nur Probe (Reaktionskammer) und Detektor sind erforderlich.",
+      hint1: "Chemolumineszenz erzeugt Licht durch eine chemische Reaktion (A + B → C*). Daher braucht man keine Lichtquelle von außen.",
+      hint2: "Aufbau: nur Probenmischer + Detektor. Das macht die Methode so empfindlich – de facto kein Hintergrundrauschen.",
+      options: [
+        {
+          id: "chemoluminescence",
+          label: "Chemolumineszenz-Detektor",
+          description: "Keine externe Lichtquelle, nur Probe und Detektor",
+        },
+        {
+          id: "fluorescence",
+          label: "Fluoreszenzspektrometer",
+          description: "Mit externer Lichtquelle, Detektor im 90°-Winkel",
+        },
+        {
+          id: "uv-vis",
+          label: "UV/Vis-Spektrometer",
+          description: "Detektor in Transmissionsrichtung",
+        },
+        {
+          id: "rfa",
+          label: "Röntgenfluoreszenz (RFA)",
+          description: "Röntgenröhre + Analysatorkristall + Detektor",
+        },
+      ],
+    },
+  ],
   quiz: [
     { id: "q1", question: "Was ist der Unterschied zwischen Fluoreszenz und Phosphoreszenz?", options: ["Fluoreszenz ist die intensivere Emission", "Singulett gegen Triplett als Ausgangszustand", "Phosphoreszenz braucht immer UV-Anregung", "Nur die Wellenlänge unterscheidet die beiden"], correct: 1, explanation: "Fluoreszenz kommt aus dem angeregten Singulettzustand S₁ und ist mit 10⁻⁸ bis 10⁻¹⁰ s sehr schnell, weil der Übergang spinerlaubt ist. Phosphoreszenz kommt aus dem Triplettzustand T₁; dieser Übergang ist spinverboten und dauert deshalb Millisekunden bis Sekunden. Das Nachleuchten von Leuchtfarben ist der sichtbare Beweis." },
     { id: "q2", question: "Warum steht der Detektor beim Fluoreszenzspektrometer im 90°-Winkel zur Anregungsquelle?", options: ["Damit möglichst viel Emissionslicht auf den Detektor trifft", "Damit der Anregungsstrahl nicht in den Detektor fällt", "Weil die Emission bei 90° am stärksten ist", "Weil der Aufbau sonst zu breit würde"], correct: 1, explanation: "Fluoreszenz wird in alle Richtungen abgestrahlt, der Anregungsstrahl läuft dagegen geradeaus weiter. Steht der Detektor seitlich, sieht er nur die Emission und nicht die um Größenordnungen stärkere Anregungsstrahlung. Genau dieser dunkle Hintergrund ist der Grund für die hohe Empfindlichkeit der Methode." },
