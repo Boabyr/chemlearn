@@ -1,4 +1,5 @@
-import { Frame, Box, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Box, Beam, Caption, Tag } from './parts'
 
 /** Quarzmikrowaage: Massenbeladung senkt die Resonanzfrequenz (Sauerbrey). */
 export default function Qcm() {

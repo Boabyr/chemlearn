@@ -1,4 +1,5 @@
-import { Frame, Cell, Electrode, Box, Beam, Caption, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Electrode, Box, Beam, Caption } from './parts'
 
 /** Drei-Elektroden-Zelle: Potentiostat trennt Potentialmessung (RE) vom Stromfluss (CE). */
 export default function ThreeElectrode() {

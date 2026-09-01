@@ -1,4 +1,5 @@
-import { Frame, Box, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Box, Detector, Beam, Caption, Tag } from './parts'
 
 /** Röntgenfluoreszenz: Primärstrahl regt die Probe an, Analysatorkristall zerlegt die Sekundärstrahlung. */
 export default function Rfa() {

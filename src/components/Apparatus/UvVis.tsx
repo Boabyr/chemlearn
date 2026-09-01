@@ -1,4 +1,5 @@
-import { Frame, Lamp, Monochromator, Cuvette, Detector, Beam, Caption, C } from './parts'
+import { C } from './farben'
+import { Frame, Lamp, Monochromator, Cuvette, Detector, Beam, Caption } from './parts'
 
 /** UV/Vis-Absorptionsspektrometer: alles auf einer optischen Achse. */
 export default function UvVis() {

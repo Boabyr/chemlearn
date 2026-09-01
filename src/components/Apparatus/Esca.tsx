@@ -1,4 +1,5 @@
-import { Frame, Box, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Box, Detector, Beam, Caption, Tag } from './parts'
 
 /** ESCA/XPS: Röntgenanregung, aber gemessen wird die kinetische Energie der Photoelektronen. */
 export default function Esca() {

@@ -1,4 +1,5 @@
-import { Frame, Cell, Electrode, Box, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Electrode, Box, Beam, Caption, Tag } from './parts'
 
 /** Coulometrische Zelle: vollständiger Umsatz, gemessen wird die geflossene Ladung. */
 export default function Coulometry() {

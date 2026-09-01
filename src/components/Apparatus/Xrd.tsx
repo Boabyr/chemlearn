@@ -1,4 +1,5 @@
-import { Frame, Box, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Box, Detector, Beam, Caption, Tag } from './parts'
 
 /** Röntgendiffraktometer: θ-2θ-Geometrie, Detektor fährt auf dem Messkreis. */
 export default function Xrd() {

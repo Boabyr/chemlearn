@@ -21,6 +21,7 @@ export const course = {
   ],
   totalTopics: 9,
   estimatedHours: 25,
+  sprache: "en",
   examiners: [
     // Keine echte Altprüfung — Übungsfragen zum Kurs, eigener Abschnitt.
     { id: "uebung", label: "Practice questions", icon: "📝" },

@@ -199,7 +199,8 @@ export default function ExamSimulator() {
 
             <div className="space-y-4">
               {examStructures.map(exam => (
-                <div key={exam.id} className="bg-raised border border-line hover:border-accent rounded-2xl p-6 cursor-pointer transition-all"
+                <button key={exam.id} type="button"
+                  className="w-full text-left bg-raised border border-line hover:border-accent rounded-2xl p-6 transition-all"
                   onClick={() => startExam(exam)}>
                   <div className="flex justify-between items-start mb-3">
                     <div>
@@ -215,10 +216,11 @@ export default function ExamSimulator() {
                       </span>
                     ))}
                   </div>
-                </div>
+                </button>
               ))}
 
-              <div className="bg-raised border border-line hover:border-purple-500 rounded-2xl p-6 cursor-pointer transition-all"
+              <button type="button"
+                className="w-full text-left bg-raised border border-line hover:border-purple-500 rounded-2xl p-6 transition-all"
                 onClick={() => {
                   // Punkte aus den tatsächlich gezogenen Fragen summieren.
                   // Vorher standen hier fest 72 Gesamt- und 3x24 Abschnittspunkte —
@@ -247,7 +249,7 @@ export default function ExamSimulator() {
                 }}>
                 <h3 className="font-semibold text-purple-300">🎲 Zufalls-Prüfung</h3>
                 <p className="text-muted text-sm mt-1">Neue Fragen aus dem Fragenkatalog, original Prüfungsstruktur</p>
-              </div>
+              </button>
             </div>
           </div>
         )}

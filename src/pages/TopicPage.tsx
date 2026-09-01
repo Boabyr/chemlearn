@@ -1,7 +1,8 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { loadTopic } from '../lib/courseRegistry'
+import { kursMit, loadTopic } from '../lib/courseRegistry'
+import { zuletztMerken } from '../lib/zuletzt'
 import { useProgress } from '../hooks/useProgress'
 import { useAttempts } from '../hooks/useAttempts'
 import { useReviews, cardItemId } from '../hooks/useReviews'
@@ -25,6 +26,7 @@ export default function TopicPage() {
   const { loading } = useAuth()
   const navigate = useNavigate()
   const { markTopicSeen, markTopicComplete } = useProgress(courseId)
+  const sprache = kursMit(courseId ?? '')?.sprache ?? 'de'
   const { logAttempt, flush } = useAttempts(courseId)
   const { gradeItem } = useReviews(courseId)
   const [topic, setTopic] = useState<Thema | null>(null)
@@ -45,10 +47,28 @@ export default function TopicPage() {
         .then(t => {
           setTopic(t)
           markTopicSeen(topicId, courseId)
+          zuletztMerken({ courseId, topicId, titel: t.title })
         })
         .catch(() => navigate(`/course/${courseId}`))
     }
   }, [courseId, topicId])
+
+  // Quizantwort per Zahlentaste wählen.
+  useEffect(() => {
+    function beiTaste(e: KeyboardEvent) {
+      const frage = topic?.quiz[quizIdx]
+      if (tab !== 'quiz' || answered || quizDone || !frage) return
+      const ziel = e.target as HTMLElement | null
+      if (ziel && ['INPUT', 'TEXTAREA'].includes(ziel.tagName)) return
+      const nummer = Number(e.key)
+      if (!Number.isInteger(nummer) || nummer < 1 || nummer > frage.options.length) return
+      e.preventDefault()
+      setSelected(nummer - 1)
+    }
+    window.addEventListener('keydown', beiTaste)
+    return () => window.removeEventListener('keydown', beiTaste)
+  })
+
 
   if (loading || !topic) return (
     <div className="min-h-screen bg-surface flex items-center justify-center">
@@ -159,7 +179,7 @@ export default function TopicPage() {
         ))}
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <main lang={sprache} className="max-w-3xl mx-auto px-4 py-8">
 
         {tab === 'theory' && (
           <div>
@@ -240,6 +260,9 @@ export default function TopicPage() {
                     })}
                   </div>
                 </div>
+                <div aria-live="polite" className="sr-only">
+                  {answered ? (selected === q.correct ? 'Richtig.' : 'Falsch.') : ''}
+                </div>
                 {answered && (
                   <div className="bg-accent/10 border border-accent rounded-xl px-5 py-4 mb-4 text-sm text-muted leading-relaxed">
                     <span className="text-accent font-semibold">Erklärung: </span>{q.explanation}
@@ -267,7 +290,9 @@ export default function TopicPage() {
             <div className="mb-6 text-center text-sm text-subtle">
               Karte {cardIdx + 1} von {topic.flashcards.length} – antippen zum Umdrehen
             </div>
-            <div onClick={() => setFlipped(f => !f)} className="cursor-pointer" style={{ perspective: '1000px' }}>
+            <button type="button" onClick={() => setFlipped(f => !f)}
+              aria-expanded={flipped} aria-label="Karteikarte umdrehen"
+              className="block w-full text-left" style={{ perspective: '1000px' }}>
               <div style={{ position: 'relative', height: '220px', transition: 'transform 0.5s', transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   className="absolute inset-0 bg-raised border border-accent rounded-2xl flex flex-col items-center justify-center p-8">
@@ -280,12 +305,12 @@ export default function TopicPage() {
                   <p className="text-sm text-muted text-center leading-relaxed">{topic.flashcards[cardIdx].back}</p>
                 </div>
               </div>
-            </div>
+            </button>
             {/* Bewertung steuert, wann die Karte wiederkommt */}
             {flipped ? (
               <div className="mt-8">
                 <p className="text-center text-xs text-subtle mb-3">Wie gut saß das?</p>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {([
                     [GRADES.NOCHMAL, 'Nochmal', 'border-danger text-danger hover:bg-danger/20'],
                     [GRADES.SCHWER, 'Schwer', 'border-warning text-warning hover:bg-warning/20'],
@@ -293,7 +318,7 @@ export default function TopicPage() {
                     [GRADES.LEICHT, 'Leicht', 'border-success text-success hover:bg-success/20'],
                   ] as const).map(([grade, label, cls]) => (
                     <button key={label} onClick={() => gradeCard(grade)}
-                      className={`py-2.5 bg-raised border rounded-xl text-xs font-medium transition-colors ${cls}`}>
+                      className={`min-h-11 bg-raised border rounded-xl px-3 py-3 text-sm font-medium transition-colors ${cls}`}>
                       {label}
                     </button>
                   ))}
@@ -324,7 +349,8 @@ export default function TopicPage() {
             <div className="flex justify-center gap-1.5 mt-4">
               {topic.flashcards.map((_, i) => (
                 <button key={i} onClick={() => { setCardIdx(i); setFlipped(false) }}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  aria-label={`Zu Karte ${i + 1}`}
+                  className={`h-11 w-6 rounded-full bg-clip-content py-4 transition-colors ${
                     i === cardIdx ? 'bg-accent'
                     : gradedCards[i] !== undefined ? 'bg-accent/40'
                     : 'bg-sunken'
@@ -346,7 +372,7 @@ export default function TopicPage() {
             <SuggestButton courseId={courseId} topicId={topicId} />
           </div>
         )}
-      </div>
+      </main>
     </div>
   )
 }

@@ -1,4 +1,5 @@
-import { Frame, Cell, Electrode, Box, Beam, Caption, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Electrode, Box, Beam, Caption } from './parts'
 
 /** Zwei-Elektroden-Zelle: nur Mess- und Referenzelektrode, kein Potentiostat. */
 export default function TwoElectrode() {

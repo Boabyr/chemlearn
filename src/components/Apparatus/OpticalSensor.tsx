@@ -1,4 +1,5 @@
-import { Frame, Lamp, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Lamp, Detector, Beam, Caption, Tag } from './parts'
 
 /** Optischer Fasersensor: Indikatorschicht am Faserende, Signal läuft durch dieselbe Faser zurück. */
 export default function OpticalSensor() {

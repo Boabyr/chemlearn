@@ -4,7 +4,9 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from './useAuth'
 import { qk } from '../lib/queryKeys'
 import { abholen, nachtragen, quittieren } from '../lib/outbox'
-import type { AttemptLike } from '../lib/learning/mastery'
+import { serieFortschreiben } from '../lib/serie'
+import { qk as schluessel } from '../lib/queryKeys'
+import type { StatistikVersuch } from '../lib/learning/statistik'
 
 export type AttemptSource = 'topic-quiz' | 'practice' | 'exam-sim'
 
@@ -50,10 +52,10 @@ function alsZeile(userId: string, a: AttemptInput): AttemptZeile {
   }
 }
 
-async function versucheLaden(userId: string, courseId?: string): Promise<AttemptLike[]> {
+async function versucheLaden(userId: string, courseId?: string): Promise<StatistikVersuch[]> {
   let query = supabase
     .from('attempts')
-    .select('topic_id, question_id, correct, answered_at')
+    .select('topic_id, question_id, correct, answered_at, ms_taken, source')
     .eq('user_id', userId)
     .order('answered_at', { ascending: false })
     .limit(5000)
@@ -66,6 +68,8 @@ async function versucheLaden(userId: string, courseId?: string): Promise<Attempt
     questionId: d.question_id,
     correct: d.correct,
     answeredAt: d.answered_at,
+    msTaken: d.ms_taken,
+    source: d.source,
   }))
 }
 
@@ -84,7 +88,7 @@ export function useAttempts(courseId?: string) {
   const puffer = useRef<AttemptInput[]>([])
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const { data: attempts = [], isPending } = useQuery({
+  const { data: attempts = [], isPending } = useQuery<StatistikVersuch[]>({
     queryKey: qk.attempts(userId, courseId),
     queryFn: () => versucheLaden(user!.id, courseId),
     enabled: !!user,
@@ -122,6 +126,10 @@ export function useAttempts(courseId?: string) {
     if (zeilen.length > 0 || nachgereicht) {
       await qc.invalidateQueries({ queryKey: qk.attempts(user.id, courseId) })
       await qc.invalidateQueries({ queryKey: qk.attempts(user.id, undefined) })
+
+      // Gelernt ist gelernt: auch eine Übungsrunde hält die Serie am Leben.
+      await serieFortschreiben(user.id)
+      await qc.invalidateQueries({ queryKey: schluessel.streak(user.id) })
     }
   }, [user, courseId, qc, korbLeeren])
 
@@ -130,11 +138,13 @@ export function useAttempts(courseId?: string) {
     if (!user) return
     puffer.current.push(input)
 
-    qc.setQueryData<AttemptLike[]>(qk.attempts(user.id, courseId), alt => [{
+    qc.setQueryData<StatistikVersuch[]>(qk.attempts(user.id, courseId), alt => [{
       topicId: input.topicId,
       questionId: input.questionId,
       correct: input.correct,
       answeredAt: new Date().toISOString(),
+      msTaken: input.msTaken ?? null,
+      source: input.source,
     }, ...(alt ?? [])])
 
     if (timer.current) clearTimeout(timer.current)
@@ -142,6 +152,13 @@ export function useAttempts(courseId?: string) {
   }, [user, courseId, qc, flush])
 
   useEffect(() => { if (user) void korbLeeren() }, [user, korbLeeren])
+
+  // Zurück im Netz: sofort nachreichen, nicht erst bei der nächsten Antwort.
+  useEffect(() => {
+    const wiederDa = () => { void flush() }
+    window.addEventListener('online', wiederDa)
+    return () => window.removeEventListener('online', wiederDa)
+  }, [flush])
 
   useEffect(() => {
     // `visibilitychange` kommt früh genug, dass ein Netzaufruf noch durchgeht.
