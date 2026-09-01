@@ -245,6 +245,30 @@ Angriff an C-3 lässt nur zwei Grenzstrukturen zu.
     bindung: id: b1 | von: n1 | nach: c2 | ordnung: 2
 ```
 
+### Zwei Arten von Abbildung
+
+`art: strukturen` zeichnet Skelettformeln (oben). `art: diagramm` zeichnet Kurven mit
+Achsen — für alles, was der Text als *Form* beschreibt: die Kalibriergerade, das Minimum
+der Van-Deemter-Kurve, den Sprung einer Titration.
+
+```
+# ABBILDUNGEN
+- id: kalibriergerade | art: diagramm | titel: Kalibriergerade und ihre Grenze | beschreibung: ... | x_achse: titel: Konzentration c (mmol/L) | min: 0 | max: 3 | y_achse: titel: Absorption A | min: 0 | max: 3
+  kurve: beschriftung: ideal | punkte: 0,0 ; 3,3 | stil: gestrichelt | farbe: subtle
+  kurve: beschriftung: real gemessen | punkte: 0,0 ; 0.5,0.445 ; 1,0.796 ; 3,1.597 | farbe: accent
+  marker: x: 0.5 | y: 0.445 | beschriftung: unbekannte Probe | hilfslinien: ja
+```
+
+Punkte sind Paare `x,y`, getrennt durch Semikolon — **Datenpunkte, kein Code**, dieselbe
+Regel wie bei den Formeln. Alle Punkte und Marker müssen innerhalb der Achsengrenzen
+liegen, sonst bricht der Import ab. `hilfslinien: ja` zieht gestrichelte Linien auf beide
+Achsen, für „Signal messen, Wert ablesen". Farben: `accent`, `success`, `warning`,
+`danger`, `subtle`.
+
+Auch hier gilt: **erzeuge das nicht.** Die Punktlisten kommen aus einer Rechnung oder aus
+Messwerten, nicht aus einer Textquelle. Wenn eine Stelle nach einem Diagramm verlangt,
+vermerke das im Bericht.
+
 `verknuepfung: resonanz` setzt den Doppelpfeil ↔ zwischen die Bilder — ein
 Molekül, mehrere Grenzstrukturen. `reihe` stellt sie nur nebeneinander, etwa zum
 Vergleich zweier Angriffsorte.

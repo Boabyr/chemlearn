@@ -180,6 +180,18 @@ function leseBindung(text) {
  * Dieselben Atome und Bindungen wie im Mechanismus — nur ohne Pfeile und ohne
  * Aufgabe. Koordinaten bleiben Handarbeit.
  */
+/** `titel: Konzentration c | min: 0 | max: 3` */
+function leseAchse(text, ort, id) {
+  if (!text) return null
+  const f = inlineFields(text)
+  const achse = { titel: f.titel ?? '', min: Number(f.min), max: Number(f.max) }
+  if (!Number.isFinite(achse.min) || !Number.isFinite(achse.max) || achse.min >= achse.max) {
+    problem(ort, `Diagramm "${id}": Achse "${achse.titel}" braucht min < max`)
+    return null
+  }
+  return achse
+}
+
 function leseAbbildungen(block, ort) {
   if (!block) return []
   const abbildungen = []
@@ -201,16 +213,46 @@ function leseAbbildungen(block, ort) {
     if (kopf) {
       schliesseAbbildung()
       const f = inlineFields('id: ' + kopf[1])
-      aktuell = {
-        id: f.id,
-        titel: f.titel ?? f.id,
-        beschreibung: f.beschreibung,
-        verknuepfung: f.verknuepfung === 'reihe' ? 'reihe' : 'resonanz',
-        strukturen: [],
-      }
+      const istDiagramm = f.art === 'diagramm'
+      aktuell = istDiagramm
+        ? {
+            art: 'diagramm', id: f.id, titel: f.titel ?? f.id, beschreibung: f.beschreibung,
+            xAchse: leseAchse(f.x_achse, ort, f.id),
+            yAchse: leseAchse(f.y_achse, ort, f.id),
+            kurven: [], marker: [],
+          }
+        : {
+            art: 'strukturen', id: f.id, titel: f.titel ?? f.id, beschreibung: f.beschreibung,
+            verknuepfung: f.verknuepfung === 'reihe' ? 'reihe' : 'resonanz',
+            strukturen: [],
+          }
       continue
     }
     if (!aktuell) continue
+
+    if (aktuell.art === 'diagramm') {
+      const kurve = zeile.match(/^\s{2,}kurve:\s*(.+)$/)
+      if (kurve) {
+        const f = inlineFields(kurve[1])
+        const punkte = (f.punkte ?? '').split(';').map(paar => {
+          const [x, y] = paar.split(',').map(t => Number(t.trim()))
+          return { x, y }
+        }).filter(pk => Number.isFinite(pk.x) && Number.isFinite(pk.y))
+        const eintrag = { beschriftung: f.beschriftung ?? 'Kurve', punkte }
+        if (f.stil) eintrag.stil = f.stil
+        if (f.farbe) eintrag.farbe = f.farbe
+        aktuell.kurven.push(eintrag)
+        continue
+      }
+      const marker = zeile.match(/^\s{2,}marker:\s*(.+)$/)
+      if (marker) {
+        const f = inlineFields(marker[1])
+        const eintrag = { x: Number(f.x), y: Number(f.y), beschriftung: f.beschriftung ?? '' }
+        if (String(f.hilfslinien ?? '') === 'ja') eintrag.hilfslinien = true
+        aktuell.marker.push(eintrag)
+      }
+      continue
+    }
 
     const s = zeile.match(/^\s{2,}struktur:\s*(.+)$/)
     if (s) {
@@ -229,6 +271,23 @@ function leseAbbildungen(block, ort) {
 
   for (const a of abbildungen) {
     if (!a.id || !/^[a-z0-9-]+$/.test(a.id)) { problem(ort, `Abbildungs-Kennung "${a.id}" muss klein und ohne Umlaute sein`); return [] }
+
+    if (a.art === 'diagramm') {
+      if (!a.xAchse || !a.yAchse) { problem(ort, `Diagramm "${a.id}" ohne x_achse oder y_achse`); return [] }
+      if (a.kurven.length === 0) { problem(ort, `Diagramm "${a.id}" ohne Kurve`); return [] }
+      const drin = (pk) => pk.x >= a.xAchse.min && pk.x <= a.xAchse.max && pk.y >= a.yAchse.min && pk.y <= a.yAchse.max
+      for (const k of a.kurven) {
+        if (k.punkte.length < 2) { problem(ort, `Diagramm "${a.id}": Kurve "${k.beschriftung}" hat weniger als zwei Punkte`); return [] }
+        for (const pk of k.punkte) {
+          if (!drin(pk)) { problem(ort, `Diagramm "${a.id}": Punkt (${pk.x}, ${pk.y}) liegt außerhalb der Achsen`); return [] }
+        }
+      }
+      for (const mk of a.marker) {
+        if (!drin(mk)) { problem(ort, `Diagramm "${a.id}": Marker "${mk.beschriftung}" liegt außerhalb der Achsen`); return [] }
+      }
+      continue
+    }
+
     if (a.strukturen.length < 2) { problem(ort, `Abbildung "${a.id}" zeigt weniger als zwei Strukturen`); return [] }
     for (const st of a.strukturen) {
       if (st.atome.length < 2) { problem(ort, `Abbildung "${a.id}": Struktur "${st.beschriftung}" ohne Atome`); return [] }
@@ -905,9 +964,31 @@ function themaAlsTypeScript(t) {
     zeilen.push('  abbildungen: [')
     for (const a of t.abbildungen) {
       zeilen.push('    {')
+      zeilen.push(`      art: ${str(a.art ?? 'strukturen')},`)
       zeilen.push(`      id: ${str(a.id)},`)
       zeilen.push(`      titel: ${str(a.titel)},`)
       if (a.beschreibung) zeilen.push(`      beschreibung: ${str(a.beschreibung)},`)
+      if (a.art === 'diagramm') {
+        const achse = (na) => `{ titel: ${str(na.titel)}, min: ${na.min}, max: ${na.max} }`
+        zeilen.push(`      xAchse: ${achse(a.xAchse)},`)
+        zeilen.push(`      yAchse: ${achse(a.yAchse)},`)
+        zeilen.push('      kurven: [')
+        for (const k of a.kurven) {
+          const punkte = k.punkte.map(pk => `{ x: ${pk.x}, y: ${pk.y} }`).join(', ')
+          const zusatz = (k.stil ? `, stil: ${str(k.stil)}` : '') + (k.farbe ? `, farbe: ${str(k.farbe)}` : '')
+          zeilen.push(`        { beschriftung: ${str(k.beschriftung)}, punkte: [${punkte}]${zusatz} },`)
+        }
+        zeilen.push('      ],')
+        if (a.marker.length) {
+          zeilen.push('      marker: [')
+          for (const mk of a.marker) {
+            zeilen.push(`        { x: ${mk.x}, y: ${mk.y}, beschriftung: ${str(mk.beschriftung)}${mk.hilfslinien ? ', hilfslinien: true' : ''} },`)
+          }
+          zeilen.push('      ],')
+        }
+        zeilen.push('    },')
+        continue
+      }
       zeilen.push(`      verknuepfung: ${str(a.verknuepfung)},`)
       zeilen.push('      strukturen: [')
       for (const st of a.strukturen) {

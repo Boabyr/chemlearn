@@ -81,6 +81,8 @@ Daraus folgt: **Je kleiner Ksp, desto größer der Sprung.** AgI (Ksp = 8,5×10�
 eine deutlich schärfere Stufe als AgCl (1,8×10⁻¹⁰). Bei zu großem Ksp verschwindet der
 Sprung im Rauschen und die Titration wird unbrauchbar.
 
+{{abbildung:titrationskurve}}
+
 ## Die drei klassischen Indikatorverfahren
 
 | Verfahren | Prinzip | Bedingung |
@@ -125,6 +127,380 @@ bestimmende Konzentration variabel oder festgehalten ist.
       hints: ["Vor dem Äquivalenzpunkt bekommst du [Ag⁺] nicht direkt, sondern über das Löslichkeitsprodukt: [Ag⁺] = Ksp/[Cl⁻] mit Ksp(AgCl) = 1,8·10⁻¹⁰.", "Am Äquivalenzpunkt ist [Ag⁺] = [Cl⁻] = √Ksp. Eingesetzt ergibt das E = E° + 0,05916/2 · log(Ksp) — der Wendepunkt der Titrationskurve."],
     },
   },
+  abbildungen: [
+    {
+      "art": "diagramm",
+      "id": "titrationskurve",
+      "titel": "Fällungstitration: die Sprunghöhe hängt an Ksp",
+      "beschreibung": "Beide Male 100 mL 0,1 M Halogenid, titriert mit 0,1 M AgNO₃. Das kleinere Löslichkeitsprodukt des Silberiodids drückt [Ag⁺] vor dem Äquivalenzpunkt viel tiefer — der Sprung wird entsprechend höher.",
+      "xAchse": {
+        "titel": "zugesetztes AgNO₃ (mL)",
+        "min": 0,
+        "max": 200
+      },
+      "yAchse": {
+        "titel": "E gegen SHE (V)",
+        "min": -0.2,
+        "max": 0.85
+      },
+      "kurven": [
+        {
+          "beschriftung": "Chlorid, Ksp = 1,8·10⁻¹⁰",
+          "punkte": [
+            {
+              "x": 0.0,
+              "y": 0.2817
+            },
+            {
+              "x": 5.0,
+              "y": 0.2842
+            },
+            {
+              "x": 10.0,
+              "y": 0.2868
+            },
+            {
+              "x": 15.0,
+              "y": 0.2894
+            },
+            {
+              "x": 20.0,
+              "y": 0.2921
+            },
+            {
+              "x": 25.0,
+              "y": 0.2948
+            },
+            {
+              "x": 30.0,
+              "y": 0.2976
+            },
+            {
+              "x": 35.0,
+              "y": 0.3004
+            },
+            {
+              "x": 40.0,
+              "y": 0.3034
+            },
+            {
+              "x": 45.0,
+              "y": 0.3066
+            },
+            {
+              "x": 50.0,
+              "y": 0.3099
+            },
+            {
+              "x": 55.0,
+              "y": 0.3134
+            },
+            {
+              "x": 60.0,
+              "y": 0.3173
+            },
+            {
+              "x": 65.0,
+              "y": 0.3215
+            },
+            {
+              "x": 70.0,
+              "y": 0.3262
+            },
+            {
+              "x": 75.0,
+              "y": 0.3317
+            },
+            {
+              "x": 80.0,
+              "y": 0.3381
+            },
+            {
+              "x": 85.0,
+              "y": 0.3462
+            },
+            {
+              "x": 90.0,
+              "y": 0.3573
+            },
+            {
+              "x": 95.0,
+              "y": 0.3758
+            },
+            {
+              "x": 100.0,
+              "y": 0.5108
+            },
+            {
+              "x": 105.0,
+              "y": 0.6444
+            },
+            {
+              "x": 110.0,
+              "y": 0.6616
+            },
+            {
+              "x": 115.0,
+              "y": 0.6714
+            },
+            {
+              "x": 120.0,
+              "y": 0.6782
+            },
+            {
+              "x": 125.0,
+              "y": 0.6834
+            },
+            {
+              "x": 130.0,
+              "y": 0.6875
+            },
+            {
+              "x": 135.0,
+              "y": 0.6909
+            },
+            {
+              "x": 140.0,
+              "y": 0.6938
+            },
+            {
+              "x": 145.0,
+              "y": 0.6963
+            },
+            {
+              "x": 150.0,
+              "y": 0.6985
+            },
+            {
+              "x": 155.0,
+              "y": 0.7004
+            },
+            {
+              "x": 160.0,
+              "y": 0.7022
+            },
+            {
+              "x": 165.0,
+              "y": 0.7037
+            },
+            {
+              "x": 170.0,
+              "y": 0.7052
+            },
+            {
+              "x": 175.0,
+              "y": 0.7065
+            },
+            {
+              "x": 180.0,
+              "y": 0.7077
+            },
+            {
+              "x": 185.0,
+              "y": 0.7088
+            },
+            {
+              "x": 190.0,
+              "y": 0.7098
+            },
+            {
+              "x": 195.0,
+              "y": 0.7107
+            },
+            {
+              "x": 200.0,
+              "y": 0.7116
+            }
+          ],
+          "farbe": "accent"
+        },
+        {
+          "beschriftung": "Iodid, Ksp = 8,5·10⁻¹⁷",
+          "punkte": [
+            {
+              "x": 0.0,
+              "y": -0.0926
+            },
+            {
+              "x": 5.0,
+              "y": -0.09
+            },
+            {
+              "x": 10.0,
+              "y": -0.0874
+            },
+            {
+              "x": 15.0,
+              "y": -0.0848
+            },
+            {
+              "x": 20.0,
+              "y": -0.0822
+            },
+            {
+              "x": 25.0,
+              "y": -0.0795
+            },
+            {
+              "x": 30.0,
+              "y": -0.0767
+            },
+            {
+              "x": 35.0,
+              "y": -0.0738
+            },
+            {
+              "x": 40.0,
+              "y": -0.0708
+            },
+            {
+              "x": 45.0,
+              "y": -0.0677
+            },
+            {
+              "x": 50.0,
+              "y": -0.0643
+            },
+            {
+              "x": 55.0,
+              "y": -0.0608
+            },
+            {
+              "x": 60.0,
+              "y": -0.057
+            },
+            {
+              "x": 65.0,
+              "y": -0.0527
+            },
+            {
+              "x": 70.0,
+              "y": -0.048
+            },
+            {
+              "x": 75.0,
+              "y": -0.0426
+            },
+            {
+              "x": 80.0,
+              "y": -0.0361
+            },
+            {
+              "x": 85.0,
+              "y": -0.028
+            },
+            {
+              "x": 90.0,
+              "y": -0.0169
+            },
+            {
+              "x": 95.0,
+              "y": 0.0016
+            },
+            {
+              "x": 100.0,
+              "y": 0.3236
+            },
+            {
+              "x": 105.0,
+              "y": 0.6444
+            },
+            {
+              "x": 110.0,
+              "y": 0.6616
+            },
+            {
+              "x": 115.0,
+              "y": 0.6714
+            },
+            {
+              "x": 120.0,
+              "y": 0.6782
+            },
+            {
+              "x": 125.0,
+              "y": 0.6834
+            },
+            {
+              "x": 130.0,
+              "y": 0.6875
+            },
+            {
+              "x": 135.0,
+              "y": 0.6909
+            },
+            {
+              "x": 140.0,
+              "y": 0.6938
+            },
+            {
+              "x": 145.0,
+              "y": 0.6963
+            },
+            {
+              "x": 150.0,
+              "y": 0.6985
+            },
+            {
+              "x": 155.0,
+              "y": 0.7004
+            },
+            {
+              "x": 160.0,
+              "y": 0.7022
+            },
+            {
+              "x": 165.0,
+              "y": 0.7037
+            },
+            {
+              "x": 170.0,
+              "y": 0.7052
+            },
+            {
+              "x": 175.0,
+              "y": 0.7065
+            },
+            {
+              "x": 180.0,
+              "y": 0.7077
+            },
+            {
+              "x": 185.0,
+              "y": 0.7088
+            },
+            {
+              "x": 190.0,
+              "y": 0.7098
+            },
+            {
+              "x": 195.0,
+              "y": 0.7107
+            },
+            {
+              "x": 200.0,
+              "y": 0.7116
+            }
+          ],
+          "farbe": "warning"
+        }
+      ],
+      "marker": [
+        {
+          "x": 100,
+          "y": 0.511,
+          "beschriftung": "ÄP Chlorid",
+          "hilfslinien": true
+        },
+        {
+          "x": 100,
+          "y": 0.324,
+          "beschriftung": "ÄP Iodid",
+          "hilfslinien": true
+        }
+      ]
+    }
+  ],
   quiz: [
     { id: "q1", question: "Was ist eine Elektrode 2. Art und warum wird sie als Referenzelektrode verwendet?", options: ["Eine Elektrode aus zwei verschiedenen Metallen", "Metall, schwerlösliches Salz und dessen Anion", "Eine leicht polarisierbare Elektrode", "Eine Elektrode, die nur Anionen misst"], correct: 1, explanation: "Beispiel Ag/AgCl/KCl: Das Potential folgt E = E° − 0,05916·log[Cl⁻]. Weil die gesättigte KCl-Lösung die Chloridkonzentration festhält, bleibt E konstant und reproduzierbar. Eine Elektrode erster Art (Ag in Ag⁺-Lösung) folgt dagegen der Analytkonzentration und taugt als Indikatorelektrode." },
     { id: "q2", question: "Wie berechnet man die Zellspannung bei 65% Titration von 100mL 0,1M NaCl mit 0,1M AgNO₃ (Ksp=1,8×10⁻¹⁰, E°Ag=0,799V)?", options: ["Unmittelbar aus dem Standardpotential E° = 0,799 V", "Über Ksp zu [Ag⁺], dann Nernst: rund +0,32 V", "Am Äquivalenzpunkt gilt stets E = 0 V", "Über E = 0,799 − 0,05916/2·log(Ksp)"], correct: 1, explanation: "Nach 65 % der Titration bleiben 3,5 mmol Chlorid in 165 mL, also [Cl⁻] = 0,021 mol/L. Daraus [Ag⁺] = Ksp/[Cl⁻] = 8,5·10⁻⁹ mol/L und mit Nernst E = 0,799 + 0,05916·log(8,5·10⁻⁹) = +0,32 V. Die letzte Formel gilt erst am Äquivalenzpunkt selbst." },
