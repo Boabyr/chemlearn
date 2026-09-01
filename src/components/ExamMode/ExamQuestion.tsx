@@ -71,15 +71,15 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
   }[question.professor]
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden">
+    <div className="bg-raised border border-line rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className={`px-5 py-3 flex items-center justify-between border-b border-slate-700 bg-slate-800/80`}>
+      <div className={`px-5 py-3 flex items-center justify-between border-b border-line bg-raised/80`}>
         <div className="flex items-center gap-3">
           <span className={`text-xs font-mono uppercase tracking-widest text-${profColor}-400`}>
             {profLabel}
           </span>
           {showSource && (
-            <span className="text-xs text-slate-500">{question.source}</span>
+            <span className="text-xs text-subtle">{question.source}</span>
           )}
         </div>
         <span className={`text-xs font-semibold text-${profColor}-400`}>
@@ -88,7 +88,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
       </div>
 
       <div className="px-5 py-5">
-        <p className="text-white leading-relaxed mb-5">{question.question}</p>
+        <p className="text-ink leading-relaxed mb-5">{question.question}</p>
 
         {/* MC Options */}
         {(question.type === 'mc-single' || question.type === 'mc-multi') && question.options && (
@@ -97,11 +97,11 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
               const isSel = selected.includes(i)
               const corr = Array.isArray(question.correct) ? question.correct : [question.correct]
               const isRight = corr.includes(i)
-              let cls = 'border-slate-600 bg-slate-700/40 text-slate-300 hover:border-slate-400'
+              let cls = 'border-line bg-sunken/60 text-muted hover:border-subtle'
               if (submitted) {
-                if (isRight) cls = 'border-green-500 bg-green-900/20 text-green-300'
-                else if (isSel) cls = 'border-red-500 bg-red-900/20 text-red-300'
-                else cls = 'border-slate-700 bg-slate-800 text-slate-500'
+                if (isRight) cls = 'border-success bg-success/10 text-success'
+                else if (isSel) cls = 'border-danger bg-danger/10 text-danger'
+                else cls = 'border-line bg-raised text-subtle'
               } else if (isSel) {
                 cls = `border-${profColor}-400 bg-${profColor}-900/20 text-${profColor}-300`
               }
@@ -129,15 +129,15 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
                 onChange={e => !submitted && setNumInput(e.target.value)}
                 placeholder="Dein Ergebnis..."
                 disabled={submitted}
-                className="flex-1 bg-slate-900 border border-slate-600 rounded-xl px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-teal-400 disabled:opacity-60"
+                className="flex-1 bg-surface border border-line rounded-xl px-4 py-3 text-ink font-mono text-lg focus:outline-none focus:border-accent disabled:opacity-60"
               />
               {question.unit && (
-                <span className="text-slate-400 text-sm font-mono">{question.unit}</span>
+                <span className="text-muted text-sm font-mono">{question.unit}</span>
               )}
             </div>
             {submitted && (
               <div className={`px-4 py-2 rounded-lg text-sm font-mono ${
-                correct ? 'bg-green-900/20 text-green-300' : 'bg-red-900/20 text-red-300'
+                correct ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'
               }`}>
                 Korrekt: {question.correct} {question.unit}
                 {question.tolerance && ` (±${question.tolerance})`}
@@ -149,23 +149,23 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
         {/* Order */}
         {question.type === 'order' && question.options && (
           <div className="space-y-2">
-            <p className="text-xs text-slate-500 mb-2">Reihenfolge durch ↑↓ anpassen:</p>
+            <p className="text-xs text-subtle mb-2">Reihenfolge durch ↑↓ anpassen:</p>
             {orderArr.map((optIdx, pos) => {
               const corr = question.correct as number[]
               const isRightPos = submitted && corr[pos] === optIdx
               const isWrongPos = submitted && corr[pos] !== optIdx
               return (
                 <div key={optIdx} className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm transition-all ${
-                  isRightPos ? 'border-green-500 bg-green-900/20 text-green-300' :
-                  isWrongPos ? 'border-red-500 bg-red-900/20 text-red-300' :
-                  'border-slate-600 bg-slate-700/40 text-slate-300'
+                  isRightPos ? 'border-success bg-success/10 text-success' :
+                  isWrongPos ? 'border-danger bg-danger/10 text-danger' :
+                  'border-line bg-sunken/60 text-muted'
                 }`}>
-                  <span className="font-mono text-slate-500 w-5">{pos+1}.</span>
+                  <span className="font-mono text-subtle w-5">{pos+1}.</span>
                   <span className="flex-1">{question.options![optIdx]}</span>
                   {!submitted && (
                     <div className="flex gap-1">
-                      <button onClick={() => moveOrder(pos, -1)} className="text-slate-400 hover:text-white px-1">↑</button>
-                      <button onClick={() => moveOrder(pos, 1)} className="text-slate-400 hover:text-white px-1">↓</button>
+                      <button onClick={() => moveOrder(pos, -1)} className="text-muted hover:text-ink px-1">↑</button>
+                      <button onClick={() => moveOrder(pos, 1)} className="text-muted hover:text-ink px-1">↓</button>
                     </div>
                   )}
                   {isRightPos && <span>✓</span>}
@@ -184,7 +184,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
               (question.type === 'mc-multi' && selected.length === 0) ||
               (question.type === 'numeric' && numInput === '')
             }
-            className="mt-4 w-full bg-teal-600 hover:bg-teal-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl text-sm transition-colors">
+            className="mt-4 w-full bg-accent hover:bg-accent-strong disabled:opacity-40 disabled:cursor-not-allowed text-on-accent font-semibold py-3 rounded-xl text-sm transition-colors">
             Antwort prüfen ✓
           </button>
         )}
@@ -193,8 +193,8 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
         {submitted && (
           <div className={`mt-4 px-4 py-3 rounded-xl text-sm leading-relaxed ${
             correct
-              ? 'bg-green-900/20 border border-green-800 text-green-300'
-              : 'bg-red-900/20 border border-red-800 text-red-300'
+              ? 'bg-success/10 border border-success text-success'
+              : 'bg-danger/10 border border-danger text-danger'
           }`}>
             <span className="font-semibold">{correct ? '✓ Richtig! ' : '✗ Nicht ganz. '}</span>
             {question.explanation}

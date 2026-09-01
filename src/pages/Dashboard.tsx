@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import ThemeToggle from '../components/Shell/ThemeToggle'
 import { useAuth } from '../hooks/useAuth'
 import { useRole } from '../hooks/useRole'
 import { supabase } from '../lib/supabase'
@@ -14,8 +15,8 @@ export default function Dashboard() {
   const { streak, progress } = useProgress()
 
   if (loading) return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-teal-400 text-lg">Laden...</div>
+    <div className="min-h-screen bg-surface flex items-center justify-center">
+      <div className="text-accent text-lg">Laden...</div>
     </div>
   )
 
@@ -34,17 +35,17 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+    <div className="min-h-screen bg-surface text-ink">
+      <nav className="bg-raised border-b border-line px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <span className="text-xl">⚗️</span>
-          <span className="text-teal-400 font-bold text-lg">ChemLearn</span>
+          <span className="text-accent font-bold text-lg">ChemLearn</span>
         </div>
         <div className="flex items-center gap-4">
           {streak.currentStreak > 0 && (
-            <div className="flex items-center gap-1 bg-amber-900/30 border border-amber-700/50 px-3 py-1 rounded-full">
+            <div className="flex items-center gap-1 bg-warning/20 border border-warning px-3 py-1 rounded-full">
               <span className="text-sm">🔥</span>
-              <span className="text-amber-400 text-xs font-bold">{streak.currentStreak}</span>
+              <span className="text-warning text-xs font-bold">{streak.currentStreak}</span>
             </div>
           )}
           {isTutor && (
@@ -53,8 +54,9 @@ export default function Dashboard() {
               🎓 {isAdmin ? 'Admin' : 'Tutor'}
             </button>
           )}
-          <span className="text-slate-400 text-sm hidden sm:block">{user.email}</span>
-          <button onClick={handleLogout} className="text-slate-400 hover:text-white text-sm transition-colors">
+          <span className="text-muted text-sm hidden sm:block">{user.email}</span>
+          <ThemeToggle />
+          <button onClick={handleLogout} className="text-muted hover:text-ink text-sm transition-colors">
             Abmelden
           </button>
         </div>
@@ -62,10 +64,10 @@ export default function Dashboard() {
 
       <div className="max-w-4xl mx-auto px-4 py-10">
         <div className="mb-10">
-          <p className="text-teal-400 text-xs font-mono uppercase tracking-widest mb-2">Willkommen zurück</p>
+          <p className="text-accent text-xs font-mono uppercase tracking-widest mb-2">Willkommen zurück</p>
           <h1 className="text-3xl font-light">Meine Kurse</h1>
           {streak.currentStreak > 0 && (
-            <p className="text-amber-400 text-sm mt-2">
+            <p className="text-warning text-sm mt-2">
               🔥 {streak.currentStreak} Tage Streak – weiter so!
               {streak.longestStreak > streak.currentStreak && ` (Rekord: ${streak.longestStreak})`}
             </p>
@@ -85,16 +87,16 @@ export default function Dashboard() {
             return (
               <div key={course.id}
                 onClick={() => navigate(`/course/${course.id}`)}
-                className="bg-slate-800 border border-slate-700 rounded-2xl p-6 cursor-pointer hover:border-teal-500 transition-all"
+                className="bg-raised border border-line rounded-2xl p-6 cursor-pointer hover:border-accent transition-all"
                 style={{ borderTopColor: course.color, borderTopWidth: 3 }}>
                 <div className="text-3xl mb-3">{course.icon}</div>
                 <h2 className="font-semibold text-lg mb-1">{course.title}</h2>
-                <p className="text-slate-400 text-sm mb-4">{course.description}</p>
-                <div className="flex justify-between text-xs text-slate-500 mb-2">
+                <p className="text-muted text-sm mb-4">{course.description}</p>
+                <div className="flex justify-between text-xs text-subtle mb-2">
                   <span>{done}/{total} abgeschlossen</span>
                   <span>~{course.estimatedHours}h</span>
                 </div>
-                <div className="h-1.5 bg-slate-700 rounded-full">
+                <div className="h-1.5 bg-sunken rounded-full">
                   <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: course.color }} />
                 </div>
               </div>

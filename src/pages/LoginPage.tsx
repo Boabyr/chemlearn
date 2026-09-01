@@ -28,43 +28,43 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <span className="text-4xl">⚗️</span>
-          <h1 className="text-3xl font-bold text-teal-400 mt-2">ChemLearn</h1>
-          <p className="text-slate-400 mt-1">Heterocyclische Chemie interaktiv lernen</p>
+          <h1 className="text-3xl font-bold text-accent mt-2">ChemLearn</h1>
+          <p className="text-muted mt-1">Heterocyclische Chemie interaktiv lernen</p>
         </div>
 
-        <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-          <h2 className="text-xl font-semibold text-white mb-6">
+        <div className="bg-raised rounded-2xl p-8 border border-line">
+          <h2 className="text-xl font-semibold text-ink mb-6">
             {isLogin ? 'Einloggen' : 'Registrieren'}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-slate-400 mb-1">E-Mail</label>
+              <label className="block text-sm text-muted mb-1">E-Mail</label>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-400"
+                className="w-full bg-surface border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-accent"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Passwort</label>
+              <label className="block text-sm text-muted mb-1">Passwort</label>
               <input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-teal-400"
+                className="w-full bg-surface border border-line rounded-lg px-4 py-3 text-ink focus:outline-none focus:border-accent"
                 required
               />
             </div>
 
             {error && (
-              <p className="text-red-400 text-sm bg-red-900/20 border border-red-800 rounded-lg px-4 py-2">
+              <p className="text-danger text-sm bg-danger/10 border border-danger rounded-lg px-4 py-2">
                 {error}
               </p>
             )}
@@ -72,7 +72,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-black font-semibold rounded-lg px-4 py-3 transition-colors"
+              className="w-full bg-accent hover:bg-accent-strong disabled:opacity-50 text-on-accent font-semibold rounded-lg px-4 py-3 transition-colors"
             >
               {loading ? 'Laden...' : isLogin ? 'Einloggen' : 'Registrieren'}
             </button>
@@ -80,7 +80,7 @@ export default function LoginPage() {
 
           <button
             onClick={() => setIsLogin(l => !l)}
-            className="w-full mt-4 text-slate-400 hover:text-teal-400 text-sm transition-colors"
+            className="w-full mt-4 text-muted hover:text-accent text-sm transition-colors"
           >
             {isLogin ? 'Noch kein Konto? Registrieren' : 'Bereits registriert? Einloggen'}
           </button>

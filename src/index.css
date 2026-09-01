@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+/*
+ * Farbrollen statt Paletten-Namen. Seiten benutzen `bg-surface`, `text-ink`,
+ * `border-line` — nie `bg-slate-900`. Dadurch trägt ein Themenwechsel überall,
+ * und die Score-Farben stehen an einer Stelle statt viermal als Hex im JSX.
+ */
+@theme {
+  --color-surface:        var(--c-surface);
+  --color-raised:         var(--c-raised);
+  --color-sunken:         var(--c-sunken);
+  --color-line:           var(--c-line);
+  --color-ink:            var(--c-ink);
+  --color-muted:          var(--c-muted);
+  --color-subtle:         var(--c-subtle);
+  --color-accent:         var(--c-accent);
+  --color-accent-strong:  var(--c-accent-strong);
+  --color-on-accent:      var(--c-on-accent);
+  --color-success:        var(--c-success);
+  --color-warning:        var(--c-warning);
+  --color-danger:         var(--c-danger);
+}
+
+/* Hell ist die Grundlage — Dunkel überschreibt nur die Werte. */
+:root {
+  --c-surface:       #f8fafc;
+  --c-raised:        #ffffff;
+  --c-sunken:        #f1f5f9;
+  --c-line:          #d8dee7;
+  --c-ink:           #0f172a;
+  --c-muted:         #475569;
+  --c-subtle:        #64748b;
+  --c-accent:        #0d7d74;
+  --c-accent-strong: #0b6159;
+  --c-on-accent:     #ffffff;
+  --c-success:       #15803d;
+  --c-warning:       #a16207;
+  --c-danger:        #b91c1c;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-surface:       #0f172a;
+    --c-raised:        #1e293b;
+    --c-sunken:        #172033;
+    --c-line:          #334155;
+    --c-ink:           #f1f5f9;
+    --c-muted:         #94a3b8;
+    --c-subtle:        #64748b;
+    --c-accent:        #2dd4bf;
+    --c-accent-strong: #5eead4;
+    --c-on-accent:     #042f2e;
+    --c-success:       #4ade80;
+    --c-warning:       #fbbf24;
+    --c-danger:        #f87171;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --c-surface:       #0f172a;
+  --c-raised:        #1e293b;
+  --c-sunken:        #172033;
+  --c-line:          #334155;
+  --c-ink:           #f1f5f9;
+  --c-muted:         #94a3b8;
+  --c-subtle:        #64748b;
+  --c-accent:        #2dd4bf;
+  --c-accent-strong: #5eead4;
+  --c-on-accent:     #042f2e;
+  --c-success:       #4ade80;
+  --c-warning:       #fbbf24;
+  --c-danger:        #f87171;
+
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--c-surface);
+  color: var(--c-ink);
+}
+
+/* Tastaturfokus muss immer sichtbar sein — auch dort, wo `focus:outline-none` steht. */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

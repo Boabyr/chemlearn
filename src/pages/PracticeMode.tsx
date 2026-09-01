@@ -108,21 +108,21 @@ export default function PracticeMode() {
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-teal-400">Laden...</div>
+    <div className="min-h-screen bg-surface flex items-center justify-center">
+      <div className="text-accent">Laden...</div>
     </div>
   )
 
   const filters: Filter[] = ['adaptive', 'all', ...professors]
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+    <div className="min-h-screen bg-surface text-ink">
+      <nav className="bg-raised border-b border-line px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/')} className="text-slate-400 hover:text-white transition-colors">← Dashboard</button>
-          <span className="text-teal-400 font-mono text-xs uppercase tracking-widest">🎯 Übungsmodus</span>
+          <button onClick={() => navigate('/')} className="text-muted hover:text-ink transition-colors">← Dashboard</button>
+          <span className="text-accent font-mono text-xs uppercase tracking-widest">🎯 Übungsmodus</span>
         </div>
-        <div className="text-sm text-slate-400">
+        <div className="text-sm text-muted">
           {answered}/{queue.length} Fragen · {score}/{total}P
         </div>
       </nav>
@@ -133,7 +133,7 @@ export default function PracticeMode() {
           {filters.map(f => (
             <button key={f} onClick={() => { setFilter(f); build(f) }}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
-                filter === f ? 'bg-teal-600 text-white' : 'bg-slate-800 border border-slate-700 text-slate-400 hover:border-teal-500'
+                filter === f ? 'bg-accent text-on-accent' : 'bg-raised border border-line text-muted hover:border-accent'
               }`}>
               {f === 'adaptive'
                 ? `✨ Für mich${dueCount > 0 ? ` (${dueCount} fällig)` : ''}`
@@ -144,38 +144,38 @@ export default function PracticeMode() {
         </div>
 
         {filter === 'adaptive' && !sessionDone && queue.length > 0 && (
-          <p className="text-xs text-slate-500 mb-4">
+          <p className="text-xs text-subtle mb-4">
             Zusammengestellt aus fälligen Wiederholungen und deinen schwächsten Themen.
           </p>
         )}
 
         {/* Fortschritt */}
         <div className="mb-6">
-          <div className="flex justify-between text-xs text-slate-500 mb-1">
+          <div className="flex justify-between text-xs text-subtle mb-1">
             <span>Frage {Math.min(idx + 1, queue.length)} von {queue.length}</span>
             <span>{score} von {total} Punkten</span>
           </div>
-          <div className="h-2 bg-slate-700 rounded-full">
-            <div className="h-full bg-teal-500 rounded-full transition-all"
+          <div className="h-2 bg-sunken rounded-full">
+            <div className="h-full bg-accent rounded-full transition-all"
               style={{ width: `${queue.length ? (idx / queue.length) * 100 : 0}%` }} />
           </div>
         </div>
 
         {sessionDone ? (
-          <div className="text-center py-16 bg-slate-800 border border-slate-700 rounded-2xl">
+          <div className="text-center py-16 bg-raised border border-line rounded-2xl">
             <div className="text-5xl mb-4">🎉</div>
-            <h2 className="text-2xl font-light text-teal-400 mb-2">Session abgeschlossen!</h2>
-            <p className="text-slate-400 mb-4">{score} von {total} Punkten</p>
+            <h2 className="text-2xl font-light text-accent mb-2">Session abgeschlossen!</h2>
+            <p className="text-muted mb-4">{score} von {total} Punkten</p>
             <div className="text-5xl font-bold mb-8" style={{
-              color: pct >= 75 ? '#4ade80' : pct >= 50 ? '#fbbf24' : '#f87171'
+              color: pct >= 75 ? 'var(--c-success)' : pct >= 50 ? 'var(--c-warning)' : 'var(--c-danger)'
             }}>{pct}%</div>
             <div className="flex gap-3 justify-center">
               <button onClick={() => build(filter)}
-                className="px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl text-sm transition-colors">
+                className="px-6 py-3 bg-accent hover:bg-accent-strong text-on-accent font-semibold rounded-xl text-sm transition-colors">
                 Neue Runde
               </button>
               <button onClick={() => navigate('/exam-simulator')}
-                className="px-6 py-3 bg-slate-700 border border-slate-600 text-slate-300 font-semibold rounded-xl text-sm transition-colors">
+                className="px-6 py-3 bg-sunken border border-line text-muted font-semibold rounded-xl text-sm transition-colors">
                 Prüfungssimulator
               </button>
             </div>
@@ -189,12 +189,12 @@ export default function PracticeMode() {
               showSource
             />
             <button onClick={next}
-              className="w-full py-3 bg-slate-700 border border-slate-600 hover:border-slate-400 text-slate-300 font-semibold rounded-xl text-sm transition-colors">
+              className="w-full py-3 bg-sunken border border-line hover:border-subtle text-muted font-semibold rounded-xl text-sm transition-colors">
               {idx < queue.length - 1 ? 'Nächste Frage →' : 'Runde abschließen'}
             </button>
           </div>
         ) : (
-          <div className="text-center text-slate-400">Keine Fragen gefunden.</div>
+          <div className="text-center text-muted">Keine Fragen gefunden.</div>
         )}
       </div>
     </div>

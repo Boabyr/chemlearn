@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { loadTopic } from '../lib/courseRegistry'
@@ -13,6 +13,10 @@ import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
 // import ReportButton from '../components/Reports/ReportButton'
 // import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
+import { ampelText } from '../lib/scoreColor'
+
+// Markdown- und Formelsatz wiegen schwer und werden nur im Theorie-Reiter gebraucht.
+const TheoryRenderer = lazy(() => import('../components/Theory/TheoryRenderer'))
 
 export default function TopicPage() {
   const { courseId, topicId } = useParams()
@@ -49,8 +53,8 @@ export default function TopicPage() {
   }, [courseId, topicId])
 
   if (loading || !topic) return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-teal-400 text-lg">Laden...</div>
+    <div className="min-h-screen bg-surface flex items-center justify-center">
+      <div className="text-accent text-lg">Laden...</div>
     </div>
   )
 
@@ -114,19 +118,19 @@ export default function TopicPage() {
   const interactive = (topic as any).interactive
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center gap-4 sticky top-0 z-10">
-        <button onClick={() => navigate(`/course/${courseId}`)} className="text-slate-400 hover:text-white transition-colors">
+    <div className="min-h-screen bg-surface text-ink">
+      <nav className="bg-raised border-b border-line px-6 py-4 flex items-center gap-4 sticky top-0 z-10">
+        <button onClick={() => navigate(`/course/${courseId}`)} className="text-muted hover:text-ink transition-colors">
           ← Zurück
         </button>
-        <span className="text-teal-400 font-mono text-xs uppercase tracking-widest">{topic.title}</span>
+        <span className="text-accent font-mono text-xs uppercase tracking-widest">{topic.title}</span>
       </nav>
 
-      <div className="bg-slate-800 border-b border-slate-700 px-6 flex gap-1">
+      <div className="bg-raised border-b border-line px-6 flex gap-1">
         {(['theory', 'quiz', 'flashcards'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-              tab === t ? 'border-teal-400 text-teal-400' : 'border-transparent text-slate-400 hover:text-white'
+              tab === t ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-ink'
             }`}>
             {t === 'theory' ? '📖 Theorie' : t === 'quiz' ? '✅ Quiz' : '🃏 Karteikarten'}
           </button>
@@ -138,25 +142,14 @@ export default function TopicPage() {
         {tab === 'theory' && (
           <div>
             <h1 className="text-2xl font-light mb-2">{topic.title}</h1>
-            <p className="text-slate-400 text-sm mb-8">{topic.subtitle}</p>
-            <div className="space-y-2">
-              {topic.theory.split('\n').map((line, i) => {
-                if (line.startsWith('## ')) return <h2 key={i} className="text-xl font-semibold text-white mt-8 mb-3">{line.replace('## ', '')}</h2>
-                if (line.startsWith('### ')) return <h3 key={i} className="text-lg font-medium text-teal-400 mt-6 mb-2">{line.replace('### ', '')}</h3>
-                if (line.startsWith('| ')) return <p key={i} className="text-slate-300 text-sm font-mono pl-2">{line}</p>
-                if (line.startsWith('- ')) return (
-                  <p key={i} className="text-slate-300 pl-4">
-                    <span className="text-teal-400 mr-2">•</span>{line.replace('- ', '')}
-                  </p>
-                )
-                if (line.trim() === '') return <div key={i} className="h-2" />
-                return <p key={i} className="text-slate-300 leading-relaxed">{line}</p>
-              })}
-            </div>
+            <p className="text-muted text-sm mb-8">{topic.subtitle}</p>
+            <Suspense fallback={<p className="text-muted">Theorie wird gesetzt...</p>}>
+              <TheoryRenderer markdown={topic.theory} showToc />
+            </Suspense>
 
             {interactive && (
-              <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
-                <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
+              <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
+                <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
                 {interactive.type === 'builder' && interactive.stages && (
                   <MechanismBuilder title={interactive.title ?? topic.title} description={interactive.description ?? ''} stages={interactive.stages} />
                 )}
@@ -176,8 +169,8 @@ export default function TopicPage() {
             )}
 
             {(topic as any).mechanism?.type === 'builder' && (topic as any).mechanism?.stages && (
-              <div className="mt-10 bg-slate-800 border border-slate-700 rounded-2xl p-6">
-                <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">🎬 Interaktiver Mechanismus</p>
+              <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
+                <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiver Mechanismus</p>
                 <MechanismBuilder title={(topic as any).mechanism.title ?? topic.title}
                   description={(topic as any).mechanism.description ?? ''} stages={(topic as any).mechanism.stages} />
               </div>
@@ -190,38 +183,36 @@ export default function TopicPage() {
             {quizDone ? (
               <div className="text-center py-12">
                 <div className="text-5xl mb-4">🎉</div>
-                <h2 className="text-2xl font-light text-teal-400 mb-2">Quiz abgeschlossen!</h2>
-                <p className="text-slate-400 mb-6">{score} von {topic.quiz.length} Fragen richtig</p>
-                <div className="text-5xl font-bold mb-8" style={{
-                  color: score === topic.quiz.length ? '#4ade80' : score >= topic.quiz.length * 0.6 ? '#fbbf24' : '#f87171'
-                }}>
+                <h2 className="text-2xl font-light text-accent mb-2">Quiz abgeschlossen!</h2>
+                <p className="text-muted mb-6">{score} von {topic.quiz.length} Fragen richtig</p>
+                <div className={`text-5xl font-bold mb-8 ${ampelText(score / topic.quiz.length)}`}>
                   {Math.round(score / topic.quiz.length * 100)}%
                 </div>
-                <p className="text-teal-400 text-sm mb-6">✓ Fortschritt gespeichert!</p>
-                <button onClick={resetQuiz} className="bg-teal-500 hover:bg-teal-400 text-black font-semibold px-6 py-3 rounded-xl transition-colors">
+                <p className="text-accent text-sm mb-6">✓ Fortschritt gespeichert!</p>
+                <button onClick={resetQuiz} className="bg-accent hover:bg-accent-strong text-on-accent font-semibold px-6 py-3 rounded-xl transition-colors">
                   Nochmal versuchen
                 </button>
               </div>
             ) : (
               <div>
-                <div className="flex justify-between text-xs text-slate-500 mb-2">
+                <div className="flex justify-between text-xs text-subtle mb-2">
                   <span>Frage {quizIdx + 1} von {topic.quiz.length}</span>
                   <span>{score} richtig</span>
                 </div>
-                <div className="h-1.5 bg-slate-700 rounded-full mb-8">
-                  <div className="h-full bg-teal-400 rounded-full transition-all"
+                <div className="h-1.5 bg-sunken rounded-full mb-8">
+                  <div className="h-full bg-accent rounded-full transition-all"
                     style={{ width: `${(quizIdx / topic.quiz.length) * 100}%` }} />
                 </div>
-                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-4">
+                <div className="bg-raised border border-line rounded-2xl p-6 mb-4">
                   <h2 className="text-lg font-light leading-relaxed mb-6">{q.question}</h2>
                   <div className="space-y-3">
                     {q.options.map((opt, i) => {
-                      let cls = 'border-slate-600 bg-slate-700/50 text-slate-300 hover:border-teal-500'
+                      let cls = 'border-line bg-sunken/50 text-muted hover:border-accent'
                       if (answered) {
-                        if (i === q.correct) cls = 'border-green-500 bg-green-900/30 text-green-400'
-                        else if (i === selected) cls = 'border-red-500 bg-red-900/30 text-red-400'
-                        else cls = 'border-slate-700 bg-slate-800 text-slate-500'
-                      } else if (i === selected) cls = 'border-teal-400 bg-teal-900/30 text-teal-300'
+                        if (i === q.correct) cls = 'border-success bg-success/20 text-success'
+                        else if (i === selected) cls = 'border-danger bg-danger/20 text-danger'
+                        else cls = 'border-line bg-raised text-subtle'
+                      } else if (i === selected) cls = 'border-accent bg-accent/20 text-accent'
                       return (
                         <button key={i} onClick={() => !answered && setSelected(i)}
                           className={`w-full text-left px-4 py-3 rounded-xl border transition-all text-sm ${cls}`}>
@@ -232,18 +223,18 @@ export default function TopicPage() {
                   </div>
                 </div>
                 {answered && (
-                  <div className="bg-teal-900/20 border border-teal-800 rounded-xl px-5 py-4 mb-4 text-sm text-slate-300 leading-relaxed">
-                    <span className="text-teal-400 font-semibold">Erklärung: </span>{q.explanation}
+                  <div className="bg-accent/10 border border-accent rounded-xl px-5 py-4 mb-4 text-sm text-muted leading-relaxed">
+                    <span className="text-accent font-semibold">Erklärung: </span>{q.explanation}
                   </div>
                 )}
                 <div className="flex gap-3">
                   {!answered && selected !== null && (
-                    <button onClick={handleAnswer} className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors">
+                    <button onClick={handleAnswer} className="flex-1 bg-accent hover:bg-accent-strong text-on-accent font-semibold py-3 rounded-xl transition-colors">
                       Antwort prüfen
                     </button>
                   )}
                   {answered && (
-                    <button onClick={nextQuestion} className="flex-1 bg-teal-500 hover:bg-teal-400 text-black font-semibold py-3 rounded-xl transition-colors">
+                    <button onClick={nextQuestion} className="flex-1 bg-accent hover:bg-accent-strong text-on-accent font-semibold py-3 rounded-xl transition-colors">
                       {quizIdx < topic.quiz.length - 1 ? 'Nächste Frage →' : 'Ergebnis anzeigen'}
                     </button>
                   )}
@@ -255,60 +246,60 @@ export default function TopicPage() {
 
         {tab === 'flashcards' && (
           <div>
-            <div className="mb-6 text-center text-sm text-slate-500">
+            <div className="mb-6 text-center text-sm text-subtle">
               Karte {cardIdx + 1} von {topic.flashcards.length} – antippen zum Umdrehen
             </div>
             <div onClick={() => setFlipped(f => !f)} className="cursor-pointer" style={{ perspective: '1000px' }}>
               <div style={{ position: 'relative', height: '220px', transition: 'transform 0.5s', transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-                  className="absolute inset-0 bg-slate-800 border border-teal-500 rounded-2xl flex flex-col items-center justify-center p-8">
-                  <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">Begriff</p>
+                  className="absolute inset-0 bg-raised border border-accent rounded-2xl flex flex-col items-center justify-center p-8">
+                  <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">Begriff</p>
                   <p className="text-xl font-light text-center">{topic.flashcards[cardIdx].front}</p>
                 </div>
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-                  className="absolute inset-0 bg-teal-900/30 border border-teal-500 rounded-2xl flex flex-col items-center justify-center p-8">
-                  <p className="text-xs text-teal-400 font-mono uppercase tracking-widest mb-4">Erklärung</p>
-                  <p className="text-sm text-slate-300 text-center leading-relaxed">{topic.flashcards[cardIdx].back}</p>
+                  className="absolute inset-0 bg-accent/20 border border-accent rounded-2xl flex flex-col items-center justify-center p-8">
+                  <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">Erklärung</p>
+                  <p className="text-sm text-muted text-center leading-relaxed">{topic.flashcards[cardIdx].back}</p>
                 </div>
               </div>
             </div>
             {/* Bewertung steuert, wann die Karte wiederkommt */}
             {flipped ? (
               <div className="mt-8">
-                <p className="text-center text-xs text-slate-500 mb-3">Wie gut saß das?</p>
+                <p className="text-center text-xs text-subtle mb-3">Wie gut saß das?</p>
                 <div className="grid grid-cols-4 gap-2">
                   {([
-                    [GRADES.NOCHMAL, 'Nochmal', 'border-red-700 text-red-400 hover:bg-red-900/30'],
-                    [GRADES.SCHWER, 'Schwer', 'border-amber-700 text-amber-400 hover:bg-amber-900/30'],
-                    [GRADES.GUT, 'Gut', 'border-teal-700 text-teal-400 hover:bg-teal-900/30'],
-                    [GRADES.LEICHT, 'Leicht', 'border-green-700 text-green-400 hover:bg-green-900/30'],
+                    [GRADES.NOCHMAL, 'Nochmal', 'border-danger text-danger hover:bg-danger/20'],
+                    [GRADES.SCHWER, 'Schwer', 'border-warning text-warning hover:bg-warning/20'],
+                    [GRADES.GUT, 'Gut', 'border-accent text-accent hover:bg-accent/20'],
+                    [GRADES.LEICHT, 'Leicht', 'border-success text-success hover:bg-success/20'],
                   ] as const).map(([grade, label, cls]) => (
                     <button key={label} onClick={() => gradeCard(grade)}
-                      className={`py-2.5 bg-slate-800 border rounded-xl text-xs font-medium transition-colors ${cls}`}>
+                      className={`py-2.5 bg-raised border rounded-xl text-xs font-medium transition-colors ${cls}`}>
                       {label}
                     </button>
                   ))}
                 </div>
                 {gradedCards[cardIdx] !== undefined && (
-                  <p className="text-center text-xs text-slate-600 mt-3">
+                  <p className="text-center text-xs text-subtle mt-3">
                     Bewertet – nächster Termin gespeichert.
                   </p>
                 )}
               </div>
             ) : (
-              <p className="text-center text-xs text-slate-600 mt-8">
+              <p className="text-center text-xs text-subtle mt-8">
                 Karte umdrehen, um zu bewerten
               </p>
             )}
 
             <div className="flex justify-center gap-4 mt-6">
               <button onClick={() => { setCardIdx(i => Math.max(0, i-1)); setFlipped(false) }} disabled={cardIdx === 0}
-                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors">
+                className="px-6 py-2.5 bg-raised border border-line rounded-xl text-sm disabled:opacity-40 hover:border-subtle transition-colors">
                 ← Zurück
               </button>
               <button onClick={() => { setCardIdx(i => Math.min(topic.flashcards.length-1, i+1)); setFlipped(false) }}
                 disabled={cardIdx === topic.flashcards.length-1}
-                className="px-6 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-sm disabled:opacity-40 hover:border-slate-400 transition-colors">
+                className="px-6 py-2.5 bg-raised border border-line rounded-xl text-sm disabled:opacity-40 hover:border-subtle transition-colors">
                 Weiter →
               </button>
             </div>
@@ -316,9 +307,9 @@ export default function TopicPage() {
               {topic.flashcards.map((_, i) => (
                 <button key={i} onClick={() => { setCardIdx(i); setFlipped(false) }}
                   className={`w-2 h-2 rounded-full transition-colors ${
-                    i === cardIdx ? 'bg-teal-400'
-                    : gradedCards[i] !== undefined ? 'bg-teal-800'
-                    : 'bg-slate-600'
+                    i === cardIdx ? 'bg-accent'
+                    : gradedCards[i] !== undefined ? 'bg-accent/40'
+                    : 'bg-sunken'
                   }`} />
               ))}
             </div>

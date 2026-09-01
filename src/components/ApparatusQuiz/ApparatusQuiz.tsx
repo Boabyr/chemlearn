@@ -46,25 +46,25 @@ export default function ApparatusQuiz({ question, targetId, options, explanation
 
   return (
     <div>
-      <p className="text-white font-medium mb-5">{question}</p>
+      <p className="text-ink font-medium mb-5">{question}</p>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
         {options.map((opt, i) => {
           const isSelected = selected === opt.id
           const isTarget = opt.id === targetId
-          let border = 'border-slate-600 hover:border-slate-400'
+          let border = 'border-line hover:border-subtle'
           if (answered) {
-            if (isTarget) border = 'border-green-500 bg-green-900/20'
-            else if (isSelected) border = 'border-red-500 bg-red-900/20'
-            else border = 'border-slate-700 opacity-50'
-          } else if (isSelected) border = 'border-teal-400 bg-teal-900/20'
+            if (isTarget) border = 'border-success bg-success/10'
+            else if (isSelected) border = 'border-danger bg-danger/10'
+            else border = 'border-line opacity-50'
+          } else if (isSelected) border = 'border-accent bg-accent/10'
 
           const Drawing = getApparatus(opt.id)
 
           return (
             <button key={opt.id} onClick={() => select(opt.id)}
               className={`border-2 rounded-xl p-3 transition-all cursor-pointer ${border}`}>
-              <div className="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden mb-2 flex items-center justify-center">
+              <div className="w-full aspect-video bg-surface rounded-lg overflow-hidden mb-2 flex items-center justify-center">
                 <div className="w-full h-full p-1">
                   {Drawing ? <Drawing /> : <MissingApparatus index={i} />}
                 </div>
@@ -72,11 +72,11 @@ export default function ApparatusQuiz({ question, targetId, options, explanation
               {/* Label NUR nach Antwort zeigen */}
               {answered && (
                 <p className={`text-xs text-center font-medium mt-1 ${
-                  isTarget ? 'text-green-400' : isSelected ? 'text-red-400' : 'text-slate-500'
+                  isTarget ? 'text-success' : isSelected ? 'text-danger' : 'text-subtle'
                 }`}>{opt.label}</p>
               )}
               {!answered && (
-                <p className="text-xs text-center text-slate-500 mt-1">Apparatur {String.fromCharCode(65+i)}</p>
+                <p className="text-xs text-center text-subtle mt-1">Apparatur {String.fromCharCode(65+i)}</p>
               )}
             </button>
           )
@@ -88,21 +88,21 @@ export default function ApparatusQuiz({ question, targetId, options, explanation
         <div className="space-y-2 mb-4">
           {hints < 1 && hint1 && (
             <button onClick={() => setHints(1)}
-              className="text-xs text-slate-500 hover:text-teal-400 transition-colors">
+              className="text-xs text-subtle hover:text-accent transition-colors">
               💡 Hinweis 1 anzeigen
             </button>
           )}
           {hints >= 1 && hint1 && (
-            <p className="text-xs text-teal-300 bg-teal-900/20 px-3 py-2 rounded-lg">💡 {hint1}</p>
+            <p className="text-xs text-accent bg-accent/10 px-3 py-2 rounded-lg">💡 {hint1}</p>
           )}
           {hints === 1 && hint2 && (
             <button onClick={() => setHints(2)}
-              className="text-xs text-slate-500 hover:text-teal-400 transition-colors">
+              className="text-xs text-subtle hover:text-accent transition-colors">
               💡 Hinweis 2 anzeigen
             </button>
           )}
           {hints >= 2 && hint2 && (
-            <p className="text-xs text-teal-300 bg-teal-900/20 px-3 py-2 rounded-lg">💡 {hint2}</p>
+            <p className="text-xs text-accent bg-accent/10 px-3 py-2 rounded-lg">💡 {hint2}</p>
           )}
         </div>
       )}
@@ -110,7 +110,7 @@ export default function ApparatusQuiz({ question, targetId, options, explanation
       {/* Erklärung */}
       {answered && (
         <div className={`px-4 py-3 rounded-xl text-sm leading-relaxed ${
-          correct ? 'bg-green-900/20 border border-green-800 text-green-300' : 'bg-red-900/20 border border-red-800 text-red-300'
+          correct ? 'bg-success/10 border border-success text-success' : 'bg-danger/10 border border-danger text-danger'
         }`}>
           <span className="font-semibold">{correct ? '✓ Richtig! ' : '✗ Nicht ganz. '}</span>
           {explanation}

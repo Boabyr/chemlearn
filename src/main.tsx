@@ -9,6 +9,7 @@ import TopicPage       from './pages/TopicPage'
 import TutorDashboard  from './pages/TutorDashboard'
 import PracticeMode    from './pages/PracticeMode'
 import ExamSimulator   from './pages/ExamSimulator'
+import ErrorBoundary   from './components/Shell/ErrorBoundary'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
@@ -16,7 +17,8 @@ if ('serviceWorker' in navigator) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
       <Routes>
         <Route path='/'                            element={<Dashboard />} />
         <Route path='/login'                       element={<LoginPage />} />
@@ -27,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/exam-simulator'              element={<ExamSimulator />} />
         <Route path='*'                            element={<Navigate to='/' replace />} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>
 )
