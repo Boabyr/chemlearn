@@ -58,8 +58,8 @@ n = Beugungsordnung, d = Netzebenenabstand, θ = Glanzwinkel
 - Elemente über ihre typischen Emissionslinien identifizieren
 - Minimum: intensivste Linie finden (Kα oder Lα1)
 - Linien höherer Ordnung (2. Ordnung) beachten!
-- Linienüberlappungen prüfen (z.B. Fe Kβ ≈ Mn Kα bei 1.94/1.91 Å)
-- Intensitätsverhältnisse beachten (z.B. Fe Kα : Kβ = 4:1)
+- Linienüberlappungen prüfen (z.B. Fe Kα ≈ Mn Kβ bei 1,94/1,91 Å)
+- Intensitätsverhältnisse beachten (Kα ist rund 5- bis 8-mal intensiver als Kβ)
 
 ## Quantitative RFA – Matrixeffekte
 
