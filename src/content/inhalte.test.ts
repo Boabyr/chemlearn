@@ -179,6 +179,55 @@ describe('Quizfragen', () => {
   })
 })
 
+describe('Antwortlängen', () => {
+  // Die richtige Antwort trug früher die Begründung mit sich, die Ablenker waren
+  // knappe Schlagworte: in 75 bis 80 % der Fragen war die richtige die längste
+  // Option, im Mittel 2,3- bis 2,6-mal so lang. Wer die Chemie nicht kann, wählt
+  // die ausführlichste und liegt in vier von fünf Fällen richtig.
+  //
+  // Die Begründung steht jetzt in `explanation`, die Optionen sind knappe
+  // Behauptungen von ähnlicher Länge. Zufall wären 25 %; gemessen sind 31 %.
+  const HOECHSTENS_LAENGSTE = 0.45
+  const HOECHSTENS_FAKTOR = 1.35
+  const HOECHSTENS_JE_FRAGE = 2.0
+
+  const laengen = (frage: { options: string[] }) => frage.options.map(o => o.length)
+  const ablenkerSchnitt = (l: number[], richtig: number) =>
+    (l.reduce((a, b) => a + b, 0) - l[richtig]) / (l.length - 1)
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: die richtige Antwort ist selten die längste', async (kursId) => {
+    const alle = (await loadAllTopics(kursId)).flatMap(t => t.quiz)
+    const laengste = alle.filter(f => {
+      const l = laengen(f)
+      const max = Math.max(...l)
+      return l[f.correct] === max && l.filter(x => x === max).length === 1
+    })
+    const anteil = laengste.length / alle.length
+    expect(anteil, `${laengste.length} von ${alle.length} Fragen`).toBeLessThanOrEqual(HOECHSTENS_LAENGSTE)
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: richtige und falsche Optionen sind ähnlich lang', async (kursId) => {
+    const alle = (await loadAllTopics(kursId)).flatMap(t => t.quiz)
+    const richtig = alle.reduce((s, f) => s + laengen(f)[f.correct], 0)
+    const ablenker = alle.reduce((s, f) => s + ablenkerSchnitt(laengen(f), f.correct), 0)
+    expect(richtig / ablenker).toBeLessThanOrEqual(HOECHSTENS_FAKTOR)
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: keine einzelne Frage verrät sich über die Länge', async (kursId) => {
+    const ausreisser: string[] = []
+    for (const thema of await loadAllTopics(kursId)) {
+      for (const frage of thema.quiz) {
+        const l = laengen(frage)
+        const faktor = l[frage.correct] / ablenkerSchnitt(l, frage.correct)
+        if (faktor > HOECHSTENS_JE_FRAGE) {
+          ausreisser.push(`${thema.id}:${frage.id} — Faktor ${faktor.toFixed(1)}`)
+        }
+      }
+    }
+    expect(ausreisser).toEqual([])
+  })
+})
+
 describe('Länge der Theorietexte', () => {
   // CONTENT-PROMPT.md gibt 400 bis 900 Wörter je Thema vor. Sechs Themen der
   // organischen Chemie lagen darunter, eines bei der Hälfte — das fiel nur auf,
