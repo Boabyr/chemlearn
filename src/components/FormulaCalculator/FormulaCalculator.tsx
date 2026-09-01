@@ -1,30 +1,21 @@
-import { useState } from 'react'
-
-interface Variable {
-  id: string
-  label: string
-  symbol: string
-  unit: string
-  description: string
-}
-
-interface Formula {
-  id: string
-  name: string
-  equation: string
-  variables: Variable[]
-  solve: (inputs: Record<string, number>) => Record<string, number>
-  hints: string[]
-}
+import { useMemo, useState } from 'react'
+import type { Formel } from '../../content/schema'
+import { auswerten } from '../../lib/formel/ausdruck'
+import { leseZahl } from '../../lib/learning/bewerten'
 
 interface FormulaCalculatorProps {
-  formula: Formula
+  formula: Formel
   onComplete?: () => void
 }
 
 export default function FormulaCalculator({ formula, onComplete }: FormulaCalculatorProps) {
   const [inputs, setInputs] = useState<Record<string, string>>({})
-  const [solveFor, setSolveFor] = useState<string>(formula.variables[formula.variables.length - 1].id)
+  // Nur nach Größen fragen, für die es auch eine Umstellung gibt.
+  const loesbar = useMemo(
+    () => formula.variables.filter(v => formula.umstellungen.some(u => u.solveFor === v.id)),
+    [formula],
+  )
+  const [solveFor, setSolveFor] = useState<string>(loesbar[0].id)
   const [result, setResult] = useState<number | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showHint, setShowHint] = useState(0)
@@ -37,17 +28,22 @@ export default function FormulaCalculator({ formula, onComplete }: FormulaCalcul
 
   function calculate() {
     setError(null)
-    const numInputs: Record<string, number> = {}
+    const werte: Record<string, number> = {}
     for (const v of inputVars) {
-      const val = parseFloat(inputs[v.id] || '')
-      if (isNaN(val)) { setError(`Bitte ${v.symbol} eingeben.`); return }
-      numInputs[v.id] = val
+      const zahl = leseZahl(inputs[v.id] ?? '')
+      if (zahl === null) { setError(`Bitte ${v.symbol} eingeben.`); return }
+      werte[v.id] = zahl
     }
+
+    const umstellung = formula.umstellungen.find(u => u.solveFor === solveFor)
+    if (!umstellung) { setError(`Für ${solveFor} ist keine Umstellung hinterlegt.`); return }
+
     try {
-      const results = formula.solve({ ...numInputs, solveFor: solveFor as unknown as number })
-      setResult(results[solveFor])
-    } catch {
-      setError('Berechnung fehlgeschlagen. Bitte Werte prüfen.')
+      const wert = auswerten(umstellung.expr, werte)
+      if (!Number.isFinite(wert)) { setError('Kein endliches Ergebnis — bitte Werte prüfen.'); return }
+      setResult(wert)
+    } catch (fehler) {
+      setError((fehler as Error).message)
     }
   }
 
@@ -83,7 +79,7 @@ export default function FormulaCalculator({ formula, onComplete }: FormulaCalcul
       <div>
         <p className="text-sm text-muted mb-2">Gesucht:</p>
         <div className="flex gap-2 flex-wrap">
-          {formula.variables.map(v => (
+          {loesbar.map(v => (
             <button key={v.id} onClick={() => { setSolveFor(v.id); reset() }}
               className={`px-4 py-2 rounded-lg text-sm font-mono transition-colors ${
                 solveFor === v.id

@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "06-elektrochemische-grundlagen",
   title: "Elektrochemische Grundlagen",
@@ -68,13 +70,11 @@ Zwischen zwei Lösungen verschiedener Konzentration entsteht ein Diffusionspoten
         { id: "n", label: "Elektronenzahl", symbol: "n", unit: "—", description: "Anzahl übertragener Elektronen" },
         { id: "ratio", label: "Konzentrationsverhältnis", symbol: "[Red]/[Ox]", unit: "—", description: "c(Red)/c(Ox)" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor
-        if (sf === 'E') return { E: inputs.E0 - (0.05916 / inputs.n) * Math.log10(inputs.ratio) }
-        if (sf === 'E0') return { E0: inputs.E + (0.05916 / inputs.n) * Math.log10(inputs.ratio) }
-        if (sf === 'ratio') return { ratio: Math.pow(10, (inputs.E0 - inputs.E) * inputs.n / 0.05916) }
-        return {}
-      },
+      umstellungen: [
+        { solveFor: "E", expr: "E0 - (0.05916 / n) * log(ratio)" },
+        { solveFor: "E0", expr: "E + (0.05916 / n) * log(ratio)" },
+        { solveFor: "ratio", expr: "(10) ^ ((E0 - E) * n / 0.05916)" },
+      ],
       hints: [
         "E = E° − (0.05916/n) · log([Red]/[Ox]). Bei 25°C ist RT/F = 0.02569 V, und 2.303·RT/F = 0.05916 V. Typisch: n = 1 oder 2.",
         "log([Red]/[Ox]): Bei hoher [Red] → positive log → E sinkt. Bei hoher [Ox] → negative log → E steigt. Oxidierte Form bevorzugt höhere Potentiale."
@@ -90,11 +90,11 @@ Zwischen zwei Lösungen verschiedener Konzentration entsteht ein Diffusionspoten
     { id: "q6", question: "Eine Elektrode mit E° = +0.34 V (Cu²⁺/Cu) wird mit einer Elektrode E° = −0.76 V (Zn²⁺/Zn) kombiniert. Was ist E_Zelle°?", options: ["−0.42 V", "+0.42 V", "+1.10 V", "−1.10 V"], correct: 2, explanation: "E_Zelle = E_Kathode − E_Anode. Cu hat höheres E° → Kathode. Zn → Anode. E_Zelle = 0.34 − (−0.76) = +1.10 V. Positives E_Zelle → spontane Reaktion (ΔG = −nFE < 0). Das ist das Daniell-Element!" },
   ],
   flashcards: [
-    { front: "Nernst-Gleichung", back: "E = E° − (RT/nF)·ln([Red]/[Ox]). Bei 25°C: E = E° − (0.05916/n)·log([Red]/[Ox]). Pro Dekade Konzentrationsänderung: ΔE = 0.05916/n Volt." },
-    { front: "Standardelektrodenpotential E°", back: "Potential einer Halbzelle bei Standardbedingungen (a=1, T=25°C, p=1 bar) gegen SHE (E°=0 V). Positives E°: starkes Oxidationsmittel. Negatives E°: starkes Reduktionsmittel." },
-    { front: "Galvanisch vs. Elektrolytisch", back: "Galvanisch: spontan, ΔG < 0, E_Zelle > 0. Erzeugt Strom. Elektrolytisch: nicht-spontan, ΔG > 0, externe Spannung nötig. Verbraucht Strom. Elektrolyse: E_ext > E_Zelle." },
-    { front: "Referenzelektroden", back: "SHE: E° = 0.000 V (Standard). Kalomel (SCE, ges.): +0.241 V vs. SHE. Ag/AgCl (ges.): +0.197 V vs. SHE. Praktischer als SHE! Salzbrücke minimiert Diffusionspotential." },
-    { front: "Zellspannung", back: "E_Zelle = E_Kathode − E_Anode. Kathode: höheres Potential, Reduktion. Anode: niedrigeres Potential, Oxidation. E > 0 → spontan (ΔG = −nFE)." },
-    { front: "Faraday-Konstante F", back: "F = 96485 C/mol ≈ 96500 C/mol. Ladung eines Mols Elektronen. ΔG = −nFE. n = Elektronen pro Formelumsatz, E = Zellspannung in Volt." },
+    { id: "0nj0tc8", front: "Nernst-Gleichung", back: "E = E° − (RT/nF)·ln([Red]/[Ox]). Bei 25°C: E = E° − (0.05916/n)·log([Red]/[Ox]). Pro Dekade Konzentrationsänderung: ΔE = 0.05916/n Volt." },
+    { id: "1v93cpk", front: "Standardelektrodenpotential E°", back: "Potential einer Halbzelle bei Standardbedingungen (a=1, T=25°C, p=1 bar) gegen SHE (E°=0 V). Positives E°: starkes Oxidationsmittel. Negatives E°: starkes Reduktionsmittel." },
+    { id: "07v04ha", front: "Galvanisch vs. Elektrolytisch", back: "Galvanisch: spontan, ΔG < 0, E_Zelle > 0. Erzeugt Strom. Elektrolytisch: nicht-spontan, ΔG > 0, externe Spannung nötig. Verbraucht Strom. Elektrolyse: E_ext > E_Zelle." },
+    { id: "011smjf", front: "Referenzelektroden", back: "SHE: E° = 0.000 V (Standard). Kalomel (SCE, ges.): +0.241 V vs. SHE. Ag/AgCl (ges.): +0.197 V vs. SHE. Praktischer als SHE! Salzbrücke minimiert Diffusionspotential." },
+    { id: "01wmd2i", front: "Zellspannung", back: "E_Zelle = E_Kathode − E_Anode. Kathode: höheres Potential, Reduktion. Anode: niedrigeres Potential, Oxidation. E > 0 → spontan (ΔG = −nFE)." },
+    { id: "08tel9p", front: "Faraday-Konstante F", back: "F = 96485 C/mol ≈ 96500 C/mol. Ladung eines Mols Elektronen. ΔG = −nFE. n = Elektronen pro Formelumsatz, E = Zellspannung in Volt." },
   ],
-};
+} satisfies Thema;

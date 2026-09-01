@@ -29,9 +29,18 @@ interface ReviewZeile {
   last_reviewed_at: string
 }
 
-/** Schlüssel einer Karteikarte in der reviews-Tabelle. */
-export function cardItemId(topicId: string, cardIndex: number): string {
-  return `${topicId}#${cardIndex}`
+/**
+ * Schlüssel in der reviews-Tabelle.
+ *
+ * Die Karte wird über ihre stabile Kennung angesprochen, nicht über ihre
+ * Position — siehe Migration 003. Das Präfix trennt Karten von Fragen.
+ */
+export function cardItemId(topicId: string, cardId: string): string {
+  return `card:${topicId}:${cardId}`
+}
+
+export function questionItemId(questionId: string): string {
+  return `q:${questionId}`
 }
 
 async function wiederholungenLaden(userId: string, courseId?: string): Promise<ReviewRow[]> {
@@ -144,9 +153,10 @@ export function useReviews(courseId?: string) {
   }, [user, courseId, qc])
 
   const dueNow = reviews.filter(r => isDue(r, jetzt))
+  // Der Sitzungsbau rechnet mit blanken Fragen-Kennungen; das Präfix fällt hier ab.
   const dueQuestions: DueItem[] = dueNow
     .filter(r => r.itemType === 'question')
-    .map(r => ({ itemId: r.itemId, dueAt: r.dueAt }))
+    .map(r => ({ itemId: r.itemId.replace(/^q:/, ''), dueAt: r.dueAt }))
 
   return {
     reviews,

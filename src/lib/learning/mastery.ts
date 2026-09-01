@@ -84,12 +84,12 @@ export function weakestTopics(
 
 export interface QuestionRef {
   id: string
-  professor: string
+  examiner: string
   topicId: string
 }
 
 export interface Readiness {
-  professor: string
+  examiner: string
   /** Trefferquote × Abdeckung — unbeantwortete Fragen zählen als Lücke. */
   score: number
   /** Anteil der Fragen dieses Prüfers, die schon einmal beantwortet wurden. */
@@ -103,7 +103,7 @@ export interface Readiness {
  * Prüfungsreife je Prüfer. Eine hohe Trefferquote auf drei von dreißig Fragen
  * ist keine Reife — deshalb geht die Abdeckung in die Punktzahl ein.
  */
-export function readinessByProfessor(
+export function readinessByExaminer(
   attempts: AttemptLike[],
   questions: QuestionRef[],
   now: Date = new Date(),
@@ -115,10 +115,10 @@ export function readinessByProfessor(
     else byQuestion.set(a.questionId, [a])
   }
 
-  const professors = [...new Set(questions.map(q => q.professor))].sort()
+  const examiners = [...new Set(questions.map(q => q.examiner))].sort()
 
-  return professors.map(professor => {
-    const own = questions.filter(q => q.professor === professor)
+  return examiners.map(examiner => {
+    const own = questions.filter(q => q.examiner === examiner)
     const relevant = attempts.filter(a => own.some(q => q.id === a.questionId))
     const answered = own.filter(q => byQuestion.has(q.id)).length
     const coverage = own.length > 0 ? answered / own.length : 0
@@ -127,7 +127,7 @@ export function readinessByProfessor(
     const score = hitRate * coverage
 
     return {
-      professor,
+      examiner,
       score,
       coverage,
       level: levelFor(score, relevant.length),

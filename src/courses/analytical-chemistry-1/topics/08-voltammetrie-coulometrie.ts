@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "08-voltammetrie-coulometrie",
   title: "Voltammetrie & Coulometrie",
@@ -77,7 +79,6 @@ m = (M · Q)/(n · F) = (M · I · t)/(n · F)
   interactive: {
     type: "apparatus-quiz",
     question: "Drei-Elektroden-Aufbau für Voltammetrie",
-    mode: "name-to-image",
     targetId: "three-electrode",
     explanation: "Der Drei-Elektroden-Aufbau (Arbeitselektrode WE + Referenzelektrode RE + Gegenelektrode CE) ist notwendig, damit die Referenzelektrode keinen Strom führt und ihr Potential stabil bleibt. Der Strom fließt zwischen WE und CE, die Spannung wird zwischen WE und RE gemessen.",
     hint1: "Zwei-Elektroden: RE führt Strom → Potential ändert sich. Drei-Elektroden: Potentiostat hält E(WE-RE) konstant, Strom fließt über CE.",
@@ -114,11 +115,11 @@ m = (M · Q)/(n · F) = (M · I · t)/(n · F)
     { id: "q6", question: "Wozu dient die Karl-Fischer-Titration?", options: ["Bestimmung von Schwermetallen", "Coulometrische Bestimmung von Wasser in Proben mit hoher Präzision", "pH-Messung in nichtwässrigen Systemen", "Bestimmung von Halogeniden"], correct: 1, explanation: "Karl-Fischer-Titration: coulometrische Wasserbestimmung. Reagenz (I₂, SO₂, Pyridin/Imidazol, MeOH) reagiert stöchiometrisch mit H₂O. Elektrolytisch erzeugte I₂-Menge ∝ H₂O-Gehalt. Sehr präzise (μg H₂O), wichtig für Pharma, Lebensmittel, Petroleumprodukte." },
   ],
   flashcards: [
-    { front: "Drei-Elektroden-Aufbau", back: "WE (Arbeitselektrode, klein, Reaktion hier), RE (Referenz, kein Strom, stabiles E), CE (Gegenelektrode, groß, Strom fließt hier). Potentiostat hält E(WE vs. RE) konstant." },
-    { front: "Halbstufenpotential E_1/2", back: "E_1/2 = Potential bei i = i_d/2 (halber Grenzstrom). Charakteristisch für Analyt-Ion (≈ Formalpotential E°'). Qualitative Identifizierung möglich. Verschiedene Ionen → verschiedene E_1/2." },
-    { front: "Faraday'sches Gesetz", back: "m = M·Q/(n·F) = M·I·t/(n·F). Q [C] = I [A] × t [s]. F = 96485 C/mol. n = Elektronen/Mol. Coulometrie: absolutes Verfahren, keine Kalibrierung nötig!" },
-    { front: "Stripping-Voltammetrie", back: "1. Anreicherung: Analyt bei konst. E abgeschieden (typ. 1–5 min). 2. Rückstrippung: E geändert → Strompeak. Sehr empfindlich: ng/L bis pg/L. Anwendung: Schwermetalle (Pb, Cd, Cu) in Wasser." },
-    { front: "Cyclovoltammetrie (CV)", back: "Dreieck-Potential. Reversibel: i_pc/i_pa = 1, ΔE_p = 59/n mV. Irreversibel: nur ein Peak oder asymmetrisch. E°' = (E_pa + E_pc)/2. Informationen über Kinetik und Mechanismus." },
-    { front: "Karl-Fischer-Titration", back: "Coulometrische H₂O-Bestimmung. H₂O + I₂ + SO₂ + MeOH + Base → Reaktion. I₂ wird elektrolytisch erzeugt. n(I₂) ∝ n(H₂O). Präzision: μg. Anwendung: Pharma, Lebensmittel, Öle." },
+    { id: "1ef2p8y", front: "Drei-Elektroden-Aufbau", back: "WE (Arbeitselektrode, klein, Reaktion hier), RE (Referenz, kein Strom, stabiles E), CE (Gegenelektrode, groß, Strom fließt hier). Potentiostat hält E(WE vs. RE) konstant." },
+    { id: "0m35yuh", front: "Halbstufenpotential E_1/2", back: "E_1/2 = Potential bei i = i_d/2 (halber Grenzstrom). Charakteristisch für Analyt-Ion (≈ Formalpotential E°'). Qualitative Identifizierung möglich. Verschiedene Ionen → verschiedene E_1/2." },
+    { id: "1s609ou", front: "Faraday'sches Gesetz", back: "m = M·Q/(n·F) = M·I·t/(n·F). Q [C] = I [A] × t [s]. F = 96485 C/mol. n = Elektronen/Mol. Coulometrie: absolutes Verfahren, keine Kalibrierung nötig!" },
+    { id: "0b5zlpr", front: "Stripping-Voltammetrie", back: "1. Anreicherung: Analyt bei konst. E abgeschieden (typ. 1–5 min). 2. Rückstrippung: E geändert → Strompeak. Sehr empfindlich: ng/L bis pg/L. Anwendung: Schwermetalle (Pb, Cd, Cu) in Wasser." },
+    { id: "1f5wafc", front: "Cyclovoltammetrie (CV)", back: "Dreieck-Potential. Reversibel: i_pc/i_pa = 1, ΔE_p = 59/n mV. Irreversibel: nur ein Peak oder asymmetrisch. E°' = (E_pa + E_pc)/2. Informationen über Kinetik und Mechanismus." },
+    { id: "1jt9ck3", front: "Karl-Fischer-Titration", back: "Coulometrische H₂O-Bestimmung. H₂O + I₂ + SO₂ + MeOH + Base → Reaktion. I₂ wird elektrolytisch erzeugt. n(I₂) ∝ n(H₂O). Präzision: μg. Anwendung: Pharma, Lebensmittel, Öle." },
   ],
-};
+} satisfies Thema;

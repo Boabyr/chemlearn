@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "05-roentgenspektroskopie",
   title: "Röntgenspektroskopie (RFA)",
@@ -93,7 +95,6 @@ N_A/N_A100 = (μ_A · c_A)/(μ_A · c_A + μ_M · c_M)
   interactive: {
     type: "apparatus-quiz",
     question: "Röntgenfluoreszenzspektrometer (RFA/XFS)",
-    mode: "name-to-image",
     targetId: "rfa",
     explanation: "Das RFA-Spektrometer besteht aus: Röntgenröhre (erzeugt Primärstrahlung) → Probe (emittiert charakteristische Röntgenstrahlung) → Analysatorkristall (Monochromator via Bragg'sches Gesetz) → Detektor. Der Analysatorkristall ermöglicht die wellenlängenselektive Detektion.",
     hint1: "RFA = Röntgenfluoreszenzanalyse. Röntgenröhre regt Probe an, Probe emittiert charakteristische Röntgenstrahlung, Analysatorkristall selektiert Wellenlängen via Bragg'schem Gesetz.",
@@ -130,11 +131,11 @@ N_A/N_A100 = (μ_A · c_A)/(μ_A · c_A + μ_M · c_M)
     { id: "q6", question: "Welche Detektortypen werden in RFA-Spektrometern eingesetzt?", options: ["Nur Photodioden", "Zählrohr, Szintillationsdetektor (NaI(Tl)) und Halbleiterdetektor (Si(Li), PIN-Prinzip)", "Nur CCD-Arrays", "Thermoelemente"], correct: 1, explanation: "Drei Typen: 1. Proportionalzählrohr (gasgefüllt). 2. Szintillationsdetektor (NaI(Tl) + Photomultiplier). 3. Halbleiterdetektor (Si(Li) oder reines Si, PIN-Prinzip, gekühlt für beste Auflösung)." },
   ],
   flashcards: [
-    { front: "Moseley'sches Gesetz", back: "1/√λ = K(Z−σ). Emissionswellenlänge eindeutig mit Ordnungszahl Z verknüpft → Basis der qualitativen Elementanalyse per RFA. K = Serienkonstante, σ = Abschirmfaktor." },
-    { front: "Bragg'sches Gesetz", back: "nλ = 2d·sin(θ). Analysatorkristall im RFA-Spektrometer. d = Netzebenenabstand, θ = Glanzwinkel. Verschiedene Kristalle für verschiedene Elementbereiche: LiF (≥Z=20), PG (P,S,Cl), PE (Al-K)." },
-    { front: "RFA – Vor- und Nachteile", back: "✓ Zerstörungsfrei, Multielement, F bis U. ✗ Nicht sehr sensitiv (0.01–100%), leichte Elemente schwierig (Z<23), C/O/N kaum bestimmbar, teure Instrumente." },
-    { front: "Matrixeffekte RFA", back: "1. Sekundäranregung durch Matrixstrahlung. 2. Absorption Primärstrahlung durch Matrix. 3. Sekundärabsorption. Kompensation: ähnliche Standards, interner Standard, Verdünnung, math. Modelle." },
-    { front: "Röntgenröhre – λmin", back: "λ_min = hc/(eU) = 12.398/U (Å). U = Anodenspannung in kV. Bremsstrahlung überlagert mit charakteristischen Emissionslinien des Anodenmaterials (z.B. Mo, W, Cu)." },
-    { front: "Auger vs. Röntgenemission", back: "Beide Folgeprozesse nach Photoionisation. Auger: Energie auf drittes e⁻ übertragen → Augerelektron. Röntgen: Photon emittiert (Kα, Kβ...). Leichte Elemente: Auger dominiert. Schwere Elemente: Röntgenemission dominiert." },
+    { id: "0jltk3e", front: "Moseley'sches Gesetz", back: "1/√λ = K(Z−σ). Emissionswellenlänge eindeutig mit Ordnungszahl Z verknüpft → Basis der qualitativen Elementanalyse per RFA. K = Serienkonstante, σ = Abschirmfaktor." },
+    { id: "1juva7r", front: "Bragg'sches Gesetz", back: "nλ = 2d·sin(θ). Analysatorkristall im RFA-Spektrometer. d = Netzebenenabstand, θ = Glanzwinkel. Verschiedene Kristalle für verschiedene Elementbereiche: LiF (≥Z=20), PG (P,S,Cl), PE (Al-K)." },
+    { id: "1g4r1bj", front: "RFA – Vor- und Nachteile", back: "✓ Zerstörungsfrei, Multielement, F bis U. ✗ Nicht sehr sensitiv (0.01–100%), leichte Elemente schwierig (Z<23), C/O/N kaum bestimmbar, teure Instrumente." },
+    { id: "083w12j", front: "Matrixeffekte RFA", back: "1. Sekundäranregung durch Matrixstrahlung. 2. Absorption Primärstrahlung durch Matrix. 3. Sekundärabsorption. Kompensation: ähnliche Standards, interner Standard, Verdünnung, math. Modelle." },
+    { id: "0bd8kdk", front: "Röntgenröhre – λmin", back: "λ_min = hc/(eU) = 12.398/U (Å). U = Anodenspannung in kV. Bremsstrahlung überlagert mit charakteristischen Emissionslinien des Anodenmaterials (z.B. Mo, W, Cu)." },
+    { id: "0mb1d4z", front: "Auger vs. Röntgenemission", back: "Beide Folgeprozesse nach Photoionisation. Auger: Energie auf drittes e⁻ übertragen → Augerelektron. Röntgen: Photon emittiert (Kα, Kβ...). Leichte Elemente: Auger dominiert. Schwere Elemente: Röntgenemission dominiert." },
   ],
-};
+} satisfies Thema;

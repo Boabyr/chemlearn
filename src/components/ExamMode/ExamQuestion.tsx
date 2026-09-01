@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { professorLabel, type ExamQuestion } from '../../data/exams'
+import { examinerLabel, type ExamQuestion } from '../../data/exams'
 import { stilFuer } from './pruefStil'
 import { bewerte, leseZahl } from '../../lib/learning/bewerten'
 
@@ -51,8 +51,8 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
     onAnswer(bewertung.korrekt, bewertung.punkte)
   }
 
-  const stil = stilFuer(question.professor)
-  const profLabel = professorLabel(question.professor)
+  const stil = stilFuer(question.examiner)
+  const profLabel = examinerLabel(question.examiner)
 
   return (
     <div className="bg-raised border border-line rounded-2xl overflow-hidden">

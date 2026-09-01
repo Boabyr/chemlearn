@@ -1,37 +1,64 @@
-import * as ac1 from './ac1'
-import type { ExamQuestion, ExamStructure, QuestionType } from './ac1'
+import type { ExamQuestion, ExamStructure, QuestionType } from './typen'
+import { kursMit } from '../../lib/courseRegistry'
 
 export type { ExamQuestion, ExamStructure, QuestionType }
+export type { ExamSection, PruefungsDaten } from './typen'
 
-/** Prüfungsfragen und Prüfungsaufbauten je Kurs. Neuer Kurs: hier eintragen. */
-const byCourse: Record<string, { questions: ExamQuestion[]; structures: ExamStructure[] }> = {
-  'analytical-chemistry-1': { questions: ac1.questions, structures: ac1.structures },
+interface PruefungsModul {
+  questions?: ExamQuestion[]
+  structures?: ExamStructure[]
+}
+
+/**
+ * Prüfungsdaten finden sich selbst: `src/data/exams/<kurs-id>.ts`.
+ *
+ * Vorher stand hier eine Handliste, und der Importer patchte sie per Regex,
+ * verankert an der Zeichenkette `ac1` — ab dem dritten Fach war Schluss.
+ */
+const module = import.meta.glob<PruefungsModul>('./*.ts', { eager: true })
+
+const jeKurs = new Map<string, { questions: ExamQuestion[]; structures: ExamStructure[] }>()
+for (const [pfad, modul] of Object.entries(module)) {
+  const kursId = pfad.replace(/^\.\//, '').replace(/\.ts$/, '')
+  if (kursId === 'index' || kursId === 'typen') continue
+  jeKurs.set(kursId, { questions: modul.questions ?? [], structures: modul.structures ?? [] })
 }
 
 export function examQuestionsFor(courseId: string): ExamQuestion[] {
-  return byCourse[courseId]?.questions ?? []
+  return jeKurs.get(courseId)?.questions ?? []
 }
 
 export function examStructuresFor(courseId: string): ExamStructure[] {
-  return byCourse[courseId]?.structures ?? []
+  return jeKurs.get(courseId)?.structures ?? []
 }
 
 export function courseIdsWithExams(): string[] {
-  return Object.keys(byCourse).filter(id => byCourse[id].questions.length > 0)
+  return [...jeKurs.entries()].filter(([, daten]) => daten.questions.length > 0).map(([id]) => id)
 }
 
-/** Prüfer, die in diesem Kurs überhaupt vorkommen. */
-export function professorsFor(courseId: string): string[] {
-  return [...new Set(examQuestionsFor(courseId).map(q => q.professor))].sort()
+/** Prüferkennungen dieses Fachs — aus dem Kurskopf, sonst aus den Fragen. */
+export function examinersFor(courseId: string): string[] {
+  const ausKurs = kursMit(courseId)?.examiners ?? []
+  if (ausKurs.length > 0) return ausKurs.map(p => p.id)
+  return [...new Set(examQuestionsFor(courseId).map(q => q.examiner))].sort()
 }
 
-/** Anzeigename für einen Prüferschlüssel. */
-const ANZEIGENAMEN: Record<string, string> = {
-  lieberzeit: 'Lieberzeit',
-  koellensperger: 'Köllensperger',
-  gerner: 'Gerner',
+function grossAmAnfang(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-export function professorLabel(professor: string): string {
-  return ANZEIGENAMEN[professor] ?? professor.charAt(0).toUpperCase() + professor.slice(1)
+/** Anzeigename. Ohne Kursangabe bleibt nur die Kennung. */
+export function examinerLabel(pruefer: string, courseId?: string): string {
+  if (courseId) {
+    const treffer = kursMit(courseId)?.examiners.find(p => p.id === pruefer)
+    if (treffer) return treffer.label
+  }
+  return grossAmAnfang(pruefer)
+}
+
+/** Anzeigename mit Symbol, wie ihn die Prüfungsseiten zeigen. */
+export function examinerAnzeige(pruefer: string, courseId: string): string {
+  const treffer = kursMit(courseId)?.examiners.find(p => p.id === pruefer)
+  if (!treffer) return grossAmAnfang(pruefer)
+  return treffer.icon ? `${treffer.icon} ${treffer.label}` : treffer.label
 }

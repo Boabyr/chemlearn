@@ -1,59 +1,68 @@
-import { course as heterocyclicChemistry } from "../courses/organic-chemistry/index";
-import { course as analyticalChemistry1 } from "../courses/analytical-chemistry-1/index";
+import type { Kurs, Thema } from '../content/schema'
 
-const courseTopicLoaders: Record<string, Record<string, () => Promise<any>>> = {
-  "organic-chemistry": {
-    "01-introduction":               () => import("../courses/organic-chemistry/topics/01-introduction"),
-    "02-pyridines":                  () => import("../courses/organic-chemistry/topics/02-pyridines"),
-    "03-five-ring-one-heteroatom":   () => import("../courses/organic-chemistry/topics/03-five-ring-one-heteroatom"),
-    "04-five-ring-two-heteroatoms":  () => import("../courses/organic-chemistry/topics/04-five-ring-two-heteroatom"),
-    "05-cycloadditions":             () => import("../courses/organic-chemistry/topics/05-cycloadditions"),
-    "06-cyclocondensations":         () => import("../courses/organic-chemistry/topics/06-cyclocondensations"),
-    "07-sear-regioselectivity":      () => import("../courses/organic-chemistry/topics/07-sear-regioselectivity"),
-    "08-mechanisms":                 () => import("../courses/organic-chemistry/topics/08-mechanisms"),
-    "09-bioisosteres-skeletal-editing": () => import("../courses/organic-chemistry/topics/09-bioisosteres-skeletal-editing"),
-  },
-  "analytical-chemistry-1": {
-    "01-grundlagen-spektroskopie":    () => import("../courses/analytical-chemistry-1/topics/01-grundlagen-spektroskopie"),
-    "02-lambert-beer":                () => import("../courses/analytical-chemistry-1/topics/02-lambert-beer"),
-    "03-fluoreszenz-lumineszenz":     () => import("../courses/analytical-chemistry-1/topics/03-fluoreszenz-lumineszenz"),
-    "04-ftir-raman":                  () => import("../courses/analytical-chemistry-1/topics/04-ftir-raman"),
-    "05-roentgenspektroskopie":       () => import("../courses/analytical-chemistry-1/topics/05-roentgenspektroskopie"),
-    "06-elektrochemische-grundlagen": () => import("../courses/analytical-chemistry-1/topics/06-elektrochemische-grundlagen"),
-    "07-potentiometrie-nernst":       () => import("../courses/analytical-chemistry-1/topics/07-potentiometrie-nernst"),
-    "08-voltammetrie-coulometrie":    () => import("../courses/analytical-chemistry-1/topics/08-voltammetrie-coulometrie"),
-    "09-chemosensoren":               () => import("../courses/analytical-chemistry-1/topics/09-chemosensoren"),
-    "10-statistik-qualitaet":         () => import("../courses/analytical-chemistry-1/topics/10-statistik-qualitaet"),
-    "11-saeurebase-ph":               () => import("../courses/analytical-chemistry-1/topics/11-saeurebase-ph"),
-    "12-faellungsreaktionen":         () => import("../courses/analytical-chemistry-1/topics/12-faellungsreaktionen"),
-    "13-chromatographie-grundlagen":  () => import("../courses/analytical-chemistry-1/topics/13-chromatographie-grundlagen"),
-    "14-trennverfahren-gc-hplc":      () => import("../courses/analytical-chemistry-1/topics/14-trennverfahren-gc-hplc"),
-    "15-kalibrierung-standardaddition": () => import("../courses/analytical-chemistry-1/topics/15-kalibrierung-standardaddition"),
-    "16-atomspektrometrie":           () => import("../courses/analytical-chemistry-1/topics/16-atomspektrometrie"),
-    "17-elektroden-faellungstitration": () => import("../courses/analytical-chemistry-1/topics/17-elektroden-faellungstitration"),
-    "18-fehlerrechnung":              () => import("../courses/analytical-chemistry-1/topics/18-fehlerrechnung"),
-  },
-};
+/**
+ * Kurse und Themen finden sich selbst.
+ *
+ * Vorher stand hier je Thema eine Zeile von Hand — inklusive eines
+ * Tippfehlers (`04-five-ring-two-heteroatoms` gegen die Datei
+ * `04-five-ring-two-heteroatom.ts`), und der Importer musste diese Datei per
+ * Regex umschreiben, um ein neues Fach anzulegen. Ein Fach anlegen heißt
+ * jetzt: Ordner mit `index.ts` und `topics/` hinlegen.
+ *
+ * Themen bleiben eigene Bündel (`import()` je Datei), Kursköpfe kommen
+ * sofort mit — sie sind klein und werden überall gebraucht.
+ */
 
-export const allCourses = [heterocyclicChemistry, analyticalChemistry1];
+interface ThemenModul { topic?: Thema; default?: Thema }
+interface KursModul { course?: Kurs; default?: Kurs }
 
-export async function loadTopic(courseId: string, topicId: string) {
-  const loaders = courseTopicLoaders[courseId];
-  if (!loaders) throw new Error(`Kurs nicht gefunden: ${courseId}`);
-  const loader = loaders[topicId];
-  if (!loader) throw new Error(`Thema nicht gefunden: ${topicId}`);
-  const module = await loader();
-  return module.topic ?? module.default;
+const kursModule = import.meta.glob<KursModul>('../courses/*/index.ts', { eager: true })
+const themenModule = import.meta.glob<ThemenModul>('../courses/*/topics/*.ts')
+
+/** `../courses/<kurs>/topics/<thema>.ts` → [kurs, thema] */
+function zerlegePfad(pfad: string): [string, string] {
+  const teile = pfad.split('/')
+  return [teile[2], teile[4].replace(/\.ts$/, '')]
 }
 
-export async function loadAllTopics(courseId: string) {
-  const loaders = courseTopicLoaders[courseId];
-  if (!loaders) throw new Error(`Kurs nicht gefunden: ${courseId}`);
-  const topics = await Promise.all(
-    Object.entries(loaders).map(async ([_id, loader]) => {
-      const module = await loader();
-      return module.topic ?? module.default;
-    })
-  );
-  return topics;
+const themenLader = new Map<string, Map<string, () => Promise<ThemenModul>>>()
+for (const [pfad, lader] of Object.entries(themenModule)) {
+  const [kursId, themaId] = zerlegePfad(pfad)
+  if (!themenLader.has(kursId)) themenLader.set(kursId, new Map())
+  themenLader.get(kursId)!.set(themaId, lader)
+}
+
+export const allCourses: Kurs[] = Object.entries(kursModule)
+  .map(([, modul]) => modul.course ?? modul.default)
+  .filter((kurs): kurs is Kurs => !!kurs)
+  .sort((a, b) => a.title.localeCompare(b.title, 'de'))
+
+export function kursMit(courseId: string): Kurs | undefined {
+  return allCourses.find(kurs => kurs.id === courseId)
+}
+
+/** Themen-Kennungen, die als Datei vorliegen — unabhängig von der Kursliste. */
+export function vorhandeneThemen(courseId: string): string[] {
+  return [...(themenLader.get(courseId)?.keys() ?? [])].sort()
+}
+
+export async function loadTopic(courseId: string, topicId: string): Promise<Thema> {
+  const lader = themenLader.get(courseId)?.get(topicId)
+  if (!lader) throw new Error(`Thema nicht gefunden: ${courseId}/${topicId}`)
+  const modul = await lader()
+  const thema = modul.topic ?? modul.default
+  if (!thema) throw new Error(`Thema ohne Inhalt: ${courseId}/${topicId}`)
+  return thema
+}
+
+/** Alle Themen eines Kurses in der Reihenfolge der Kursliste. */
+export async function loadAllTopics(courseId: string): Promise<Thema[]> {
+  const kurs = kursMit(courseId)
+  const reihenfolge = kurs?.topics ?? vorhandeneThemen(courseId)
+  const geladen = await Promise.all(
+    reihenfolge
+      .filter(themaId => themenLader.get(courseId)?.has(themaId))
+      .map(themaId => loadTopic(courseId, themaId)),
+  )
+  return geladen
 }

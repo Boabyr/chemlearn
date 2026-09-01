@@ -6,11 +6,11 @@ import type { AttemptLike } from './mastery'
 const now = new Date('2026-03-01T10:00:00Z')
 
 const fragen: SessionQuestion[] = [
-  { id: 'A1', topicId: '01', professor: 'lieberzeit' },
-  { id: 'A2', topicId: '01', professor: 'lieberzeit' },
-  { id: 'B1', topicId: '02', professor: 'gerner' },
-  { id: 'B2', topicId: '02', professor: 'gerner' },
-  { id: 'C1', topicId: '03', professor: 'gerner' },
+  { id: 'A1', topicId: '01', examiner: 'lieberzeit' },
+  { id: 'A2', topicId: '01', examiner: 'lieberzeit' },
+  { id: 'B1', topicId: '02', examiner: 'gerner' },
+  { id: 'B2', topicId: '02', examiner: 'gerner' },
+  { id: 'C1', topicId: '03', examiner: 'gerner' },
 ]
 
 function faellig(itemId: string, tageUeberfaellig: number) {
@@ -81,9 +81,9 @@ describe('buildSession', () => {
 
   it('beschränkt sich auf den gewählten Prüfer', () => {
     const s = buildSession({
-      questions: fragen, attempts: [], due: [], minutes: 30, now, professor: 'gerner',
+      questions: fragen, attempts: [], due: [], minutes: 30, now, examiner: 'gerner',
     })
-    expect(s.every(q => q.professor === 'gerner')).toBe(true)
+    expect(s.every(q => q.examiner === 'gerner')).toBe(true)
     expect(s.length).toBeGreaterThan(0)
   })
 })

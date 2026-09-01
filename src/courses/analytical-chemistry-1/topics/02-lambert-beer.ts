@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "02-lambert-beer",
   title: "Lambert-Beer-Gesetz",
@@ -82,14 +84,12 @@ Das Lambert-Beer-Gesetz gilt exakt nur unter folgenden Bedingungen:
         { id: "c", label: "Konzentration", symbol: "c", unit: "mol/L", description: "Molarität der Lösung" },
         { id: "d", label: "Schichtdicke", symbol: "d", unit: "cm", description: "Küvettenlänge" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor
-        if (sf === 'A') return { A: inputs.eps * inputs.c * inputs.d }
-        if (sf === 'c') return { c: inputs.A / (inputs.eps * inputs.d) }
-        if (sf === 'd') return { d: inputs.A / (inputs.eps * inputs.c) }
-        if (sf === 'eps') return { eps: inputs.A / (inputs.c * inputs.d) }
-        return {}
-      },
+      umstellungen: [
+        { solveFor: "A", expr: "eps * c * d" },
+        { solveFor: "c", expr: "A / (eps * d)" },
+        { solveFor: "d", expr: "A / (eps * c)" },
+        { solveFor: "eps", expr: "A / (c * d)" },
+      ],
       hints: [
         "A = ε × c × d. Alle drei Faktoren multiplizieren. Typische Werte: ε = 1000–100000 L/(mol·cm), d = 1 cm, c = 10⁻⁵–10⁻³ mol/L.",
         "Umformungen: c = A/(ε·d), d = A/(ε·c), ε = A/(c·d). Denke an die Einheiten: [A] ist dimensionslos, [ε·c·d] = (L/mol/cm)·(mol/L)·cm = 1 ✓"
@@ -105,11 +105,11 @@ Das Lambert-Beer-Gesetz gilt exakt nur unter folgenden Bedingungen:
     { id: "q6", question: "Wie lautet die Beziehung zwischen Absorption A und Transmission T?", options: ["A = T", "A = 1 - T", "A = -log(T)", "A = log(T)"], correct: 2, explanation: "A = -log(T) = -log(I/I₀) = log(I₀/I). Bei T = 1 (100% Transmission): A = 0. Bei T = 0.01 (1%): A = 2." },
   ],
   flashcards: [
-    { front: "Lambert-Beer-Gesetz", back: "A = ε · c · d. A = Absorption, ε = mol. Extinktionskoeffizient [L/(mol·cm)], c = Konzentration [mol/L], d = Schichtdicke [cm]. Gilt für verdünnte Lösungen mit monochromatischem Licht." },
-    { front: "Transmission T und Absorption A", back: "T = I/I₀ (Bereich 0–1). A = -log(T) = log(I₀/I). T = 10% → A = 1 (90% absorbiert). T = 1% → A = 2. T = 50% → A = 0.301." },
-    { front: "Voraussetzungen Lambert-Beer", back: "1. Monochromatisches Licht. 2. Verdünnte Lösung (<0.01 M). 3. Keine Lichtstreuung. 4. Keine photochemischen Reaktionen. Abweichungen: hohe c, Bandbreite, Streulicht, Assoziation/Dissoziation." },
-    { front: "Warum λmax für Messungen?", back: "Bei λmax: ε maximal → steilste Kalibriergerade → beste Sensitivität. Flaches Maximum → geringe Wellenlängenfehler haben kleinen Einfluss auf A. Optimaler Linearitätsbereich: A = 0.1–1.5." },
-    { front: "Kalibriergerade", back: "A = ε · d · c → lineare Funktion von c (Steigung = ε·d). Mehrere Standards → A gegen c → Gerade. Unbekannte Probe: A messen → c ablesen. Nur im linearen Bereich gültig!" },
-    { front: "Molarer Extinktionskoeffizient ε", back: "Charakteristisch für jeden Stoff bei bestimmter Wellenlänge. Einheit: L·mol⁻¹·cm⁻¹. Kleine ε (<100): wenig absorbierend. Große ε (>100.000): starke Absorber (z.B. Farbstoffe). Temperaturabhängig!" },
+    { id: "1nos00w", front: "Lambert-Beer-Gesetz", back: "A = ε · c · d. A = Absorption, ε = mol. Extinktionskoeffizient [L/(mol·cm)], c = Konzentration [mol/L], d = Schichtdicke [cm]. Gilt für verdünnte Lösungen mit monochromatischem Licht." },
+    { id: "10hw68u", front: "Transmission T und Absorption A", back: "T = I/I₀ (Bereich 0–1). A = -log(T) = log(I₀/I). T = 10% → A = 1 (90% absorbiert). T = 1% → A = 2. T = 50% → A = 0.301." },
+    { id: "04dacye", front: "Voraussetzungen Lambert-Beer", back: "1. Monochromatisches Licht. 2. Verdünnte Lösung (<0.01 M). 3. Keine Lichtstreuung. 4. Keine photochemischen Reaktionen. Abweichungen: hohe c, Bandbreite, Streulicht, Assoziation/Dissoziation." },
+    { id: "0vxol5c", front: "Warum λmax für Messungen?", back: "Bei λmax: ε maximal → steilste Kalibriergerade → beste Sensitivität. Flaches Maximum → geringe Wellenlängenfehler haben kleinen Einfluss auf A. Optimaler Linearitätsbereich: A = 0.1–1.5." },
+    { id: "0at6mqo", front: "Kalibriergerade", back: "A = ε · d · c → lineare Funktion von c (Steigung = ε·d). Mehrere Standards → A gegen c → Gerade. Unbekannte Probe: A messen → c ablesen. Nur im linearen Bereich gültig!" },
+    { id: "0hlta5g", front: "Molarer Extinktionskoeffizient ε", back: "Charakteristisch für jeden Stoff bei bestimmter Wellenlänge. Einheit: L·mol⁻¹·cm⁻¹. Kleine ε (<100): wenig absorbierend. Große ε (>100.000): starke Absorber (z.B. Farbstoffe). Temperaturabhängig!" },
   ],
-};
+} satisfies Thema;

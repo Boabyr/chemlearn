@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "09-chemosensoren",
   title: "Chemosensoren & Sensorik",
@@ -79,7 +81,6 @@ Chemosensor bei dem das Rezeptorelement ein biologisches Makromolekül (Enzym, A
   interactive: {
     type: "apparatus-quiz",
     question: "Amperometrischer Glucosesensor (Clark-Elektrode Typ)",
-    mode: "image-to-name",
     targetId: "glucose-sensor",
     explanation: "Der amperometrische Glucosesensor: GOD (Glucoseoxidase) oxidiert Glucose mit O₂ → H₂O₂. Das H₂O₂ wird an einer Pt-Elektrode (+0.65 V) oxidiert → messbarer Strom proportional zur Glucosekonzentration. Klassischer Biosensor (1. Generation).",
     hint1: "GOD = Glucoseoxidase. Glucose → Gluconolacton + H₂O₂. H₂O₂ wird elektrochemisch detektiert.",
@@ -116,11 +117,11 @@ Chemosensor bei dem das Rezeptorelement ein biologisches Makromolekül (Enzym, A
     { id: "q6", question: "Welche Anwendung hat ein Chemosensor in der Point-of-Care Diagnostik?", options: ["Massenspektrometrie", "Schnelle Patientennahe Analyse ohne Zentrallabor (z.B. Blutglucose, Troponin beim Herzinfarkt)", "Bestimmung von Röntgenstrukturen", "Chromatographische Trennung"], correct: 1, explanation: "Point-of-Care (POC): Analyse direkt beim Patienten ohne Zentrallabor. Miniaturisierte Sensoren (Lab-on-a-Chip). Beispiele: Blutglucose (Diabetes), Troponin (Herzinfarkt-Diagnose in Minuten), Blutgase (O₂, CO₂, pH). Vorteile: schnell, wenig Probe, kostengünstig." },
   ],
   flashcards: [
-    { front: "Chemosensor – Aufbau", back: "Rezeptorelement (selektive molekulare Erkennung: Enzym, Antikörper, Ionophor) + Transducer (elektrochemisch, optisch, massensensitiv, thermisch). Miniaturisiert, kontinuierlich, reversibel." },
-    { front: "Glucosesensor Generationen", back: "1. Gen.: GOD → H₂O₂ → Pt-Elektrode (O₂-abhängig). 2. Gen.: Mediator (Ferrocen) ersetzt O₂ (O₂-unabhängig). 3. Gen.: Direkter Elektronentransfer (DET) Enzym → Elektrode." },
-    { front: "Sauerbrey-Gleichung (QCM)", back: "Δf = −C·Δm (vereinfacht). Massenanlagerung → Frequenzabfall. Empfindlichkeit: ng/cm². Anwendungen: Gassensoren, Biosensoren, Schichtdicke in Vakuumdeposition." },
-    { front: "Biosensor (IUPAC)", back: "Chemosensor mit biologischem Rezeptorelement: Enzym, Antikörper, DNA, Rezeptorprotein. Transducer: beliebig. Biosensor ≠ Chemosensor in vivo." },
-    { front: "Transducer-Typen", back: "Elektrochemisch (amperometrisch, potentiometrisch, impedimetrisch). Optisch (Absorption, Fluoreszenz, SPR). Massensensitiv (QCM, SAW). Thermisch (Enzymthermistor)." },
-    { front: "Point-of-Care Diagnostik", back: "Analyse direkt beim Patienten. Miniaturisierte Sensoren (Lab-on-a-Chip, Microfluidik). Vorteile: schnell (min), wenig Probe (μL), kostengünstig, mobil. Beispiele: Glucose, Troponin, Blutgase, CRP." },
+    { id: "05mwoai", front: "Chemosensor – Aufbau", back: "Rezeptorelement (selektive molekulare Erkennung: Enzym, Antikörper, Ionophor) + Transducer (elektrochemisch, optisch, massensensitiv, thermisch). Miniaturisiert, kontinuierlich, reversibel." },
+    { id: "1a1gdq6", front: "Glucosesensor Generationen", back: "1. Gen.: GOD → H₂O₂ → Pt-Elektrode (O₂-abhängig). 2. Gen.: Mediator (Ferrocen) ersetzt O₂ (O₂-unabhängig). 3. Gen.: Direkter Elektronentransfer (DET) Enzym → Elektrode." },
+    { id: "06cm2gs", front: "Sauerbrey-Gleichung (QCM)", back: "Δf = −C·Δm (vereinfacht). Massenanlagerung → Frequenzabfall. Empfindlichkeit: ng/cm². Anwendungen: Gassensoren, Biosensoren, Schichtdicke in Vakuumdeposition." },
+    { id: "1bmz0cm", front: "Biosensor (IUPAC)", back: "Chemosensor mit biologischem Rezeptorelement: Enzym, Antikörper, DNA, Rezeptorprotein. Transducer: beliebig. Biosensor ≠ Chemosensor in vivo." },
+    { id: "1y79ufz", front: "Transducer-Typen", back: "Elektrochemisch (amperometrisch, potentiometrisch, impedimetrisch). Optisch (Absorption, Fluoreszenz, SPR). Massensensitiv (QCM, SAW). Thermisch (Enzymthermistor)." },
+    { id: "07zvkds", front: "Point-of-Care Diagnostik", back: "Analyse direkt beim Patienten. Miniaturisierte Sensoren (Lab-on-a-Chip, Microfluidik). Vorteile: schnell (min), wenig Probe (μL), kostengünstig, mobil. Beispiele: Glucose, Troponin, Blutgase, CRP." },
   ],
-};
+} satisfies Thema;
