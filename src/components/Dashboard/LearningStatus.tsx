@@ -65,7 +65,7 @@ export default function LearningStatus({ courseId, courseTitle }: {
 
       <div className="grid sm:grid-cols-[auto_1fr] gap-6 sm:gap-8">
         {/* Fällige Wiederholungen als Kennzahl, nicht als Diagramm */}
-        <div>
+        <button onClick={() => navigate('/lernen')} className="text-left">
           <p className="text-xs text-subtle uppercase tracking-widest mb-1">Heute fällig</p>
           <p className={`text-4xl font-light ${dueCount > 0 ? 'text-accent' : 'text-subtle'}`}>
             {dueCount}
@@ -73,7 +73,7 @@ export default function LearningStatus({ courseId, courseTitle }: {
           <p className="text-xs text-subtle mt-1">
             {dueCount === 1 ? 'Wiederholung' : 'Wiederholungen'}
           </p>
-        </div>
+        </button>
 
         {/* Prüfungsreife je Prüfer */}
         {readiness.length > 0 && (

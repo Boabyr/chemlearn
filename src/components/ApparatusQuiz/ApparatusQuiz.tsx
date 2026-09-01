@@ -14,6 +14,7 @@ interface Props {
   explanation: string
   hint1?: string
   hint2?: string
+  onComplete?: (korrekt: boolean) => void
 }
 
 /** Fällt ein, wenn eine Apparatur-ID keine Zeichnung hat. Im Dev-Build meldet
@@ -30,7 +31,7 @@ function MissingApparatus({ index }: { index: number }) {
   )
 }
 
-export default function ApparatusQuiz({ question, targetId, options, explanation, hint1, hint2 }: Props) {
+export default function ApparatusQuiz({ question, targetId, options, explanation, hint1, hint2, onComplete }: Props) {
   const [selected, setSelected] = useState<string | null>(null)
   const [hints, setHints] = useState(0)
   const [answered, setAnswered] = useState(false)
@@ -39,6 +40,7 @@ export default function ApparatusQuiz({ question, targetId, options, explanation
     if (answered) return
     setSelected(id)
     setAnswered(true)
+    onComplete?.(id === targetId)
   }
 
   const correct = selected === targetId

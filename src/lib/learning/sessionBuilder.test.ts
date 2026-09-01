@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildSession, QUESTION_SECONDS } from './sessionBuilder'
+import { buildSession, sekundenFuer, QUESTION_SECONDS } from './sessionBuilder'
 import type { SessionQuestion } from './sessionBuilder'
 import type { AttemptLike } from './mastery'
 
@@ -22,10 +22,11 @@ function versuch(topicId: string, questionId: string, correct: boolean): Attempt
 }
 
 describe('buildSession', () => {
-  it('leitet die Länge aus der verfügbaren Zeit ab', () => {
+  it('bleibt im Zeitbudget, statt es aufzurunden', () => {
     const minuten = 2
     const s = buildSession({ questions: fragen, attempts: [], due: [], minutes: minuten, now })
-    expect(s).toHaveLength(Math.round((minuten * 60) / QUESTION_SECONDS))
+    // Ohne Typangabe zählt jede Frage mit dem Standardwert.
+    expect(s).toHaveLength(Math.floor((minuten * 60) / QUESTION_SECONDS))
   })
 
   it('stellt fällige Wiederholungen an den Anfang', () => {
@@ -85,5 +86,37 @@ describe('buildSession', () => {
     })
     expect(s.every(q => q.examiner === 'gerner')).toBe(true)
     expect(s.length).toBeGreaterThan(0)
+  })
+})
+
+describe('Zeitbudget je Fragetyp', () => {
+  const frage = (id: string, type: string) => ({ id, topicId: 't1', examiner: 'e', type })
+
+  it('veranschlagt eine Rechenfrage höher als eine Ankreuzfrage', () => {
+    expect(sekundenFuer({ type: 'numeric' })).toBeGreaterThan(sekundenFuer({ type: 'mc-single' }))
+  })
+
+  it('fällt bei unbekanntem Typ auf den Standardwert zurück', () => {
+    expect(sekundenFuer({})).toBe(QUESTION_SECONDS)
+    expect(sekundenFuer({ type: 'gibtesnicht' })).toBe(QUESTION_SECONDS)
+  })
+
+  it('packt mehr Ankreuzfragen als Rechenfragen in dieselbe Zeit', () => {
+    const kurz = buildSession({
+      questions: Array.from({ length: 30 }, (_, i) => frage(`s${i}`, 'mc-single')),
+      attempts: [], due: [], minutes: 10,
+    })
+    const lang = buildSession({
+      questions: Array.from({ length: 30 }, (_, i) => frage(`n${i}`, 'numeric')),
+      attempts: [], due: [], minutes: 10,
+    })
+    expect(kurz.length).toBeGreaterThan(lang.length)
+  })
+
+  it('legt bei sehr knapper Zeit trotzdem eine Frage vor', () => {
+    const sitzung = buildSession({
+      questions: [frage('n1', 'numeric')], attempts: [], due: [], minutes: 1,
+    })
+    expect(sitzung).toHaveLength(1)
   })
 })

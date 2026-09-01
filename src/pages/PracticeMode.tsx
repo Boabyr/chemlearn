@@ -74,7 +74,7 @@ export default function PracticeMode() {
   function onAnswer(correct: boolean, pts: number) {
     const q = queue[idx]
     if (!q) return
-    if (correct) setScore(s => s + pts)
+    setScore(s => s + pts)   // Teilpunkte zählen mit
     setAnswered(a => a + 1)
 
     logAttempt({

@@ -1,7 +1,10 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
+import { useReviews } from '../hooks/useReviews'
+import { frageItemId } from '../lib/learning/lernItem'
+import { GRADES } from '../lib/learning/sm2'
 import { examQuestionsFor, examStructuresFor, examinerAnzeige, examinersFor, courseIdsWithExams } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import { stilFuer } from '../components/ExamMode/pruefStil'
@@ -10,6 +13,22 @@ type Mode = 'select' | 'exam' | 'result'
 
 /** Fragen je Prüferabschnitt in der Zufalls-Prüfung. */
 const FRAGEN_JE_ABSCHNITT = 5
+
+/**
+ * Zeitbudget: eine Minute je Punkt, mindestens eine Viertelstunde.
+ *
+ * Die Kursseite versprach „ganze Prüfung unter Zeitdruck", es gab aber keinen
+ * Timer — der einzige Unterschied zum Übungsmodus fehlte damit ganz.
+ */
+function minutenFuer(gesamtPunkte: number): number {
+  return Math.max(15, gesamtPunkte)
+}
+
+function alsUhrzeit(sekunden: number): string {
+  const m = Math.floor(Math.max(0, sekunden) / 60)
+  const s = Math.max(0, sekunden) % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}
 
 export default function ExamSimulator() {
   const { loading } = useAuth()
@@ -22,6 +41,7 @@ export default function ExamSimulator() {
   const professoren = useMemo(() => examinersFor(courseId), [courseId])
   const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
   const { logAttempt, flush } = useAttempts(courseId)
+  const { gradeItem } = useReviews(courseId)
 
   const [mode, setMode] = useState<Mode>('select')
   const [selectedExam, setSelectedExam] = useState(examStructures[0])
@@ -29,6 +49,8 @@ export default function ExamSimulator() {
   const [qIdx, setQIdx] = useState(0)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [answered, setAnswered] = useState<Record<string, boolean>>({})
+  const [restSekunden, setRestSekunden] = useState(0)
+  const [zeitAbgelaufen, setZeitAbgelaufen] = useState(false)
 
   function startExam(exam: typeof examStructures[0]) {
     setSelectedExam(exam)
@@ -36,25 +58,86 @@ export default function ExamSimulator() {
     setQIdx(0)
     setScores({})
     setAnswered({})
+    setRestSekunden(minutenFuer(exam.totalPoints) * 60)
+    setZeitAbgelaufen(false)
     setMode('exam')
   }
 
+  // Countdown. Bei null ist die Prüfung vorbei, wie im Hörsaal.
+  useEffect(() => {
+    if (mode !== 'exam') return
+    const uhr = setInterval(() => {
+      setRestSekunden(rest => {
+        if (rest <= 1) {
+          clearInterval(uhr)
+          setZeitAbgelaufen(true)
+          setMode('result')
+          return 0
+        }
+        return rest - 1
+      })
+    }, 1000)
+    return () => clearInterval(uhr)
+  }, [mode])
+
   function onAnswer(qId: string, correct: boolean, pts: number) {
-    setScores(s => ({ ...s, [qId]: correct ? pts : 0 }))
+    // Teilpunkte zählen mit — vorher fiel eine halb richtige Antwort auf null.
+    setScores(s => ({ ...s, [qId]: pts }))
     setAnswered(a => ({ ...a, [qId]: true }))
 
     const frage = examQuestions.find(q => q.id === qId)
-    if (frage) {
-      logAttempt({
-        courseId,
-        topicId: frage.topicId,
-        questionId: frage.id,
-        source: 'exam-sim',
-        correct,
-        pointsEarned: correct ? pts : 0,
-        pointsPossible: frage.points,
-      })
+    if (!frage) return
+
+    logAttempt({
+      courseId,
+      topicId: frage.topicId,
+      questionId: frage.id,
+      source: 'exam-sim',
+      correct,
+      pointsEarned: pts,
+      pointsPossible: frage.points,
+    })
+
+    // Auch der Simulator füttert die Planung. Vorher protokollierte er nur
+    // und beeinflusste die Wiederholung mit keinem Wert.
+    void gradeItem(
+      { itemType: 'question', itemId: frageItemId(frage.id), topicId: frage.topicId, courseId },
+      correct ? GRADES.GUT : GRADES.NOCHMAL,
+    )
+  }
+
+  const alleFragenDerPruefung = useMemo(
+    () => selectedExam
+      ? selectedExam.sections.flatMap(a => a.questionIds)
+        .map(id => examQuestions.find(q => q.id === id))
+        .filter((q): q is NonNullable<typeof q> => !!q)
+      : [],
+    [selectedExam, examQuestions],
+  )
+
+  const falscheFragen = alleFragenDerPruefung.filter(q => (scores[q.id] ?? 0) < q.points)
+
+  /** Aus den nicht voll gepunkteten Fragen eine kurze Nachrunde bauen. */
+  function falscheWiederholen() {
+    if (falscheFragen.length === 0) return
+    const jeAbschnitt = new Map<string, typeof falscheFragen>()
+    for (const frage of falscheFragen) {
+      if (!jeAbschnitt.has(frage.examiner)) jeAbschnitt.set(frage.examiner, [])
+      jeAbschnitt.get(frage.examiner)!.push(frage)
     }
+    const sections = [...jeAbschnitt.entries()].map(([examiner, fragen]) => {
+      const punkte = fragen.reduce((summe, q) => summe + q.points, 0)
+      return { examiner, points: punkte, passingPoints: Math.ceil(punkte / 2), questionIds: fragen.map(q => q.id) }
+    })
+    const gesamt = sections.reduce((summe, a) => summe + a.points, 0)
+    startExam({
+      id: 'nachrunde',
+      date: 'Nachrunde',
+      title: 'Nur die falschen',
+      totalPoints: gesamt,
+      passingPoints: Math.ceil(gesamt / 2),
+      sections,
+    })
   }
 
   const currentSection = selectedExam.sections[sectionIdx]
@@ -174,9 +257,15 @@ export default function ExamSimulator() {
           <div>
             {/* Abschnitts-Header */}
             <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.examiner).panel}`}>
-              <p className={`text-sm font-semibold ${stilFuer(currentSection.examiner).text}`}>
-                {examinerAnzeige(currentSection.examiner, courseId)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
-              </p>
+              <div className="flex items-center justify-between gap-3">
+                <p className={`text-sm font-semibold ${stilFuer(currentSection.examiner).text}`}>
+                  {examinerAnzeige(currentSection.examiner, courseId)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
+                </p>
+                <p role="timer" aria-label="Verbleibende Zeit"
+                  className={`font-mono text-sm tabular-nums ${restSekunden <= 300 ? 'text-danger' : 'text-muted'}`}>
+                  ⏱ {alsUhrzeit(restSekunden)}
+                </p>
+              </div>
               <div className="mt-2 h-1.5 bg-sunken rounded-full">
                 <div className={`h-full ${stilFuer(currentSection.examiner).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
@@ -214,6 +303,11 @@ export default function ExamSimulator() {
                 {Math.round(totalEarned/selectedExam.totalPoints*100)}% – 
                 Bestehensgrenze: {selectedExam.passingPoints}P gesamt + {selectedExam.sections[0].passingPoints}P/Teil
               </p>
+              {zeitAbgelaufen && (
+                <p className="mt-3 text-sm text-warning" role="status">
+                  ⏱ Zeit abgelaufen — unbeantwortete Fragen zählen als null Punkte.
+                </p>
+              )}
             </div>
 
             <div className="space-y-3 mb-6">
@@ -237,7 +331,34 @@ export default function ExamSimulator() {
               ))}
             </div>
 
-            <div className="flex gap-3">
+            {/* Fragenliste statt nur Abschnittssummen: sichtbar machen, was
+                schiefging — sonst weiß man nur, dass es schiefging. */}
+            <details className="mb-6 rounded-2xl border border-line bg-raised p-5" open={falscheFragen.length > 0}>
+              <summary className="cursor-pointer text-sm font-medium text-ink">
+                Fragen im Einzelnen ({falscheFragen.length} nicht voll gepunktet)
+              </summary>
+              <ul className="mt-4 space-y-2">
+                {alleFragenDerPruefung.map(frage => {
+                  const erreicht = scores[frage.id] ?? 0
+                  const voll = erreicht >= frage.points
+                  return (
+                    <li key={frage.id} className="flex items-start gap-3 border-b border-line pb-2 text-sm last:border-0">
+                      <span className={voll ? 'text-success' : 'text-danger'}>{voll ? '✓' : '✗'}</span>
+                      <span className="flex-1 text-muted">{frage.question}</span>
+                      <span className="font-mono text-xs text-subtle">{erreicht}/{frage.points}P</span>
+                    </li>
+                  )
+                })}
+              </ul>
+            </details>
+
+            <div className="flex flex-wrap gap-3">
+              {falscheFragen.length > 0 && (
+                <button onClick={falscheWiederholen}
+                  className="flex-1 rounded-xl bg-warning/20 border border-warning py-3 text-sm font-semibold text-warning transition-colors hover:bg-warning/30">
+                  Nur die {falscheFragen.length} falschen nochmal
+                </button>
+              )}
               <button onClick={() => setMode('select')}
                 className="flex-1 py-3 bg-accent hover:bg-accent-strong text-on-accent font-semibold rounded-xl text-sm transition-colors">
                 Neue Prüfung

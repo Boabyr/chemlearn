@@ -9,6 +9,7 @@ export interface Antwort {
 export interface Bewertung {
   /** Liegt überhaupt eine auswertbare Antwort vor? Sonst ist es kein Versuch. */
   gueltig: boolean
+  /** Vollständig richtig. Teilpunkte zählen hier nicht als richtig. */
   korrekt: boolean
   punkte: number
 }
@@ -45,9 +46,19 @@ export function bewerte(frage: ExamQuestion, antwort: Antwort): Bewertung {
       const auswahl = antwort.auswahl ?? []
       if (auswahl.length === 0) return UNGUELTIG
       const richtig = frage.correct as number[]
-      return treffer(
-        richtig.length === auswahl.length && richtig.every(c => auswahl.includes(c)),
-      )
+
+      // Teilpunkte: getroffene minus falsch angekreuzte, nie unter null.
+      // Alles-oder-nichts bestrafte einen von drei Fehlern wie drei von drei.
+      const getroffen = auswahl.filter(a => richtig.includes(a)).length
+      const daneben = auswahl.length - getroffen
+      const anteil = Math.max(0, (getroffen - daneben) / richtig.length)
+      const vollstaendig = getroffen === richtig.length && daneben === 0
+
+      return {
+        gueltig: true,
+        korrekt: vollstaendig,
+        punkte: Math.round(frage.points * anteil * 100) / 100,
+      }
     }
 
     case 'numeric': {
@@ -62,7 +73,15 @@ export function bewerte(frage: ExamQuestion, antwort: Antwort): Bewertung {
       const reihenfolge = antwort.reihenfolge ?? []
       const richtig = frage.correct as number[]
       if (reihenfolge.length !== richtig.length) return UNGUELTIG
-      return treffer(reihenfolge.every((v, i) => v === richtig[i]))
+
+      const aufPosition = reihenfolge.filter((v, i) => v === richtig[i]).length
+      const anteil = aufPosition / richtig.length
+
+      return {
+        gueltig: true,
+        korrekt: aufPosition === richtig.length,
+        punkte: Math.round(frage.points * anteil * 100) / 100,
+      }
     }
 
     default:

@@ -62,6 +62,26 @@ describe('bewerte — Auswahl und Reihenfolge', () => {
     expect(bewerte(f, { auswahl: [] }).gueltig).toBe(false)
   })
 
+  it('gibt bei Mehrfachauswahl Teilpunkte', () => {
+    const f = frage({ type: 'mc-multi', correct: [0, 2], points: 4 })
+    expect(bewerte(f, { auswahl: [0, 2] }).punkte).toBe(4)
+    // eine von zwei getroffen, nichts falsch angekreuzt
+    expect(bewerte(f, { auswahl: [0] }).punkte).toBe(2)
+    // eine getroffen, eine daneben — hebt sich auf
+    expect(bewerte(f, { auswahl: [0, 1] }).punkte).toBe(0)
+    // zwei getroffen, eine daneben
+    expect(bewerte(f, { auswahl: [0, 1, 2] }).punkte).toBe(2)
+    expect(bewerte(f, { auswahl: [1, 3] }).punkte).toBe(0)
+  })
+
+  it('gibt bei der Reihenfolge Punkte je richtiger Position', () => {
+    const f = frage({ type: 'order', correct: [2, 0, 1, 3], points: 4 })
+    expect(bewerte(f, { reihenfolge: [2, 0, 1, 3] }).punkte).toBe(4)
+    expect(bewerte(f, { reihenfolge: [2, 0, 3, 1] }).punkte).toBe(2)
+    expect(bewerte(f, { reihenfolge: [3, 1, 0, 2] }).punkte).toBe(0)
+    expect(bewerte(f, { reihenfolge: [2, 0, 3, 1] }).korrekt).toBe(false)
+  })
+
   it('prüft die Reihenfolge Platz für Platz', () => {
     const f = frage({ type: 'order', correct: [2, 0, 1], points: 3 })
     expect(bewerte(f, { reihenfolge: [2, 0, 1] }).korrekt).toBe(true)

@@ -10,6 +10,7 @@ import TopicPage       from './pages/TopicPage'
 import TutorDashboard  from './pages/TutorDashboard'
 import PracticeMode    from './pages/PracticeMode'
 import ExamSimulator   from './pages/ExamSimulator'
+import LernSession     from './pages/LernSession'
 import ErrorBoundary   from './components/Shell/ErrorBoundary'
 import RequireAuth     from './components/Shell/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/course/:courseId'          element={geschuetzt(<CoursePage />)} />
               <Route path='/course/:courseId/:topicId' element={geschuetzt(<TopicPage />)} />
               <Route path='/tutor'                     element={geschuetzt(<TutorDashboard />)} />
+              <Route path='/lernen'                    element={geschuetzt(<LernSession />)} />
               <Route path='/practice'                  element={geschuetzt(<PracticeMode />)} />
               <Route path='/exam-simulator'            element={geschuetzt(<ExamSimulator />)} />
               <Route path='*'                          element={<Navigate to='/' replace />} />

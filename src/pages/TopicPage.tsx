@@ -5,6 +5,7 @@ import { loadTopic } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
 import { useAttempts } from '../hooks/useAttempts'
 import { useReviews, cardItemId } from '../hooks/useReviews'
+import { frageItemId } from '../lib/learning/lernItem'
 import { GRADES, type Grade } from '../lib/learning/sm2'
 import type { Thema } from '../content/schema'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
@@ -71,6 +72,13 @@ export default function TopicPage() {
       correct: richtig,
       msTaken: Date.now() - questionStart,
     })
+
+    // Auch Quizfragen kommen in die Wiederholungsplanung, damit sie in der
+    // Tagesrunde auftauchen können.
+    void gradeItem(
+      { itemType: 'question', itemId: frageItemId(`${topicId}:${q.id}`), topicId, courseId },
+      richtig ? GRADES.GUT : GRADES.NOCHMAL,
+    )
   }
 
   function nextQuestion() {
@@ -95,6 +103,23 @@ export default function TopicPage() {
     setErgebnisse([])
     setQuizDone(false)
     setQuestionStart(Date.now())
+  }
+
+  /**
+   * Ergebnis eines Interaktivteils festhalten.
+   *
+   * Bis hierher zeichneten Apparaturquiz, Formelrechner, Spektren und
+   * Mechanismen gar nichts auf — die Übung war für den Lernstand unsichtbar.
+   */
+  function interaktivFertig(korrekt: boolean) {
+    if (!courseId || !topicId || !topic?.interactive) return
+    logAttempt({
+      courseId,
+      topicId,
+      questionId: `${topicId}:interaktiv:${topic.interactive.type}`,
+      source: 'topic-quiz',
+      correct: korrekt,
+    })
   }
 
   /** Karteikarte bewerten und die naechste aufschlagen. */
@@ -149,20 +174,22 @@ export default function TopicPage() {
                 <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
                 {interactive.type === 'mechanism' && (
                   <MechanismBuilder title={interactive.title} description={interactive.description}
-                    stages={interactive.stages} />
+                    stages={interactive.stages} onComplete={() => interaktivFertig(true)} />
                 )}
                 {interactive.type === 'formula-calculator' && (
-                  <FormulaCalculator formula={interactive.formula} />
+                  <FormulaCalculator formula={interactive.formula} onComplete={() => interaktivFertig(true)} />
                 )}
                 {interactive.type === 'apparatus-quiz' && (
                   <ApparatusQuiz question={interactive.question} targetId={interactive.targetId}
                     options={interactive.options} explanation={interactive.explanation}
-                    hint1={interactive.hint1} hint2={interactive.hint2} />
+                    hint1={interactive.hint1} hint2={interactive.hint2}
+                    onComplete={interaktivFertig} />
                 )}
                 {interactive.type === 'spectrum-assignment' && (
                   <SpectrumAssignment title={interactive.title} description={interactive.description}
                     xLabel={interactive.xLabel} yLabel={interactive.yLabel} peaks={interactive.peaks}
-                    hint1={interactive.hint1} hint2={interactive.hint2} />
+                    hint1={interactive.hint1} hint2={interactive.hint2}
+                    onComplete={() => interaktivFertig(true)} />
                 )}
               </div>
             )}
