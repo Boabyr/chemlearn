@@ -186,7 +186,7 @@ export default function TopicPage() {
             <h1 className="text-2xl font-light mb-2">{topic.title}</h1>
             <p className="text-muted text-sm mb-8">{topic.subtitle}</p>
             <Suspense fallback={<p className="text-muted">Theorie wird gesetzt...</p>}>
-              <TheoryRenderer markdown={topic.theory} showToc />
+              <TheoryRenderer markdown={topic.theory} showToc abbildungen={topic.abbildungen} />
             </Suspense>
 
             {interactive && (

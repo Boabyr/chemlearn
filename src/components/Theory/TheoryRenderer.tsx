@@ -1,9 +1,12 @@
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import remarkChemistry from './remarkChemistry'
+import Abbildung from './Abbildung'
+import { zerlegeAnAbbildungen } from './abbildungsMarken'
+import type { Abbildung as AbbildungDaten } from '../../content/schema'
 import { slugify, abschnitte } from './toc'
 import 'katex/dist/katex.min.css'
 
@@ -20,10 +23,14 @@ interface Props {
   markdown: string
   /** Inhaltsübersicht über den Text setzen (ab zwei Abschnitten). */
   showToc?: boolean
+  /** Über {{abbildung:id}} im Text gerufen. */
+  abbildungen?: AbbildungDaten[]
 }
 
-export default function TheoryRenderer({ markdown, showToc = false }: Props) {
+export default function TheoryRenderer({ markdown, showToc = false, abbildungen = [] }: Props) {
   const toc = useMemo(() => (showToc ? abschnitte(markdown) : []), [markdown, showToc])
+  const teile = useMemo(() => zerlegeAnAbbildungen(markdown), [markdown])
+  const nachId = useMemo(() => new Map(abbildungen.map(a => [a.id, a])), [abbildungen])
 
   return (
     <div>
@@ -42,58 +49,70 @@ export default function TheoryRenderer({ markdown, showToc = false }: Props) {
       )}
 
       <div className="leading-relaxed text-ink">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm, remarkMath, remarkChemistry]}
-          rehypePlugins={[rehypeKatex]}
-          components={{
-            h1: ({ children }) => (
-              <h2 id={slugify(kindText(children))}
-                className="mt-8 mb-3 scroll-mt-20 text-xl font-semibold text-ink">{children}</h2>
-            ),
-            h2: ({ children }) => (
-              <h2 id={slugify(kindText(children))}
-                className="mt-8 mb-3 scroll-mt-20 text-xl font-semibold text-ink">{children}</h2>
-            ),
-            h3: ({ children }) => (
-              <h3 id={slugify(kindText(children))}
-                className="mt-6 mb-2 scroll-mt-20 text-lg font-medium text-accent">{children}</h3>
-            ),
-            p: ({ children }) => <p className="mb-4 text-muted">{children}</p>,
-            strong: ({ children }) => <strong className="font-semibold text-ink">{children}</strong>,
-            em: ({ children }) => <em className="italic text-muted">{children}</em>,
-            ul: ({ children }) => <ul className="mb-4 list-disc space-y-1 pl-6 text-muted marker:text-accent">{children}</ul>,
-            ol: ({ children }) => <ol className="mb-4 list-decimal space-y-1 pl-6 text-muted marker:text-accent">{children}</ol>,
-            li: ({ children }) => <li className="pl-1">{children}</li>,
-            blockquote: ({ children }) => (
-              <blockquote className="mb-4 border-l-4 border-accent bg-sunken py-2 pl-4 text-muted">{children}</blockquote>
-            ),
-            a: ({ children, href }) => (
-              <a href={href} className="text-accent underline underline-offset-2">{children}</a>
-            ),
-            code: ({ children, className }) =>
-              className?.includes('language-') ? (
-                <code className="block overflow-x-auto rounded-lg bg-sunken p-3 font-mono text-sm text-ink">{children}</code>
-              ) : (
-                <code className="rounded bg-sunken px-1.5 py-0.5 font-mono text-[0.9em] text-ink">{children}</code>
-              ),
-            pre: ({ children }) => <pre className="mb-4">{children}</pre>,
-            table: ({ children }) => (
-              <div className="mb-6 overflow-x-auto rounded-xl border border-line">
-                <table className="w-full border-collapse text-sm">{children}</table>
-              </div>
-            ),
-            thead: ({ children }) => <thead className="bg-sunken">{children}</thead>,
-            th: ({ children }) => (
-              <th className="border-b border-line px-3 py-2 text-left font-semibold text-ink">{children}</th>
-            ),
-            td: ({ children }) => (
-              <td className="border-b border-line px-3 py-2 align-top text-muted">{children}</td>
-            ),
-            hr: () => <hr className="my-8 border-line" />,
-          }}
-        >
-          {markdown}
-        </ReactMarkdown>
+        {teile.map((teil, i) => {
+          if (typeof teil !== 'string') {
+            const abbildung = nachId.get(teil.abbildung)
+            // Fehlt die Abbildung, meldet das der Inhaltstest — hier bleibt
+            // die Stelle einfach leer statt eine rohe Marke zu zeigen.
+            return abbildung ? <Abbildung key={i} abbildung={abbildung} /> : null
+          }
+          return (
+            <Fragment key={i}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm, remarkMath, remarkChemistry]}
+                rehypePlugins={[rehypeKatex]}
+                components={{
+                  h1: ({ children }) => (
+                    <h2 id={slugify(kindText(children))}
+                      className="mt-8 mb-3 scroll-mt-20 text-xl font-semibold text-ink">{children}</h2>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 id={slugify(kindText(children))}
+                      className="mt-8 mb-3 scroll-mt-20 text-xl font-semibold text-ink">{children}</h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 id={slugify(kindText(children))}
+                      className="mt-6 mb-2 scroll-mt-20 text-lg font-medium text-accent">{children}</h3>
+                  ),
+                  p: ({ children }) => <p className="mb-4 text-muted">{children}</p>,
+                  strong: ({ children }) => <strong className="font-semibold text-ink">{children}</strong>,
+                  em: ({ children }) => <em className="italic text-muted">{children}</em>,
+                  ul: ({ children }) => <ul className="mb-4 list-disc space-y-1 pl-6 text-muted marker:text-accent">{children}</ul>,
+                  ol: ({ children }) => <ol className="mb-4 list-decimal space-y-1 pl-6 text-muted marker:text-accent">{children}</ol>,
+                  li: ({ children }) => <li className="pl-1">{children}</li>,
+                  blockquote: ({ children }) => (
+                    <blockquote className="mb-4 border-l-4 border-accent bg-sunken py-2 pl-4 text-muted">{children}</blockquote>
+                  ),
+                  a: ({ children, href }) => (
+                    <a href={href} className="text-accent underline underline-offset-2">{children}</a>
+                  ),
+                  code: ({ children, className }) =>
+                    className?.includes('language-') ? (
+                      <code className="block overflow-x-auto rounded-lg bg-sunken p-3 font-mono text-sm text-ink">{children}</code>
+                    ) : (
+                      <code className="rounded bg-sunken px-1.5 py-0.5 font-mono text-[0.9em] text-ink">{children}</code>
+                    ),
+                  pre: ({ children }) => <pre className="mb-4">{children}</pre>,
+                  table: ({ children }) => (
+                    <div className="mb-6 overflow-x-auto rounded-xl border border-line">
+                      <table className="w-full border-collapse text-sm">{children}</table>
+                    </div>
+                  ),
+                  thead: ({ children }) => <thead className="bg-sunken">{children}</thead>,
+                  th: ({ children }) => (
+                    <th className="border-b border-line px-3 py-2 text-left font-semibold text-ink">{children}</th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="border-b border-line px-3 py-2 align-top text-muted">{children}</td>
+                  ),
+                  hr: () => <hr className="my-8 border-line" />,
+                }}
+              >
+                {teil}
+                    </ReactMarkdown>
+            </Fragment>
+          )
+        })}
       </div>
     </div>
   )

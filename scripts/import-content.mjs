@@ -175,6 +175,78 @@ function leseBindung(text) {
 }
 
 /**
+ * Abbildungen im Theorietext lesen.
+ *
+ * Dieselben Atome und Bindungen wie im Mechanismus — nur ohne Pfeile und ohne
+ * Aufgabe. Koordinaten bleiben Handarbeit.
+ */
+function leseAbbildungen(block, ort) {
+  if (!block) return []
+  const abbildungen = []
+  let aktuell = null
+  let struktur = null
+
+  const schliesseStruktur = () => {
+    if (struktur && aktuell) aktuell.strukturen.push(struktur)
+    struktur = null
+  }
+  const schliesseAbbildung = () => {
+    schliesseStruktur()
+    if (aktuell) abbildungen.push(aktuell)
+    aktuell = null
+  }
+
+  for (const zeile of block.split('\n')) {
+    const kopf = zeile.match(/^-\s*id:\s*(.+)$/)
+    if (kopf) {
+      schliesseAbbildung()
+      const f = inlineFields('id: ' + kopf[1])
+      aktuell = {
+        id: f.id,
+        titel: f.titel ?? f.id,
+        beschreibung: f.beschreibung,
+        verknuepfung: f.verknuepfung === 'reihe' ? 'reihe' : 'resonanz',
+        strukturen: [],
+      }
+      continue
+    }
+    if (!aktuell) continue
+
+    const s = zeile.match(/^\s{2,}struktur:\s*(.+)$/)
+    if (s) {
+      schliesseStruktur()
+      struktur = { beschriftung: inlineFields(s[1]).beschriftung ?? s[1].trim(), atome: [], bindungen: [] }
+      continue
+    }
+    if (!struktur) continue
+
+    const atom = zeile.match(/^\s{4,}atom:\s*(.+)$/)
+    if (atom) { struktur.atome.push(leseAtom(atom[1])); continue }
+    const bindung = zeile.match(/^\s{4,}bindung:\s*(.+)$/)
+    if (bindung) struktur.bindungen.push(leseBindung(bindung[1]))
+  }
+  schliesseAbbildung()
+
+  for (const a of abbildungen) {
+    if (!a.id || !/^[a-z0-9-]+$/.test(a.id)) { problem(ort, `Abbildungs-Kennung "${a.id}" muss klein und ohne Umlaute sein`); return [] }
+    if (a.strukturen.length < 2) { problem(ort, `Abbildung "${a.id}" zeigt weniger als zwei Strukturen`); return [] }
+    for (const st of a.strukturen) {
+      if (st.atome.length < 2) { problem(ort, `Abbildung "${a.id}": Struktur "${st.beschriftung}" ohne Atome`); return [] }
+      const ids = st.atome.map(x => x.id)
+      for (const b of st.bindungen) {
+        for (const ende of ['von', 'nach']) {
+          if (!ids.includes(b[ende])) {
+            problem(ort, `Abbildung "${a.id}": Bindung ${b.id} nennt Atom "${b[ende]}", das es nicht gibt`)
+            return []
+          }
+        }
+      }
+    }
+  }
+  return abbildungen
+}
+
+/**
  * Mechanismus im Strukturformel-Format lesen.
  *
  * Koordinaten bleiben Handarbeit — daran ändert sich nichts. Neu ist, dass
@@ -456,6 +528,17 @@ function baueThema(roh) {
     if (!s.THEORIE) problem(ort, 'kein Theorieteil')
   }
 
+  const gerufen = [...(s.THEORIE ?? '').matchAll(/\{\{abbildung:([a-z0-9-]+)\}\}/g)].map(m => m[1])
+  const abbildungen = leseAbbildungen(s.ABBILDUNGEN, ort)
+  if (!ergaenzen) {
+    for (const id of gerufen) {
+      if (!abbildungen.some(a => a.id === id)) problem(ort, `{{abbildung:${id}}} — dazu gibt es keine Abbildung`)
+    }
+    for (const a of abbildungen) {
+      if (!gerufen.includes(a.id)) problem(ort, `Abbildung "${a.id}" wird im Text nirgends gerufen`)
+    }
+  }
+
   return {
     ergaenzen,
     interaktivErsetzen,
@@ -466,6 +549,7 @@ function baueThema(roh) {
     estimatedMinutes: Number(meta.dauer_minuten ?? 60),
     theory: s.THEORIE ?? '',
     interactive: leseInteraktiv(s.INTERAKTIV, ort),
+    abbildungen,
     quiz: leseQuiz(s.QUIZ, ort, { optional: ergaenzen }),
     flashcards: leseFlashcards(s.FLASHCARDS, ort, { optional: ergaenzen }),
     kartenWeg: leseKartenWeg(s.FLASHCARDS),
@@ -583,9 +667,13 @@ function ergaenzeThema(vorhanden, zusatz, ort) {
     else warnung(ort, `${vorhanden.id} hat schon einen Interaktivteil — "interaktiv: ersetzen" setzen, um ihn abzulösen`)
   }
 
+  const bekannteAbbildungen = new Set((vorhanden.abbildungen ?? []).map(a => a.id))
+  const neueAbbildungen = (zusatz.abbildungen ?? []).filter(a => !bekannteAbbildungen.has(a.id))
+
   return {
     thema: {
       ...vorhanden,
+      abbildungen: [...(vorhanden.abbildungen ?? []), ...neueAbbildungen],
       interactive,
       quiz: [...vorhanden.quiz, ...neueFragen],
       flashcards: [...bleiben, ...neueKarten],
@@ -811,6 +899,39 @@ function themaAlsTypeScript(t) {
     }
     zeilen.push('    ],')
     zeilen.push('  },')
+  }
+
+  if (t.abbildungen?.length) {
+    zeilen.push('  abbildungen: [')
+    for (const a of t.abbildungen) {
+      zeilen.push('    {')
+      zeilen.push(`      id: ${str(a.id)},`)
+      zeilen.push(`      titel: ${str(a.titel)},`)
+      if (a.beschreibung) zeilen.push(`      beschreibung: ${str(a.beschreibung)},`)
+      zeilen.push(`      verknuepfung: ${str(a.verknuepfung)},`)
+      zeilen.push('      strukturen: [')
+      for (const st of a.strukturen) {
+        zeilen.push('        {')
+        zeilen.push(`          beschriftung: ${str(st.beschriftung)},`)
+        zeilen.push('          atome: [')
+        for (const at of st.atome) {
+          const zusatz = ['ladung', 'freiePaare', 'wasserstoffe'].filter(k => at[k] !== undefined)
+            .map(k => `, ${k}: ${at[k]}`).join('')
+            + (at.zeigen ? ', zeigen: true' : '') + (at.frei ? ', frei: true' : '')
+          zeilen.push(`            { id: ${str(at.id)}, element: ${str(at.element)}, x: ${at.x}, y: ${at.y}${zusatz} },`)
+        }
+        zeilen.push('          ],')
+        zeilen.push('          bindungen: [')
+        for (const b of st.bindungen) {
+          zeilen.push(`            { id: ${str(b.id)}, von: ${str(b.von)}, nach: ${str(b.nach)}, ordnung: ${b.ordnung}${b.art ? `, art: ${str(b.art)}` : ''} },`)
+        }
+        zeilen.push('          ],')
+        zeilen.push('        },')
+      }
+      zeilen.push('      ],')
+      zeilen.push('    },')
+    }
+    zeilen.push('  ],')
   }
 
   zeilen.push('  quiz: [')
