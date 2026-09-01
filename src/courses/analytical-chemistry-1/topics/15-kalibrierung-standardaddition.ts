@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 60,
   theory: `
 
+
 ## Grundbegriffe (prüfungsrelevant!)
 
 **Kalibrierung/Kalibration:**
@@ -64,6 +65,7 @@ LOQ = 10·s_y0 / m
 c_x / (c_x + c_S·V_S/V_total) = y₀/y₁
 
 c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
+
 
 `,
   interactive: {

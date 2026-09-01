@@ -177,6 +177,7 @@ export default function PracticeMode() {
         ) : queue.length > 0 ? (
           <div className="space-y-4">
             <ExamQuestionCard
+              courseId={courseId}
               key={queue[idx].id}
               question={queue[idx]}
               onAnswer={onAnswer}

@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 60,
   theory: `
 
+
+
 ## Bioisosteres
 
 **Definition:** Bioisosteres are atoms, ions or molecules with similar size, shape and electron distribution that exhibit similar biological activity but different chemical properties.
@@ -71,31 +73,97 @@ Indole → 3-chloroquinoline derivative:
 - Scaffold hopping: scaffold exchange without loss of activity
 - Bioisosteric ring replacement: e.g. benzene → pyridine increases water solubility
 
+
+
 `,
   interactive: {
     type: "mechanism",
-    title: "Nitrile to tetrazole — making a carboxylic acid bioisostere",
-    description: "The classic replacement for COOH is built by a [3+2] cycloaddition of azide onto a nitrile.",
+    title: "Ciamician-Dennstedt — turning a pyrrole into a pyridine",
+    description: "Skeletal editing heißt: das Gerüst selbst umbauen. Hier wird aus einem Fünfring ein Sechsring — in zwei Schritten.",
     stages: [
       {
-        id: 0, label: "Azide attacks the nitrile carbon", description: "Draw the arrow from the terminal azide nitrogen to the nitrile carbon.",
-        hint1: "The nitrile carbon is electrophilic because nitrogen pulls electron density out of the triple bond.", hint2: "The product is 5-substituted tetrazole with a pKa around 4 to 5 — close to a carboxylic acid, but far more stable towards metabolism.",
-        atoms: [
-          { id: "C", label: "C", x: 165, y: 110, color: "#e2e8f0", r: 20 },
-          { id: "Nn", label: "N", x: 100, y: 70, color: "#60a5fa", r: 18 },
-          { id: "N1", label: "N1", x: 250, y: 205, color: "#60a5fa", r: 18 },
-          { id: "N2", label: "N2", x: 320, y: 180, color: "#60a5fa", r: 18, charge: "+" },
-          { id: "N3", label: "N3", x: 375, y: 125, color: "#60a5fa", r: 18, charge: "−" },
+        id: 0, titel: "Das Carben addiert sich",
+        aufgabe: "Dichlorcarben lagert sich an die C2=C3-Bindung an. Zeichne beide Pfeile: die Doppelbindung zum Carbenkohlenstoff, und dessen freies Elektronenpaar zurück zu C-3.",
+        erklaerung: "Ein Carben hat sowohl ein freies Elektronenpaar als auch ein leeres Orbital — deshalb zwei Pfeile in entgegengesetzte Richtungen. Die π-Elektronen des elektronenreichen Pyrrols füllen das leere Orbital, das Elektronenpaar des Carbens bildet die zweite neue Bindung. Es entsteht ein an den Fünfring ankondensierter Cyclopropanring.",
+        hinweise: ["Der Angriff geht von der C2=C3-Doppelbindung aus, nicht vom Stickstoff.", "Ein Carben kann gleichzeitig Elektronen aufnehmen und abgeben — daher zwei Pfeile."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "c3", element: "C", x: 182, y: 121 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "cc", element: "C", x: 310, y: 130, freiePaare: 1, frei: true },
+          { id: "cl1", element: "Cl", x: 370, y: 90, freiePaare: 3 },
+          { id: "cl2", element: "Cl", x: 370, y: 180, freiePaare: 3 },
         ],
-        bonds: [
-          { a: "C", b: "Nn", dash: false, color: "#64748b" },
-          { a: "N1", b: "N2", dash: false, color: "#64748b" },
-          { a: "N2", b: "N3", dash: false, color: "#64748b" },
-          { a: "C", b: "N1", dash: true, color: "#475569" },
+        bindungen: [
+          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
+          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
+          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
+          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
+          { id: "q1", von: "cc", nach: "cl1", ordnung: 1 },
+          { id: "q2", von: "cc", nach: "cl2", ordnung: 1 },
         ],
-        correctArrow: { from: "N3", to: "C" },
+        pfeile: [
+          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "cc" } },
+          { von: { art: "freiesPaar", id: "cc" }, nach: { art: "atom", id: "c3" } },
+        ],
+      },
+      {
+        id: 1, titel: "Der Ring wird größer",
+        aufgabe: "Chlorid tritt aus, und die C2–C3-Bindung wandert an den entstehenden Kohlenstoff. Zeichne beide Pfeile.",
+        erklaerung: "Sobald das Chlorid weg ist, sitzt am Cyclopropan-Kohlenstoff eine positive Ladung. Die gespannte C2–C3-Bindung wandert dorthin — aus dem Dreiring plus Fünfring wird ein Sechsring. Nach der Deprotonierung steht ein aromatisches 3-Chlorpyridin da. Ein Ringatom mehr, ohne die Substanz von Grund auf neu aufzubauen: das ist der ganze Gedanke des skeletal editing.",
+        hinweise: ["Zuerst muss Platz für die positive Ladung entstehen — ein Chlorid geht mit seinem Bindungselektronenpaar ab.", "Die wandernde Bindung ist die gespannte zwischen C-2 und C-3."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "c3", element: "C", x: 182, y: 121 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "cc", element: "C", x: 255, y: 140 },
+          { id: "cl1", element: "Cl", x: 320, y: 100, freiePaare: 3 },
+          { id: "cl2", element: "Cl", x: 300, y: 195, freiePaare: 3 },
+        ],
+        bindungen: [
+          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "p2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
+          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
+          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
+          { id: "s1", von: "c2", nach: "cc", ordnung: 1 },
+          { id: "s2", von: "c3", nach: "cc", ordnung: 1 },
+          { id: "q1", von: "cc", nach: "cl1", ordnung: 1 },
+          { id: "q2", von: "cc", nach: "cl2", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "bindung", id: "q1" }, nach: { art: "atom", id: "cl1" } },
+          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "cc" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "3-Chlorpyridin",
+      beschreibung: "Aus dem Fünfring ist ein Sechsring geworden, der Stickstoff ist geblieben, und das Chlor sitzt an C-3. Ein Ringatom mehr in zwei Schritten statt einer neuen Synthese.",
+      atome: [
+        { id: "n1", element: "N", x: 100, y: 131, freiePaare: 1 },
+        { id: "c2", element: "C", x: 150, y: 102 },
+        { id: "c3", element: "C", x: 200, y: 131 },
+        { id: "c4", element: "C", x: 200, y: 189 },
+        { id: "c5", element: "C", x: 150, y: 218 },
+        { id: "c6", element: "C", x: 100, y: 189 },
+        { id: "cl1", element: "Cl", x: 262, y: 100, freiePaare: 3 },
+      ],
+      bindungen: [
+        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+        { id: "ccl", von: "c3", nach: "cl1", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "What is a bioisostere and why is tetrazole a classic bioisostere of carboxylic acid?", options: ["An identical compound; tetrazole has the same molecular formula as COOH", "A group with similar size, polarity and pKa but different metabolic properties; tetrazole has pKa ~4-5 similar to COOH, but is metabolically more stable", "A compound with the same solubility; tetrazole is equally water-soluble", "A prodrug; tetrazole is hydrolysed to COOH in the body"], correct: 1, explanation: "Bioisosteres: similar physicochemical properties (size, geometry, pKa, H-bonds) → similar biological activity. Tetrazole pKa ~4-5 ≈ RCOOH pKa ~4-5. Advantage: tetrazole resistant to hydrolysis/oxidation → longer duration of action, better oral bioavailability." },

@@ -144,6 +144,144 @@ function abschnitte(inhalt) {
 
 // ── Themen ────────────────────────────────────────────────────────────────
 
+/** `von: freiesPaar n1` → { art: "freiesPaar", id: "n1" } */
+function leseZiel(text, ort) {
+  const teile = String(text ?? '').trim().split(/\s+/)
+  if (teile.length !== 2) { problem(ort, `Pfeilziel nicht lesbar: "${text}"`); return null }
+  const [art, id] = teile
+  if (!['bindung', 'freiesPaar', 'atom'].includes(art)) {
+    problem(ort, `Unbekannte Zielart "${art}" — erlaubt sind bindung, freiesPaar, atom`)
+    return null
+  }
+  return { art, id }
+}
+
+function leseAtom(text) {
+  const f = inlineFields(text)
+  const atom = { id: f.id, element: f.element ?? 'C', x: Number(f.x), y: Number(f.y) }
+  if (f.ladung !== undefined) atom.ladung = Number(f.ladung)
+  if (f.paare !== undefined) atom.freiePaare = Number(f.paare)
+  if (f.h !== undefined) atom.wasserstoffe = Number(f.h)
+  if (f.zeigen !== undefined) atom.zeigen = String(f.zeigen) === 'ja'
+  if (f.frei !== undefined) atom.frei = String(f.frei) === 'ja'
+  return atom
+}
+
+function leseBindung(text) {
+  const f = inlineFields(text)
+  const bindung = { id: f.id, von: f.von, nach: f.nach, ordnung: Number(f.ordnung ?? 1) }
+  if (f.art) bindung.art = f.art
+  return bindung
+}
+
+/**
+ * Mechanismus im Strukturformel-Format lesen.
+ *
+ * Koordinaten bleiben Handarbeit — daran ändert sich nichts. Neu ist, dass
+ * eine Stufe mehrere Pfeile tragen kann und ein Pfeil an einer Bindung oder
+ * einem freien Elektronenpaar ansetzen darf.
+ */
+function leseMechanismus(block, ort) {
+  const kv = keyValues(block.split(/^schritte:\s*$/m)[0] ?? '')
+  const rest = block.split(/^schritte:\s*$/m)[1] ?? ''
+  const [schrittTeil, ergebnisTeil] = rest.split(/^ergebnis:\s*/m)
+
+  const stufen = []
+  let aktuell = null
+
+  for (const zeile of (schrittTeil ?? '').split('\n')) {
+    const kopf = zeile.match(/^-\s*nr:\s*(.+)$/)
+    if (kopf) {
+      if (aktuell) stufen.push(aktuell)
+      const f = inlineFields('nr: ' + kopf[1])
+      aktuell = {
+        id: Number(f.nr) - 1,
+        titel: f.titel ?? `Schritt ${f.nr}`,
+        aufgabe: f.aufgabe ?? '',
+        erklaerung: f.erklaerung ?? '',
+        hinweise: [], atome: [], bindungen: [], pfeile: [],
+      }
+      continue
+    }
+    if (!aktuell) continue
+
+    const hinweis = zeile.match(/^\s{2,}hinweis:\s*(.+)$/)
+    if (hinweis) { aktuell.hinweise.push(hinweis[1].trim()); continue }
+
+    const atom = zeile.match(/^\s{2,}atom:\s*(.+)$/)
+    if (atom) { aktuell.atome.push(leseAtom(atom[1])); continue }
+
+    const bindung = zeile.match(/^\s{2,}bindung:\s*(.+)$/)
+    if (bindung) { aktuell.bindungen.push(leseBindung(bindung[1])); continue }
+
+    const pfeil = zeile.match(/^\s{2,}pfeil:\s*(.+)$/)
+    if (pfeil) {
+      const f = inlineFields(pfeil[1])
+      const von = leseZiel(f.von, ort)
+      const nach = leseZiel(f.nach, ort)
+      if (von && nach) aktuell.pfeile.push({ von, nach })
+    }
+  }
+  if (aktuell) stufen.push(aktuell)
+
+  if (stufen.length < 2) {
+    problem(ort, `Mechanismus "${kv.titel ?? ''}" hat ${stufen.length} Schritt(e) — mindestens zwei`)
+    return null
+  }
+
+  for (const stufe of stufen) {
+    if (stufe.atome.length < 2) { problem(ort, `Schritt "${stufe.titel}" ohne Atome`); return null }
+    if (stufe.pfeile.length === 0) { problem(ort, `Schritt "${stufe.titel}" ohne Pfeil`); return null }
+    if (stufe.hinweise.length === 0) { problem(ort, `Schritt "${stufe.titel}" ohne Hinweis`); return null }
+    if (!stufe.erklaerung) { problem(ort, `Schritt "${stufe.titel}" ohne Erklärung`); return null }
+
+    const atomIds = stufe.atome.map(a => a.id)
+    const bindungsIds = stufe.bindungen.map(b => b.id)
+    for (const bindung of stufe.bindungen) {
+      for (const ende of ['von', 'nach']) {
+        if (!atomIds.includes(bindung[ende])) {
+          problem(ort, `Schritt "${stufe.titel}": Bindung ${bindung.id} nennt Atom "${bindung[ende]}", das es nicht gibt`)
+          return null
+        }
+      }
+    }
+    for (const pfeil of stufe.pfeile) {
+      for (const ende of ['von', 'nach']) {
+        const ziel = pfeil[ende]
+        const bekannt = ziel.art === 'bindung' ? bindungsIds.includes(ziel.id) : atomIds.includes(ziel.id)
+        if (!bekannt) {
+          problem(ort, `Schritt "${stufe.titel}": Pfeil zeigt auf ${ziel.art} "${ziel.id}", das es nicht gibt`)
+          return null
+        }
+      }
+    }
+  }
+
+  // Ergebnisbild
+  if (!ergebnisTeil) { problem(ort, `Mechanismus "${kv.titel ?? ''}" ohne Ergebnisbild`); return null }
+  const ergebnisKopf = inlineFields((ergebnisTeil.split('\n')[0] ?? '').trim())
+  const ergebnis = {
+    titel: ergebnisKopf.titel ?? 'Produkt',
+    beschreibung: ergebnisKopf.beschreibung ?? '',
+    atome: [], bindungen: [],
+  }
+  for (const zeile of ergebnisTeil.split('\n').slice(1)) {
+    const atom = zeile.match(/^\s{2,}atom:\s*(.+)$/)
+    if (atom) { ergebnis.atome.push(leseAtom(atom[1])); continue }
+    const bindung = zeile.match(/^\s{2,}bindung:\s*(.+)$/)
+    if (bindung) ergebnis.bindungen.push(leseBindung(bindung[1]))
+  }
+  if (ergebnis.atome.length < 2) { problem(ort, 'Ergebnisbild ohne Atome'); return null }
+
+  return {
+    art: 'mechanism',
+    title: kv.titel ?? '',
+    description: kv.beschreibung ?? '',
+    stufen,
+    ergebnis,
+  }
+}
+
 function leseInteraktiv(block, ort) {
   if (!block) return null
   const kv = keyValues(block)
@@ -226,70 +364,7 @@ function leseInteraktiv(block, ort) {
   }
 
   if (typ === 'mechanism') {
-    // Mechanismen brauchen gesetzte Atomkoordinaten — die kann keine Textquelle
-    // liefern. Deshalb werden sie hier nur übernommen, wenn `atome:` und
-    // `bindungen:` ausdrücklich dabeistehen, sonst laut abgelehnt.
-    const stufen = []
-    let aktuell = null
-
-    for (const zeile of block.split('\n')) {
-      const schritt = zeile.match(/^-\s*nr:\s*(.+)$/)
-      if (schritt) {
-        if (aktuell) stufen.push(aktuell)
-        const f = inlineFields('nr: ' + schritt[1])
-        aktuell = {
-          id: Number(f.nr) - 1,
-          label: f.label ?? `Schritt ${f.nr}`,
-          description: f.beschreibung ?? '',
-          hint1: f.hinweis1 ?? '', hint2: f.hinweis2 ?? '',
-          atoms: [], bonds: [], correctArrow: null,
-        }
-        const pfeil = (f.pfeil ?? '').split('→').map(t => t.trim())
-        if (pfeil.length === 2) aktuell.correctArrow = { from: pfeil[0], to: pfeil[1] }
-        continue
-      }
-      if (!aktuell) continue
-
-      const atom = zeile.match(/^\s{2,}atom:\s*(.+)$/)
-      if (atom) {
-        const f = inlineFields(atom[1])
-        aktuell.atoms.push({
-          id: f.id, label: f.label ?? f.id,
-          x: Number(f.x), y: Number(f.y),
-          color: f.farbe ?? '#e2e8f0', r: Number(f.r ?? 16),
-          ...(f.ladung ? { charge: f.ladung } : {}),
-          ...(f.index ? { sub: f.index } : {}),
-        })
-        continue
-      }
-      const bindung = zeile.match(/^\s{2,}bindung:\s*(.+)$/)
-      if (bindung) {
-        const f = inlineFields(bindung[1])
-        aktuell.bonds.push({
-          a: f.a, b: f.b,
-          dash: String(f.gestrichelt ?? 'nein') === 'ja',
-          color: f.farbe ?? '#64748b',
-        })
-      }
-    }
-    if (aktuell) stufen.push(aktuell)
-
-    if (stufen.length === 0) { problem(ort, 'mechanism ohne Schritte'); return null }
-    for (const stufe of stufen) {
-      if (stufe.atoms.length < 2) {
-        problem(ort, `Mechanismus-Schritt "${stufe.label}" ohne Atomkoordinaten — Mechanismen lassen sich nicht aus Text ableiten, siehe CONTENT-PROMPT.md`)
-        return null
-      }
-      if (!stufe.correctArrow) {
-        problem(ort, `Mechanismus-Schritt "${stufe.label}" ohne "pfeil: von → nach"`)
-        return null
-      }
-    }
-
-    return {
-      art: 'mechanism',
-      title: kv.titel ?? '', description: kv.beschreibung ?? '', stufen,
-    }
+    return leseMechanismus(block, ort)
   }
 
   warnung(ort, `Unbekannter Interaktiv-Typ "${typ}" — wird übersprungen`)
@@ -337,6 +412,15 @@ function leseQuiz(block, ort, opt = {}) {
   return fragen
 }
 
+/** `WEG: <Vorderseite>` im FLASHCARDS-Block: diese Karte soll verschwinden. */
+function leseKartenWeg(block) {
+  if (!block) return []
+  return block.split('\n')
+    .map(z => z.match(/^WEG:\s*(.+)$/))
+    .filter(Boolean)
+    .map(m => m[1].trim())
+}
+
 function leseFlashcards(block, ort, opt = {}) {
   if (!block) return []
   const karten = []
@@ -361,6 +445,10 @@ function baueThema(roh) {
   const s = abschnitte(inhalt)
   const meta = keyValues(s.META ?? '')
   const ergaenzen = String(meta.modus ?? '').trim() === 'ergaenzen'
+  // Ausdrückliche Erlaubnis, einen vorhandenen Interaktivteil zu ersetzen.
+  // Ohne sie bleibt der alte stehen — versehentliches Überschreiben wäre
+  // schlimmer als eine Warnung.
+  const interaktivErsetzen = String(meta.interaktiv ?? '').trim() === 'ersetzen'
 
   if (!/^\d{2}-[a-z0-9-]+$/.test(name)) problem(ort, `Dateiname "${name}" folgt nicht dem Muster NN-slug`)
   if (!ergaenzen) {
@@ -370,6 +458,7 @@ function baueThema(roh) {
 
   return {
     ergaenzen,
+    interaktivErsetzen,
     id: name,
     title: meta.titel ?? name,
     subtitle: meta.untertitel ?? '',
@@ -379,6 +468,7 @@ function baueThema(roh) {
     interactive: leseInteraktiv(s.INTERAKTIV, ort),
     quiz: leseQuiz(s.QUIZ, ort, { optional: ergaenzen }),
     flashcards: leseFlashcards(s.FLASHCARDS, ort, { optional: ergaenzen }),
+    kartenWeg: leseKartenWeg(s.FLASHCARDS),
     ort,
   }
 }
@@ -451,7 +541,7 @@ function alsParserForm(interaktiv) {
       return {
         art: 'mechanism',
         title: interaktiv.title, description: interaktiv.description,
-        stufen: interaktiv.stages,
+        stufen: interaktiv.stages, ergebnis: interaktiv.ergebnis,
       }
     default:
       return null
@@ -476,14 +566,21 @@ function ergaenzeThema(vorhanden, zusatz, ort) {
     neueFragen.push({ ...frage, id })
   }
 
-  const bekannteKarten = new Set(vorhanden.flashcards.map(k => kartenId(k.front)))
+  // Erst Wegfallendes streichen, dann Neues anhängen — sonst könnte eine
+  // ersetzte Karte an ihrer eigenen Kennung scheitern.
+  const wegIds = new Set((zusatz.kartenWeg ?? []).map(kartenId))
+  const bleiben = vorhanden.flashcards.filter(k => !wegIds.has(k.id))
+  const entfernt = vorhanden.flashcards.length - bleiben.length
+
+  const bekannteKarten = new Set(bleiben.map(k => kartenId(k.front)))
   const neueKarten = zusatz.flashcards.filter(k => !bekannteKarten.has(kartenId(k.front)))
 
   // Nach dem ersten Auftrag liegt der Interaktivteil bereits in Parserform vor.
   let interactive = vorhanden.interactive?.art ? vorhanden.interactive : alsParserForm(vorhanden.interactive)
+  const ersetzt = !!(interactive && zusatz.interactive && zusatz.interaktivErsetzen)
   if (zusatz.interactive) {
-    if (interactive) warnung(ort, `${vorhanden.id} hat schon einen Interaktivteil — der neue wird ignoriert`)
-    else interactive = zusatz.interactive
+    if (!interactive || zusatz.interaktivErsetzen) interactive = zusatz.interactive
+    else warnung(ort, `${vorhanden.id} hat schon einen Interaktivteil — "interaktiv: ersetzen" setzen, um ihn abzulösen`)
   }
 
   return {
@@ -491,9 +588,15 @@ function ergaenzeThema(vorhanden, zusatz, ort) {
       ...vorhanden,
       interactive,
       quiz: [...vorhanden.quiz, ...neueFragen],
-      flashcards: [...vorhanden.flashcards, ...neueKarten],
+      flashcards: [...bleiben, ...neueKarten],
     },
-    bilanz: { fragen: neueFragen.length, karten: neueKarten.length, interaktiv: !vorhanden.interactive && !!zusatz.interactive },
+    bilanz: {
+      fragen: neueFragen.length,
+      karten: neueKarten.length,
+      interaktiv: !vorhanden.interactive && !!zusatz.interactive,
+      ersetzt,
+      entfernt,
+    },
   }
 }
 
@@ -641,6 +744,21 @@ function themaAlsTypeScript(t) {
     zeilen.push('    ],')
     zeilen.push('  },')
   } else if (i?.art === 'mechanism') {
+    const atomZeile = (a, einzug) => {
+      const felder = [`id: ${str(a.id)}`, `element: ${str(a.element)}`, `x: ${a.x}`, `y: ${a.y}`]
+      if (a.ladung !== undefined) felder.push(`ladung: ${a.ladung}`)
+      if (a.freiePaare !== undefined) felder.push(`freiePaare: ${a.freiePaare}`)
+      if (a.wasserstoffe !== undefined) felder.push(`wasserstoffe: ${a.wasserstoffe}`)
+      if (a.zeigen !== undefined) felder.push(`zeigen: ${a.zeigen}`)
+      if (a.frei !== undefined) felder.push(`frei: ${a.frei}`)
+      return `${einzug}{ ${felder.join(', ')} },`
+    }
+    const bindungsZeile = (b, einzug) => {
+      const felder = [`id: ${str(b.id)}`, `von: ${str(b.von)}`, `nach: ${str(b.nach)}`, `ordnung: ${b.ordnung}`]
+      if (b.art) felder.push(`art: ${str(b.art)}`)
+      return `${einzug}{ ${felder.join(', ')} },`
+    }
+
     zeilen.push('  interactive: {')
     zeilen.push('    type: "mechanism",')
     zeilen.push(`    title: ${str(i.title)},`)
@@ -648,23 +766,35 @@ function themaAlsTypeScript(t) {
     zeilen.push('    stages: [')
     for (const st of i.stufen) {
       zeilen.push('      {')
-      zeilen.push(`        id: ${st.id}, label: ${str(st.label)}, description: ${str(st.description)},`)
-      zeilen.push(`        hint1: ${str(st.hint1)}, hint2: ${str(st.hint2)},`)
-      zeilen.push('        atoms: [')
-      for (const a of st.atoms) {
-        const zusatz = (a.charge ? `, charge: ${str(a.charge)}` : '') + (a.sub ? `, sub: ${str(a.sub)}` : '')
-        zeilen.push(`          { id: ${str(a.id)}, label: ${str(a.label)}, x: ${a.x}, y: ${a.y}, color: ${str(a.color)}, r: ${a.r}${zusatz} },`)
+      zeilen.push(`        id: ${st.id}, titel: ${str(st.titel)},`)
+      zeilen.push(`        aufgabe: ${str(st.aufgabe)},`)
+      zeilen.push(`        erklaerung: ${str(st.erklaerung)},`)
+      zeilen.push(`        hinweise: [${st.hinweise.map(str).join(', ')}],`)
+      zeilen.push('        atome: [')
+      for (const a of st.atome) zeilen.push(atomZeile(a, '          '))
+      zeilen.push('        ],')
+      zeilen.push('        bindungen: [')
+      for (const b of st.bindungen) zeilen.push(bindungsZeile(b, '          '))
+      zeilen.push('        ],')
+      zeilen.push('        pfeile: [')
+      for (const pf of st.pfeile) {
+        zeilen.push(`          { von: { art: ${str(pf.von.art)}, id: ${str(pf.von.id)} }, `
+          + `nach: { art: ${str(pf.nach.art)}, id: ${str(pf.nach.id)} } },`)
       }
       zeilen.push('        ],')
-      zeilen.push('        bonds: [')
-      for (const b of st.bonds) {
-        zeilen.push(`          { a: ${str(b.a)}, b: ${str(b.b)}, dash: ${b.dash}, color: ${str(b.color)} },`)
-      }
-      zeilen.push('        ],')
-      zeilen.push(`        correctArrow: { from: ${str(st.correctArrow.from)}, to: ${str(st.correctArrow.to)} },`)
       zeilen.push('      },')
     }
     zeilen.push('    ],')
+    zeilen.push('    ergebnis: {')
+    zeilen.push(`      titel: ${str(i.ergebnis.titel)},`)
+    zeilen.push(`      beschreibung: ${str(i.ergebnis.beschreibung)},`)
+    zeilen.push('      atome: [')
+    for (const a of i.ergebnis.atome) zeilen.push(atomZeile(a, '        '))
+    zeilen.push('      ],')
+    zeilen.push('      bindungen: [')
+    for (const b of i.ergebnis.bindungen) zeilen.push(bindungsZeile(b, '        '))
+    zeilen.push('      ],')
+    zeilen.push('    },')
     zeilen.push('  },')
   } else if (i?.art === 'spectrum-assignment') {
     zeilen.push('  interactive: {')
@@ -958,13 +1088,15 @@ function main() {
     let stand = leseVorhandenesThema(kursId, themaId)
     if (!stand) { problem(stapel[0].ort, `Ergänzung für "${themaId}", das es noch nicht gibt`); continue }
 
-    const summe = { fragen: 0, karten: 0, interaktiv: false }
+    const summe = { fragen: 0, karten: 0, entfernt: 0, interaktiv: false, ersetzt: false }
     for (const zusatz of stapel) {
       const { thema, bilanz } = ergaenzeThema(stand, zusatz, zusatz.ort)
       stand = thema
       summe.fragen += bilanz.fragen
       summe.karten += bilanz.karten
+      summe.entfernt += bilanz.entfernt
       summe.interaktiv = summe.interaktiv || bilanz.interaktiv
+      summe.ersetzt = summe.ersetzt || bilanz.ersetzt
     }
     ergaenzt.push({ thema: stand, bilanz: summe, id: themaId })
   }
@@ -998,7 +1130,9 @@ function main() {
   console.log(`              vorhanden ${themenVorhanden.length}${force ? ' — werden überschrieben' : ' — bleiben unberührt'}`)
   for (const e of ergaenzt) {
     const teile = [`${e.bilanz.fragen} Fragen`, `${e.bilanz.karten} Karten`]
+    if (e.bilanz.entfernt) teile.push(`${e.bilanz.entfernt} Karten entfernt`)
     if (e.bilanz.interaktiv) teile.push('Interaktivteil')
+    if (e.bilanz.ersetzt) teile.push('Interaktivteil ersetzt')
     console.log(`  Ergänzung   ${e.id}: +${teile.join(', +')}`)
   }
   for (const z of zusammengefuehrt) {

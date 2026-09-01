@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 80,
   theory: `
 
+
+
 ## What is a Cyclocondensation?
 
 A **cyclocondensation** is a ring-closure reaction with loss of small molecules (H₂O, ROH, NH₃). Unlike cycloadditions, it involves nucleophilic/electrophilic steps (not pericyclic).
@@ -53,34 +55,111 @@ Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
 ### Imidazole synthesis:
 1,2-Dicarbonyl + NH₃ + aldehyde → imidazole (van Leusen: TosMIC)
 
+
+
 `,
   interactive: {
     type: "mechanism",
-    title: "Pyrazole from a 1,3-diketone and hydrazine",
-    description: "A cyclocondensation starts like any carbonyl chemistry — with a nucleophilic attack.",
+    title: "Pyrazole from a 1,3-diketone — three condensation steps",
+    description: "Eine Cyclokondensation ist gewöhnliche Carbonylchemie, zweimal hintereinander. Zeichne alle drei Schritte.",
     stages: [
       {
-        id: 0, label: "First attack of the hydrazine", description: "Draw the arrow from the terminal hydrazine nitrogen to one carbonyl carbon.",
-        hint1: "Hydrazine has two nucleophilic nitrogens; one attacks each carbonyl, which is why exactly a five-membered ring closes.", hint2: "After the attack comes dehydration to the hydrazone, then the second nitrogen closes the ring and a second molecule of water leaves. Aromatisation drives the whole sequence.",
-        atoms: [
-          { id: "C1", label: "C=O", x: 150, y: 110, color: "#e2e8f0", r: 20 },
-          { id: "O1", label: "O", x: 150, y: 45, color: "#f87171", r: 16 },
-          { id: "C2", label: "CH₂", x: 215, y: 150, color: "#e2e8f0", r: 20 },
-          { id: "C3", label: "C=O", x: 285, y: 110, color: "#e2e8f0", r: 20 },
-          { id: "O3", label: "O", x: 285, y: 45, color: "#f87171", r: 16 },
-          { id: "Na", label: "NH₂", x: 100, y: 205, color: "#60a5fa", r: 20 },
-          { id: "Nb", label: "NH₂", x: 340, y: 205, color: "#60a5fa", r: 20 },
+        id: 0, titel: "Angriff am ersten Carbonyl",
+        aufgabe: "Das erste Stickstoffatom des Hydrazins greift C-1 an. Zeichne beide Pfeile.",
+        erklaerung: "Der Carbonylkohlenstoff ist elektrophil, weil der Sauerstoff Elektronendichte abzieht. Das Elektronenpaar des Stickstoffs bildet die neue Bindung, und die π-Elektronen der C=O-Bindung weichen auf den Sauerstoff aus — sonst hätte der Kohlenstoff fünf Bindungen. Es entsteht ein Halbaminal.",
+        hinweise: ["Nucleophil greift an, π-Elektronen weichen aus. Dasselbe Muster wie bei jeder Addition an ein Carbonyl.", "Der Sauerstoff nimmt die Elektronen und damit die negative Ladung auf."],
+        atome: [
+          { id: "c1", element: "C", x: 130, y: 160 },
+          { id: "o1", element: "O", x: 130, y: 95, freiePaare: 2 },
+          { id: "c2", element: "C", x: 190, y: 200 },
+          { id: "c3", element: "C", x: 250, y: 160 },
+          { id: "o3", element: "O", x: 250, y: 95, freiePaare: 2 },
+          { id: "na", element: "N", x: 350, y: 215, freiePaare: 1, wasserstoffe: 2 },
+          { id: "nb", element: "N", x: 410, y: 180, freiePaare: 1, wasserstoffe: 2 },
         ],
-        bonds: [
-          { a: "C1", b: "O1", dash: false, color: "#64748b" },
-          { a: "C1", b: "C2", dash: false, color: "#64748b" },
-          { a: "C2", b: "C3", dash: false, color: "#64748b" },
-          { a: "C3", b: "O3", dash: false, color: "#64748b" },
-          { a: "Na", b: "Nb", dash: false, color: "#64748b" },
+        bindungen: [
+          { id: "k1", von: "c1", nach: "o1", ordnung: 2 },
+          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
+          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
+          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
         ],
-        correctArrow: { from: "Na", to: "C1" },
+        pfeile: [
+          { von: { art: "freiesPaar", id: "na" }, nach: { art: "atom", id: "c1" } },
+          { von: { art: "bindung", id: "k1" }, nach: { art: "atom", id: "o1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Wasser tritt aus",
+        aufgabe: "Aus dem Halbaminal wird das Hydrazon. Zeichne beide Pfeile: das Elektronenpaar am Stickstoff in die N–C-Bindung, und die C–O-Bindung zum Sauerstoff.",
+        erklaerung: "Das Elektronenpaar des Stickstoffs schiebt in die Bindung zum Kohlenstoff und macht daraus eine Doppelbindung. Damit der Kohlenstoff nicht überladen wird, muss die C–O-Bindung brechen — der Sauerstoff geht mit seinen Elektronen als Wasser weg. Diesen Wasseraustritt meint das Wort Kondensation.",
+        hinweise: ["Eine C=N-Doppelbindung entsteht. Was muss dafür den Platz räumen?", "Der zweite Pfeil zeigt auf den Sauerstoff, nicht von ihm weg."],
+        atome: [
+          { id: "c1", element: "C", x: 130, y: 160 },
+          { id: "o1", element: "O", x: 90, y: 105, freiePaare: 2, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 190, y: 200 },
+          { id: "c3", element: "C", x: 250, y: 160 },
+          { id: "o3", element: "O", x: 250, y: 95, freiePaare: 2 },
+          { id: "na", element: "N", x: 190, y: 105, freiePaare: 1, wasserstoffe: 1 },
+          { id: "nb", element: "N", x: 250, y: 65, freiePaare: 1, wasserstoffe: 2 },
+        ],
+        bindungen: [
+          { id: "k1", von: "c1", nach: "o1", ordnung: 1 },
+          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
+          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
+          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
+          { id: "k6", von: "c1", nach: "na", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "na" }, nach: { art: "bindung", id: "k6" } },
+          { von: { art: "bindung", id: "k1" }, nach: { art: "atom", id: "o1" } },
+        ],
+      },
+      {
+        id: 2, titel: "Ringschluss",
+        aufgabe: "Das zweite Stickstoffatom greift das verbliebene Carbonyl an. Zeichne beide Pfeile.",
+        erklaerung: "Jetzt schließt sich der Ring: der zweite Stickstoff sitzt genau in Reichweite von C-3. Nach einem weiteren Wasseraustritt und der Tautomerie steht das aromatische Pyrazol da — und die gewonnene Aromatizität ist es, die die ganze Kette antreibt. Ist das Diketon unsymmetrisch, entstehen an dieser Stelle zwei Regioisomere.",
+        hinweise: ["Derselbe Angriff wie im ersten Schritt, nur am anderen Ende der Kette.", "Zähle die Ringglieder: N, N, C, C, C — fünf, das passt."],
+        atome: [
+          { id: "c1", element: "C", x: 130, y: 160 },
+          { id: "c2", element: "C", x: 190, y: 200 },
+          { id: "c3", element: "C", x: 250, y: 160 },
+          { id: "o3", element: "O", x: 300, y: 205, freiePaare: 2 },
+          { id: "na", element: "N", x: 130, y: 100 },
+          { id: "nb", element: "N", x: 190, y: 60, freiePaare: 1, wasserstoffe: 2 },
+        ],
+        bindungen: [
+          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
+          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
+          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
+          { id: "k6", von: "c1", nach: "na", ordnung: 2 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "nb" }, nach: { art: "atom", id: "c3" } },
+          { von: { art: "bindung", id: "k4" }, nach: { art: "atom", id: "o3" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "Pyrazol",
+      beschreibung: "Nach dem zweiten Wasseraustritt und der Tautomerie ist der Fünfring aromatisch. Zwei Stickstoffatome nebeneinander, sechs π-Elektronen.",
+      atome: [
+        { id: "nb", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+        { id: "na", element: "N", x: 98, y: 182, freiePaare: 1 },
+        { id: "c1", element: "C", x: 118, y: 121 },
+        { id: "c2", element: "C", x: 182, y: 121 },
+        { id: "c3", element: "C", x: 202, y: 182 },
+      ],
+      bindungen: [
+        { id: "p1", von: "nb", nach: "na", ordnung: 1 },
+        { id: "p2", von: "na", nach: "c1", ordnung: 2 },
+        { id: "p3", von: "c1", nach: "c2", ordnung: 1 },
+        { id: "p4", von: "c2", nach: "c3", ordnung: 2 },
+        { id: "p5", von: "c3", nach: "nb", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "Which components does the Hantzsch dihydropyridine synthesis require?", options: ["Azide + alkyne", "Enamine (or aldehyde) + 1,3-dicarbonyl + NH₃", "Diene + dienophile", "Hydrazine + 1,3-dicarbonyl"], correct: 1, explanation: "Hantzsch synthesis [3+3]: enamine (3C unit) + 1,3-dicarbonyl compound (3C unit) + NH₃ (1N unit). Alternative: aldehyde + 2× β-ketoester + NH₃. Product: 1,4-dihydropyridine; after oxidation: pyridine." },
@@ -93,9 +172,9 @@ Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
   flashcards: [
     { id: "1bqsez5", front: "Hantzsch Dihydropyridine Synthesis", back: "[3+3] cyclocondensation: enamine + 1,3-dicarbonyl + NH₃ → 1,4-dihydropyridine → [O] → pyridine. Regioselective: use pre-synthesised enamine." },
     { id: "0k94jy7", front: "Biginelli Reaction", back: "3-component reaction: aldehyde + β-ketoester + urea → DHPM (dihydropyrimidinone). Acid-catalysed. Products: calcium channel blockers." },
-    { id: "1uvjmpz", front: "Kröhnke Reaction", back: "[3+2+1] cyclocondensation. Steps: 1. α-Br-ketone + pyridine → pyridinium salt. 2. + α,β-unsaturated ketone (Michael). 3. + NH₄OAc → cyclisation + aromatisation → pyridine." },
     { id: "07k6u7x", front: "Pyrazole Synthesis", back: "1,3-Dicarbonyl + H₂N-NH-R → N-substituted pyrazole (regioselective). With H₂N-NH₂ → mixture. Important: 1,3-diketones prefer 3(5)-substituted pyrazole." },
     { id: "08fisvj", front: "Bohlmann-Rahtz Reaction", back: "[3+3] cyclocondensation: enaminone + β-ketoester → pyridine. Regiochemistry dictated by the enaminone. Propargylamine as alternative." },
     { id: "1vwbl7q", front: "Retrosynthesis: Cyclocondensation", back: "Identify: which C-N or C-O bonds were newly formed? Cut them retrosynthetically. Add H₂O (or NH₃, ROH) that was eliminated. That gives A and B." },
+    { id: "1ewll7i", front: "Warum eine Cyclokondensation Regioisomere liefern kann", back: "Anders als eine Cycloaddition läuft sie über einzelne Zwischenstufen. Ein unsymmetrisches 1,3-Diketon bietet zwei verschiedene Carbonylgruppen an, und das Nucleophil kann an beiden zuerst angreifen. Wer die Regiochemie festlegen will, setzt ein vorgefertigtes Enamin oder Enaminon ein, das nur eine Verknüpfung erlaubt." },
   ],
 } satisfies Thema;

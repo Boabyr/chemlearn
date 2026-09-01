@@ -41,6 +41,16 @@ export function kursMit(courseId: string): Kurs | undefined {
   return allCourses.find(kurs => kurs.id === courseId)
 }
 
+/**
+ * Sprache der Inhalte eines Kurses.
+ *
+ * Das Feld gab es schon, ausgewertet wurde es an genau einer Stelle. Überall
+ * sonst wurden englische Texte unter `lang="de"` vorgelesen.
+ */
+export function spracheVon(courseId: string | undefined): string {
+  return (courseId && kursMit(courseId)?.sprache) || 'de'
+}
+
 /** Themen-Kennungen, die als Datei vorliegen — unabhängig von der Kursliste. */
 export function vorhandeneThemen(courseId: string): string[] {
   return [...(themenLader.get(courseId)?.keys() ?? [])].sort()

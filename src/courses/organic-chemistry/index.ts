@@ -20,7 +20,7 @@ export const course = {
     "09-bioisosteres-skeletal-editing",
   ],
   totalTopics: 9,
-  estimatedHours: 25,
+  estimatedHours: 11,
   sprache: "en",
   examiners: [
     // Keine echte Altprüfung — Übungsfragen zum Kurs, eigener Abschnitt.

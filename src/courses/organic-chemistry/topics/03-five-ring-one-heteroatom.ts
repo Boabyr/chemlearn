@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 75,
   theory: `
 
+
+
 ## Overview: Pyrrole, Furan, Thiophene
 
 All three are 5-membered aromatic heterocycles with **6 π electrons**:
@@ -77,50 +79,88 @@ Mechanism: double condensation (hemi-acetal) + cyclisation + dehydration
 - Analogous to indole, but with O or S
 - SEAr preferred at C-2 of the 5-membered ring part
 
+
+
 `,
   interactive: {
     type: "mechanism",
     title: "SEAr on pyrrole — why C-2 wins",
-    description: "Follow the electron flow of the electrophilic attack and the rearomatisation.",
+    description: "Pyrrol ist elektronenreich und reagiert bereitwillig mit Elektrophilen. Zeichne den Angriff und die Rückkehr zur Aromatizität.",
     stages: [
       {
-        id: 0, label: "Attack at C-2", description: "The electron-rich ring attacks the electrophile. Draw the arrow from the C2=C3 π bond to the bromine.",
-        hint1: "The nucleophile here is the ring itself — the arrow starts at the π bond, not at the nitrogen.", hint2: "C-2 is chosen because the resulting arenium ion has three resonance structures, one of them carrying the positive charge on nitrogen.",
-        atoms: [
-          { id: "N1", label: "N", x: 200, y: 80, color: "#60a5fa", r: 18 },
-          { id: "C2", label: "C2", x: 260, y: 125, color: "#e2e8f0", r: 18 },
-          { id: "C3", label: "C3", x: 238, y: 195, color: "#e2e8f0", r: 18 },
-          { id: "C4", label: "C4", x: 162, y: 195, color: "#e2e8f0", r: 18 },
-          { id: "C5", label: "C5", x: 140, y: 125, color: "#e2e8f0", r: 18 },
-          { id: "Br", label: "Br⁺", x: 370, y: 125, color: "#4ade80", r: 18 },
+        id: 0, titel: "Angriff der π-Bindung",
+        aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Bromkation.",
+        erklaerung: "Der Nucleophil ist hier der Ring selbst — deshalb beginnt der Pfeil an der π-Bindung, nicht am Stickstoff. C-2 wird bevorzugt, weil das entstehende Areniumion drei Grenzstrukturen hat, darunter eine mit der positiven Ladung am Stickstoff, wo jedes Atom ein volles Oktett behält. Ein Angriff an C-3 böte nur zwei.",
+        hinweise: ["Wer greift an? Nicht der Stickstoff, sondern die Doppelbindung zwischen C-2 und C-3.", "Zähle für beide Angriffsstellen die Grenzstrukturen des Kations — die Stelle mit mehr gewinnt."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "c3", element: "C", x: 182, y: 121 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "br", element: "Br", x: 350, y: 150, ladung: 1, frei: true },
         ],
-        bonds: [
-          { a: "N1", b: "C2", dash: false, color: "#64748b" },
-          { a: "C2", b: "C3", dash: false, color: "#64748b" },
-          { a: "C3", b: "C4", dash: false, color: "#64748b" },
-          { a: "C4", b: "C5", dash: false, color: "#64748b" },
-          { a: "C5", b: "N1", dash: false, color: "#64748b" },
+        bindungen: [
+          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
+          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
+          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
+          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
         ],
-        correctArrow: { from: "C2", to: "Br" },
+        pfeile: [
+          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "br" } },
+        ],
       },
       {
-        id: 1, label: "Rearomatisation", description: "A base removes the proton from C-2 and the aromatic sextet is restored. Draw the arrow from the C2–H bond to the base.",
-        hint1: "The arenium ion is not the product — the ring is no longer aromatic at this point.", hint2: "Losing H⁺ costs nothing compared with the aromatic stabilisation regained.",
-        atoms: [
-          { id: "N1", label: "N⁺", x: 200, y: 80, color: "#60a5fa", r: 18, charge: "+" },
-          { id: "C2", label: "C2", x: 260, y: 125, color: "#e2e8f0", r: 18 },
-          { id: "H2", label: "H", x: 320, y: 90, color: "#cbd5e1", r: 14 },
-          { id: "C3", label: "C3", x: 238, y: 195, color: "#e2e8f0", r: 18 },
-          { id: "Base", label: "B⁻", x: 390, y: 175, color: "#f87171", r: 18, charge: "−" },
+        id: 1, titel: "Rearomatisierung",
+        aufgabe: "Eine Base nimmt das Proton von C-2 ab. Zeichne beide Pfeile: das freie Elektronenpaar der Base zum Wasserstoff, und die C2–H-Bindung in den Ring.",
+        erklaerung: "Das Areniumion ist nicht das Produkt — an C-2 sitzt jetzt ein sp³-Kohlenstoff, der Ring hat sein Sextett verloren, und die positive Ladung liegt am Stickstoff. Die Deprotonierung kostet fast nichts gegenüber der zurückgewonnenen Aromatizität. Deshalb ist die Substitution und nicht die Addition das Ergebnis.",
+        hinweise: ["Am Ende muss C-2 wieder drei Bindungen im Ring haben — der Wasserstoff ist einer zu viel.", "Das Elektronenpaar der C–H-Bindung wandert nicht zur Base, sondern in den Ring."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220, ladung: 1, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "c3", element: "C", x: 182, y: 121 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "br", element: "Br", x: 268, y: 205 },
+          { id: "h2", element: "H", x: 250, y: 145 },
+          { id: "base", element: "N", x: 370, y: 90, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
         ],
-        bonds: [
-          { a: "N1", b: "C2", dash: false, color: "#64748b" },
-          { a: "C2", b: "H2", dash: false, color: "#64748b" },
-          { a: "C2", b: "C3", dash: false, color: "#64748b" },
+        bindungen: [
+          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "p2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "p3", von: "c3", nach: "c4", ordnung: 2 },
+          { id: "p4", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "p5", von: "c5", nach: "n1", ordnung: 2 },
+          { id: "cbr", von: "c2", nach: "br", ordnung: 1 },
+          { id: "ch", von: "c2", nach: "h2", ordnung: 1 },
         ],
-        correctArrow: { from: "H2", to: "Base" },
+        pfeile: [
+          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "h2" } },
+          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "p2" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "2-Brompyrrol",
+      beschreibung: "Das Brom sitzt an C-2, der Ring ist wieder aromatisch. Substitution, nicht Addition.",
+      atome: [
+        { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+        { id: "c2", element: "C", x: 202, y: 182 },
+        { id: "c3", element: "C", x: 182, y: 121 },
+        { id: "c4", element: "C", x: 118, y: 121 },
+        { id: "c5", element: "C", x: 98, y: 182 },
+        { id: "br", element: "Br", x: 268, y: 205 },
+      ],
+      bindungen: [
+        { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
+        { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
+        { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
+        { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
+        { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
+        { id: "cbr", von: "c2", nach: "br", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "Why does indole react preferentially at C-3 rather than C-2 in electrophilic aromatic substitution?", options: ["C-2 is sterically hindered", "Attack at C-3 gives an arenium ion that can be delocalised onto the benzene ring and N – aromaticity of the benzene ring is preserved", "C-3 has higher π electron density in the ground state", "N stabilises the transition state at C-3 by inversion"], correct: 1, explanation: "Attack at C-3: the arenium ion can be delocalised onto N WITHOUT disturbing the aromaticity of the benzene ring. Attack at C-2 would require the charge to be transferred to the benzene ring → loss of benzene aromaticity → energetically unfavourable." },

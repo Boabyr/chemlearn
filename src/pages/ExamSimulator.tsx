@@ -8,6 +8,7 @@ import { GRADES } from '../lib/learning/sm2'
 import { examQuestionsFor, examStructuresFor, examinerAnzeige, examinersFor, courseIdsWithExams } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import { stilFuer } from '../components/ExamMode/pruefStil'
+import { kursMit } from '../lib/courseRegistry'
 
 type Mode = 'select' | 'exam' | 'result'
 
@@ -39,6 +40,7 @@ export default function ExamSimulator() {
 
   const examQuestions = useMemo(() => examQuestionsFor(courseId), [courseId])
   const professoren = useMemo(() => examinersFor(courseId), [courseId])
+  const kursTitel = kursMit(courseId)?.title ?? 'diesem Kurs'
   const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
   const { logAttempt, flush } = useAttempts(courseId)
   const { gradeItem } = useReviews(courseId)
@@ -191,11 +193,27 @@ export default function ExamSimulator() {
         {mode === 'select' && (
           <div>
             <h1 className="text-2xl font-light mb-2">Prüfungssimulator</h1>
-            <p className="text-muted text-sm mb-8">Simuliere eine echte AC1-Prüfung mit originalem Aufbau.</p>
+            {/* Regeln aus der Prüfung selbst, nicht aus einem Kurs abgeschrieben.
+                Vorher stand hier fest "AC1", "3 Teile" und "36 Punkte" — auch
+                für Kurse, auf die nichts davon zutrifft. */}
+            <p className="text-muted text-sm mb-8">
+              {examStructures.length > 0
+                ? `Nachgestellte Prüfung aus ${kursTitel} mit originalem Aufbau.`
+                : `Für ${kursTitel} gibt es noch keine nachgestellte Prüfung — die Zufalls-Prüfung stellt eine Runde aus dem Fragenkatalog zusammen.`}
+            </p>
 
-            <div className="bg-warning/10 border border-warning rounded-xl px-5 py-4 mb-6 text-sm text-warning">
-              <span className="font-semibold">Prüfungsregeln:</span> Alle 3 Teile müssen mit mindestens 12 Punkten bestanden werden UND insgesamt mind. 36 Punkte erreicht werden.
-            </div>
+            {examStructures.length > 0 && (
+              <div className="bg-warning/10 border border-warning rounded-xl px-5 py-4 mb-6 text-sm text-warning">
+                <span className="font-semibold">Prüfungsregeln:</span>{' '}
+                {(() => {
+                  const erste = examStructures[0]
+                  const teile = erste.sections.length
+                  return `Alle ${teile} ${teile === 1 ? 'Teil' : 'Teile'} müssen einzeln bestanden werden `
+                    + `(mindestens ${erste.sections[0].passingPoints} Punkte) und insgesamt mindestens `
+                    + `${erste.passingPoints} von ${erste.totalPoints} Punkten.`
+                })()}
+              </div>
+            )}
 
             <div className="space-y-4">
               {examStructures.map(exam => (
@@ -275,6 +293,7 @@ export default function ExamSimulator() {
             </div>
 
             <ExamQuestionCard
+              courseId={courseId}
               key={currentQId}
               question={currentQ}
               onAnswer={(correct, pts) => onAnswer(currentQId, correct, pts)}

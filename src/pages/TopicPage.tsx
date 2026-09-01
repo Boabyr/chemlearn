@@ -9,7 +9,7 @@ import { useReviews, cardItemId } from '../hooks/useReviews'
 import { frageItemId } from '../lib/learning/lernItem'
 import { GRADES, type Grade } from '../lib/learning/sm2'
 import type { Thema } from '../content/schema'
-import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
+import MechanismusAufgabe from '../components/Mechanismus/MechanismusAufgabe'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
 import ReportButton from '../components/Reports/ReportButton'
@@ -193,8 +193,9 @@ export default function TopicPage() {
               <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
                 <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
                 {interactive.type === 'mechanism' && (
-                  <MechanismBuilder title={interactive.title} description={interactive.description}
-                    stages={interactive.stages} onComplete={() => interaktivFertig(true)} />
+                  <MechanismusAufgabe title={interactive.title} description={interactive.description}
+                    stages={interactive.stages} ergebnis={interactive.ergebnis}
+                    onComplete={interaktivFertig} />
                 )}
                 {interactive.type === 'formula-calculator' && (
                   <FormulaCalculator formula={interactive.formula} onComplete={() => interaktivFertig(true)} />

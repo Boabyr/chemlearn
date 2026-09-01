@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 65,
   theory: `
 
+
 ## Elektroden 2. Art
 
 Elektroden 2. Art: Metall in Kontakt mit seinem schwerlöslichen Salz und dem Anion des Salzes.
@@ -67,6 +68,7 @@ Molarität M: c [mol/L] = c [mg/L] / M [g/mol] × 10⁻³
 
 **Beispiel: 68 ppb C₂₉H₆₀ (M = 408,8 g/mol) in Wasser:**
 c = 68×10⁻⁶ g/L / 408,8 g/mol = 1,66×10⁻⁷ mol/L = 166 nmol/L
+
 
 `,
   interactive: {

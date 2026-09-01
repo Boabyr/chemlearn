@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 65,
   theory: `
 
+
 ## Löslichkeitsprodukt Ksp
 
 Für schwerlösliches Salz AB:
@@ -71,6 +72,7 @@ Nachweis über Potentiometrie oder Indikator (Mohr, Volhard, Fajans)
 **Berechnung der Löslichkeit:**
 Ksp(CaF₂) = [Ca²⁺][F⁻]² = s · (2s)² = 4s³
 s = ∛(Ksp/4)
+
 
 `,
   interactive: {

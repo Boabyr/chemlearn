@@ -73,6 +73,60 @@ describe('Themen', () => {
   })
 })
 
+describe('Kursangaben', () => {
+  it.each(allCourses.map(k => [k.id] as const))('%s: die Stundenangabe stimmt mit den Themen überein', async (kursId) => {
+    // 40 h angegeben gegen 20,7 h aus den Themenzeiten — eine erfundene Zahl
+    // auf der Kurskarte ist schlimmer als gar keine.
+    const kurs = allCourses.find(k => k.id === kursId)!
+    const minuten = (await loadAllTopics(kursId)).reduce((s, t) => s + t.estimatedMinutes, 0)
+    const stunden = minuten / 60
+    expect(Math.abs(kurs.estimatedHours - stunden),
+      `${kursId}: ${kurs.estimatedHours} h angegeben, ${stunden.toFixed(1)} h in den Themen`).toBeLessThan(1)
+  })
+})
+
+describe('Mechanismen', () => {
+  it('tragen jeder einen eigenen Titel — kein Mechanismus steht zweimal im Kurs', async () => {
+    // 05 und 09 zeigten dieselbe Azid-Cycloaddition, nur mit anderem Partner.
+    for (const kurs of allCourses) {
+      const titel = (await loadAllTopics(kurs.id))
+        .map(t => t.interactive)
+        .filter(i => i?.type === 'mechanism')
+        .map(i => (i as { title: string }).title)
+      expect(new Set(titel).size, `${kurs.id}: doppelter Mechanismus-Titel`).toBe(titel.length)
+    }
+  })
+
+  it('haben mehrere Schritte und ein Ergebnisbild', async () => {
+    const duenn: string[] = []
+    for (const kurs of allCourses) {
+      for (const thema of await loadAllTopics(kurs.id)) {
+        if (thema.interactive?.type !== 'mechanism') continue
+        if (thema.interactive.stages.length < 2) duenn.push(`${thema.id}: nur ein Schritt`)
+        if (!thema.interactive.ergebnis) duenn.push(`${thema.id}: kein Ergebnisbild`)
+      }
+    }
+    expect(duenn).toEqual([])
+  })
+})
+
+describe('Karteikarten über den ganzen Kurs', () => {
+  it.each(allCourses.map(k => [k.id] as const))('%s: keine Karte steht zweimal', async (kursId) => {
+    // Das Schema verbietet Dubletten nur innerhalb eines Themas — "Boger
+    // Reaction" stand deshalb in zwei Themen.
+    const gesehen = new Map<string, string>()
+    const doppelt: string[] = []
+    for (const thema of await loadAllTopics(kursId)) {
+      for (const karte of thema.flashcards) {
+        const vorher = gesehen.get(karte.id)
+        if (vorher) doppelt.push(`"${karte.front.slice(0, 40)}" in ${vorher} und ${thema.id}`)
+        else gesehen.set(karte.id, thema.id)
+      }
+    }
+    expect(doppelt).toEqual([])
+  })
+})
+
 describe('Sollstärke der Themen', () => {
   // Die Vorgabe aus CONTENT-PROMPT.md: sechs Quizfragen, sechs Karten,
   // ein Interaktivteil. Dazu mindestens eine Prüfungsfrage je Thema, sonst

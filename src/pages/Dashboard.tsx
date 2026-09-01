@@ -4,7 +4,7 @@ import ThemeToggle from '../components/Shell/ThemeToggle'
 import { useAuth } from '../hooks/useAuth'
 import { useRole } from '../hooks/useRole'
 import { supabase } from '../lib/supabase'
-import { allCourses } from '../lib/courseRegistry'
+import { allCourses, spracheVon } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
 import { courseIdsWithExams } from '../data/exams'
 import LearningStatus from '../components/Dashboard/LearningStatus'
@@ -110,7 +110,7 @@ export default function Dashboard() {
           {allCourses.map(course => {
             const { done, total, pct } = courseProgress(course.id)
             return (
-              <button key={course.id} type="button"
+              <button key={course.id} type="button" lang={spracheVon(course.id)}
                 onClick={() => navigate(`/course/${course.id}`)}
                 className="bg-raised border border-line rounded-2xl p-6 text-left w-full hover:border-accent transition-all"
                 style={{ borderTopColor: course.color, borderTopWidth: 3 }}>

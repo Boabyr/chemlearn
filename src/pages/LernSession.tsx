@@ -9,6 +9,7 @@ import { GRADES, type Grade } from '../lib/learning/sm2'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import ThemeToggle from '../components/Shell/ThemeToggle'
 import { ampelText } from '../lib/scoreColor'
+import { spracheVon } from '../lib/courseRegistry'
 
 const KNOEPFE: { grade: Grade; label: string; taste: string }[] = [
   { grade: GRADES.NOCHMAL, label: 'Nochmal', taste: '1' },
@@ -221,7 +222,7 @@ export default function LernSession() {
 
       <main className="mx-auto max-w-3xl px-4 py-8">
         {aufgabe.art === 'card' ? (
-          <section aria-label="Karteikarte">
+          <section aria-label="Karteikarte" lang={spracheVon(aufgabe.courseId)}>
             <button onClick={() => setUmgedreht(u => !u)}
               aria-expanded={umgedreht}
               className="min-h-64 w-full rounded-2xl border border-line bg-raised p-8 text-left transition-colors hover:border-subtle">
@@ -251,7 +252,8 @@ export default function LernSession() {
           </section>
         ) : (
           <section aria-label="Frage">
-            <ExamQuestionCard key={aufgabe.itemId} question={aufgabe.frage} onAnswer={frageBeantwortet} showSource />
+            <ExamQuestionCard key={aufgabe.itemId} question={aufgabe.frage}
+              courseId={aufgabe.courseId} onAnswer={frageBeantwortet} showSource />
             {beantwortet && (
               <div className="mt-6">
                 <p className="mb-3 text-center text-sm text-subtle">Wie sicher saß das?</p>

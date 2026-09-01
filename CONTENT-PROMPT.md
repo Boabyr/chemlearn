@@ -173,18 +173,49 @@ hinweis2: ...
 
 **4. `mechanism`** — Reaktionsmechanismen mit Elektronenpfeilen.
 
-**Erzeuge diesen Typ nicht.** Ein Mechanismus braucht gesetzte Atomkoordinaten
-(x/y je Atom, Bindungen zwischen Atom-IDs); aus einer Textbeschreibung lässt
-sich das nicht ableiten. Der Importer weist einen Mechanismus ohne Koordinaten
-ausdrücklich zurück, statt ihn still zu verwerfen.
+**Erzeuge diesen Typ nicht.** Ein Mechanismus ist eine Strukturformel mit
+gesetzten Koordinaten; aus einer Textbeschreibung lässt sich das nicht
+ableiten. Der Importer weist ihn ohne Koordinaten ausdrücklich zurück, statt
+ihn still zu verwerfen.
 
 Wenn ein Thema nach einem Mechanismus verlangt: `typ: keiner` schreiben und im
 Bericht vermerken — die Strukturzeichnung entsteht von Hand.
 
----
+Zur Einordnung, wie das Format aussieht (Bühne 480 × 300, Ursprung links oben):
 
-> **Karten-IDs schreibst du nicht.** Der Importer leitet sie aus der
-> Vorderseite ab, damit ein Umsortieren den Lernplan nicht verschiebt.
+```
+typ: mechanism
+titel: Chichibabin amination
+beschreibung: Warum Nucleophile an C-2 angreifen.
+schritte:
+- nr: 1 | titel: Angriff | aufgabe: Zeichne beide Pfeile. | erklaerung: Weil ...
+  hinweis: Erster Hinweis.
+  hinweis: Zweiter Hinweis.
+  atom: id: n1 | element: N | x: 72 | y: 132 | paare: 1
+  atom: id: c2 | element: C | x: 120 | y: 105
+  atom: id: nh | element: N | x: 300 | y: 70 | ladung: -1 | h: 2 | paare: 2 | frei: ja
+  bindung: id: r1 | von: n1 | nach: c2 | ordnung: 2
+  pfeil: von: freiesPaar nh | nach: atom c2
+  pfeil: von: bindung r1 | nach: atom n1
+- nr: 2 | ...
+ergebnis: titel: 2-Aminopyridin | beschreibung: Der Ring ist wieder aromatisch.
+  atom: ...
+  bindung: ...
+```
+
+Regeln, auf denen der Importer besteht:
+
+- **mindestens zwei Schritte** je Mechanismus, jeder mit mindestens einem Pfeil,
+  einem Hinweis und einer Erklärung
+- aufeinanderfolgende Schritte teilen mehr als die Hälfte ihrer Atom-IDs — die
+  Struktur wird umgeformt, nicht ausgetauscht
+- Atome liegen auf der Bühne und nicht übereinander (Mindestabstand 22)
+- ein Atom ohne Bindung braucht `frei: ja`, sonst gilt es als Versehen
+- die Ladung steht im Feld `ladung`, nie im Elementsymbol
+- Kohlenstoff bleibt eine Ecke ohne Buchstabe; `zeigen: ja` erzwingt das Symbol
+- ein Pfeil beginnt an `bindung`, `freiesPaar` oder `atom` und endet an
+  `bindung` oder `atom` — nie dort, wo er beginnt
+- `ergebnis` ist Pflicht: das Produktbild ohne Aufgabe
 
 ---
 
@@ -314,6 +345,11 @@ Der Importer hängt an, statt zu ersetzen:
 - Karteikarten mit bereits vorhandener Vorderseite fallen weg. Es lohnt sich
   also, vorher in die Datei zu schauen — sonst schreibst du umsonst.
 - Ein Interaktivteil wird nur übernommen, wenn das Thema noch keinen hat.
+  Soll ein vorhandener abgelöst werden, steht im META-Block zusätzlich
+  `interaktiv: ersetzen` — ausdrücklich, damit nichts versehentlich verschwindet.
+- Eine vorhandene Karteikarte lässt sich mit `WEG: <Vorderseite>` im
+  FLASHCARDS-Block entfernen. Das ist der einzige Weg, Inhalt wieder
+  loszuwerden, ohne die Datei von Hand anzufassen.
 - Mehrere Quelldateien dürfen dasselbe Thema ergänzen; sie werden nacheinander
   aufgetragen.
 

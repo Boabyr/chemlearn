@@ -6,8 +6,9 @@ export const topic = {
   subtitle: "Synthesis & Reactivity",
   icon: "🔵",
   estimatedMinutes: 90,
-
   theory: `
+
+
 ## Importance of Pyridines in Pharmacy
 
 Pyridine scaffolds are found in numerous FDA-approved drugs (general uses: base, solvent, synthetic building block).
@@ -77,149 +78,111 @@ Pyridine + mCPBA → pyridine N-oxide
 ### Side-chain reactions
 2-Methylpyridine: α-methylene strongly acidic (analogous to ketones)
 - Lithiation possible → further reaction with electrophiles
-`,
 
+
+`,
   interactive: {
     type: "mechanism",
-    title: "Kröhnke Reaction – Mechanism",
-    description: "Show the electron flow during cyclisation to the pyridine ring",
+    title: "Chichibabin amination — nucleophilic attack on pyridine",
+    description: "Pyridin ist elektronenarm und lässt Nucleophile an sich heran. Zeichne, warum der Angriff an C-2 gelingt und wie der Ring wieder aromatisch wird.",
     stages: [
       {
-        id: 0,
-        label: "Step 1: Aldol Condensation",
-        description: "The activated CH₂ of the pyridinium salt attacks the aldehyde nucleophilically (Knoevenagel-type).",
-        atoms: [
-          { id: "c1", label: "C", x: 80, y: 130, color: "#2dd4bf", r: 22, sub: "δ−" },
-          { id: "c2", label: "C=O", x: 280, y: 130, color: "#f87171", r: 28, sub: "δ+" },
-          { id: "c3", label: "C", x: 400, y: 130, color: "#e2e8f0", r: 20 },
+        id: 0, titel: "Angriff des Amids an C-2",
+        aufgabe: "Das Amid-Ion greift C-2 an. Zeichne beide Pfeile: das freie Elektronenpaar des Amids zum Kohlenstoff, und die C2=N1-Bindung zum Stickstoff.",
+        erklaerung: "Der Angriff an C-2 lohnt sich, weil die negative Ladung im entstehenden Addukt auf dem Stickstoff landen kann — dem elektronegativsten Ringatom. Bei einem Angriff an C-3 gäbe es diese Grenzstruktur nicht. Genau umgekehrt zur elektrophilen Substitution, wo C-3 bevorzugt wird.",
+        hinweise: ["Wenn eine neue Bindung an C-2 entsteht, muss dort eine alte weichen — sonst hätte der Kohlenstoff fünf Bindungen.", "Schiebe die Elektronen dorthin, wo die negative Ladung am besten aufgehoben ist."],
+        atome: [
+          { id: "n1", element: "N", x: 72, y: 132 },
+          { id: "c2", element: "C", x: 120, y: 105 },
+          { id: "c3", element: "C", x: 168, y: 132 },
+          { id: "c4", element: "C", x: 168, y: 188 },
+          { id: "c5", element: "C", x: 120, y: 215 },
+          { id: "c6", element: "C", x: 72, y: 188 },
+          { id: "nh", element: "N", x: 300, y: 70, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
         ],
-        bonds: [
-          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
+        bindungen: [
+          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
         ],
-        correctArrow: { from: "c1", to: "c2" },
-        hint1: "The nucleophilic carbon attacks the electrophilic carbonyl carbon.",
-        hint2: "Draw arrow from C(δ−) → C=O(δ+).",
+        pfeile: [
+          { von: { art: "freiesPaar", id: "nh" }, nach: { art: "atom", id: "c2" } },
+          { von: { art: "bindung", id: "r1" }, nach: { art: "atom", id: "n1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Rearomatisierung",
+        aufgabe: "Das Addukt gibt ein Hydrid ab und wird wieder aromatisch. Zeichne den Pfeil von der C2–H-Bindung zur C2–N1-Bindung.",
+        erklaerung: "Das Elektronenpaar der C–H-Bindung klappt in den Ring und stellt die Doppelbindung zum Stickstoff wieder her; der Wasserstoff geht als Hydrid weg und entwickelt mit dem Lösungsmittel Wasserstoffgas. Diese Gasentwicklung treibt die Reaktion und ist im Kolben sichtbar.",
+        hinweise: ["Aromatizität ist der Preis, den die Reaktion zurückgewinnen will — die Elektronen müssen in den Ring.", "Ein Pfeil, der auf eine Bindung zeigt, macht aus einer Einfach- eine Doppelbindung."],
+        atome: [
+          { id: "n1", element: "N", x: 72, y: 132, ladung: -1, freiePaare: 2 },
+          { id: "c2", element: "C", x: 120, y: 105 },
+          { id: "c3", element: "C", x: 168, y: 132 },
+          { id: "c4", element: "C", x: 168, y: 188 },
+          { id: "c5", element: "C", x: 120, y: 215 },
+          { id: "c6", element: "C", x: 72, y: 188 },
+          { id: "nh", element: "N", x: 190, y: 60, wasserstoffe: 2 },
+          { id: "h2", element: "H", x: 90, y: 55 },
+        ],
+        bindungen: [
+          { id: "r1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+          { id: "cn", von: "c2", nach: "nh", ordnung: 1 },
+          { id: "ch", von: "c2", nach: "h2", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "r1" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "2-Aminopyridin",
+      beschreibung: "Der Ring ist wieder aromatisch, die Aminogruppe sitzt an C-2. Das abgespaltene Hydrid entweicht als Wasserstoff.",
+      atome: [
+        { id: "n1", element: "N", x: 100, y: 132, freiePaare: 1 },
+        { id: "c2", element: "C", x: 148, y: 105 },
+        { id: "c3", element: "C", x: 196, y: 132 },
+        { id: "c4", element: "C", x: 196, y: 188 },
+        { id: "c5", element: "C", x: 148, y: 215 },
+        { id: "c6", element: "C", x: 100, y: 188 },
+        { id: "nh", element: "N", x: 218, y: 60, freiePaare: 1, wasserstoffe: 2 },
+      ],
+      bindungen: [
+        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+        { id: "cn", von: "c2", nach: "nh", ordnung: 1 },
+      ],
+    },
   },
-
   quiz: [
-    {
-      id: "q1",
-      question: "In the Kondrat'eva pyridine synthesis, which compound acts as the azadiene?",
-      options: ["Triazine", "Oxazole", "Pyrimidine", "Imidazole"],
-      correct: 1,
-      explanation: "In the Kondrat'eva synthesis the oxazole acts as a 1-oxa-1,3-diene (azadiene). It reacts with a dienophile (alkyne) in a [4+2] cycloaddition. The bicyclic intermediate then loses CO₂ (retro-[4+2]) to give the aromatic pyridine.",
-    },
-    {
-      id: "q2",
-      question: "Which position in pyridine is preferred for electrophilic aromatic substitution (SEAr)?",
-      options: ["C-2 (ortho to N)", "C-3 (meta to N)", "C-4 (para to N)", "SEAr barely occurs"],
-      correct: 1,
-      explanation: "If SEAr occurs on pyridine at all (it is strongly deactivated), it proceeds preferentially at C-3. This is the position where the cationic transition state is least destabilised by the electron-deficient N.",
-    },
-    {
-      id: "q3",
-      question: "What is special about the Boger reaction for pyridine synthesis?",
-      options: [
-        "A triazine reacts as azadiene with an enamine; N₂ is eliminated retro-[4+2]",
-        "Two alkyne molecules and a nitrile trimerise catalytically",
-        "A pyrrole rearranges via cyclopropane to a pyridine",
-        "A 1,5-dicarbonyl reacts with NH₃",
-      ],
-      correct: 0,
-      explanation: "In the Boger reaction a triazine acts as aza-diene and reacts with an electron-rich dienophile (e.g. enamine) in a [4+2] cycloaddition. The bicyclic intermediate collapses immediately with loss of N₂ (retro-DA, XY = N₂) to give the substituted pyridine.",
-    },
-    {
-      id: "q4",
-      question: "What is the Chichibabin reaction?",
-      options: [
-        "Bromination of pyridine at C-3",
-        "Nucleophilic amination of pyridine with NaNH₂ → 2-aminopyridine",
-        "Oxidation of pyridine to the N-oxide",
-        "Cycloaddition of pyridine with dienophiles",
-      ],
-      correct: 1,
-      explanation: "The Chichibabin reaction is a nucleophilic aromatic substitution: pyridine + NaNH₂ → 2-aminopyridine + NaH. The amide anion attacks C-2 nucleophilically (ortho to N, activated). The Meisenheimer complex is the intermediate.",
-    },
-    {
-      id: "q5",
-      question: "The Boekelheide rearrangement of pyridine N-oxide with Ac₂O (Δ) gives…",
-      options: [
-        "2-(Acetoxymethyl)pyridine",
-        "4-Acetoxypyridine",
-        "Pyridine-2-carboxylic acid",
-        "N-Acetylpyridine",
-      ],
-      correct: 0,
-      explanation: "In the Boekelheide rearrangement a 2-methylpyridine N-oxide reacts with Ac₂O under heat. The acetate migrates from the activated O to the benzylic C of the methyl group → 2-(acetoxymethyl)pyridine. Useful for functionalising the 2-position.",
-    },
-    {
-      id: "q6",
-      question: "Why are the 2- and 4-positions of pyridine preferred for SNAr?",
-      options: [
-        "π electron density is highest there",
-        "The nitrogen atom stabilises the negative Meisenheimer complex inductively there",
-        "Thermodynamically controlled reactions occur at those positions",
-        "The N atom acts as a σ-donor at those positions",
-      ],
-      correct: 1,
-      explanation: "In SNAr at C-2 or C-4 of pyridine the negative charge of the Meisenheimer complex can be directly delocalised onto the electron-deficient N atom → stabilisation → lower activation energy. At C-3 this delocalisation is not possible.",
-    },
-    {
-      id: "q7",
-      question: "For the Hantzsch dihydropyridine synthesis ([3+3]): what problem arises with unsymmetrical components?",
-      options: [
-        "The reaction does not proceed",
-        "A mixture of two regioisomers (P1 and P2) forms",
-        "The product is not aromatic",
-        "NH₃ attacks at the wrong position",
-      ],
-      correct: 1,
-      explanation: "When enamine and 1,3-dicarbonyl compound are unsymmetrical, two structural isomers (P1 and P2) can form since cyclisation is possible in both directions. Solution: pre-synthesise a defined enamine for regioselectivity.",
-    },
+    { id: "q1", question: "In the Kondrat'eva pyridine synthesis, which compound acts as the azadiene?", options: ["Triazine", "Oxazole", "Pyrimidine", "Imidazole"], correct: 1, explanation: "In the Kondrat'eva synthesis the oxazole acts as a 1-oxa-1,3-diene (azadiene). It reacts with a dienophile (alkyne) in a [4+2] cycloaddition. The bicyclic intermediate then loses CO₂ (retro-[4+2]) to give the aromatic pyridine." },
+    { id: "q2", question: "Which position in pyridine is preferred for electrophilic aromatic substitution (SEAr)?", options: ["C-2 (ortho to N)", "C-3 (meta to N)", "C-4 (para to N)", "SEAr barely occurs"], correct: 1, explanation: "If SEAr occurs on pyridine at all (it is strongly deactivated), it proceeds preferentially at C-3. This is the position where the cationic transition state is least destabilised by the electron-deficient N." },
+    { id: "q3", question: "What is special about the Boger reaction for pyridine synthesis?", options: ["A triazine reacts as azadiene with an enamine; N₂ is eliminated retro-[4+2]", "Two alkyne molecules and a nitrile trimerise catalytically", "A pyrrole rearranges via cyclopropane to a pyridine", "A 1,5-dicarbonyl reacts with NH₃"], correct: 0, explanation: "In the Boger reaction a triazine acts as aza-diene and reacts with an electron-rich dienophile (e.g. enamine) in a [4+2] cycloaddition. The bicyclic intermediate collapses immediately with loss of N₂ (retro-DA, XY = N₂) to give the substituted pyridine." },
+    { id: "q4", question: "What is the Chichibabin reaction?", options: ["Bromination of pyridine at C-3", "Nucleophilic amination of pyridine with NaNH₂ → 2-aminopyridine", "Oxidation of pyridine to the N-oxide", "Cycloaddition of pyridine with dienophiles"], correct: 1, explanation: "The Chichibabin reaction is a nucleophilic aromatic substitution: pyridine + NaNH₂ → 2-aminopyridine + NaH. The amide anion attacks C-2 nucleophilically (ortho to N, activated). The Meisenheimer complex is the intermediate." },
+    { id: "q5", question: "The Boekelheide rearrangement of pyridine N-oxide with Ac₂O (Δ) gives…", options: ["2-(Acetoxymethyl)pyridine", "4-Acetoxypyridine", "Pyridine-2-carboxylic acid", "N-Acetylpyridine"], correct: 0, explanation: "In the Boekelheide rearrangement a 2-methylpyridine N-oxide reacts with Ac₂O under heat. The acetate migrates from the activated O to the benzylic C of the methyl group → 2-(acetoxymethyl)pyridine. Useful for functionalising the 2-position." },
+    { id: "q6", question: "Why are the 2- and 4-positions of pyridine preferred for SNAr?", options: ["π electron density is highest there", "The nitrogen atom stabilises the negative Meisenheimer complex inductively there", "Thermodynamically controlled reactions occur at those positions", "The N atom acts as a σ-donor at those positions"], correct: 1, explanation: "In SNAr at C-2 or C-4 of pyridine the negative charge of the Meisenheimer complex can be directly delocalised onto the electron-deficient N atom → stabilisation → lower activation energy. At C-3 this delocalisation is not possible." },
+    { id: "q7", question: "For the Hantzsch dihydropyridine synthesis ([3+3]): what problem arises with unsymmetrical components?", options: ["The reaction does not proceed", "A mixture of two regioisomers (P1 and P2) forms", "The product is not aromatic", "NH₃ attacks at the wrong position"], correct: 1, explanation: "When enamine and 1,3-dicarbonyl compound are unsymmetrical, two structural isomers (P1 and P2) can form since cyclisation is possible in both directions. Solution: pre-synthesise a defined enamine for regioselectivity." },
   ],
-
   flashcards: [
-    {
-      id: "02lwqyt",
-      front: "Kondrat'eva Pyridine Synthesis",
-      back: "[4+2] cycloaddition: oxazole (as azadiene) + dienophile (alkyne) → bicyclic intermediate → −CO₂ (retro-[4+2]) → pyridine. Oxazole serves as 1-oxa-1,3-diene.",
-    },
-    {
-      id: "1cv4imb",
-      front: "Boger Reaction",
-      back: "Triazine (azadiene) + enamine (dienophile) → [4+2] cycloaddition → intermediate loses N₂ (retro-DA) → substituted pyridine. Key feature: XY = N₂ is eliminated.",
-    },
-    {
-      id: "1uvjmpz",
-      front: "Kröhnke Reaction",
-      back: "[3+2+1] cyclocondensation: 1,5-dicarbonyl compound + NH₃ → pyridine. Mechanism: aldol → Michael → cyclisation → aromatisation.",
-    },
-    {
-      id: "1yj82fg",
-      front: "Chichibabin Reaction",
-      back: "Pyridine + NaNH₂ → 2-aminopyridine + NaH. SNAr at C-2 (activated by N). Meisenheimer complex as intermediate. Classic method for amination.",
-    },
-    {
-      id: "08mcu70",
-      front: "Guareschi-Thorpe Reaction",
-      back: "[3+3] cyclocondensation: cyanoacetamide/cyanoacetyl derivative + 1,3-dicarbonyl (+ NH₃) → 2-pyridinone with CN group. Formation of cyanopyridones.",
-    },
-    {
-      id: "1k1pd51",
-      front: "Bönnemann-Reppe Synthesis",
-      back: "[2+2+2] cycloaddition: 1 nitrile + 2 alkynes, cobalt catalysis → pyridine. Trimerisation under metal-catalysed conditions.",
-    },
-    {
-      id: "1nr4uj3",
-      front: "Boekelheide Rearrangement",
-      back: "2-Methylpyridine N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine. [1,2]-O→C acyl migration. Useful for introducing functionality at the 2-methyl group.",
-    },
-    {
-      id: "0ab3tka",
-      front: "SEAr vs. SNAr at Pyridine",
-      back: "SEAr: very slow, deactivated, preferred C-3. SNAr: activated at C-2 and C-4 (Meisenheimer complex delocalised onto N). Pyridine prefers SNAr!",
-    },
+    { id: "02lwqyt", front: "Kondrat'eva Pyridine Synthesis", back: "[4+2] cycloaddition: oxazole (as azadiene) + dienophile (alkyne) → bicyclic intermediate → −CO₂ (retro-[4+2]) → pyridine. Oxazole serves as 1-oxa-1,3-diene." },
+    { id: "1cv4imb", front: "Boger Reaction", back: "Triazine (azadiene) + enamine (dienophile) → [4+2] cycloaddition → intermediate loses N₂ (retro-DA) → substituted pyridine. Key feature: XY = N₂ is eliminated." },
+    { id: "1uvjmpz", front: "Kröhnke Reaction", back: "[3+2+1] cyclocondensation: 1,5-dicarbonyl compound + NH₃ → pyridine. Mechanism: aldol → Michael → cyclisation → aromatisation." },
+    { id: "1yj82fg", front: "Chichibabin Reaction", back: "Pyridine + NaNH₂ → 2-aminopyridine + NaH. SNAr at C-2 (activated by N). Meisenheimer complex as intermediate. Classic method for amination." },
+    { id: "08mcu70", front: "Guareschi-Thorpe Reaction", back: "[3+3] cyclocondensation: cyanoacetamide/cyanoacetyl derivative + 1,3-dicarbonyl (+ NH₃) → 2-pyridinone with CN group. Formation of cyanopyridones." },
+    { id: "1k1pd51", front: "Bönnemann-Reppe Synthesis", back: "[2+2+2] cycloaddition: 1 nitrile + 2 alkynes, cobalt catalysis → pyridine. Trimerisation under metal-catalysed conditions." },
+    { id: "1nr4uj3", front: "Boekelheide Rearrangement", back: "2-Methylpyridine N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine. [1,2]-O→C acyl migration. Useful for introducing functionality at the 2-methyl group." },
+    { id: "0ab3tka", front: "SEAr vs. SNAr at Pyridine", back: "SEAr: very slow, deactivated, preferred C-3. SNAr: activated at C-2 and C-4 (Meisenheimer complex delocalised onto N). Pyridine prefers SNAr!" },
   ],
 } satisfies Thema;

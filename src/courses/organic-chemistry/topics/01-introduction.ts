@@ -6,8 +6,9 @@ export const topic = {
   subtitle: "Nomenclature, Aromaticity & Acid-Base Properties",
   icon: "📖",
   estimatedMinutes: 60,
-
   theory: `
+
+
 ## What is a Heterocyclic Compound?
 
 A **heterocycle** is a ring molecule that contains at least one atom other than carbon – typically N, O or S – alongside carbon.
@@ -87,146 +88,110 @@ For electrophilic aromatic substitution (SEAr):
 - HOMO energy is decisive
 - Pyrrole, furan, thiophene: higher HOMO → more reactive than benzene
 - Pyridine: lower HOMO → less reactive than benzene (deactivated by N)
-`,
 
+
+`,
   interactive: {
     type: "mechanism",
-    title: "Pyridine vs. Pyrrole – Basicity explained",
-    description: "Lone pair orientation determines basicity",
+    title: "Pyridine as a base — protonation and back",
+    description: "Das freie Elektronenpaar am Stickstoff liegt in der Ringebene und steht zur Verfügung. Zeichne die Säure-Base-Reaktion in beide Richtungen.",
     stages: [
       {
-        id: 0,
-        label: "Step 1: Pyridine-N – lone pair available",
-        description: "The sp²-N lone pair of pyridine lies in a σ orbital perpendicular to the ring plane. It is NOT part of the π system → available for protonation.",
-        atoms: [
-          { id: "n", label: "N", x: 240, y: 80, color: "#60a5fa", r: 26 },
-          { id: "c2", label: "C", x: 340, y: 130, color: "#e2e8f0", r: 22 },
-          { id: "c3", label: "C", x: 340, y: 220, color: "#e2e8f0", r: 22 },
-          { id: "c4", label: "C", x: 240, y: 270, color: "#e2e8f0", r: 22 },
-          { id: "c5", label: "C", x: 140, y: 220, color: "#e2e8f0", r: 22 },
-          { id: "c6", label: "C", x: 140, y: 130, color: "#e2e8f0", r: 22 },
-          { id: "lp", label: ":N", x: 240, y: 30, color: "#60a5fa", r: 18 },
+        id: 0, titel: "Protonierung",
+        aufgabe: "Pyridin greift HCl an. Zeichne beide Pfeile: das freie Elektronenpaar zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
+        erklaerung: "Das Elektronenpaar am Stickstoff sitzt in einem sp²-Orbital in der Ringebene und ist nicht Teil des aromatischen Sextetts. Es kann angreifen, ohne die Aromatizität zu zerstören — deshalb ist Pyridin mit pKs 5,2 der konjugierten Säure eine brauchbare Base. Gleichzeitig muss die H–Cl-Bindung brechen, sonst hätte der Wasserstoff fünf Bindungen.",
+        hinweise: ["Zwei Pfeile: einer bildet die neue Bindung, einer löst die alte. Ohne den zweiten bekäme der Wasserstoff zwei Bindungen.", "Der Pfeil zum Wasserstoff startet am freien Elektronenpaar des Stickstoffs, nicht am Ring."],
+        atome: [
+          { id: "n1", element: "N", x: 100, y: 131, freiePaare: 1 },
+          { id: "c2", element: "C", x: 150, y: 102 },
+          { id: "c3", element: "C", x: 200, y: 131 },
+          { id: "c4", element: "C", x: 200, y: 189 },
+          { id: "c5", element: "C", x: 150, y: 218 },
+          { id: "c6", element: "C", x: 100, y: 189 },
+          { id: "h1", element: "H", x: 320, y: 120, frei: true },
+          { id: "cl1", element: "Cl", x: 385, y: 120, freiePaare: 3, frei: true },
         ],
-        bonds: [
-          { a: "n", b: "c2", dash: false, color: "#60a5fa" },
-          { a: "n", b: "c6", dash: false, color: "#60a5fa" },
-          { a: "c2", b: "c3", dash: false, color: "#e2e8f0" },
-          { a: "c3", b: "c4", dash: false, color: "#e2e8f0" },
-          { a: "c4", b: "c5", dash: false, color: "#e2e8f0" },
-          { a: "c5", b: "c6", dash: false, color: "#e2e8f0" },
+        bindungen: [
+          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+          { id: "hcl", von: "h1", nach: "cl1", ordnung: 1 },
         ],
-        correctArrow: { from: "lp", to: "n" },
-        hint1: "The lone pair (shown as :N) lies in a σ orbital – outside the π system.",
-        hint2: "Draw arrow from the lone pair toward a proton donor.",
+        pfeile: [
+          { von: { art: "freiesPaar", id: "n1" }, nach: { art: "atom", id: "h1" } },
+          { von: { art: "bindung", id: "hcl" }, nach: { art: "atom", id: "cl1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Rückreaktion",
+        aufgabe: "Hydroxid nimmt dem Pyridinium den Wasserstoff wieder ab. Zeichne beide Pfeile.",
+        erklaerung: "Die Reaktion ist ein Gleichgewicht. Eine stärkere Base als Chlorid holt den Wasserstoff zurück, und das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — Pyridin ist wieder da. Genau dieses Hin und Her macht den pKs-Wert zur brauchbaren Kennzahl.",
+        hinweise: ["Das Elektronenpaar des Hydroxids greift den Wasserstoff an; die N–H-Bindung muss dabei zum Stickstoff zurückklappen.", "Wohin das Elektronenpaar der brechenden Bindung geht, entscheidet, wer am Ende die Ladung trägt."],
+        atome: [
+          { id: "n1", element: "N", x: 100, y: 131, ladung: 1 },
+          { id: "c2", element: "C", x: 150, y: 102 },
+          { id: "c3", element: "C", x: 200, y: 131 },
+          { id: "c4", element: "C", x: 200, y: 189 },
+          { id: "c5", element: "C", x: 150, y: 218 },
+          { id: "c6", element: "C", x: 100, y: 189 },
+          { id: "h1", element: "H", x: 60, y: 90 },
+          { id: "o1", element: "O", x: 300, y: 60, ladung: -1, freiePaare: 3, wasserstoffe: 1, frei: true },
+        ],
+        bindungen: [
+          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+          { id: "nh", von: "n1", nach: "h1", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "o1" }, nach: { art: "atom", id: "h1" } },
+          { von: { art: "bindung", id: "nh" }, nach: { art: "atom", id: "n1" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "Pyridin, unverändert",
+      beschreibung: "Das Gleichgewicht steht wieder auf der Seite der freien Base — der Ring hat nie seine Aromatizität verloren.",
+      atome: [
+        { id: "n1", element: "N", x: 130, y: 131, freiePaare: 1 },
+        { id: "c2", element: "C", x: 180, y: 102 },
+        { id: "c3", element: "C", x: 230, y: 131 },
+        { id: "c4", element: "C", x: 230, y: 189 },
+        { id: "c5", element: "C", x: 180, y: 218 },
+        { id: "c6", element: "C", x: 130, y: 189 },
+      ],
+      bindungen: [
+        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
+        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
+        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
+        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
+        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
+        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
+      ],
+    },
   },
-
   quiz: [
-    {
-      id: "q1",
-      question: "Which statement about the aromaticity of pyrrole is correct?",
-      options: [
-        "The lone pair of N is not part of the π system",
-        "Pyrrole has 6 π electrons and is therefore aromatic (Hückel: n=1)",
-        "Pyrrole is not aromatic because it contains a heteroatom",
-        "Pyrrole follows the 4n rule and is antiaromatic",
-      ],
-      correct: 1,
-      explanation: "Pyrrole has 6 π electrons (4 from the two double bonds + 2 from the N lone pair). The sp²-N lone pair lies in the ring plane and is part of the π system → pyrrole is aromatic (Hückel, n=1).",
-    },
-    {
-      id: "q2",
-      question: "Why is pyridine (pKa 5.2) significantly more basic than pyrrole (pKa ~0)?",
-      options: [
-        "Because pyridine has more carbon atoms",
-        "Because the N lone pair in pyrrole is delocalised into the π system and not available for protonation",
-        "Because pyridine is a 6-membered ring and pyrrole is 5-membered",
-        "Because pyridine contains sp³-hybridised N",
-      ],
-      correct: 1,
-      explanation: "In pyrrole the lone pair of N is part of the aromatic π system (6 π e⁻). Protonation would destroy aromaticity → very unfavourable → not basic. In pyridine the LP lies in a σ orbital and is freely available.",
-    },
-    {
-      id: "q3",
-      question: "Which of the following heterocycles is least basic?",
-      options: ["Piperidine", "Pyridine", "Imidazole", "Pyrrole"],
-      correct: 3,
-      explanation: "Pyrrole has its N lone pair fully incorporated into the π system (required for aromaticity). Piperidine (sp³-N, pKa~11) > Imidazole (pKa 7.0) > Pyridine (pKa 5.2) > Pyrrole (pKa ~0).",
-    },
-    {
-      id: "q4",
-      question: "What is the Hantzsch-Widman system?",
-      options: [
-        "A nomenclature system for acyclic heterocompounds",
-        "A systematic nomenclature system for 3- to 10-membered heterocycles",
-        "A method for the synthesis of pyridines",
-        "A system for determining aromaticity",
-      ],
-      correct: 1,
-      explanation: "The Hantzsch-Widman system is an IUPAC nomenclature system specifically for small to medium-sized heterocycles (3–10-membered). It combines prefixes for heteroatoms (oxa-, thia-, aza-) with suffixes for ring size and degree of unsaturation (e.g. -ole, -ine).",
-    },
-    {
-      id: "q5",
-      question: "What trivial name does 1-azabenzene carry?",
-      options: ["Imidazole", "Pyrimidine", "Pyridine", "Pyrrole"],
-      correct: 2,
-      explanation: "1-Azabenzene = pyridine. The systematic name describes the benzene ring with one CH replaced by N. Pyrimidine would be 1,3-diazabenzene.",
-    },
-    {
-      id: "q6",
-      question: "A heterocycle is aromatic when… (choose the best answer)",
-      options: [
-        "It is planar, has 4n+2 π electrons, and has a fully conjugated system",
-        "It contains at least one N atom",
-        "It has exactly 6 atoms in the ring",
-        "It contains no heteroatom with a lone pair",
-      ],
-      correct: 0,
-      explanation: "Aromaticity in heterocycles requires: planarity + 4n+2 π electrons (Hückel) + continuous conjugation. The heteroatom must contribute either a double bond or its lone pair to the π system.",
-    },
+    { id: "q1", question: "Which statement about the aromaticity of pyrrole is correct?", options: ["The lone pair of N is not part of the π system", "Pyrrole has 6 π electrons and is therefore aromatic (Hückel: n=1)", "Pyrrole is not aromatic because it contains a heteroatom", "Pyrrole follows the 4n rule and is antiaromatic"], correct: 1, explanation: "Pyrrole has 6 π electrons (4 from the two double bonds + 2 from the N lone pair). The sp²-N lone pair lies in the ring plane and is part of the π system → pyrrole is aromatic (Hückel, n=1)." },
+    { id: "q2", question: "Why is pyridine (pKa 5.2) significantly more basic than pyrrole (pKa ~0)?", options: ["Because pyridine has more carbon atoms", "Because the N lone pair in pyrrole is delocalised into the π system and not available for protonation", "Because pyridine is a 6-membered ring and pyrrole is 5-membered", "Because pyridine contains sp³-hybridised N"], correct: 1, explanation: "In pyrrole the lone pair of N is part of the aromatic π system (6 π e⁻). Protonation would destroy aromaticity → very unfavourable → not basic. In pyridine the LP lies in a σ orbital and is freely available." },
+    { id: "q3", question: "Which of the following heterocycles is least basic?", options: ["Piperidine", "Pyridine", "Imidazole", "Pyrrole"], correct: 3, explanation: "Pyrrole has its N lone pair fully incorporated into the π system (required for aromaticity). Piperidine (sp³-N, pKa~11) > Imidazole (pKa 7.0) > Pyridine (pKa 5.2) > Pyrrole (pKa ~0)." },
+    { id: "q4", question: "What is the Hantzsch-Widman system?", options: ["A nomenclature system for acyclic heterocompounds", "A systematic nomenclature system for 3- to 10-membered heterocycles", "A method for the synthesis of pyridines", "A system for determining aromaticity"], correct: 1, explanation: "The Hantzsch-Widman system is an IUPAC nomenclature system specifically for small to medium-sized heterocycles (3–10-membered). It combines prefixes for heteroatoms (oxa-, thia-, aza-) with suffixes for ring size and degree of unsaturation (e.g. -ole, -ine)." },
+    { id: "q5", question: "What trivial name does 1-azabenzene carry?", options: ["Imidazole", "Pyrimidine", "Pyridine", "Pyrrole"], correct: 2, explanation: "1-Azabenzene = pyridine. The systematic name describes the benzene ring with one CH replaced by N. Pyrimidine would be 1,3-diazabenzene." },
+    { id: "q6", question: "A heterocycle is aromatic when… (choose the best answer)", options: ["It is planar, has 4n+2 π electrons, and has a fully conjugated system", "It contains at least one N atom", "It has exactly 6 atoms in the ring", "It contains no heteroatom with a lone pair"], correct: 0, explanation: "Aromaticity in heterocycles requires: planarity + 4n+2 π electrons (Hückel) + continuous conjugation. The heteroatom must contribute either a double bond or its lone pair to the π system." },
   ],
-
   flashcards: [
-    {
-      id: "10z74oc",
-      front: "Hückel Rule",
-      back: "A molecule is aromatic if it is planar and has 4n+2 π electrons (n = 0,1,2,...). Examples: benzene (6e), pyrrole (6e), furan (6e), pyridine (6e).",
-    },
-    {
-      id: "13x0m4z",
-      front: "Pyrrole-N vs. Pyridine-N",
-      back: "Pyrrole-N: sp², LP in π system → NOT basic (pKa~0). Pyridine-N: sp², LP in σ system (perpendicular to plane) → BASIC (pKa 5.2).",
-    },
-    {
-      id: "15q9i2y",
-      front: "Hantzsch-Widman Nomenclature",
-      back: "System for 3–10-membered heterocycles. Prefix: oxa (O), thia (S), aza (N). Suffix: -irine (3-membered unsat.), -ole (5-membered unsat.), -ine (6-membered N).",
-    },
-    {
-      id: "07bbr3p",
-      front: "Furan",
-      back: "Systematic: 1-oxacyclopenta-2,4-diene. 5-membered ring, O heteroatom, 6 π electrons (4 from C=C + 2 from O lone pair). Aromatic but less stable than benzene.",
-    },
-    {
-      id: "0xgsj8o",
-      front: "Imidazole – special properties",
-      back: "Contains TWO N atoms: one pyrrole-N (LP in π system, not basic) and one pyridine-N (LP free, basic). pKa = 7.0. Tautomerism possible (NH migrates).",
-    },
-    {
-      id: "1k2wdlg",
-      front: "FMO Theory & Reactivity",
-      back: "For SEAr the HOMO is decisive. Electron-rich heteroaromatics (pyrrole, furan, thiophene) have higher HOMO → more reactive than benzene. Pyridine: lower HOMO → less reactive.",
-    },
-    {
-      id: "1sndyzy",
-      front: "Koopmans' Theorem",
-      back: "Ionisation energy ≈ negative orbital energy of the removed electron (Iᵢ ≈ −εᵢ). Allows estimation of reactivity of heteroaromatics toward electrophiles.",
-    },
-    {
-      id: "1mrboe9",
-      front: "Basicity series N-heterocycles",
-      back: "Piperidine (sp³, pKa~11) > Imidazole (pKa 7.0) > Pyridine (pKa 5.2) > 2,6-di-tBu-pyridine (pKa 3.7, steric) > Pyrimidine (pKa 2.3, inductive EWG) > Pyrrole (pKa~0)",
-    },
+    { id: "10z74oc", front: "Hückel Rule", back: "A molecule is aromatic if it is planar and has 4n+2 π electrons (n = 0,1,2,...). Examples: benzene (6e), pyrrole (6e), furan (6e), pyridine (6e)." },
+    { id: "13x0m4z", front: "Pyrrole-N vs. Pyridine-N", back: "Pyrrole-N: sp², LP in π system → NOT basic (pKa~0). Pyridine-N: sp², LP in σ system (perpendicular to plane) → BASIC (pKa 5.2)." },
+    { id: "15q9i2y", front: "Hantzsch-Widman Nomenclature", back: "System for 3–10-membered heterocycles. Prefix: oxa (O), thia (S), aza (N). Suffix: -irine (3-membered unsat.), -ole (5-membered unsat.), -ine (6-membered N)." },
+    { id: "07bbr3p", front: "Furan", back: "Systematic: 1-oxacyclopenta-2,4-diene. 5-membered ring, O heteroatom, 6 π electrons (4 from C=C + 2 from O lone pair). Aromatic but less stable than benzene." },
+    { id: "0xgsj8o", front: "Imidazole – special properties", back: "Contains TWO N atoms: one pyrrole-N (LP in π system, not basic) and one pyridine-N (LP free, basic). pKa = 7.0. Tautomerism possible (NH migrates)." },
+    { id: "1k2wdlg", front: "FMO Theory & Reactivity", back: "For SEAr the HOMO is decisive. Electron-rich heteroaromatics (pyrrole, furan, thiophene) have higher HOMO → more reactive than benzene. Pyridine: lower HOMO → less reactive." },
+    { id: "1sndyzy", front: "Koopmans' Theorem", back: "Ionisation energy ≈ negative orbital energy of the removed electron (Iᵢ ≈ −εᵢ). Allows estimation of reactivity of heteroaromatics toward electrophiles." },
+    { id: "1mrboe9", front: "Basicity series N-heterocycles", back: "Piperidine (sp³, pKa~11) > Imidazole (pKa 7.0) > Pyridine (pKa 5.2) > 2,6-di-tBu-pyridine (pKa 3.7, steric) > Pyrimidine (pKa 2.3, inductive EWG) > Pyrrole (pKa~0)" },
   ],
 } satisfies Thema;
