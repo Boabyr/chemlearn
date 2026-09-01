@@ -1,33 +1,30 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
-import { examQuestionsFor, examStructuresFor, professorLabel } from '../data/exams'
+import { examQuestionsFor, examStructuresFor, professorLabel, professorsFor } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
+import { stilFuer } from '../components/ExamMode/pruefStil'
 
 type Mode = 'select' | 'exam' | 'result'
 
 const DEFAULT_COURSE = 'analytical-chemistry-1'
 
-// Vollstaendige Klassennamen: zusammengesetzte Tailwind-Klassen werden nicht erzeugt.
-const PROF_STYLE: Record<string, { chip: string; panel: string; text: string; bar: string }> = {
-  lieberzeit:     { chip: 'bg-accent/20 text-accent',     panel: 'bg-accent/10 border-accent',     text: 'text-accent',   bar: 'bg-accent' },
-  koellensperger: { chip: 'bg-blue-900/40 text-blue-400',     panel: 'bg-blue-900/20 border-blue-800',     text: 'text-blue-400',   bar: 'bg-blue-500' },
-  gerner:         { chip: 'bg-purple-900/40 text-purple-400', panel: 'bg-purple-900/20 border-purple-800', text: 'text-purple-400', bar: 'bg-purple-500' },
-}
-const FALLBACK_STYLE = { chip: 'bg-sunken text-muted', panel: 'bg-raised border-line', text: 'text-muted', bar: 'bg-subtle' }
-const styleFor = (p: string) => PROF_STYLE[p] ?? FALLBACK_STYLE
+/** Fragen je Prüferabschnitt in der Zufalls-Prüfung. */
+const FRAGEN_JE_ABSCHNITT = 5
+
 
 const PROF_ICONS: Record<string, string> = { lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪' }
 const labelFor = (p: string) => `${PROF_ICONS[p] ?? '📘'} ${professorLabel(p)}`
 
 export default function ExamSimulator() {
-  const { user, loading } = useAuth()
+  const { loading } = useAuth()
   const navigate = useNavigate()
   const [params] = useSearchParams()
   const courseId = params.get('course') ?? DEFAULT_COURSE
 
   const examQuestions = useMemo(() => examQuestionsFor(courseId), [courseId])
+  const professoren = useMemo(() => professorsFor(courseId), [courseId])
   const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
   const { logAttempt, flush } = useAttempts(courseId)
 
@@ -37,10 +34,6 @@ export default function ExamSimulator() {
   const [qIdx, setQIdx] = useState(0)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [answered, setAnswered] = useState<Record<string, boolean>>({})
-
-  useEffect(() => {
-    if (!loading && !user) navigate('/login')
-  }, [user, loading])
 
   function startExam(exam: typeof examStructures[0]) {
     setSelectedExam(exam)
@@ -140,7 +133,7 @@ export default function ExamSimulator() {
                   </div>
                   <div className="flex gap-2">
                     {exam.sections.map(sec => (
-                      <span key={sec.professor} className={`text-xs px-3 py-1 rounded-full ${styleFor(sec.professor).chip}`}>
+                      <span key={sec.professor} className={`text-xs px-3 py-1 rounded-full ${stilFuer(sec.professor).chip}`}>
                         {labelFor(sec.professor)} ({sec.points}P)
                       </span>
                     ))}
@@ -150,24 +143,29 @@ export default function ExamSimulator() {
 
               <div className="bg-raised border border-line hover:border-purple-500 rounded-2xl p-6 cursor-pointer transition-all"
                 onClick={() => {
-                  // Zufällige Prüfung aus allen Fragen
-                  const shuffled = [...examQuestions].sort(() => Math.random() - 0.5)
-                  const byProf = {
-                    lieberzeit: shuffled.filter(q => q.professor === 'lieberzeit').slice(0, 5),
-                    koellensperger: shuffled.filter(q => q.professor === 'koellensperger').slice(0, 5),
-                    gerner: shuffled.filter(q => q.professor === 'gerner').slice(0, 5),
-                  }
+                  // Punkte aus den tatsächlich gezogenen Fragen summieren.
+                  // Vorher standen hier fest 72 Gesamt- und 3x24 Abschnittspunkte —
+                  // eine Grenze, die der gezogene Satz gar nicht erreichen konnte.
+                  const gemischt = [...examQuestions].sort(() => Math.random() - 0.5)
+                  const abschnitte = professoren.map(prof => {
+                    const fragen = gemischt.filter(q => q.professor === prof).slice(0, FRAGEN_JE_ABSCHNITT)
+                    const punkte = fragen.reduce((summe, q) => summe + q.points, 0)
+                    return {
+                      professor: prof,
+                      points: punkte,
+                      passingPoints: Math.ceil(punkte / 2),
+                      questionIds: fragen.map(q => q.id),
+                    }
+                  }).filter(a => a.questionIds.length > 0)
+
+                  const gesamt = abschnitte.reduce((summe, a) => summe + a.points, 0)
                   startExam({
                     id: 'random',
                     date: 'Zufällig generiert',
                     title: 'Zufalls-Prüfung',
-                    totalPoints: 72,
-                    passingPoints: 36,
-                    sections: [
-                      { professor: 'lieberzeit', points: 24, passingPoints: 12, questionIds: byProf.lieberzeit.map(q => q.id) },
-                      { professor: 'koellensperger', points: 24, passingPoints: 12, questionIds: byProf.koellensperger.map(q => q.id) },
-                      { professor: 'gerner', points: 24, passingPoints: 12, questionIds: byProf.gerner.map(q => q.id) },
-                    ],
+                    totalPoints: gesamt,
+                    passingPoints: Math.ceil(gesamt / 2),
+                    sections: abschnitte,
                   })
                 }}>
                 <h3 className="font-semibold text-purple-300">🎲 Zufalls-Prüfung</h3>
@@ -181,12 +179,12 @@ export default function ExamSimulator() {
         {mode === 'exam' && currentQ && (
           <div>
             {/* Abschnitts-Header */}
-            <div className={`mb-6 px-5 py-4 rounded-xl border ${styleFor(currentSection.professor).panel}`}>
-              <p className={`text-sm font-semibold ${styleFor(currentSection.professor).text}`}>
+            <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.professor).panel}`}>
+              <p className={`text-sm font-semibold ${stilFuer(currentSection.professor).text}`}>
                 {labelFor(currentSection.professor)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
               </p>
               <div className="mt-2 h-1.5 bg-sunken rounded-full">
-                <div className={`h-full ${styleFor(currentSection.professor).bar} rounded-full transition-all`}
+                <div className={`h-full ${stilFuer(currentSection.professor).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
               </div>
             </div>
@@ -230,7 +228,7 @@ export default function ExamSimulator() {
                   sec.passed ? 'border-success bg-success/10' : 'border-danger bg-danger/10'
                 }`}>
                   <div>
-                    <span className={`font-semibold ${styleFor(sec.professor).text}`}>
+                    <span className={`font-semibold ${stilFuer(sec.professor).text}`}>
                       {labelFor(sec.professor)}
                     </span>
                     <span className="text-subtle text-xs ml-2">(min. {sec.passing}P)</span>

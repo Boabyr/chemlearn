@@ -27,8 +27,8 @@ export default function PracticeMode() {
   const [params] = useSearchParams()
   const courseId = params.get('course') ?? DEFAULT_COURSE
 
-  const { attempts, logAttempt, flush } = useAttempts(courseId)
-  const { dueQuestions, gradeItem, dueCount } = useReviews(courseId)
+  const { attempts, logAttempt, flush, loading: versucheLaden } = useAttempts(courseId)
+  const { dueQuestions, gradeItem, dueCount, loading: planLaden } = useReviews(courseId)
 
   const [filter, setFilter] = useState<Filter>('adaptive')
   const [queue, setQueue] = useState<ExamQuestion[]>([])
@@ -36,14 +36,10 @@ export default function PracticeMode() {
   const [score, setScore] = useState(0)
   const [answered, setAnswered] = useState(0)
   const [sessionDone, setSessionDone] = useState(false)
-  const [startedAt, setStartedAt] = useState(() => Date.now())
+  const [frageSeit, setFrageSeit] = useState(() => Date.now())
 
   const alleFragen = useMemo(() => examQuestionsFor(courseId), [courseId])
   const professors = useMemo(() => professorsFor(courseId), [courseId])
-
-  useEffect(() => {
-    if (!loading && !user) navigate('/login')
-  }, [user, loading, navigate])
 
   const build = useCallback((f: Filter) => {
     let next: ExamQuestion[]
@@ -63,16 +59,18 @@ export default function PracticeMode() {
     setScore(0)
     setAnswered(0)
     setSessionDone(false)
-    setStartedAt(Date.now())
+    setFrageSeit(Date.now())
   }, [alleFragen, attempts, dueQuestions])
 
-  // Erste Runde erst zusammenstellen, wenn die Historie geladen ist.
+  // Erste Runde erst zusammenstellen, wenn Historie und Fälligkeiten wirklich
+  // geladen sind. Vorher lief der Aufbau sofort los, mit leeren Listen — die
+  // "adaptive" Runde war dann bloß der Fragenkatalog in Dateireihenfolge.
   const [initialised, setInitialised] = useState(false)
   useEffect(() => {
-    if (initialised || !user) return
+    if (initialised || !user || versucheLaden || planLaden) return
     build('adaptive')
     setInitialised(true)
-  }, [initialised, user, build])
+  }, [initialised, user, versucheLaden, planLaden, build])
 
   const total = useMemo(() => queue.reduce((s, q) => s + q.points, 0), [queue])
   const pct = total > 0 ? Math.round((score / total) * 100) : 0
@@ -91,7 +89,7 @@ export default function PracticeMode() {
       correct,
       pointsEarned: pts,
       pointsPossible: q.points,
-      msTaken: Date.now() - startedAt,
+      msTaken: Date.now() - frageSeit,
     })
 
     // Richtig beantwortet heisst später wieder vorlegen, falsch heisst bald wieder.
@@ -102,7 +100,7 @@ export default function PracticeMode() {
   }
 
   function next() {
-    setStartedAt(Date.now())
+    setFrageSeit(Date.now())
     if (idx < queue.length - 1) setIdx(i => i + 1)
     else { void flush(); setSessionDone(true) }
   }

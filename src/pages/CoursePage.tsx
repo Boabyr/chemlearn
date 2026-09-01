@@ -16,17 +16,13 @@ const LEVEL_STYLE: Record<Level, { dot: string; label: string }> = {
 
 export default function CoursePage() {
   const { courseId } = useParams()
-  const { user, loading } = useAuth()
+  const { loading } = useAuth()
   const navigate = useNavigate()
   const [course, setCourse] = useState<Course | null>(null)
   const [topicTitles, setTopicTitles] = useState<Record<string, string>>({})
 
   const { topics: mastery } = useMastery(courseId ?? '')
   const { dueCount } = useReviews(courseId)
-
-  useEffect(() => {
-    if (!loading && !user) navigate('/login')
-  }, [user, loading, navigate])
 
   useEffect(() => {
     const found = allCourses.find(c => c.id === courseId)

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRole } from '../hooks/useRole'
+import type { ContentReportRow, ContentSuggestionRow } from '../lib/database.types'
 import { supabase } from '../lib/supabase'
 
 type Tab = 'reports' | 'suggestions' | 'content'
@@ -11,8 +12,8 @@ export default function TutorDashboard() {
   const { isTutor, isAdmin, loading: roleLoading } = useRole()
   const navigate = useNavigate()
   const [tab, setTab] = useState<Tab>('reports')
-  const [reports, setReports] = useState<any[]>([])
-  const [suggestions, setSuggestions] = useState<any[]>([])
+  const [reports, setReports] = useState<ContentReportRow[]>([])
+  const [suggestions, setSuggestions] = useState<ContentSuggestionRow[]>([])
   const [resolveNote, setResolveNote] = useState<Record<string, string>>({})
 
   useEffect(() => {

@@ -20,7 +20,6 @@ export default function Dashboard() {
     </div>
   )
 
-  if (!user) { navigate('/login'); return null }
 
   async function handleLogout() {
     await supabase.auth.signOut()
@@ -54,7 +53,7 @@ export default function Dashboard() {
               🎓 {isAdmin ? 'Admin' : 'Tutor'}
             </button>
           )}
-          <span className="text-muted text-sm hidden sm:block">{user.email}</span>
+          <span className="text-muted text-sm hidden sm:block">{user?.email}</span>
           <ThemeToggle />
           <button onClick={handleLogout} className="text-muted hover:text-ink text-sm transition-colors">
             Abmelden

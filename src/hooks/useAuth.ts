@@ -1,23 +1,7 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
-import type { User } from '@supabase/supabase-js'
+import { useContext } from 'react'
+import { AuthContext } from '../context/authContext'
 
+/** Liest die eine Sitzung aus dem Provider. Öffnet kein eigenes Abo mehr. */
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  return { user, loading }
+  return useContext(AuthContext)
 }
