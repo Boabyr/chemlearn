@@ -17,7 +17,7 @@ Voraussetzung: Atomisierung der Probe (Überführung in gasförmige Atome).
 ## Atomabsorptionsspektrometrie (AAS)
 
 **Prinzip:** Freie Atome absorbieren Licht bei charakteristischer Wellenlänge.
-A = ε · N · d  (N = Atomzahldichte statt Konzentration)
+A = k · N · d  (N = Atomzahldichte statt Konzentration, k = atomarer Absorptionskoeffizient)
 
 **Komponenten:**
 1. **Hohlkathodenlampe (HKL):** Lichtquelle → emittiert extrem schmale Linien des zu bestimmenden Elements!
