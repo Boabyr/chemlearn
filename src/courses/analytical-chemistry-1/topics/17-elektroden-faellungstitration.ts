@@ -7,6 +7,7 @@ export const topic = {
   icon: "⚗️",
   estimatedMinutes: 65,
   theory: `
+
 ## Elektroden 2. Art
 
 Elektroden 2. Art: Metall in Kontakt mit seinem schwerlöslichen Salz und dem Anion des Salzes.
@@ -66,18 +67,41 @@ Molarität M: c [mol/L] = c [mg/L] / M [g/mol] × 10⁻³
 
 **Beispiel: 68 ppb C₂₉H₆₀ (M = 408,8 g/mol) in Wasser:**
 c = 68×10⁻⁶ g/L / 408,8 g/mol = 1,66×10⁻⁷ mol/L = 166 nmol/L
+
 `,
+  interactive: {
+    type: "formula-calculator",
+    formula: {
+      id: "silberpotential",
+      name: "Silberelektrode in der Fällungstitration",
+      equation: "E = E° + 0,05916 · log[Ag⁺]",
+      variables: [
+        { id: "E", label: "Gemessenes Potential", symbol: "E", unit: "V", description: "Gegen die Standardwasserstoffelektrode" },
+        { id: "E0", label: "Standardpotential", symbol: "E°", unit: "V", description: "Für Ag⁺/Ag sind das +0,799 V" },
+        { id: "cAg", label: "Silberionenkonzentration", symbol: "[Ag⁺]", unit: "mol/L", description: "Freie Ag⁺-Ionen in der Lösung" },
+      ],
+      umstellungen: [
+        { solveFor: "E", expr: "E0 + 0.05916 * log(cAg)" },
+        { solveFor: "E0", expr: "E - 0.05916 * log(cAg)" },
+        { solveFor: "cAg", expr: "10 ^ ((E - E0) / 0.05916)" },
+      ],
+      hints: ["Vor dem Äquivalenzpunkt bekommst du [Ag⁺] nicht direkt, sondern über das Löslichkeitsprodukt: [Ag⁺] = Ksp/[Cl⁻] mit Ksp(AgCl) = 1,8·10⁻¹⁰.", "Am Äquivalenzpunkt ist [Ag⁺] = [Cl⁻] = √Ksp. Eingesetzt ergibt das E = E° + 0,05916/2 · log(Ksp) — der Wendepunkt der Titrationskurve."],
+    },
+  },
   quiz: [
     { id: "q1", question: "Was ist eine Elektrode 2. Art und warum wird sie als Referenzelektrode verwendet?", options: ["Eine Elektrode aus zwei Metallen", "Metall + schwerlösliches Salz + Anion: stabiles Potential durch konstante [Anion] in ges. KCl → ideal als Referenz", "Eine polarisierbare Elektrode", "Eine Elektrode für Anionen"], correct: 1, explanation: "Elektrode 2. Art: Ag/AgCl oder Kalomel (Hg/Hg₂Cl₂). Potential konstant durch: AgCl(s) + KCl(ges.) → [Cl⁻] = konstant → E = konstant. Ideal als Referenz: robust, einfach, kein H₂ nötig wie SHE." },
     { id: "q2", question: "Wie berechnet man die Zellspannung bei 65% Titration von 100mL 0,1M NaCl mit 0,1M AgNO₃ (Ksp=1,8×10⁻¹⁰, E°Ag=0,799V)?", options: ["Direkt aus E° = 0,799V", "E ≈ +0,32V: [Cl⁻] = 0,021mol/L → [Ag⁺] = Ksp/[Cl⁻] → Nernst", "E = 0V am Äquivalenzpunkt", "E = 0,799 - 0,05916/2·log(Ksp)"], correct: 1, explanation: "n_Cl rest = (100-65)×0,1mmol/mL = 3,5mmol in 165mL → [Cl⁻] = 0,0212mol/L → [Ag⁺] = 1,8×10⁻¹⁰/0,0212 = 8,5×10⁻⁹ → E = 0,799+0,05916·log(8,5×10⁻⁹) = 0,799-0,477 ≈ +0,32V vs. SHE." },
     { id: "q3", question: "Was ist 0,4 ppb in μg/L?", options: ["0,4 μg/L", "400 μg/L", "0,0004 μg/L", "0,4 mg/L"], correct: 0, explanation: "ppb = parts per billion = μg/kg ≈ μg/L (wässrige Lösung). 0,4 ppb = 0,4 μg/L. Reihe: 1 ppm = 1 mg/L; 1 ppb = 1 μg/L; 1 ppt = 1 ng/L." },
     { id: "q4", question: "Wie berechnet sich das Potential am Äquivalenzpunkt einer Redoxtitration (Fe²⁺ mit Ce⁴⁺)?", options: ["E = E°(Fe³⁺/Fe²⁺)", "E_ÄP = (E°(Fe³⁺/Fe²⁺) + E°(Ce⁴⁺/Ce³⁺)) / 2", "E_ÄP = 0V", "E = E°(Ce⁴⁺/Ce³⁺)"], correct: 1, explanation: "Am ÄP: genau so viel Ce⁴⁺ zugegeben wie Fe²⁺ vorhanden → [Fe³⁺]=[Ce³⁺] und [Fe²⁺]=[Ce⁴⁺] sehr klein. E_ÄP = (E°₁ + E°₂)/2 (gilt für n=1 für beide Halbzellen). Allgemein: E_ÄP = (n₁E°₁ + n₂E°₂)/(n₁+n₂)." },
     { id: "q5", question: "Warum ist die gesättigte KCl-Lösung in Referenzelektroden wichtig?", options: ["Wegen der hohen Leitfähigkeit", "Hält [Cl⁻] konstant → konstantes Elektrodenpotential + minimiert Diffusionspotential durch gleiche K⁺ und Cl⁻ Beweglichkeiten", "Als Puffer gegen pH-Änderungen", "Verhindert Oxidation der Elektrode"], correct: 1, explanation: "KCl ges.: Zwei Funktionen: 1. [Cl⁻] konstant → E(Ag/AgCl) oder E(Kalomel) konstant. 2. K⁺ und Cl⁻ haben fast gleiche Ionenbeweglichkeit → minimales Diffusionspotential an der Salzbrücke." },
+    { id: "q6", question: "Wodurch hält eine Ag/AgCl-Referenzelektrode ihr Potential konstant?", options: ["Durch einen eingebauten Spannungsregler", "Durch gesättigte KCl-Lösung, die [Cl⁻] und damit E festlegt", "Durch ständiges Nachdosieren von Silbernitrat", "Durch Temperaturregelung auf exakt 25 °C"], correct: 1, explanation: "Das Potential folgt E = E° − 0,05916 · log[Cl⁻]. Solange die Chloridkonzentration durch eine gesättigte KCl-Lösung festgehalten wird, bleibt E konstant und reproduzierbar. Das ist die Definition einer Elektrode zweiter Art." },
   ],
   flashcards: [
     { id: "0uzyeji", front: "Ag/AgCl Elektrode", back: "AgCl + e⁻ ⇌ Ag + Cl⁻. E = 0,222 - 0,05916·log[Cl⁻]. In ges. KCl: E = +0,197V vs. SHE. Robust, einfach, häufigste Referenzelektrode. Potential konstant durch [Cl⁻] = konstant." },
     { id: "0r86tgg", front: "Kalomel-Elektrode (SCE)", back: "Hg₂Cl₂ + 2e⁻ ⇌ 2Hg + 2Cl⁻. Ges. SCE: +0,241V vs. SHE. Häufig in älteren Geräten. Enthält Hg → weniger umweltfreundlich. Klassische Referenzelektrode." },
     { id: "0a1s9cy", front: "Potential-Berechnung Fällungstitration", back: "Vor ÄP: [Ag⁺] = Ksp/[Cl⁻], dann Nernst. Am ÄP: [Ag⁺]=[Cl⁻]=√Ksp → E_ÄP = E°+0,05916/2·log(Ksp). Nach ÄP: [Ag⁺] = cÜberschuss." },
     { id: "1cbvcf0", front: "ppm, ppb, Molarität", back: "1 ppm = 1 mg/L (wässrig). 1 ppb = 1 μg/L. 1 ppt = 1 ng/L. Umrechnung: c[mol/L] = c[mg/L] / M[g/mol] × 10⁻³. Beispiel: 68ppb C₂₉H₆₀ (M=409): c = 68×10⁻⁶/409 = 166nmol/L." },
+    { id: "17wuf8x", front: "Äquivalenzpunkt einer Redoxtitration", back: "Bei einer Titration mit gleicher Elektronenzahl auf beiden Seiten liegt das Potential am Äquivalenzpunkt im Mittel der beiden Standardpotentiale: E_ÄP = (E°(Fe³⁺/Fe²⁺) + E°(Ce⁴⁺/Ce³⁺))/2. Vor dem Punkt rechnet man mit dem Redoxpaar der Probe, danach mit dem des Titranten." },
+    { id: "0sldftl", front: "ppm und ppb in Molarität umrechnen", back: "1 ppm entspricht in wässriger Lösung 1 mg/L, 1 ppb entspricht 1 µg/L (Dichte ≈ 1). Molarität: c[mol/L] = c[mg/L] / M[g/mol] · 10⁻³. Beispiel: 68 ppb einer Substanz mit M = 408,8 g/mol ergeben 1,66·10⁻⁷ mol/L." },
   ],
 } satisfies Thema;

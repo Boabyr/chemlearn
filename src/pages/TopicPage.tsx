@@ -10,8 +10,8 @@ import type { Thema } from '../content/schema'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
-// import ReportButton from '../components/Reports/ReportButton'
-// import SuggestButton from '../components/Reports/SuggestButton'
+import ReportButton from '../components/Reports/ReportButton'
+import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
 import { ampelText } from '../lib/scoreColor'
 import { richtige, prozent } from '../lib/learning/quizScore'
@@ -304,6 +304,19 @@ export default function TopicPage() {
                   }`} />
               ))}
             </div>
+          </div>
+        )}
+
+        {courseId && topicId && (
+          <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-line pt-6">
+            <span className="text-xs text-subtle">Etwas stimmt nicht oder fehlt?</span>
+            <ReportButton
+              courseId={courseId} topicId={topicId}
+              contentType={tab === 'quiz' ? 'quiz' : tab === 'flashcards' ? 'flashcard' : 'theory'}
+              contentId={tab === 'quiz' ? (q?.id ?? '') : tab === 'flashcards' ? (topic.flashcards[cardIdx]?.id ?? '') : topic.id}
+              contentPreview={tab === 'quiz' ? q?.question : tab === 'flashcards' ? topic.flashcards[cardIdx]?.front : topic.title}
+            />
+            <SuggestButton courseId={courseId} topicId={topicId} />
           </div>
         )}
       </div>

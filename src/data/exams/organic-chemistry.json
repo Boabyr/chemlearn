@@ -1,0 +1,260 @@
+{
+  "questions": [
+    {
+      "id": "U101",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "01-introduction",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Why is pyrrole not basic, although it contains a nitrogen atom?",
+      "options": [
+        "Because the nitrogen carries no lone pair",
+        "Because the lone pair is part of the aromatic π system and protonation would destroy aromaticity",
+        "Because the N-H bond is too strong",
+        "Because pyrrole is not planar"
+      ],
+      "correct": 1,
+      "explanation": "Pyrrole needs the nitrogen lone pair to reach six π electrons. Protonating the nitrogen would remove those two electrons from the ring and break the aromatic sextet, which is far too costly. Pyridine behaves differently: its lone pair sits in an sp² orbital in the ring plane and is available, hence pKa ≈ 5.2 for the conjugate acid."
+    },
+    {
+      "id": "U102",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "01-introduction",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Which species satisfy the Hückel rule and are aromatic?",
+      "options": [
+        "Pyrrole (6 π electrons)",
+        "Pyridine (6 π electrons)",
+        "The pyrrolide anion after deprotonation of the N-H",
+        "Cyclobutadiene (4 π electrons)"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Hückel requires a planar, fully conjugated ring with 4n+2 π electrons. Pyrrole, pyridine and the pyrrolide anion all reach six. Cyclobutadiene has four, which is 4n — antiaromatic and highly unstable."
+    },
+    {
+      "id": "U103",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "02-pyridines",
+      "points": 4,
+      "type": "mc-single",
+      "question": "Pyridine reacts with sodium amide at elevated temperature to give 2-aminopyridine. What is this reaction called and where does the nucleophile attack?",
+      "options": [
+        "Chichibabin reaction, attack at C-2",
+        "Kröhnke reaction, attack at C-3",
+        "Boger reaction, attack at C-4",
+        "Bönnemann cyclisation, attack at nitrogen"
+      ],
+      "correct": 0,
+      "explanation": "The Chichibabin reaction is the classical nucleophilic amination of pyridine. The amide attacks C-2 because the negative charge of the resulting Meisenheimer-type adduct can be delocalised onto the ring nitrogen. Hydride leaves and hydrogen gas is evolved."
+    },
+    {
+      "id": "U104",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "02-pyridines",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Why is SNAr much easier on pyridine than SEAr?",
+      "options": [
+        "Because pyridine is electron-poor, so it welcomes nucleophiles and repels electrophiles",
+        "Because the nitrogen blocks the electrophile sterically",
+        "Because pyridine is not aromatic",
+        "Because SNAr does not require a leaving group"
+      ],
+      "correct": 0,
+      "explanation": "The electronegative nitrogen withdraws π density, especially from C-2 and C-4. That deactivates the ring towards electrophiles and at the same time stabilises the anionic intermediate of a nucleophilic attack. Pyridine is therefore the mirror image of benzene chemistry."
+    },
+    {
+      "id": "U105",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "03-five-ring-one-heteroatom",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Bromination of furan gives predominantly which product?",
+      "options": [
+        "3-Bromofuran",
+        "2-Bromofuran",
+        "2,3-Dibromofuran",
+        "No reaction, furan is deactivated"
+      ],
+      "correct": 1,
+      "explanation": "Like pyrrole and thiophene, furan reacts at C-2. Attack there gives three resonance structures for the arenium ion, including one in which the oxygen carries the positive charge and every atom has a full octet. Attack at C-3 offers only two."
+    },
+    {
+      "id": "U106",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "03-five-ring-one-heteroatom",
+      "points": 3,
+      "type": "order",
+      "question": "Order the following by increasing aromatic stabilisation (least aromatic first).",
+      "options": [
+        "Furan",
+        "Pyrrole",
+        "Thiophene",
+        "Benzene"
+      ],
+      "correct": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Oxygen holds its lone pair most tightly, so furan delocalises least and behaves partly like a diene — it undergoes Diels-Alder reactions. Pyrrole donates better, thiophene better still because sulfur is large and polarisable. Benzene remains the reference at the top."
+    },
+    {
+      "id": "U107",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "04-five-ring-two-heteroatoms",
+      "points": 4,
+      "type": "mc-single",
+      "question": "Histidine acts as an acid-base catalyst in many enzymes. Which property of its imidazole ring makes that possible?",
+      "options": [
+        "The N-H is strongly acidic with pKa 2.5",
+        "The pyridine-type nitrogen has a pKa around 7, so both protonated and free forms exist at physiological pH",
+        "Imidazole is not aromatic and therefore flexible",
+        "The ring binds metal ions irreversibly"
+      ],
+      "correct": 1,
+      "explanation": "A catalyst that has to accept and release a proton must be half protonated at working pH. With pKa ≈ 7 the imidazole of histidine sits exactly at physiological pH, which is why it appears in serine proteases and carbonic anhydrase."
+    },
+    {
+      "id": "U108",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "05-cycloadditions",
+      "points": 4,
+      "type": "mc-single",
+      "question": "Which pair of starting materials gives an isoxazole by [3+2] cycloaddition?",
+      "options": [
+        "Azide and alkyne",
+        "Nitrile oxide and alkyne",
+        "Diazoalkane and alkene",
+        "Tetrazine and enamine"
+      ],
+      "correct": 1,
+      "explanation": "The nitrile oxide R–C≡N⁺–O⁻ is the 1,3-dipole that carries both the nitrogen and the oxygen into the new ring, giving an isoxazole with an alkyne and an isoxazoline with an alkene. Azide plus alkyne would give a triazole, diazoalkane plus alkene a pyrazoline, tetrazine plus enamine a pyridazine after loss of N₂."
+    },
+    {
+      "id": "U109",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "06-cyclocondensations",
+      "points": 4,
+      "type": "mc-multi",
+      "question": "Which statements about cyclocondensations are correct?",
+      "options": [
+        "A small molecule such as water or ammonia is lost during ring closure",
+        "The steps are nucleophilic and electrophilic, not pericyclic",
+        "Unsymmetrical components can give two regioisomers",
+        "The reaction is always concerted and passes through no intermediate"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Cyclocondensation is ordinary carbonyl chemistry run twice: attack, dehydration, ring closure, dehydration. Because it proceeds through discrete intermediates, unsymmetrical partners can combine in two ways — which is precisely why pre-formed enamines are used to fix the regiochemistry. Only cycloadditions are concerted."
+    },
+    {
+      "id": "U110",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "06-cyclocondensations",
+      "points": 3,
+      "type": "mc-single",
+      "question": "The Biginelli reaction combines which three components?",
+      "options": [
+        "Aldehyde, β-ketoester and urea",
+        "Two aldehydes and ammonia",
+        "Alkyne, azide and copper",
+        "Nitrile oxide, alkene and base"
+      ],
+      "correct": 0,
+      "explanation": "The Biginelli three-component reaction gives dihydropyrimidinones from an aldehyde, a β-ketoester and urea in one pot. It belongs to the same family as the Hantzsch dihydropyridine synthesis, which replaces urea with ammonia and gives a dihydropyridine instead."
+    },
+    {
+      "id": "U111",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "07-sear-regioselectivity",
+      "points": 4,
+      "type": "mc-single",
+      "question": "Indole is brominated. Where does the electrophile attack and why?",
+      "options": [
+        "At C-2, because that position is closest to nitrogen",
+        "At C-3, because the arenium ion then leaves the benzene ring aromatic",
+        "At C-5 of the benzene ring, because it is most electron-rich",
+        "At nitrogen, because it carries the lone pair"
+      ],
+      "correct": 1,
+      "explanation": "Indole is the standard exception to the C-2 rule of five-membered heteroaromatics. Attack at C-3 lets the positive charge rest on nitrogen while the fused benzene ring keeps its own aromatic sextet. Attack at C-2 would have to delocalise the charge into the benzene ring and break it."
+    },
+    {
+      "id": "U112",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "08-mechanisms",
+      "points": 4,
+      "type": "mc-multi",
+      "question": "Which statements about the Kondrat'eva pyridine synthesis are correct?",
+      "options": [
+        "Oxazole acts as the 4π component (azadiene)",
+        "The alkyne is the dienophile",
+        "CO₂ is lost in the retro-[4+2] step",
+        "The reaction requires a palladium catalyst"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Kondrat'eva is a thermal cycloaddition followed by a retro-cycloaddition. The oxazole supplies four π electrons, the alkyne two, and the bridged intermediate fragments with loss of carbon dioxide to give the aromatic pyridine. No transition metal is involved."
+    },
+    {
+      "id": "U113",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "08-mechanisms",
+      "points": 3,
+      "type": "mc-single",
+      "question": "In the Paal-Knorr pyrrole synthesis, what is the final driving force for the last tautomerisation?",
+      "options": [
+        "Formation of the aromatic pyrrole ring",
+        "Precipitation of the product",
+        "Release of ammonia",
+        "Formation of a carbon-carbon bond"
+      ],
+      "correct": 0,
+      "explanation": "The last step converts the non-aromatic dihydropyrrole into the aromatic ring. Aromatic stabilisation is what makes the whole condensation sequence run to completion; the two dehydration steps before it are individually reversible."
+    },
+    {
+      "id": "U114",
+      "source": "Practice-2026",
+      "examiner": "uebung",
+      "topicId": "09-bioisosteres-skeletal-editing",
+      "points": 3,
+      "type": "mc-single",
+      "question": "A lead compound carrying a carboxylic acid shows poor membrane permeability and rapid conjugation. Which replacement is the classical first choice?",
+      "options": [
+        "Replace COOH by a methyl group",
+        "Replace COOH by a tetrazole",
+        "Replace COOH by an aldehyde",
+        "Remove the acid without replacement"
+      ],
+      "correct": 1,
+      "explanation": "Tetrazole keeps the acidity (pKa 4 to 5) and the hydrogen-bonding pattern that the target recognises, but resists glucuronidation and is somewhat more lipophilic. Removing the acid or swapping it for a methyl group would drop the key interaction; an aldehyde is reactive and metabolically unstable."
+    }
+  ],
+  "structures": []
+}

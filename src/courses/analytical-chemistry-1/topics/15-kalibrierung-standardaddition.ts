@@ -7,6 +7,7 @@ export const topic = {
   icon: "📏",
   estimatedMinutes: 60,
   theory: `
+
 ## Grundbegriffe (prüfungsrelevant!)
 
 **Kalibrierung/Kalibration:**
@@ -63,6 +64,7 @@ LOQ = 10·s_y0 / m
 c_x / (c_x + c_S·V_S/V_total) = y₀/y₁
 
 c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
+
 `,
   interactive: {
     type: "formula-calculator",
@@ -80,10 +82,7 @@ c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
         { solveFor: "cx", expr: "cS * y0 / (y1 - y0)" },
         { solveFor: "cS", expr: "cx * (y1 - y0) / y0" },
       ],
-      hints: [
-        "Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!",
-        "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."
-      ],
+      hints: ["Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!", "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."],
     },
   },
   quiz: [
@@ -92,11 +91,14 @@ c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
     { id: "q3", question: "Signal der Probe: 553mV. Nach Zugabe von 35ppm Standard: 661mV. Verhältnis cS/cProbe beträgt (vereinfacht)?", options: ["553/661", "35·553/(661-553)", "553/(661-553)", "661/553-1"], correct: 2, explanation: "cx = cS · y0/(y1-y0) = cS · 553/(661-553) = cS · 553/108 = cS · 5,12. Also: wenn cS dem effektiven Beitrag entspricht, gilt cx ≈ cS · 5,12. Exakte Berechnung braucht Volumenverhältnisse." },
     { id: "q4", question: "Wie stellt man 10 ppb aus einer 1000 ppm Stammlösung her (2 Schritte)?", options: ["Direkte Verdünnung 1:100000", "Schritt 1: 1000ppm → 100ppb (Faktor 1:10000); Schritt 2: 100ppb → 10ppb (Faktor 1:10)", "Schritt 1: 1:100 → 10ppm; Schritt 2: 1:1000 → 10ppb", "Zwei Schritte je 1:316 (√100000)"], correct: 2, explanation: "1000 ppm = 1000 mg/L. Schritt 1: 0,01ml auf 1000ml → 1:100000 direkt, oder: 1ml auf 100ml → 10ppm; dann 1ml auf 1000ml → 10ppb. Wichtig: intermediäre Verdünnung vermeidet zu kleine Volumina!" },
     { id: "q5", question: "Was kompensiert ein interner Standard?", options: ["Matrixeffekte in der Probe", "Schwankungen in Injektionsvolumen und Probenvorbereitung durch konstantes Verhältnis Analyt/Standard", "Temperatureffekte", "Kalibrierungsfehler"], correct: 1, explanation: "Interner Standard: bekannte Menge einer Referenzsubstanz (ähnlich dem Analyten aber unterschiedliche tR) wird zur Probe zugegeben. Verhältnis Analyt/IS-Signal wird ausgewertet → kompensiert Injektionsschwankungen, Verluste bei Probenvorbereitung. Standard in GC und HPLC." },
+    { id: "q6", question: "Eine Verdünnungsreihe soll aus einem 1000 mg/L-Stammstandard 10 ppb erzeugen. Welcher Weg führt dorthin?", options: ["1 mL Stamm auf 100 mL, das reicht bereits", "Drei Schritte à Faktor 100, 100 und 10 über die Zwischenstufen 10 mg/L und 100 ppb", "10 mL Stamm auf 1000 mL in einem Schritt", "Verdünnung ist bei ppb-Konzentrationen nicht zulässig"], correct: 1, explanation: "1000 mg/L auf 10 ppb sind fünf Zehnerpotenzen. In einem Schritt wäre das Pipettiervolumen unmessbar klein, deshalb staffelt man: 1000 mg/L → 10 mg/L (0,1 mL auf 10 mL) → 100 ppb (0,1 mL auf 10 mL) → 10 ppb (1 mL auf 10 mL). Jeder einzelne Schritt bleibt pipettierbar." },
   ],
   flashcards: [
     { id: "1budcvm", front: "Kalibrierung vs. Eichung", back: "Kalibrierung: allgemeiner Begriff, Zusammenhang Signal-Konzentration. Eichung: amtliche/gesetzliche Kalibrierung (Handelsmessgeräte). Beide mathematisch gleich: y = m·c + b." },
     { id: "1pmoffs", front: "Standardaddition", back: "cx = cS · y0/(y1-y0). Kompensiert Matrixeffekte! Anwendung: wenn Probenmatrix das Signal beeinflusst. Standard wird direkt in Probe zugegeben. Voraussetzung: lineares Signal." },
     { id: "1m72vlf", front: "Interner Standard", back: "Bekannte Menge Referenzsubstanz zur Probe zugeben. Verhältnis Analyt/IS kompensiert: Injektionsschwankungen, Verdampfungsverluste, Probenaufbereitungsverluste. Häufig in GC, HPLC, ICP-MS." },
     { id: "18pr0xq", front: "Verdünnungsreihe", back: "c1·V1 = c2·V2. Schrittweise Verdünnung aus Stammstandard. Nie zu kleine Volumina (Pipettierfehler). Konzentration der Kalibrierlösungen: LOQ bis obere Linearitätsgrenze, Probenkonzentration muss im Bereich liegen." },
+    { id: "0hm8anc", front: "Volumenkorrektur bei der Standardaddition", back: "Der zugesetzte Standard verdünnt die Probe mit. Deshalb gilt nicht c_x = c_S · y₀/(y₁−y₀), sondern c_x = c_S · V_S/V_gesamt · y₀/(y₁−y₀). Wer die Verdünnung vergisst, bekommt einen systematisch zu hohen Analytgehalt." },
+    { id: "09sq3kk", front: "Wann Standardaddition statt externer Kalibrierung", back: "Wenn die Probenmatrix das Signal beeinflusst und sich nicht nachstellen lässt. Der Standard wird direkt in die Probe gegeben, Signal und Standard sehen dieselbe Matrix. Preis: mehr Messaufwand je Probe, kein gemeinsamer Kalibriersatz." },
   ],
 } satisfies Thema;
