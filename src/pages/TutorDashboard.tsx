@@ -34,7 +34,7 @@ export default function TutorDashboard() {
 
   useEffect(() => {
     if (!roleLoading && !isTutor) navigate('/')
-  }, [isTutor, roleLoading])
+  }, [isTutor, roleLoading, navigate])
 
   useEffect(() => {
     if (!isTutor) return

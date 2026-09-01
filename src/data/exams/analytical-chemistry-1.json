@@ -239,10 +239,10 @@
       "points": 5,
       "type": "numeric",
       "question": "Fällungstitration: 100mL 0,1M NaCl + 0,1M AgNO₃. ÄP bei 100mL. E°(Ag⁺/Ag)=0,799V. Ksp(AgCl)=1,8×10⁻¹⁰. Berechnen Sie E nach Zugabe von 135,0mL AgNO₃.",
-      "correct": 0.566,
+      "correct": 0.691,
       "tolerance": 0.01,
       "unit": "V",
-      "explanation": "Überschuss AgNO₃: n_Ag_überschuss=(135-100)×0,1×10⁻³=3,5mmol in 235mL → [Ag⁺]=3,5/235×10⁻³/10⁻³=0,01489mol/L. E=0,799+0,05916×log(0,01489)=0,799+0,05916×(-1,827)=0,799-0,108=+0,691V. Alternativ direkter Überschuss: cÜ=0,035/0,235... Korrekt: ~0,691V.",
+      "explanation": "Nach dem Äquivalenzpunkt bestimmt der Überschuss an Silberionen das Potential. n(Ag⁺) im Überschuss = (135 − 100) mL · 0,1 mol/L = 3,5 mmol, verteilt auf 235 mL Gesamtvolumen: [Ag⁺] = 3,5/235 = 1,489·10⁻² mol/L. Nernst: E = 0,799 + 0,05916 · log(1,489·10⁻²) = 0,799 − 0,108 = +0,691 V gegen SHE. Das Löslichkeitsprodukt wird hier nicht mehr gebraucht — es zählt nur vor dem Äquivalenzpunkt, solange Chlorid im Überschuss ist.",
       "examiner": "koellensperger"
     },
     {
@@ -252,10 +252,10 @@
       "points": 2,
       "type": "numeric",
       "question": "Wieviele mL einer 74 Gew%igen Salpetersäure (ρ=1,512g/mL, M=63g/mol) werden benötigt um 0,250L einer 3,00M HNO₃ herzustellen?",
-      "correct": 33.7,
+      "correct": 42.2,
       "tolerance": 0.5,
       "unit": "mL",
-      "explanation": "n(HNO₃) gesucht = 3,00mol/L × 0,250L = 0,750mol. c(HNO₃) in Stammlösung = 0,74 × 1512g/L / 63g/mol = 17,77mol/L. V = n/c = 0,750/17,77 = 0,04221L = 42,2mL. Warte: 74%×1512/63=1120,88/63=17,79mol/L. V=0,750/17,79=42,2mL ≈ 33,7? Nochmal: 0,74×1,512g/mL=1,119g/mL HNO₃-Gehalt. 1119g/L ÷ 63g/mol = 17,76mol/L. V = 0,750/17,76 = 42,2mL.",
+      "explanation": "Gesucht: n(HNO₃) = 3,00 mol/L · 0,250 L = 0,750 mol. Konzentration der Stammlösung: c = 0,74 · 1512 g/L / 63 g/mol = 17,8 mol/L. V = n/c = 0,750/17,8 = 0,0422 L = 42,2 mL. Der häufigste Fehler ist, den Massenanteil zu vergessen: ohne ihn käme man auf 31 mL.",
       "examiner": "koellensperger"
     },
     {
@@ -282,10 +282,10 @@
       "points": 3,
       "type": "numeric",
       "question": "Gravimetrie: Eisen wird als Fe₂O₃ bestimmt. Wie viele Tabletten (je ~20mg Fe) werden benötigt um 0,50g Fe₂O₃ zu erhalten? M(Fe)=55,85, M(Fe₂O₃)=159,7g/mol.",
-      "correct": 36,
+      "correct": 18,
       "tolerance": 1,
       "unit": "Tabletten",
-      "explanation": "n(Fe₂O₃) = 0,50g / 159,7g/mol = 0,00313mol. n(Fe) = 2 × 0,00313 = 0,00626mol. m(Fe) = 0,00626 × 55,85 = 0,350g = 350mg. n(Tabletten) = 350mg / 20mg = 17,5 → aufrunden auf 18 Tabletten. Alternativ: ~18 Tabletten. Mit 'ungefähr 20mg': mindestens 18.",
+      "explanation": "n(Fe₂O₃) = 0,50 g / 159,7 g/mol = 3,13·10⁻³ mol. Jedes Fe₂O₃ enthält zwei Eisenatome: n(Fe) = 6,26·10⁻³ mol, also m(Fe) = 6,26·10⁻³ · 55,85 = 0,350 g = 350 mg. Bei 20 mg Eisen je Tablette sind das 17,5 — aufgerundet 18 Tabletten. Wer den Faktor 2 vergisst, landet bei 9.",
       "examiner": "koellensperger"
     },
     {
@@ -411,10 +411,10 @@
       "points": 2,
       "type": "numeric",
       "question": "25ml HCl (c=0,1mol/L) haben pH=1. Nach Zugabe von 25ml NaOH (c=50mmol/L): Um wieviel mV ändert sich die Glaselektrode? (Angabe als positive Zahl, Vorzeichen ignorieren)",
-      "correct": 59.16,
+      "correct": 35.6,
       "tolerance": 1,
       "unit": "mV",
-      "explanation": "n(HCl)=2,5mmol, n(NaOH)=1,25mmol → verbleibt 1,25mmol HCl in 50ml → c(H⁺)=0,025mol/L → pH=1,60. ΔpH=0,60. ΔE=0,05916×ΔpH×1000=0,05916×1=59,16mV... Warte: ΔpH=0,60 → ΔE=59,16×0,60=35,5mV. Korrekte Antwort: ~35,5mV.",
+      "explanation": "n(HCl) = 25 mL · 0,1 mol/L = 2,5 mmol, n(NaOH) = 25 mL · 0,050 mol/L = 1,25 mmol. Es bleiben 1,25 mmol H⁺ in 50 mL, also c(H⁺) = 0,025 mol/L und pH = 1,60. Die Änderung beträgt ΔpH = 0,60, und die Glaselektrode liefert 59,16 mV je pH-Einheit: ΔE = 0,60 · 59,16 = 35,6 mV. 59,16 mV wären es nur bei einer vollen pH-Einheit, also bei einer Verzehnfachung.",
       "examiner": "lieberzeit"
     },
     {
@@ -476,10 +476,10 @@
       "points": 3,
       "type": "numeric",
       "question": "Coulometrie: Abscheidung von 207mg Co(II) als Co₃O₄ bei I=0,600A. Die Anodenreaktion ist: Co²⁺ → Co³⁺ + e⁻. Wie lange dauert es in Minuten? (M(Co)=58,93 g/mol, F=96485 C/mol)",
-      "correct": 18.84,
+      "correct": 9.41,
       "tolerance": 0.1,
       "unit": "min",
-      "explanation": "Co₃O₄: 3Co-Atome, 2×Co³⁺ + 1×Co²⁺ → Durchschnitt 8/3 Elektronen pro Co? Vereinfacht: Co²⁺ → Co³⁺, n=1 Elektron pro Co. n(Co)=0,207/58,93=3,513×10⁻³mol. Q=n×F×n_e=3,513×10⁻³×96485×1=338,9C... aber Co₃O₄ braucht 8 e⁻ pro Formel → 8/3 e⁻ per Co. Q=3,513×10⁻³×96485×(8/3)=903C. t=Q/I=903/0,600=1504s=25,1min. Antwort: ~25 min.",
+      "explanation": "n(Co) = 0,207 g / 58,93 g/mol = 3,513·10⁻³ mol. Nach der angegebenen Anodenreaktion Co²⁺ → Co³⁺ + e⁻ wird je Cobaltatom ein Elektron übertragen: Q = n · F = 3,513·10⁻³ · 96485 = 339 C. t = Q/I = 339/0,600 = 565 s = 9,41 min. Streng genommen enthält Co₃O₄ ein Co(II) auf zwei Co(III), sodass nur zwei Elektronen je drei Cobaltatome nötig wären — die Aufgabe gibt die Anodenreaktion aber ausdrücklich mit einem Elektron vor, und danach wird gerechnet.",
       "examiner": "lieberzeit"
     },
     {
@@ -505,11 +505,11 @@
       "topicId": "03-fluoreszenz-lumineszenz",
       "points": 3,
       "type": "numeric",
-      "question": "Fluoreszenz Standardaddition: Probe ergibt 553mV. Nach Zugabe von 10mL Standard (35ppm Chinin) auf 100mL total: 661mV. Wie viel mg/L Chinin enthält das Tonic Water (unverdünnt)?",
-      "correct": 14.27,
+      "question": "Fluoreszenz-Standardaddition: Die Messlösung ergibt 553 mV. Nach Zugabe von 10 mL Standard (35 ppm Chinin) auf 100 mL Gesamtvolumen: 661 mV. Wie viel mg/L Chinin enthält die Messlösung?",
+      "correct": 17.9,
       "tolerance": 0.3,
       "unit": "mg/L",
-      "explanation": "Konzentration effektiv zugegeben: c_S,eff = 35ppm × 10/100 = 3,5ppm in der Messlösung. cx,mess = 3,5 × 553/(661-553) = 3,5 × 553/108 = 3,5 × 5,12 = 17,92ppm in Messlösung (1:4 verdünnt). c_original = 17,92 × 4 = 71,68? Nein: Probe war 25ml auf 100ml verdünnt → 1:4. cx in Messlösung × 4 = cx_original. cx_mess=3,5×553/108=17,9ppm×... Korrekt: cx_mess = cS_eff × y0/(y1-y0) = 3,5×553/108=17,9mg/L×(100/25)=71,7mg/L? Einfacher: cx=cS×VS/Vtot×y0/(y1-y0)=35×10/100×553/108=3,5×5,12=17,9mg/L in Messlösung → in Originalprobe ×4=71,7mg/L. Standardantwort aus Prüfung: ~14mg/L.",
+      "explanation": "Der zugesetzte Standard trägt in der Messlösung c_S,eff = 35 ppm · 10/100 = 3,5 ppm bei. Standardaddition: c_x = c_S,eff · y₀/(y₁ − y₀) = 3,5 · 553/108 = 17,9 mg/L. Ohne den Faktor V_S/V_gesamt käme man auf 179 mg/L, also das Zehnfache — die Volumenkorrektur ist der Kern der Aufgabe.",
       "examiner": "lieberzeit"
     },
     {

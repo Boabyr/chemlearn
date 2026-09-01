@@ -115,15 +115,16 @@ export function useProgress(courseId?: string) {
     },
   })
 
+  const beruehrenMutate = beruehren.mutate
   const markTopicSeen = useCallback((topicId: string, cId: string) => {
     if (!user) return
-    beruehren.mutate({ topicId, courseId: cId })
-  }, [user, beruehren])
+    beruehrenMutate({ topicId, courseId: cId })
+  }, [user, beruehrenMutate])
 
   const markTopicComplete = useCallback((topicId: string, cId: string, quizScore: number) => {
     if (!user) return
-    beruehren.mutate({ topicId, courseId: cId, completed: true, quizScore })
-  }, [user, beruehren])
+    beruehrenMutate({ topicId, courseId: cId, completed: true, quizScore })
+  }, [user, beruehrenMutate])
 
   return {
     progress: progressQuery.data ?? [],
