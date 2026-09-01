@@ -151,6 +151,34 @@ describe('Sollstärke der Themen', () => {
   })
 })
 
+describe('Quizfragen', () => {
+  // Beim Auffüllen in Phase 4 wurden Fragen aus dem Theorietext geschrieben, ohne
+  // das vorhandene Quiz zu lesen — alle acht doppelten eine bestehende Frage.
+  //
+  // Dieser Test fängt nur die wortgleiche Kopie. Sinnverwandte Dubletten lassen
+  // sich nicht zuverlässig automatisch erkennen: echte Fälle lagen bei 67 bis
+  // 100 % Wortüberlappung, Fehlalarme bei 60 bis 71 % — die Bereiche überlappen.
+  // Zum Nachsehen dient `npm run fragen:aehnlich`, geurteilt wird von Hand.
+  const normalisiert = (text: string) =>
+    text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: kein Fragetext steht zweimal im Kurs', async (kursId) => {
+    const gesehen = new Map<string, string>()
+    const doppelt: string[] = []
+
+    for (const thema of await loadAllTopics(kursId)) {
+      for (const frage of thema.quiz) {
+        const schluessel = normalisiert(frage.question)
+        const vorher = gesehen.get(schluessel)
+        if (vorher) doppelt.push(`"${frage.question.slice(0, 50)}…" in ${vorher} und ${thema.id}`)
+        else gesehen.set(schluessel, `${thema.id}:${frage.id}`)
+      }
+    }
+
+    expect(doppelt).toEqual([])
+  })
+})
+
 describe('Länge der Theorietexte', () => {
   // CONTENT-PROMPT.md gibt 400 bis 900 Wörter je Thema vor. Sechs Themen der
   // organischen Chemie lagen darunter, eines bei der Hälfte — das fiel nur auf,

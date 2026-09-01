@@ -338,6 +338,21 @@ Das steht schon in der Datei und bleibt Zeichen für Zeichen erhalten. Danach
 folgen nur die Abschnitte, die dazukommen sollen — `# QUIZ`, `# FLASHCARDS`,
 `# INTERAKTIV`, einzeln oder zusammen.
 
+> **Vorher die vorhandenen Fragen lesen.** Beim ersten Auffüllen wurden Fragen
+> aus dem Theorietext geschrieben, ohne ins bestehende Quiz zu schauen — alle
+> acht doppelten eine Frage, die schon dastand, teils im selben Thema. Der
+> Importer erkennt nur den wortgleichen Fall. Zum Nachsehen:
+>
+> ```bash
+> npm run fragen:aehnlich          # Paare mit hoher Wortüberlappung, kursweit
+> ```
+>
+> Dubletten entstehen besonders leicht über Themengrenzen hinweg: dieselbe
+> Regioselektivität wird im Ringkapitel und im SEAr-Kapitel gefragt, dieselbe
+> Definition im Grundlagen- und im Anwendungskapitel. Faustregel: die Frage
+> gehört in das Kapitel, dessen Thema sie ist, und dort in der Fassung, die
+> nach dem *Warum* fragt statt nach dem *Was*.
+
 Der Importer hängt an, statt zu ersetzen:
 
 - Quizfragen bekommen fortlaufende Kennungen (`q7`, `q8`, …). Eine Frage, deren

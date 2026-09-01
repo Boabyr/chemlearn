@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "import": "node scripts/import-content.mjs"
+    "import": "node scripts/import-content.mjs",
+    "fragen:aehnlich": "node scripts/aehnliche-fragen.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.100.1",
