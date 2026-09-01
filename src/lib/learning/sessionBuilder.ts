@@ -7,13 +7,32 @@
 
 import { topicMastery, type AttemptLike } from './mastery'
 
-/** Veranschlagte Bearbeitungszeit je Frage. */
+/** Veranschlagte Bearbeitungszeit, wenn der Fragetyp unbekannt ist. */
 export const QUESTION_SECONDS = 45
+
+/**
+ * Zeitbudget je Fragetyp.
+ *
+ * Vorher galten für jede Frage 45 Sekunden — eine Vierpunkt-Rechnung mit
+ * Zahleneingabe wurde damit genauso veranschlagt wie eine Ankreuzfrage, und
+ * eine Runde war entweder zu kurz oder zu lang.
+ */
+export const SEKUNDEN_JE_TYP: Record<string, number> = {
+  'mc-single': 35,
+  'mc-multi': 55,
+  order: 60,
+  numeric: 95,
+}
+
+export function sekundenFuer(frage: { type?: string }): number {
+  return (frage.type && SEKUNDEN_JE_TYP[frage.type]) || QUESTION_SECONDS
+}
 
 export interface SessionQuestion {
   id: string
   topicId: string
   examiner: string
+  type?: string
 }
 
 export interface DueItem {
@@ -40,16 +59,21 @@ export function buildSession<Q extends SessionQuestion>({
   examiner,
 }: SessionOptions<Q>): Q[] {
   const pool = examiner ? questions.filter(q => q.examiner === examiner) : questions
-  const wanted = Math.min(pool.length, Math.max(1, Math.round((minutes * 60) / QUESTION_SECONDS)))
+  const budget = Math.max(1, minutes) * 60
 
   const byId = new Map(pool.map(q => [q.id, q]))
   const gewaehlt: Q[] = []
   const genommen = new Set<string>()
+  let verplant = 0
 
   const nimm = (q: Q | undefined) => {
-    if (!q || genommen.has(q.id) || gewaehlt.length >= wanted) return
+    if (!q || genommen.has(q.id)) return
+    const dauer = sekundenFuer(q)
+    // Mindestens eine Frage, danach nur, solange das Budget reicht.
+    if (gewaehlt.length > 0 && verplant + dauer > budget) return
     genommen.add(q.id)
     gewaehlt.push(q)
+    verplant += dauer
   }
 
   // 1. Fällige Wiederholungen, am längsten überfällig zuerst.

@@ -7,6 +7,7 @@ import { allCourses } from '../lib/courseRegistry'
 import { useProgress } from '../hooks/useProgress'
 import { courseIdsWithExams } from '../data/exams'
 import LearningStatus from '../components/Dashboard/LearningStatus'
+import Tagesrunde from '../components/Dashboard/Tagesrunde'
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
@@ -72,6 +73,8 @@ export default function Dashboard() {
             </p>
           )}
         </div>
+
+        <Tagesrunde />
 
         {/* Lernstand fuer Kurse mit Pruefungsdaten */}
         {courseIdsWithExams().map(id => {
