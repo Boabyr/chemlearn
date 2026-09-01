@@ -11,22 +11,11 @@
     <meta name="apple-mobile-web-app-title" content="ChemLearn">
     <link rel="apple-touch-icon" href="/icons/icon-192.svg">
     <script>
-      window.addEventListener('error', function(e) {
-        document.body.style.background = '#0b0f1a';
-        document.body.style.color = '#f87171';
-        document.body.style.padding = '20px';
-        document.body.style.fontFamily = 'monospace';
-        document.body.style.fontSize = '12px';
-        document.body.innerHTML = '<h2>Fehler:</h2><pre>' + (e.message || 'Unbekannt') + '\n\n' + (e.filename || '') + ':' + (e.lineno || '') + '</pre>';
-      });
-      window.addEventListener('unhandledrejection', function(e) {
-        document.body.style.background = '#0b0f1a';
-        document.body.style.color = '#f87171';
-        document.body.style.padding = '20px';
-        document.body.style.fontFamily = 'monospace';
-        document.body.style.fontSize = '12px';
-        document.body.innerHTML = '<h2>Promise Fehler:</h2><pre>' + (e.reason || 'Unbekannt') + '</pre>';
-      });
+      // Thema vor dem ersten Rendern setzen, sonst blitzt der falsche Hintergrund auf.
+      try {
+        var t = localStorage.getItem('chemlearn:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
     </script>
   </head>
   <body>

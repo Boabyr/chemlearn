@@ -162,11 +162,11 @@ export default function MechanismBuilder({ title, description, stages, onComplet
   if (completed) return (
     <div className="text-center py-10">
       <div className="text-5xl mb-4">🎉</div>
-      <h3 className="text-xl font-light text-teal-400 mb-2">Mechanismus abgeschlossen!</h3>
-      <p className="text-slate-400 text-sm">Du hast alle Schritte korrekt gezeichnet.</p>
+      <h3 className="text-xl font-light text-accent mb-2">Mechanismus abgeschlossen!</h3>
+      <p className="text-muted text-sm">Du hast alle Schritte korrekt gezeichnet.</p>
       <button
         onClick={() => { setStageIdx(0); setArrow(null); setFb(null); setHints(0); setCompleted(false) }}
-        className="mt-6 px-6 py-2.5 bg-teal-500 hover:bg-teal-400 text-black font-semibold rounded-xl text-sm transition-colors"
+        className="mt-6 px-6 py-2.5 bg-accent hover:bg-accent-strong text-on-accent font-semibold rounded-xl text-sm transition-colors"
       >
         Nochmal versuchen
       </button>
@@ -178,8 +178,8 @@ export default function MechanismBuilder({ title, description, stages, onComplet
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-medium text-white mb-1">{title}</h3>
-        <p className="text-slate-400 text-sm">{description}</p>
+        <h3 className="text-lg font-medium text-ink mb-1">{title}</h3>
+        <p className="text-muted text-sm">{description}</p>
       </div>
 
       {/* Fortschritt */}
@@ -187,23 +187,23 @@ export default function MechanismBuilder({ title, description, stages, onComplet
         {stages.map((s, i) => (
           <div key={i} className="flex items-center gap-2">
             <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border transition-colors ${
-              i < stageIdx ? 'bg-teal-400 border-teal-400 text-black' :
-              i === stageIdx ? 'bg-teal-900 border-teal-400 text-teal-400' :
-              'bg-slate-800 border-slate-600 text-slate-500'
+              i < stageIdx ? 'bg-accent border-accent text-on-accent' :
+              i === stageIdx ? 'bg-accent/20 border-accent text-accent' :
+              'bg-raised border-line text-subtle'
             }`}>
               {i < stageIdx ? '✓' : i + 1}
             </div>
-            <span className={`text-xs ${i === stageIdx ? 'text-teal-400' : 'text-slate-500'}`}>
+            <span className={`text-xs ${i === stageIdx ? 'text-accent' : 'text-subtle'}`}>
               {s.label}
             </span>
-            {i < stages.length - 1 && <span className="text-slate-600 text-xs mx-1">›</span>}
+            {i < stages.length - 1 && <span className="text-subtle text-xs mx-1">›</span>}
           </div>
         ))}
       </div>
 
       {/* Aufgabe */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-300">
-        <span className="text-teal-400 font-semibold">Aufgabe: </span>
+      <div className="bg-raised border border-line rounded-xl px-4 py-3 text-sm text-muted">
+        <span className="text-accent font-semibold">Aufgabe: </span>
         {stage.description}
       </div>
 
@@ -304,15 +304,15 @@ export default function MechanismBuilder({ title, description, stages, onComplet
       {fb && (
         <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-sm font-medium ${
           fb === 'ok'
-            ? 'bg-green-900/20 border-green-700 text-green-400'
-            : 'bg-red-900/20 border-red-800 text-red-400'
+            ? 'bg-success/10 border-success text-success'
+            : 'bg-danger/10 border-danger text-danger'
         }`}>
           <span className="text-lg">{fb === 'ok' ? '✓' : '✗'}</span>
           <span>{fb === 'ok' ? 'Richtig! Weiter zum nächsten Schritt…' : 'Falscher Pfeil – versuch es nochmal.'}</span>
           {fb === 'wrong' && (
             <button
               onClick={() => { setArrow(null); setFb(null) }}
-              className="ml-auto px-3 py-1 bg-slate-700 border border-slate-600 rounded-lg text-slate-300 text-xs"
+              className="ml-auto px-3 py-1 bg-sunken border border-line rounded-lg text-muted text-xs"
             >
               Reset
             </button>
@@ -325,19 +325,19 @@ export default function MechanismBuilder({ title, description, stages, onComplet
         {hints < 2 && (
           <button
             onClick={() => setHints(h => h + 1)}
-            className="px-4 py-2 bg-amber-900/30 border border-amber-700/50 text-amber-400 rounded-lg text-xs"
+            className="px-4 py-2 bg-warning/20 border border-warning text-warning rounded-lg text-xs"
           >
             💡 Hinweis {hints + 1}
           </button>
         )}
         {hints >= 1 && (
-          <div className="flex-1 px-4 py-2 bg-amber-900/20 border border-amber-800/30 rounded-lg text-xs text-amber-300 leading-relaxed">
+          <div className="flex-1 px-4 py-2 bg-warning/10 border border-warning rounded-lg text-xs text-warning leading-relaxed">
             {stage.hint1}
           </div>
         )}
       </div>
       {hints >= 2 && (
-        <div className="px-4 py-2 bg-amber-900/20 border border-amber-700/50 rounded-lg text-xs text-amber-300 leading-relaxed">
+        <div className="px-4 py-2 bg-warning/10 border border-warning rounded-lg text-xs text-warning leading-relaxed">
           🔍 {stage.hint2}
         </div>
       )}

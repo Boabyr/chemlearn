@@ -11,11 +11,11 @@ const DEFAULT_COURSE = 'analytical-chemistry-1'
 
 // Vollstaendige Klassennamen: zusammengesetzte Tailwind-Klassen werden nicht erzeugt.
 const PROF_STYLE: Record<string, { chip: string; panel: string; text: string; bar: string }> = {
-  lieberzeit:     { chip: 'bg-teal-900/40 text-teal-400',     panel: 'bg-teal-900/20 border-teal-800',     text: 'text-teal-400',   bar: 'bg-teal-500' },
+  lieberzeit:     { chip: 'bg-accent/20 text-accent',     panel: 'bg-accent/10 border-accent',     text: 'text-accent',   bar: 'bg-accent' },
   koellensperger: { chip: 'bg-blue-900/40 text-blue-400',     panel: 'bg-blue-900/20 border-blue-800',     text: 'text-blue-400',   bar: 'bg-blue-500' },
   gerner:         { chip: 'bg-purple-900/40 text-purple-400', panel: 'bg-purple-900/20 border-purple-800', text: 'text-purple-400', bar: 'bg-purple-500' },
 }
-const FALLBACK_STYLE = { chip: 'bg-slate-700 text-slate-300', panel: 'bg-slate-800 border-slate-700', text: 'text-slate-300', bar: 'bg-slate-500' }
+const FALLBACK_STYLE = { chip: 'bg-sunken text-muted', panel: 'bg-raised border-line', text: 'text-muted', bar: 'bg-subtle' }
 const styleFor = (p: string) => PROF_STYLE[p] ?? FALLBACK_STYLE
 
 const PROF_ICONS: Record<string, string> = { lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪' }
@@ -98,18 +98,18 @@ export default function ExamSimulator() {
   const allSectionsPassed = sectionScores.every(s => s.passed)
   const passed = totalEarned >= selectedExam.passingPoints && allSectionsPassed
 
-  if (loading) return <div className="min-h-screen bg-slate-900 flex items-center justify-center"><div className="text-teal-400">Laden...</div></div>
+  if (loading) return <div className="min-h-screen bg-surface flex items-center justify-center"><div className="text-accent">Laden...</div></div>
 
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      <nav className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+    <div className="min-h-screen bg-surface text-ink">
+      <nav className="bg-raised border-b border-line px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/')} className="text-slate-400 hover:text-white">← Dashboard</button>
-          <span className="text-teal-400 font-mono text-xs uppercase tracking-widest">📝 Prüfungssimulator</span>
+          <button onClick={() => navigate('/')} className="text-muted hover:text-ink">← Dashboard</button>
+          <span className="text-accent font-mono text-xs uppercase tracking-widest">📝 Prüfungssimulator</span>
         </div>
         {mode === 'exam' && (
-          <div className="text-xs text-slate-400">
+          <div className="text-xs text-muted">
             {labelFor(currentSection.professor)} · Frage {qIdx+1}/{currentSection.questionIds.length}
           </div>
         )}
@@ -121,22 +121,22 @@ export default function ExamSimulator() {
         {mode === 'select' && (
           <div>
             <h1 className="text-2xl font-light mb-2">Prüfungssimulator</h1>
-            <p className="text-slate-400 text-sm mb-8">Simuliere eine echte AC1-Prüfung mit originalem Aufbau.</p>
+            <p className="text-muted text-sm mb-8">Simuliere eine echte AC1-Prüfung mit originalem Aufbau.</p>
 
-            <div className="bg-amber-900/20 border border-amber-700 rounded-xl px-5 py-4 mb-6 text-sm text-amber-300">
+            <div className="bg-warning/10 border border-warning rounded-xl px-5 py-4 mb-6 text-sm text-warning">
               <span className="font-semibold">Prüfungsregeln:</span> Alle 3 Teile müssen mit mindestens 12 Punkten bestanden werden UND insgesamt mind. 36 Punkte erreicht werden.
             </div>
 
             <div className="space-y-4">
               {examStructures.map(exam => (
-                <div key={exam.id} className="bg-slate-800 border border-slate-700 hover:border-teal-500 rounded-2xl p-6 cursor-pointer transition-all"
+                <div key={exam.id} className="bg-raised border border-line hover:border-accent rounded-2xl p-6 cursor-pointer transition-all"
                   onClick={() => startExam(exam)}>
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h3 className="font-semibold">{exam.title}</h3>
-                      <p className="text-slate-400 text-sm">{exam.date}</p>
+                      <p className="text-muted text-sm">{exam.date}</p>
                     </div>
-                    <span className="text-teal-400 font-mono text-sm">{exam.totalPoints}P</span>
+                    <span className="text-accent font-mono text-sm">{exam.totalPoints}P</span>
                   </div>
                   <div className="flex gap-2">
                     {exam.sections.map(sec => (
@@ -148,7 +148,7 @@ export default function ExamSimulator() {
                 </div>
               ))}
 
-              <div className="bg-slate-800 border border-slate-700 hover:border-purple-500 rounded-2xl p-6 cursor-pointer transition-all"
+              <div className="bg-raised border border-line hover:border-purple-500 rounded-2xl p-6 cursor-pointer transition-all"
                 onClick={() => {
                   // Zufällige Prüfung aus allen Fragen
                   const shuffled = [...examQuestions].sort(() => Math.random() - 0.5)
@@ -171,7 +171,7 @@ export default function ExamSimulator() {
                   })
                 }}>
                 <h3 className="font-semibold text-purple-300">🎲 Zufalls-Prüfung</h3>
-                <p className="text-slate-400 text-sm mt-1">Neue Fragen aus dem Fragenkatalog, original Prüfungsstruktur</p>
+                <p className="text-muted text-sm mt-1">Neue Fragen aus dem Fragenkatalog, original Prüfungsstruktur</p>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function ExamSimulator() {
               <p className={`text-sm font-semibold ${styleFor(currentSection.professor).text}`}>
                 {labelFor(currentSection.professor)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
               </p>
-              <div className="mt-2 h-1.5 bg-slate-700 rounded-full">
+              <div className="mt-2 h-1.5 bg-sunken rounded-full">
                 <div className={`h-full ${styleFor(currentSection.professor).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
               </div>
@@ -199,7 +199,7 @@ export default function ExamSimulator() {
 
             <button onClick={nextQ}
               disabled={!answered[currentQId]}
-              className="mt-4 w-full py-3 bg-slate-700 border border-slate-600 hover:border-slate-400 disabled:opacity-40 disabled:cursor-not-allowed text-slate-300 font-semibold rounded-xl text-sm transition-colors">
+              className="mt-4 w-full py-3 bg-sunken border border-line hover:border-subtle disabled:opacity-40 disabled:cursor-not-allowed text-muted font-semibold rounded-xl text-sm transition-colors">
               {qIdx < currentSection.questionIds.length - 1 ? 'Nächste Frage →' :
                sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${labelFor(selectedExam.sections[sectionIdx+1].professor)} →` :
                'Prüfung abschließen →'}
@@ -210,15 +210,15 @@ export default function ExamSimulator() {
         {/* ERGEBNIS */}
         {mode === 'result' && (
           <div>
-            <div className={`text-center py-10 rounded-2xl mb-6 ${passed ? 'bg-green-900/20 border border-green-700' : 'bg-red-900/20 border border-red-800'}`}>
+            <div className={`text-center py-10 rounded-2xl mb-6 ${passed ? 'bg-success/10 border border-success' : 'bg-danger/10 border border-danger'}`}>
               <div className="text-5xl mb-3">{passed ? '🎓' : '📚'}</div>
-              <h2 className={`text-2xl font-light mb-1 ${passed ? 'text-green-400' : 'text-red-400'}`}>
+              <h2 className={`text-2xl font-light mb-1 ${passed ? 'text-success' : 'text-danger'}`}>
                 {passed ? 'Bestanden!' : 'Nicht bestanden'}
               </h2>
-              <p className="text-4xl font-bold mt-3" style={{ color: passed ? '#4ade80' : '#f87171' }}>
+              <p className="text-4xl font-bold mt-3" style={{ color: passed ? 'var(--c-success)' : 'var(--c-danger)' }}>
                 {totalEarned} / {selectedExam.totalPoints}P
               </p>
-              <p className="text-slate-400 text-sm mt-2">
+              <p className="text-muted text-sm mt-2">
                 {Math.round(totalEarned/selectedExam.totalPoints*100)}% – 
                 Bestehensgrenze: {selectedExam.passingPoints}P gesamt + {selectedExam.sections[0].passingPoints}P/Teil
               </p>
@@ -227,16 +227,16 @@ export default function ExamSimulator() {
             <div className="space-y-3 mb-6">
               {sectionScores.map(sec => (
                 <div key={sec.professor} className={`flex items-center justify-between px-5 py-4 rounded-xl border ${
-                  sec.passed ? 'border-green-700 bg-green-900/10' : 'border-red-700 bg-red-900/10'
+                  sec.passed ? 'border-success bg-success/10' : 'border-danger bg-danger/10'
                 }`}>
                   <div>
                     <span className={`font-semibold ${styleFor(sec.professor).text}`}>
                       {labelFor(sec.professor)}
                     </span>
-                    <span className="text-slate-500 text-xs ml-2">(min. {sec.passing}P)</span>
+                    <span className="text-subtle text-xs ml-2">(min. {sec.passing}P)</span>
                   </div>
                   <div className="text-right">
-                    <span className={`font-mono font-bold ${sec.passed ? 'text-green-400' : 'text-red-400'}`}>
+                    <span className={`font-mono font-bold ${sec.passed ? 'text-success' : 'text-danger'}`}>
                       {sec.earned}/{sec.max}P
                     </span>
                     <span className="ml-2 text-lg">{sec.passed ? '✓' : '✗'}</span>
@@ -247,11 +247,11 @@ export default function ExamSimulator() {
 
             <div className="flex gap-3">
               <button onClick={() => setMode('select')}
-                className="flex-1 py-3 bg-teal-600 hover:bg-teal-500 text-white font-semibold rounded-xl text-sm transition-colors">
+                className="flex-1 py-3 bg-accent hover:bg-accent-strong text-on-accent font-semibold rounded-xl text-sm transition-colors">
                 Neue Prüfung
               </button>
               <button onClick={() => navigate('/practice')}
-                className="flex-1 py-3 bg-slate-700 border border-slate-600 text-slate-300 font-semibold rounded-xl text-sm transition-colors">
+                className="flex-1 py-3 bg-sunken border border-line text-muted font-semibold rounded-xl text-sm transition-colors">
                 Übungsmodus
               </button>
             </div>

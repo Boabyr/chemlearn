@@ -11,9 +11,9 @@ import type { Level } from '../../lib/learning/mastery'
 
 // Statusfarben tragen nie allein die Aussage — daneben steht immer das Wort.
 const LEVEL: Record<Level, { dot: string; bar: string; text: string; word: string }> = {
-  sicher:    { dot: 'bg-green-400', bar: '#4ade80', text: 'text-green-400', word: 'bereit' },
-  wackelig:  { dot: 'bg-amber-400', bar: '#fbbf24', text: 'text-amber-400', word: 'wackelig' },
-  ungelernt: { dot: 'bg-slate-500', bar: '#64748b', text: 'text-slate-400', word: 'ungelernt' },
+  sicher:    { dot: 'bg-success', bar: 'var(--c-success)', text: 'text-success', word: 'bereit' },
+  wackelig:  { dot: 'bg-warning', bar: 'var(--c-warning)', text: 'text-warning', word: 'wackelig' },
+  ungelernt: { dot: 'bg-subtle', bar: 'var(--c-subtle)', text: 'text-muted', word: 'ungelernt' },
 }
 
 const PROF_ICONS: Record<string, string> = {
@@ -22,7 +22,7 @@ const PROF_ICONS: Record<string, string> = {
 
 function Meter({ value, color }: { value: number; color: string }) {
   return (
-    <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+    <div className="h-1.5 bg-sunken rounded-full overflow-hidden">
       <div className="h-full rounded-full transition-all"
         style={{ width: `${Math.max(2, Math.round(value * 100))}%`, background: color }} />
     </div>
@@ -42,14 +42,14 @@ export default function LearningStatus({ courseId, courseTitle }: {
   // Vor dem ersten Versuch gibt es nichts auszuwerten.
   if (attempts.length === 0 && dueCount === 0) {
     return (
-      <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-8">
+      <div className="bg-raised border border-line rounded-2xl p-6 mb-8">
         <h2 className="font-medium mb-1">Lernstand {courseTitle}</h2>
-        <p className="text-slate-400 text-sm mb-4">
+        <p className="text-muted text-sm mb-4">
           Noch keine Antworten aufgezeichnet. Nach der ersten Übungsrunde stehen hier
           deine schwächsten Themen und die Prüfungsreife.
         </p>
         <button onClick={() => navigate(`/practice?course=${courseId}`)}
-          className="px-5 py-2.5 bg-teal-600 hover:bg-teal-500 text-white text-sm font-semibold rounded-xl transition-colors">
+          className="px-5 py-2.5 bg-accent hover:bg-accent-strong text-on-accent text-sm font-semibold rounded-xl transition-colors">
           Erste Runde starten
         </button>
       </div>
@@ -57,11 +57,11 @@ export default function LearningStatus({ courseId, courseTitle }: {
   }
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 mb-8">
+    <div className="bg-raised border border-line rounded-2xl p-6 mb-8">
       <div className="flex items-start justify-between gap-4 mb-6">
         <h2 className="font-medium">Lernstand {courseTitle}</h2>
         <button onClick={() => navigate(`/practice?course=${courseId}`)}
-          className="text-xs px-3 py-1.5 bg-teal-600 hover:bg-teal-500 text-white font-medium rounded-lg transition-colors flex-shrink-0">
+          className="text-xs px-3 py-1.5 bg-accent hover:bg-accent-strong text-on-accent font-medium rounded-lg transition-colors flex-shrink-0">
           Üben
         </button>
       </div>
@@ -69,11 +69,11 @@ export default function LearningStatus({ courseId, courseTitle }: {
       <div className="grid sm:grid-cols-[auto_1fr] gap-6 sm:gap-8">
         {/* Fällige Wiederholungen als Kennzahl, nicht als Diagramm */}
         <div>
-          <p className="text-xs text-slate-500 uppercase tracking-widest mb-1">Heute fällig</p>
-          <p className={`text-4xl font-light ${dueCount > 0 ? 'text-teal-400' : 'text-slate-600'}`}>
+          <p className="text-xs text-subtle uppercase tracking-widest mb-1">Heute fällig</p>
+          <p className={`text-4xl font-light ${dueCount > 0 ? 'text-accent' : 'text-subtle'}`}>
             {dueCount}
           </p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-subtle mt-1">
             {dueCount === 1 ? 'Wiederholung' : 'Wiederholungen'}
           </p>
         </div>
@@ -81,14 +81,14 @@ export default function LearningStatus({ courseId, courseTitle }: {
         {/* Prüfungsreife je Prüfer */}
         {readiness.length > 0 && (
           <div>
-            <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">Prüfungsreife</p>
+            <p className="text-xs text-subtle uppercase tracking-widest mb-3">Prüfungsreife</p>
             <div className="space-y-3">
               {readiness.map(r => {
                 const stil = LEVEL[r.level]
                 return (
                   <div key={r.professor}>
                     <div className="flex items-baseline justify-between gap-2 mb-1.5">
-                      <span className="text-sm text-slate-300">
+                      <span className="text-sm text-muted">
                         {PROF_ICONS[r.professor] ?? '📘'} {professorLabel(r.professor)}
                       </span>
                       <span className={`text-xs ${stil.text}`}>
@@ -106,18 +106,18 @@ export default function LearningStatus({ courseId, courseTitle }: {
 
       {/* Schwächste Themen */}
       {weakest.length > 0 && (
-        <div className="mt-6 pt-6 border-t border-slate-700">
-          <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">Wo es hakt</p>
+        <div className="mt-6 pt-6 border-t border-line">
+          <p className="text-xs text-subtle uppercase tracking-widest mb-3">Wo es hakt</p>
           <div className="space-y-2">
             {weakest.map(t => (
               <button key={t.topicId}
                 onClick={() => navigate(`/course/${courseId}/${t.topicId}`)}
                 className="w-full flex items-center gap-3 text-left group">
                 <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${LEVEL[t.level].dot}`} />
-                <span className="text-sm text-slate-400 group-hover:text-white transition-colors flex-1 min-w-0 truncate">
+                <span className="text-sm text-muted group-hover:text-ink transition-colors flex-1 min-w-0 truncate">
                   {t.topicId.replace(/^\d+-/, '').replace(/-/g, ' ')}
                 </span>
-                <span className="text-xs text-slate-600 flex-shrink-0">
+                <span className="text-xs text-subtle flex-shrink-0">
                   {t.attempts === 0 ? 'nie geübt' : `${Math.round(t.score * 100)} %`}
                 </span>
               </button>
