@@ -3,8 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './useAuth'
 import { qk } from '../lib/queryKeys'
-import { lokalesDatum } from '../lib/zeit/datum'
-import { naechsterStreak } from '../lib/learning/streak'
+import { serieFortschreiben } from '../lib/serie'
 
 /** Die Funktion gibt es in dieser Datenbank (noch) nicht — Migration 002 fehlt. */
 function rpcFehlt(code?: string, meldung?: string): boolean {
@@ -73,36 +72,9 @@ export function useProgress(courseId?: string) {
     enabled: !!user,
   })
 
-  /**
-   * Serie fortschreiben — atomar in der Datenbank, mit dem Kalendertag des Geräts.
-   *
-   * Solange Migration 002 nicht eingespielt ist, läuft der alte Weg über zwei
-   * Anweisungen weiter. Dann bleibt der Doppelzähl-Fall bei zwei offenen Tabs,
-   * aber der Fortschritt geht nicht verloren.
-   */
   const serieAntippen = useCallback(async () => {
     if (!user) return
-    const heute = lokalesDatum()
-
-    const { error } = await supabase.rpc('streak_touch', { p_today: heute })
-    if (error && !rpcFehlt(error.code, error.message)) {
-      console.error('Serie fortschreiben fehlgeschlagen:', error.message)
-      return
-    }
-
-    if (error) {
-      const bisher = await serieLaden(user.id)
-      const naechster = naechsterStreak(bisher.lastActiveDate ? bisher : null, heute)
-      if (naechster) {
-        await supabase.from('streaks').upsert({
-          user_id: user.id,
-          current_streak: naechster.currentStreak,
-          longest_streak: naechster.longestStreak,
-          last_active_date: naechster.lastActiveDate,
-        })
-      }
-    }
-
+    await serieFortschreiben(user.id)
     await qc.invalidateQueries({ queryKey: qk.streak(user.id) })
   }, [user, qc])
 

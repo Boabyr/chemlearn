@@ -1,4 +1,5 @@
-import { Frame, Box, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Box, Detector, Beam, Caption, Tag } from './parts'
 
 /** Chemolumineszenz-Detektor: einfachster Aufbau, keine externe Lichtquelle. */
 export default function Chemoluminescence() {

@@ -34,6 +34,7 @@ export default function MechanismBuilder({ title, description, stages, onComplet
   const [stageIdx, setStageIdx] = useState(0)
   const [livePos, setLivePos] = useState<{ x: number; y: number } | null>(null)
   const [arrow, setArrow] = useState<Arrow | null>(null)
+  const [vonId, setVonId] = useState<string | null>(null)
   const [fb, setFb] = useState<'ok' | 'wrong' | null>(null)
   const [hints, setHints] = useState(0)
   const [completed, setCompleted] = useState(false)
@@ -66,6 +67,7 @@ export default function MechanismBuilder({ title, description, stages, onComplet
     const a = hit(p.x, p.y)
     if (a) {
       dragRef.current = { fromId: a.id, x1: a.x, y1: a.y }
+      setVonId(a.id)
       setLivePos(p)
     }
   }
@@ -103,7 +105,39 @@ export default function MechanismBuilder({ title, description, stages, onComplet
       }
     }
     dragRef.current = null
+    setVonId(null)
     setLivePos(null)
+  }
+
+  /**
+   * Pfeil ohne Ziehen setzen: erst Ausgangsatom, dann Zielatom.
+   *
+   * Ziehen ist mit Tastatur nicht bedienbar — der Mechanismus war damit für
+   * jede Person ohne Maus verschlossen.
+   */
+  function atomGewaehlt(id: string) {
+    if (fb === 'ok') return
+    if (!vonId) { setVonId(id); return }
+    if (vonId === id) { setVonId(null); return }
+
+    const ok = vonId === stage.correctArrow.from && id === stage.correctArrow.to
+    setArrow({ from: vonId, to: id })
+    setFb(ok ? 'ok' : 'wrong')
+    setVonId(null)
+    if (!ok) return
+
+    setTimeout(() => {
+      if (stageIdx < stages.length - 1) {
+        setStageIdx(i => i + 1)
+        setArrow(null)
+        setFb(null)
+        setHints(0)
+        setLivePos(null)
+      } else {
+        setCompleted(true)
+        onComplete?.()
+      }
+    }, 900)
   }
 
   function curvedArrow(fromId: string, toId: string, color: string) {
@@ -144,7 +178,10 @@ export default function MechanismBuilder({ title, description, stages, onComplet
     </div>
   )
 
-  const drag = dragRef.current
+  const gewaehltesAtom = vonId ? stage.atoms.find(a => a.id === vonId) : undefined
+  const drag = gewaehltesAtom
+    ? { fromId: gewaehltesAtom.id, x1: gewaehltesAtom.x, y1: gewaehltesAtom.y }
+    : null
 
   return (
     <div className="space-y-4">
@@ -236,7 +273,14 @@ export default function MechanismBuilder({ title, description, stages, onComplet
 
           {/* Atome */}
           {stage.atoms.map(a => (
-            <g key={a.id}>
+            <g key={a.id} role="button" tabIndex={0}
+              aria-label={`Atom ${a.label}${vonId === a.id ? ', gewählt' : ''}`}
+              aria-pressed={vonId === a.id}
+              className="cursor-pointer focus:outline-none"
+              onClick={() => atomGewaehlt(a.id)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); atomGewaehlt(a.id) }
+              }}>
               <circle cx={a.x} cy={a.y} r={a.r + 9}
                 fill={drag?.fromId === a.id ? T.tealGlow : 'transparent'} />
               <circle cx={a.x} cy={a.y} r={a.r}
@@ -265,7 +309,7 @@ export default function MechanismBuilder({ title, description, stages, onComplet
           {!arrow && !drag && (
             <text x={240} y={250} textAnchor="middle"
               fill={T.muted} fontSize={10} fontFamily="sans-serif">
-              Atom antippen → halten → zum Zielatom ziehen → loslassen
+              Ausgangsatom wählen, dann Zielatom — ziehen geht auch
             </text>
           )}
         </svg>

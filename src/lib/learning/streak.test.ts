@@ -17,8 +17,16 @@ describe('naechsterStreak', () => {
     expect(naechsterStreak(zustand(9, 9, '2026-02-14'), '2026-02-15')).toEqual(zustand(10, 10, '2026-02-15'))
   })
 
-  it('fängt nach einer Lücke wieder bei eins an', () => {
+  it('fängt nach einer längeren Lücke wieder bei eins an', () => {
     expect(naechsterStreak(zustand(7, 12, '2026-02-10'), '2026-02-15')).toEqual(zustand(1, 12, '2026-02-15'))
+  })
+
+  it('übersteht einen einzelnen verpassten Tag', () => {
+    expect(naechsterStreak(zustand(7, 12, '2026-02-13'), '2026-02-15')).toEqual(zustand(8, 12, '2026-02-15'))
+  })
+
+  it('bricht nach zwei verpassten Tagen ab', () => {
+    expect(naechsterStreak(zustand(7, 12, '2026-02-12'), '2026-02-15')).toEqual(zustand(1, 12, '2026-02-15'))
   })
 
   it('ändert nichts, wenn heute schon gezählt wurde', () => {

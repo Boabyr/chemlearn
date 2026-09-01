@@ -1,4 +1,5 @@
-import { Frame, Lamp, Cuvette, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Lamp, Cuvette, Detector, Beam, Caption, Tag } from './parts'
 
 /** FT-IR: Michelson-Interferometer mit beweglichem Spiegel statt Monochromator. */
 export default function Ftir() {

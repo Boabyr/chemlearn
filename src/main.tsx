@@ -11,13 +11,14 @@ import TutorDashboard  from './pages/TutorDashboard'
 import PracticeMode    from './pages/PracticeMode'
 import ExamSimulator   from './pages/ExamSimulator'
 import LernSession     from './pages/LernSession'
+import Statistik       from './pages/Statistik'
+import Einstellungen   from './pages/Einstellungen'
 import ErrorBoundary   from './components/Shell/ErrorBoundary'
 import RequireAuth     from './components/Shell/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
-}
+import Aktualisierung  from './components/Shell/Aktualisierung'
+import FokusWechsel    from './components/Shell/FokusWechsel'
+import Verbindungshinweis from './components/Shell/Verbindungshinweis'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,7 +39,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
+          <Verbindungshinweis />
           <BrowserRouter>
+            <FokusWechsel />
             <Routes>
               <Route path='/login'                     element={<LoginPage />} />
               <Route path='/'                          element={geschuetzt(<Dashboard />)} />
@@ -46,11 +49,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/course/:courseId/:topicId' element={geschuetzt(<TopicPage />)} />
               <Route path='/tutor'                     element={geschuetzt(<TutorDashboard />)} />
               <Route path='/lernen'                    element={geschuetzt(<LernSession />)} />
+              <Route path='/statistik'                 element={geschuetzt(<Statistik />)} />
+              <Route path='/einstellungen'             element={geschuetzt(<Einstellungen />)} />
               <Route path='/practice'                  element={geschuetzt(<PracticeMode />)} />
               <Route path='/exam-simulator'            element={geschuetzt(<ExamSimulator />)} />
               <Route path='*'                          element={<Navigate to='/' replace />} />
             </Routes>
           </BrowserRouter>
+          <Aktualisierung />
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>

@@ -1,4 +1,5 @@
-import { Frame, Cell, Box, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Box, Beam, Caption, Tag } from './parts'
 
 /** Leitfähigkeitsmesszelle: zwei planparallele Pt-Bleche, Wechselspannung gegen Polarisation. */
 export default function Conductivity() {

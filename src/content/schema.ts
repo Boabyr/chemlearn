@@ -224,6 +224,13 @@ export const kursSchema = z.object({
   estimatedHours: z.number().positive(),
   /** Prüferabschnitte dieses Fachs. Leer heißt: ein gemeinsamer Abschnitt. */
   examiners: z.array(prueferSchema).default([]),
+  /**
+   * Sprache der Inhalte als BCP-47-Kürzel.
+   *
+   * Das Dokument ist auf Deutsch gesetzt; englische Kursinhalte darin ohne
+   * Auszeichnung liest ein Screenreader mit deutscher Aussprache vor.
+   */
+  sprache: z.string().default('de'),
 }).refine(
   kurs => kurs.totalTopics === kurs.topics.length,
   { message: 'totalTopics passt nicht zur Themenliste', path: ['totalTopics'] },

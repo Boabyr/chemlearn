@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ThemeToggle from '../components/Shell/ThemeToggle'
 import { useAuth } from '../hooks/useAuth'
@@ -8,11 +9,13 @@ import { useProgress } from '../hooks/useProgress'
 import { courseIdsWithExams } from '../data/exams'
 import LearningStatus from '../components/Dashboard/LearningStatus'
 import Tagesrunde from '../components/Dashboard/Tagesrunde'
+import { zuletztLesen } from '../lib/zuletzt'
 
 export default function Dashboard() {
   const { user, loading } = useAuth()
   const { isTutor, isAdmin } = useRole()
   const navigate = useNavigate()
+  const [weiter] = useState(zuletztLesen)
   const { streak, progress } = useProgress()
 
   if (loading) return (
@@ -55,6 +58,15 @@ export default function Dashboard() {
             </button>
           )}
           <span className="text-muted text-sm hidden sm:block">{user?.email}</span>
+          <button onClick={() => navigate('/statistik')}
+            className="rounded-lg border border-line px-3 py-1.5 text-xs text-muted hover:text-ink">
+            📊 Statistik
+          </button>
+          <button onClick={() => navigate('/einstellungen')}
+            className="rounded-lg border border-line px-3 py-1.5 text-xs text-muted hover:text-ink"
+            aria-label="Einstellungen">
+            ⚙️
+          </button>
           <ThemeToggle />
           <button onClick={handleLogout} className="text-muted hover:text-ink text-sm transition-colors">
             Abmelden
@@ -76,6 +88,17 @@ export default function Dashboard() {
 
         <Tagesrunde />
 
+        {weiter && (
+          <button onClick={() => navigate(`/course/${weiter.courseId}/${weiter.topicId}`)}
+            className="mb-8 flex w-full items-center justify-between gap-4 rounded-2xl border border-line bg-raised px-5 py-4 text-left hover:border-accent">
+            <span>
+              <span className="block font-mono text-xs uppercase tracking-widest text-subtle">Weiterlernen</span>
+              <span className="text-ink">{weiter.titel}</span>
+            </span>
+            <span className="text-accent" aria-hidden="true">→</span>
+          </button>
+        )}
+
         {/* Lernstand fuer Kurse mit Pruefungsdaten */}
         {courseIdsWithExams().map(id => {
           const kurs = allCourses.find(c => c.id === id)
@@ -87,9 +110,9 @@ export default function Dashboard() {
           {allCourses.map(course => {
             const { done, total, pct } = courseProgress(course.id)
             return (
-              <div key={course.id}
+              <button key={course.id} type="button"
                 onClick={() => navigate(`/course/${course.id}`)}
-                className="bg-raised border border-line rounded-2xl p-6 cursor-pointer hover:border-accent transition-all"
+                className="bg-raised border border-line rounded-2xl p-6 text-left w-full hover:border-accent transition-all"
                 style={{ borderTopColor: course.color, borderTopWidth: 3 }}>
                 <div className="text-3xl mb-3">{course.icon}</div>
                 <h2 className="font-semibold text-lg mb-1">{course.title}</h2>
@@ -101,7 +124,7 @@ export default function Dashboard() {
                 <div className="h-1.5 bg-sunken rounded-full">
                   <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: course.color }} />
                 </div>
-              </div>
+              </button>
             )
           })}
         </div>

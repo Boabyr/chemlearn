@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { examinerLabel, type ExamQuestion } from '../../data/exams'
 import { stilFuer } from './pruefStil'
 import { bewerte, leseZahl } from '../../lib/learning/bewerten'
@@ -26,6 +26,24 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
       setSelected(s => s.includes(i) ? s.filter(x => x !== i) : [...s, i])
     }
   }
+
+  // Antworten per Zahlentaste: bei zwanzig Fragen am Stück spart das den Weg
+  // zur Maus, und ohne Tastaturbedienung war die Frage gar nicht bedienbar.
+  useEffect(() => {
+    function beiTaste(e: KeyboardEvent) {
+      if (submitted) return
+      const ziel = e.target as HTMLElement | null
+      if (ziel && ['INPUT', 'TEXTAREA'].includes(ziel.tagName)) return
+      if (question.type !== 'mc-single' && question.type !== 'mc-multi') return
+
+      const nummer = Number(e.key)
+      if (!Number.isInteger(nummer) || nummer < 1 || nummer > (question.options?.length ?? 0)) return
+      e.preventDefault()
+      toggle(nummer - 1)
+    }
+    window.addEventListener('keydown', beiTaste)
+    return () => window.removeEventListener('keydown', beiTaste)
+  })
 
   function moveOrder(i: number, dir: -1 | 1) {
     const arr = [...orderArr]
@@ -93,7 +111,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
                 <button key={i} onClick={() => toggle(i)}
                   className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${cls}`}>
                   <span className="opacity-50 mr-2 font-mono">
-                    {question.type === 'mc-multi' ? (selected.includes(i) ? '☑' : '☐') : String.fromCharCode(65+i)+'.'}
+                    {question.type === 'mc-multi' ? (selected.includes(i) ? '☑' : '☐') : `${i + 1}.`}
                   </span>
                   {opt}
                   {submitted && isRight && <span className="float-right">✓</span>}
@@ -174,6 +192,11 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
         )}
 
         {/* Erklärung */}
+        {/* Die Rückmeldung muss auch vorgelesen werden, nicht nur farbig sein. */}
+        <div aria-live="polite" className="sr-only">
+          {submitted ? (correct ? 'Richtig.' : 'Nicht ganz.') : ''}
+        </div>
+
         {submitted && (
           <div className={`mt-4 px-4 py-3 rounded-xl text-sm leading-relaxed ${
             correct

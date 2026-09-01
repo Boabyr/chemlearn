@@ -1,4 +1,5 @@
-import { Frame, Cell, Box, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Box, Beam, Caption, Tag } from './parts'
 
 /** Amperometrischer Glucosesensor 1. Generation: GOD-Membran auf Pt, gemessen wird H₂O₂. */
 export default function GlucoseSensor() {

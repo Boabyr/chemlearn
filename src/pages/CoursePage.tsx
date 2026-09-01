@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useMastery } from '../hooks/useMastery'
 import { useReviews } from '../hooks/useReviews'
 import { allCourses, loadAllTopics } from '../lib/courseRegistry'
 import { examQuestionsFor } from '../data/exams'
-import type { Kurs } from '../content/schema'
 import type { Level } from '../lib/learning/mastery'
 
 const LEVEL_STYLE: Record<Level, { dot: string; label: string }> = {
@@ -18,16 +17,12 @@ export default function CoursePage() {
   const { courseId } = useParams()
   const { loading } = useAuth()
   const navigate = useNavigate()
-  const [course, setCourse] = useState<Kurs | null>(null)
   const [topicTitles, setTopicTitles] = useState<Record<string, string>>({})
 
   const { topics: mastery } = useMastery(courseId ?? '')
   const { dueCount } = useReviews(courseId)
-
-  useEffect(() => {
-    const found = allCourses.find(c => c.id === courseId)
-    if (found) setCourse(found)
-  }, [courseId])
+  // Der Kurskopf steht im Register — kein Grund, ihn in den Zustand zu kopieren.
+  const course = useMemo(() => allCourses.find(c => c.id === courseId) ?? null, [courseId])
 
   useEffect(() => {
     if (!courseId) return
@@ -89,9 +84,9 @@ export default function CoursePage() {
             const level = levelOf(topicId)
             const stil = LEVEL_STYLE[level]
             return (
-              <div key={topicId}
+              <button key={topicId} type="button"
                 onClick={() => navigate(`/course/${courseId}/${topicId}`)}
-                className="flex items-center gap-4 bg-raised border border-line hover:border-accent rounded-xl px-5 py-4 cursor-pointer transition-all">
+                className="flex w-full items-center gap-4 bg-raised border border-line hover:border-accent rounded-xl px-5 py-4 text-left transition-all">
                 <div className="w-8 h-8 rounded-full bg-sunken border border-line flex items-center justify-center text-sm text-muted flex-shrink-0">
                   {index + 1}
                 </div>
@@ -103,7 +98,7 @@ export default function CoursePage() {
                   </p>
                 </div>
                 <span className="text-subtle text-lg flex-shrink-0">→</span>
-              </div>
+              </button>
             )
           })}
         </div>

@@ -32,6 +32,7 @@ export const course = {
   estimatedHours: 40,
   // Prüfungsabschnitte dieses Fachs. Ein Fach ohne eigene Prüfer lässt die
   // Liste leer und bekommt einen gemeinsamen Abschnitt.
+  sprache: "de",
   examiners: [
     { id: "lieberzeit",     label: "Lieberzeit",     icon: "🔭" },
     { id: "koellensperger", label: "Köllensperger",  icon: "📊" },

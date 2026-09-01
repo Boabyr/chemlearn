@@ -1,4 +1,5 @@
-import { Frame, Cell, Electrode, Box, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Cell, Electrode, Box, Beam, Caption, Tag } from './parts'
 
 /** Ionenselektive Elektrode: stromlose Spannungsmessung, Nernst-Verhalten. */
 export default function PotentiometricSensor() {

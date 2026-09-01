@@ -1,4 +1,5 @@
-import { Frame, Lamp, Monochromator, Cuvette, Detector, Beam, Caption, Tag, C } from './parts'
+import { C } from './farben'
+import { Frame, Lamp, Monochromator, Cuvette, Detector, Beam, Caption, Tag } from './parts'
 
 /** Fluoreszenzspektrometer: Emissionsarm steht 90° zum Anregungsarm. */
 export default function Fluorescence() {

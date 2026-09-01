@@ -73,6 +73,22 @@ export type ContentSuggestionRow = {
   created_at: Zeitstempel
 }
 
+/** Freie Form, damit ein neuer Schalter keine Migration braucht. */
+export type Einstellungen = {
+  /** Prüfungstermin je Kurs, als YYYY-MM-DD. */
+  pruefungstermine?: Record<string, string>
+  /** Wie viele Elemente am Tag angepeilt werden. */
+  tagesziel?: number
+  /** Zeitzone für Serie und Statistik; leer heißt: die des Geräts. */
+  zeitzone?: string
+}
+
+export type UserSettingsRow = {
+  user_id: string
+  daten: Einstellungen
+  updated_at: string
+}
+
 export type AttemptRow = {
   id: number
   user_id: string
@@ -150,6 +166,12 @@ export interface Database {
         Row: ReviewRowDb
         Insert: ReviewRowDb
         Update: Partial<ReviewRowDb>
+        Relationships: []
+      }
+      user_settings: {
+        Row: UserSettingsRow
+        Insert: Einfuegen<UserSettingsRow, 'user_id'>
+        Update: Partial<UserSettingsRow>
         Relationships: []
       }
     }

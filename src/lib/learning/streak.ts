@@ -1,10 +1,19 @@
-import { istGestern } from '../zeit/datum'
+import { tageDazwischen } from '../zeit/datum'
 
 export interface StreakZustand {
   currentStreak: number
   longestStreak: number
   lastActiveDate: string
 }
+
+/**
+ * Ein Tag Nachsicht.
+ *
+ * Eine Serie, die beim ersten verpassten Tag zerbricht, bestraft einen
+ * Klausurtag oder eine Zugfahrt härter als das Nichtlernen selbst. Nach zwei
+ * verpassten Tagen fängt sie neu an.
+ */
+export const GNADENTAGE = 1
 
 /**
  * Nächster Serienstand — oder `null`, wenn nichts zu schreiben ist.
@@ -20,7 +29,8 @@ export function naechsterStreak(
   if (!bisher) return { currentStreak: 1, longestStreak: 1, lastActiveDate: heute }
   if (bisher.lastActiveDate >= heute) return null
 
-  const current = istGestern(bisher.lastActiveDate, heute) ? bisher.currentStreak + 1 : 1
+  const luecke = tageDazwischen(bisher.lastActiveDate, heute)
+  const current = luecke <= 1 + GNADENTAGE ? bisher.currentStreak + 1 : 1
   return {
     currentStreak: current,
     longestStreak: Math.max(current, bisher.longestStreak),
