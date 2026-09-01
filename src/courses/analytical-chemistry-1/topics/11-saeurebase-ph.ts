@@ -83,10 +83,40 @@ NaCl: neutral (starkes Salz)
 NaOH: n = 12/40 = 0,3 mol → c = 0,6 mol/L
 pH = 14 - pOH = 14 - (-log 0,6) = 14 - 0,22 = 13,78
 
-**0,1M Essigsäure (pKs=4,76) auf 1L:**
-pH = ½(4,76 - log 0,01) = ½(4,76 + 2) = ½(6,76) ... 
-[H⁺] = √(Ka · c) = √(1,74×10⁻⁵ × 0,01) = √(1,74×10⁻⁷) = 4,17×10⁻⁴
-pH = 3,38
+**0,01M Essigsäure (pKs = 4,76):**
+Näherung für schwache Säuren: pH = ½(pKs − log c) = ½(4,76 + 2) = ½(6,76) = 3,38
+Gegenprobe über die Konzentration:
+[H⁺] = √(Ka · c) = √(1,74×10⁻⁵ · 0,01) = √(1,74×10⁻⁷) = 4,17×10⁻⁴ mol/L → pH = 3,38
+
+## Wann welche Formel gilt
+
+Die drei Formeln werden regelmäßig verwechselt. Sie unterscheiden sich danach, was in der
+Lösung vorliegt:
+
+| Situation | Formel | Bedingung |
+|---|---|---|
+| starke Säure | pH = −log c | vollständig dissoziiert |
+| schwache Säure | pH = ½(pKs − log c) | nur die Säure, kein Salz |
+| Puffer | pH = pKs + log([A⁻]/[HA]) | Säure **und** konjugierte Base |
+| schwache Base | pOH = ½(pKb − log c), pH = 14 − pOH | nur die Base |
+
+Die Näherung für schwache Säuren setzt voraus, dass der Dissoziationsgrad klein bleibt —
+faustregelhaft unter 5 %. Bei sehr verdünnten oder relativ starken schwachen Säuren
+stimmt sie nicht mehr, dann muss die quadratische Gleichung gelöst werden.
+
+## Was einen Puffer belastbar macht
+
+Ein Puffer hält den pH, weil zugegebene H⁺ von A⁻ und zugegebene OH⁻ von HA abgefangen
+werden. Zwei Größen entscheiden über seine Güte:
+
+- **Lage:** Das Optimum liegt bei pH = pKs, dort ist [HA] = [A⁻] und die Kapazität
+  maximal. Brauchbar ist der Bereich pKs ± 1 — außerhalb ist eine der beiden Formen
+  weitgehend aufgebraucht.
+- **Kapazität:** Sie wächst mit der Gesamtkonzentration. Ein Puffer aus 0,1 M Komponenten
+  fängt zehnmal mehr Säure ab als einer aus 0,01 M, obwohl beide denselben pH zeigen.
+
+Beim Verdünnen ändert sich der pH eines Puffers deshalb kaum — das Verhältnis
+[A⁻]/[HA] bleibt gleich —, seine Kapazität aber sehr wohl.
 `,
   interactive: {
     type: "formula-calculator",

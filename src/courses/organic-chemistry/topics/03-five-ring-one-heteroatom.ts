@@ -77,7 +77,32 @@ Mechanism: double condensation (hemi-acetal) + cyclisation + dehydration
 
 ### Benzofuran, Benzothiophene:
 - Analogous to indole, but with O or S
-- SEAr preferred at C-2 of the 5-membered ring part
+- SEAr preferred at C-2 of the 5-membered ring part — unlike indole, because there is no
+  N–H whose lone pair could stabilise the C-3 adduct as effectively
+
+## One Synthesis, Three Rings
+
+The Paal-Knorr syntheses of pyrrole, furan and thiophene are the same reaction with three
+different reagents on the same 1,4-dicarbonyl:
+
+| Target | Reagent | Leaves |
+|---|---|---|
+| Pyrrole | NH₃ or R-NH₂ | 2 H₂O |
+| Furan | acid (H⁺) | 1 H₂O |
+| Thiophene | P₄S₁₀ or H₂S/H⁺ | H₂O / oxygen exchanged for sulfur |
+
+Worth remembering as one disconnection rather than three: a five-membered aromatic
+heterocycle with substituents at C-2 and C-5 almost always comes from a 1,4-dicarbonyl.
+The heteroatom simply says which reagent was used.
+
+## Acidity and Basicity at a Glance
+
+- **Pyrrole is an acid, not a base** (pKa 17.5 for the N–H). The lone pair is in the ring
+  and unavailable; what is available is the proton on nitrogen.
+- **Furan and thiophene are neither.** Oxygen and sulfur keep a second lone pair in the
+  ring plane, but protonating it would still cost aromaticity.
+- Deprotonating pyrrole gives the **pyrrolide anion**, which is aromatic, stable and a
+  good nucleophile at nitrogen — the entry point to N-substituted pyrroles.
 
 
 

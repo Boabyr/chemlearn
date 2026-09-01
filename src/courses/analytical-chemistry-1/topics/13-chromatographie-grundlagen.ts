@@ -92,6 +92,39 @@ B: tR=9,2min, wB=0,57min
 3. Rs = 2(9,2-6,5)/(0,73+0,57) = 2·2,7/1,30 = 4,15
 4. N_A = 16·(6,5/0,73)² = 16·79,2 = 1267
 5. H = 15cm/1267 = 0,0118cm = 118μm
+
+## Die drei Stellschrauben der Auflösung
+
+Rs = (√N/4) · ((α−1)/α) · (k'/(1+k'))
+
+Die Gleichung zerfällt in drei Faktoren, die sich unabhängig voneinander verändern lassen
+— und die sehr unterschiedlich viel bringen:
+
+- **Trennstufenzahl N** wirkt nur mit der Wurzel. Die Säulenlänge zu verdoppeln bringt den
+  Faktor √2 ≈ 1,41 an Auflösung, kostet aber die doppelte Analysenzeit und den doppelten
+  Druck. Der teuerste Weg.
+- **Selektivität α** wirkt am stärksten. Sie ändert sich über die stationäre oder mobile
+  Phase, über pH oder Temperatur. Schon α von 1,05 auf 1,10 verdoppelt den mittleren
+  Term. Der erste Weg, den man versucht.
+- **Retentionsfaktor k'** wirkt nur bis etwa k' = 5; darüber läuft der Term gegen 1 und
+  längeres Warten bringt nichts mehr. Der Zielbereich liegt bei k' = 2 bis 10.
+
+**Faustregel zur Bewertung:** Rs = 1,0 trennt zu etwa 98 %, Rs = 1,5 heißt Basislinientrennung.
+Alles darüber ist verschenkte Zeit.
+
+## Van-Deemter: warum es eine optimale Flussrate gibt
+
+H = A + B/u + C·u
+
+- **A (Eddy-Diffusion):** verschiedene Wege durch die Packung. Hängt von der Korngröße ab,
+  nicht von der Geschwindigkeit — bei Kapillarsäulen ohne Packung fällt der Term weg.
+- **B (Longitudinaldiffusion):** Verbreiterung entlang der Säule. Wirkt sich vor allem bei
+  langsamem Fluss aus, weil dann viel Zeit zum Diffundieren bleibt.
+- **C (Stoffaustausch):** Verzögerung beim Übergang zwischen den Phasen. Wächst mit der
+  Geschwindigkeit, weil das Gleichgewicht nicht mehr eingestellt wird.
+
+Weil B mit 1/u fällt und C mit u steigt, hat H ein Minimum — die optimale Flussrate. In
+der GC liegt sie höher als in der HPLC, weil Gase deutlich schneller diffundieren.
 `,
   interactive: {
     type: "formula-calculator",

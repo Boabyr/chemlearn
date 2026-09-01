@@ -73,6 +73,39 @@ Nachweis über Potentiometrie oder Indikator (Mohr, Volhard, Fajans)
 Ksp(CaF₂) = [Ca²⁺][F⁻]² = s · (2s)² = 4s³
 s = ∛(Ksp/4)
 
+## Warum die Stöchiometrie als Exponent auftaucht
+
+Der häufigste Fehler bei Löslichkeitsrechnungen ist, aus Ksp einfach die Wurzel zu ziehen.
+Das gilt nur für Salze vom Typ AB. Sobald ein Ion mehrfach vorkommt, geht sein
+Koeffizient zweimal ein: einmal als Faktor vor s, einmal als Exponent.
+
+| Typ | Beispiel | Zusammenhang | Löslichkeit |
+|---|---|---|---|
+| AB | AgCl | Ksp = s² | s = √Ksp |
+| AB₂ | CaF₂ | Ksp = 4s³ | s = ∛(Ksp/4) |
+| A₂B | Ag₂CrO₄ | Ksp = 4s³ | s = ∛(Ksp/4) |
+| AB₃ | Fe(OH)₃ | Ksp = 27s⁴ | s = ⁴√(Ksp/27) |
+
+Daraus folgt auch, dass sich Löslichkeitsprodukte verschiedener Typen **nicht** direkt
+vergleichen lassen. Ag₂CrO₄ hat mit 1,1×10⁻¹² ein kleineres Ksp als AgCl mit 1,8×10⁻¹⁰,
+ist aber die besser lösliche Verbindung — weil bei drei Ionen je Formeleinheit aus einem
+kleineren Produkt eine größere Löslichkeit folgt.
+
+## Fällen, aber vollständig
+
+Als quantitativ gilt eine Fällung, wenn weniger als 0,1 % des Analyten in Lösung bleiben.
+Erreicht wird das über den gemeinsamen Ioneneffekt: ein Überschuss des Fällungsreagenzes
+drückt die Restkonzentration.
+
+Zu viel Überschuss schadet allerdings. Manche Niederschläge lösen sich als Komplex wieder
+auf — AgCl geht bei hohem Chloridüberschuss als [AgCl₂]⁻ in Lösung zurück. Dazwischen
+liegt das Optimum, meist beim etwa 1,1-fachen der stöchiometrischen Menge.
+
+**Verdauen (Digerieren):** Der frische Niederschlag wird in der Mutterlauge stehen
+gelassen oder erwärmt. Kleine Kristalle lösen sich, große wachsen; die Oberfläche sinkt
+und mit ihr die Menge an mitgerissenen Fremdionen. Ohne diesen Schritt ist ein
+gravimetrisches Ergebnis systematisch zu hoch.
+
 
 `,
   interactive: {

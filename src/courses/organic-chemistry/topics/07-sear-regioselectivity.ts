@@ -53,8 +53,33 @@ Structure 3: charge at N (N⁺) → particularly stable
 → 3 resonance structures → more stable arenium ion than at C-3
 
 **For SEAr at pyridine (C-3 attack):**
-No N⁺ in resonance structure → less stable
-At C-2 or C-4 attack: N⁺ in resonance structure, BUT N already electron-poor (pKa 5.2) → destabilising!
+No resonance structure places the positive charge on nitrogen → this is the **least bad**
+option, and therefore the preferred position.
+
+**At C-2 or C-4 attack:** one resonance structure puts the positive charge directly on the
+nitrogen. Nitrogen is the most electronegative atom in the ring and is already withdrawing
+electron density from it — asking it to carry a formal positive charge as well is
+expensive, so those structures do not stabilise, they destabilise. (The pKa of pyridinium
+says something about the *basicity* of the free lone pair and has nothing to do with the
+stability of the arenium ion.)
+
+## Why the arenium ion decides everything
+
+The electrophile itself does not choose the position. All positions are attacked; only the
+one whose arenium ion is most stable proceeds fast enough to matter, because that step is
+rate-determining. So the whole question of regioselectivity reduces to drawing the possible
+cationic intermediates and counting how well each one spreads the charge.
+
+Two rules follow from that:
+
+- **Electron-rich rings** (pyrrole, furan, thiophene, indole) react faster than benzene,
+  because the heteroatom can donate its lone pair into the ring and take the charge itself.
+- **Electron-poor rings** (pyridine, pyrimidine) react slower than benzene and prefer the
+  position *furthest* from the heteroatom, because there the charge never has to sit on it.
+
+The same reasoning, run backwards, explains why pyridine is the easy substrate for
+nucleophilic substitution: an anionic intermediate with the negative charge on nitrogen is
+exactly what an electronegative atom likes.
 
 ## Important Reactions Summary
 

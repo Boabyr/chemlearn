@@ -70,6 +70,39 @@ A = ε · N · d  (N = Atomzahldichte statt Konzentration)
 | ICP-OES | ~8000°C | 70+ | μg/L |
 | ICP-MS | ~8000°C | 70+ | ng/L–pg/L |
 
+## Störungen und ihre Gegenmittel
+
+**Spektrale Störung:** Eine fremde Linie fällt mit der Analytlinie zusammen. Abhilfe:
+andere Linie wählen oder höher auflösen. In der ICP-MS heißt derselbe Fall
+**isobare Interferenz** — ⁴⁰Ar¹⁶O⁺ stört auf Masse 56 die Bestimmung von ⁵⁶Fe. Abhilfe
+dort: Kollisionszelle mit Helium oder eine störungsfreie Alternativmasse.
+
+**Chemische Störung:** Der Analyt bildet schwerflüchtige Verbindungen und wird nicht
+vollständig atomisiert. Klassiker: Phosphat bindet Calcium. Abhilfe: heißere Flamme
+(N₂O/Acetylen) oder ein Freisetzungsreagenz wie Lanthan, das das Phosphat abfängt.
+
+**Ionisationsstörung:** Leicht ionisierbare Begleitelemente wie Natrium und Kalium
+drücken die Ionisation des Analyten und verändern das Signal. Abhilfe: einen
+Ionisationspuffer im Überschuss zugeben, sodass die Störung für alle Proben gleich groß
+ist.
+
+**Untergrundabsorption:** Streuung an Partikeln und Molekülbanden täuschen Absorption vor.
+Abhilfe: Untergrundkorrektur mit Deuteriumlampe oder nach Zeeman.
+
+## Das Temperaturprogramm des Graphitrohrs
+
+Die Probe wird nicht auf einmal erhitzt, sondern in Stufen:
+
+1. **Trocknen** (~110 °C): Lösungsmittel verdampft, ohne zu spritzen
+2. **Veraschen/Pyrolyse** (300–1200 °C): die Matrix wird zerstört und ausgetrieben,
+   der Analyt muss dabei noch bleiben
+3. **Atomisieren** (~2000–2700 °C): das Messsignal entsteht als kurzer Peak
+4. **Ausheizen** (~2700 °C): Reste raus, damit die nächste Probe nicht verschleppt wird
+
+Die Kunst liegt in Schritt 2: möglichst heiß, um die Matrix loszuwerden, aber nicht so
+heiß, dass der Analyt mitgeht. Für flüchtige Elemente wie Cd oder Pb setzt man dafür
+Matrixmodifier zu, die den Analyten thermisch stabilisieren.
+
 
 `,
   interactive: {

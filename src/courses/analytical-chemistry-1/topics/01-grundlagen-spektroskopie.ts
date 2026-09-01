@@ -62,6 +62,43 @@ Breitbandlichtquelle → Interferometer (Michelson) → Probe → Detektor → F
 A = ε · c · d
 (wird in Thema 02 detailliert behandelt)
 
+## Warum jede Messung einen Bezugswert braucht
+
+Ein Detektor misst eine Lichtintensität, keine Absorption. Die Absorption entsteht erst
+aus dem Verhältnis zweier Intensitäten — mit und ohne Probe. Deshalb gehört zu jeder
+Absorptionsmessung ein Blindwert: dieselbe Küvette, dasselbe Lösungsmittel, nur ohne
+Analyt. Alles, was Lösungsmittel und Glas an Licht schlucken, fällt damit heraus.
+
+**Einstrahlgerät:** Blind und Probe werden nacheinander gemessen. Driftet die Lampe
+zwischen beiden Messungen, geht das direkt in das Ergebnis ein.
+
+**Zweistrahlgerät:** Ein Strahlteiler schickt Licht gleichzeitig durch Probe und
+Referenz. Lampendrift trifft beide Wege gleich und kürzt sich heraus — der Grund, warum
+Zweistrahlgeräte für lange Messreihen der Standard sind.
+
+## Auflösung, Empfindlichkeit und der Kompromiss dazwischen
+
+Ein Monochromator schneidet aus dem Licht ein Band heraus. Ein schmaler Spalt liefert
+eine gute spektrale Auflösung, lässt aber wenig Licht durch — das Signal wird kleiner und
+das Rauschen relativ größer. Ein breiter Spalt kehrt beides um. Jede Einstellung an einem
+dispersiven Gerät ist ein Handel zwischen Auflösung und Signal-Rausch-Verhältnis.
+
+## Warum Fourier-Transform-Geräte gewonnen haben
+
+Ein FT-Spektrometer misst nicht Wellenlänge für Wellenlänge, sondern alle gleichzeitig als
+Interferogramm.
+
+- **Multiplex-Vorteil (Fellgett):** alle Wellenlängen werden die ganze Messzeit über
+  erfasst statt jede nur einen Bruchteil davon → besseres Signal-Rausch-Verhältnis oder
+  dieselbe Qualität in kürzerer Zeit
+- **Durchsatz-Vorteil (Jacquinot):** kein enger Spalt nötig, es kommt deutlich mehr Licht
+  zum Detektor
+- **Wellenzahlgenauigkeit:** ein Referenzlaser eicht die Spiegelposition mit
+
+Deshalb ist die IR-Spektroskopie heute praktisch vollständig FT-IR, während im UV/Vis —
+wo Lichtquellen stark und Detektoren empfindlich sind — dispersive Geräte und
+Dioden-Array-Detektoren weiterhin genügen.
+
 `,
   interactive: {
     type: "apparatus-quiz",

@@ -151,6 +151,23 @@ describe('Sollstärke der Themen', () => {
   })
 })
 
+describe('Länge der Theorietexte', () => {
+  // CONTENT-PROMPT.md gibt 400 bis 900 Wörter je Thema vor. Sechs Themen der
+  // organischen Chemie lagen darunter, eines bei der Hälfte — das fiel nur auf,
+  // weil jemand nachgezählt hat. Jetzt zählt der Test.
+  const MINDESTLAENGE = 400
+
+  const woerter = (text: string) => text.split(/\s+/).filter(Boolean).length
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: kein Thema unter der Vorgabe', async (kursId) => {
+    const themen = await loadAllTopics(kursId)
+    const duenn = themen
+      .filter(t => woerter(t.theory) < MINDESTLAENGE)
+      .map(t => `${t.id}: ${woerter(t.theory)} Wörter`)
+    expect(duenn).toEqual([])
+  })
+})
+
 describe('Prüfungsdaten', () => {
   it.each(allCourses.map(k => [k.id] as const))('%s: Fragen zeigen auf vorhandene Themen', async (kursId) => {
     const kurs = allCourses.find(k => k.id === kursId)!

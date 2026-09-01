@@ -66,6 +66,41 @@ c_x / (c_x + c_S·V_S/V_total) = y₀/y₁
 
 c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
 
+## Die drei Kalibrierverfahren im Vergleich
+
+| Verfahren | Kompensiert | Aufwand | Wann |
+|---|---|---|---|
+| Externe Kalibrierung | nichts | eine Gerade für viele Proben | Matrix bekannt und nachstellbar |
+| Standardaddition | Matrixeffekte | mehrere Messungen **je Probe** | Matrix unbekannt oder variabel |
+| Interner Standard | Volumen- und Aufarbeitungsfehler | eine Zugabe je Probe | GC, HPLC, ICP-MS |
+
+Die Verfahren schließen einander nicht aus: In der ICP-MS ist die Kombination aus interner
+Standardisierung (gegen Drift) und externer Kalibrierung der Normalfall.
+
+**Auswertung der Standardaddition grafisch:** Man trägt das Signal gegen die zugesetzte
+Konzentration auf und verlängert die Gerade nach links bis zur x-Achse. Der Betrag des
+Achsenschnittpunkts ist die gesuchte Konzentration. Das ist dieselbe Rechnung wie die
+Formel oben, nur ohne Umstellen — und es zeigt sofort, ob die Punkte überhaupt auf einer
+Geraden liegen.
+
+## Was einen internen Standard tauglich macht
+
+- Er darf in der Probe nicht vorkommen
+- Er muss sich chemisch ähnlich verhalten wie der Analyt, damit Verluste beide gleich
+  treffen
+- Er muss vom Analyten getrennt messbar sein
+- Er wird **vor** der Probenvorbereitung zugegeben — sonst kompensiert er nur die
+  Injektion und nicht die Aufarbeitung
+
+In der Massenspektrometrie ist der Idealfall ein isotopenmarkierter Analyt: chemisch
+identisch, im Massenspektrum unterscheidbar.
+
+## Häufigster Fehler bei der Standardaddition
+
+Der zugesetzte Standard verdünnt die Probe. Wird V_S/V_total weggelassen, kommt ein
+systematisch zu hoher Gehalt heraus. Deshalb arbeitet man entweder mit sehr kleinen
+Zugabevolumina hoch konzentrierter Standards, oder man rechnet die Verdünnung sauber mit.
+
 
 `,
   interactive: {

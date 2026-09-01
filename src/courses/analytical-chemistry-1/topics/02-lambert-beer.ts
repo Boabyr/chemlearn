@@ -71,6 +71,39 @@ Das Lambert-Beer-Gesetz gilt exakt nur unter folgenden Bedingungen:
 - Hier ist ε am größten → maximale Sensitivität
 - Hier ist die Kalibriergerade am steilsten
 - Kleine Abweichungen in λ haben geringsten Effekt auf A (flaches Maximum)
+
+## Was tun, wenn A außerhalb des Bereichs liegt
+
+**A über 1,5:** Es kommt zu wenig Licht am Detektor an, das Verhältnis I/I₀ wird aus zwei
+kleinen Zahlen gebildet und der relative Fehler explodiert. Abhilfe in dieser Reihenfolge:
+Probe verdünnen, kürzere Küvette wählen (10 mm auf 1 mm senkt A um den Faktor zehn), oder
+auf eine Nebenbande mit kleinerem ε ausweichen.
+
+**A unter 0,1:** Der Unterschied zum Blindwert verschwindet im Rauschen. Abhilfe:
+aufkonzentrieren, längere Küvette, oder ein empfindlicheres Verfahren wählen.
+
+## Warum Streulicht die Kurve abknicken lässt
+
+Streulicht ist Licht, das den Detektor erreicht, ohne die Probe passiert zu haben — an
+Optikflächen gestreut oder am Monochromator vorbeigelaufen. Es addiert sich zu I und kann
+nie kleiner werden, egal wie stark die Probe absorbiert. Damit läuft die gemessene
+Absorption gegen einen oberen Grenzwert: die Kalibriergerade biegt bei hohen
+Konzentrationen zur Konzentrationsachse hin ab.
+
+Das ist der häufigste Grund für scheinbare Abweichungen vom Lambert-Beer-Gesetz und
+zugleich der Grund, warum die obere Linearitätsgrenze ein Gerätemerkmal ist und keine
+Eigenschaft des Analyten.
+
+## Additivität der Absorptionen
+
+Absorbieren mehrere Stoffe bei derselben Wellenlänge, addieren sich ihre Beiträge:
+
+A(gesamt) = ε₁·c₁·d + ε₂·c₂·d + …
+
+Daraus folgt zweierlei. Erstens stört jede mitabsorbierende Begleitsubstanz die
+Bestimmung. Zweitens lässt sich ein Gemisch aus n Komponenten auswerten, wenn man bei n
+Wellenlängen misst und die ε-Werte aller Komponenten bei allen Wellenlängen kennt — ein
+lineares Gleichungssystem, das die Mehrkomponentenanalyse trägt.
 `,
   interactive: {
     type: "formula-calculator",

@@ -77,6 +77,32 @@ Chemosensor bei dem das Rezeptorelement ein biologisches Makromolekül (Enzym, A
 - **Umwelt:** O₃, NO₂, CO in Luft; Schwermetalle in Wasser
 - **Lebensmittel:** Frische (Amine), Verderblichkeit, Allergene
 - **Industrie:** Prozessüberwachung, Qualitätskontrolle
+
+## Der Glucosesensor als Musterfall
+
+Der Blutzuckersensor zeigt den Aufbau eines Biosensors in Reinform:
+
+1. **Erkennung:** Glucoseoxidase setzt Glucose mit O₂ zu Gluconolacton und H₂O₂ um. Das
+   Enzym ist der Grund für die Selektivität — es reagiert mit Glucose und nicht mit den
+   übrigen Zuckern im Blut.
+2. **Umwandlung:** Der Transducer macht daraus ein elektrisches Signal. In der ersten
+   Generation wurde das entstehende H₂O₂ amperometrisch oxidiert.
+3. **Auswertung:** Der Strom ist der Glucosekonzentration proportional.
+
+Die zweite Generation ersetzt Sauerstoff durch einen **Mediator** (Ferrocen, Hexacyanoferrat),
+der die Elektronen vom Enzym zur Elektrode trägt. Damit hängt das Ergebnis nicht mehr vom
+schwankenden Sauerstoffgehalt der Probe ab, und das Arbeitspotential sinkt — bei niedrigerem
+Potential stören Ascorbinsäure und Harnsäure weniger.
+
+## Kenngrößen, an denen ein Sensor gemessen wird
+
+- **Selektivität:** Antwortet er nur auf den Analyten? Meist die schwierigste Größe.
+- **Empfindlichkeit:** Steigung der Kennlinie, Signal je Konzentrationseinheit
+- **Ansprechzeit (t₉₀):** Zeit bis 90 % des Endwerts erreicht sind
+- **Reversibilität:** Geht das Signal zurück, wenn der Analyt verschwindet? Ein Sensor,
+  der nur einmal anspricht, ist eine Sonde, kein Sensor.
+- **Drift und Standzeit:** Wie lange bleibt die Kalibrierung gültig? Enzyme denaturieren,
+  Membranen verschmutzen — der Grund, warum Teststreifen Wegwerfartikel sind.
 `,
   interactive: {
     type: "apparatus-quiz",

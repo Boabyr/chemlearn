@@ -47,15 +47,29 @@ Nurr1 ligand with COOH → propose bioisostere:
 ### Most important reactions:
 
 **Ciamician-Dennstedt Rearrangement:**
-Pyrrole + dibromocarbene (from CHBr₃/base) → 3-bromopyridine
-Mechanism:
-1. Cyclopropanation of pyrrole with carbene → 2H-azirine intermediate (strained 3-membered ring)
-2. Ring opening + ring expansion → chloro/bromopyridine
+Pyrrole + dihalocarbene (:CCl₂ or :CBr₂, generated from CHCl₃/CHBr₃ with strong base)
+→ 3-halopyridine
 
-**Exam example – Pindolol:**
-Indole → 3-chloroquinoline derivative:
-- Reaction: Ciamician-Dennstedt-type or Beckmann rearrangement + CHCl₃/base
-- Mechanism: indole-N attacks dibromocarbene → strained intermediate → ring opening of pyrrole part → quinoline scaffold
+Mechanism:
+1. The carbene adds across the electron-rich C2=C3 bond of the pyrrole →
+   cyclopropane-fused bicycle (an azabicyclo[3.1.0]hexene, not a three-membered
+   nitrogen ring)
+2. The strained cyclopropane ring opens; one of its carbons is taken up into the
+   five-membered ring
+3. Ring expansion + rearomatisation → 3-halopyridine
+
+The carbon count makes the point: pyrrole has four ring carbons, the carbene brings one
+more, and the product ring has five. That is a genuine skeletal edit — a ring atom has
+been **inserted**, not a substituent exchanged.
+
+**Ring expansion of indoles:**
+The same chemistry run on an indole expands the pyrrole part and leaves the fused benzene
+ring alone → 3-haloquinoline.
+- Reagent: CHCl₃ or CHBr₃ with strong base, as above
+- Mechanism: the carbene adds to the C2=C3 bond of the indole (the enamine-like, most
+  electron-rich bond), **not** to the nitrogen — the nitrogen lone pair is tied up in the
+  aromatic π system
+- Then ring opening of the cyclopropane and expansion → quinoline scaffold
 
 **Further skeletal editing concepts:**
 - **Nitrogen insertion into benzene:** Rh-catalysed, gives pyridine directly

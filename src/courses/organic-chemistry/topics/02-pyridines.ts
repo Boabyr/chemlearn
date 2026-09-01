@@ -8,17 +8,21 @@ export const topic = {
   estimatedMinutes: 90,
   theory: `
 
-
 ## Importance of Pyridines in Pharmacy
 
-Pyridine scaffolds are found in numerous FDA-approved drugs (general uses: base, solvent, synthetic building block).
+Pyridine scaffolds appear in numerous FDA-approved drugs. The ring is weakly basic
+(pKa 5.2 for pyridinium), water-soluble and metabolically robust, which is why it is
+one of the most common replacements for benzene in lead optimisation.
 
 ## I. Synthesis of Pyridine Derivatives
 
 ### A. Cyclocondensation [3+3] – Hantzsch Dihydropyridine Synthesis
 **Reagents:** Enamine + 1,3-dicarbonyl compound (or aldehyde + β-ketoester + NH₃)
+The primary product is a 1,4-dihydropyridine; an oxidation step (HNO₃, DDQ, air) gives
+the aromatic pyridine.
 
-**Problem:** With unsymmetrical enamines + unsymmetrical 1,3-dicarbonyls, two regioisomers form (P1 + P2).
+**Problem:** With unsymmetrical enamines + unsymmetrical 1,3-dicarbonyls, two
+regioisomers form (P1 + P2).
 
 **Solution for regioselectivity:**
 - Use a pre-synthesised enamine with defined regiochemistry
@@ -29,23 +33,34 @@ Pyridine scaffolds are found in numerous FDA-approved drugs (general uses: base,
 - **Bohlmann-Rahtz reaction:** Enaminone + β-ketoester → pyridine
 
 ### B. Cyclocondensation [5+1]
-Reaction of a 1,5-dicarbonyl compound with NH₃ → pyridine (after oxidation)
+Reaction of a 1,5-dicarbonyl compound with NH₃ → pyridine (after oxidation).
+The nitrogen is the single atom; the five carbons come pre-assembled.
 
-### C. Cyclocondensation [3+2+1]
-**Kröhnke reaction:** 1,5-dicarbonyl compound + NH₃
-Mechanism: aldol condensation → Michael addition → cyclisation → aromatisation
+### C. Cyclocondensation [3+2+1] – Kröhnke Reaction
+**Reagents:** α-bromoketone + pyridine, then an α,β-unsaturated ketone and NH₄OAc.
+
+**Mechanism:**
+1. Pyridine alkylates the α-bromoketone → pyridinium salt
+2. Deprotonation at the α-carbon → pyridinium ylide
+3. Michael addition of the ylide to the enone
+4. Ammonia (from NH₄OAc) condenses with both carbonyls → ring closure
+5. Pyridine is expelled as the leaving group, aromatisation gives the product
+
+Pyridine is used twice here: first as a nucleophile to activate the bromoketone, then
+as the leaving group. That is what makes the reaction regiochemically clean — the
+three fragments can only combine in one way.
 
 ### D. Cyclocondensation [2+2+1+1]
 Combination of various building blocks for functionalised pyridines
 
 ### E. Cycloaddition [4+2] – Diels-Alder type reactions
 **Azadiene + dienophile:**
-- **Boger reaction:** Triazine as azadiene + enamine (XY = N₂, retro-DA eliminates N₂)
+- **Boger reaction:** 1,2,4-triazine as azadiene + enamine (retro-DA eliminates N₂)
 - **Kondrat'eva pyridine synthesis:** Oxazole as azadiene + dienophile → pyridine
 
 **Kondrat'eva mechanism:**
 1. [4+2] cycloaddition of oxazole (as 1-oxa-1,3-butadiene) with alkyne
-2. Bicyclic transition state
+2. Bicyclic intermediate (7-oxabicyclo[2.2.1] system)
 3. Retro-[4+2]: elimination of CO₂
 4. Aromatic pyridine as product
 
@@ -53,7 +68,10 @@ Combination of various building blocks for functionalised pyridines
 **Bönnemann-Reppe synthesis:** Trimerisation of a nitrile with two equivalents of alkyne (cobalt catalysis)
 
 ### G. Rearrangements
-**Ciamician-Dennstedt rearrangement:** Pyrrole + cyclopropane → pyridine derivative
+**Ciamician-Dennstedt rearrangement:** Pyrrole + dihalocarbene (:CCl₂ or :CBr₂,
+generated from CHCl₃/CHBr₃ with strong base) → 3-halopyridine.
+The carbene adds across a C=C bond of the pyrrole; the resulting cyclopropane-fused
+bicycle opens and expands the five-membered ring to a six-membered one.
 
 ## II. Reactivity of Pyridines
 
@@ -61,22 +79,25 @@ Combination of various building blocks for functionalised pyridines
 Pyridine is **deactivated** toward SEAr (N withdraws electron density):
 - Reaction very slow, requires harsh conditions
 - Preferred position: **C-3** (meta-like to N)
+- Attack at C-2 or C-4 would place positive charge on the electronegative nitrogen
 - Bromination only possible under drastic conditions
 
 ### Nucleophilic Aromatic Substitution (SNAr)
 Pyridine is **activated** toward SNAr:
-- Preferred positions: **C-2 and C-4** (para/ortho to N)
+- Preferred positions: **C-2 and C-4** (the anionic intermediate delocalises onto N)
 - Important reactions:
-  - **Chichibabin reaction:** Pyridine + NaNH₂ → 2-aminopyridine
+  - **Chichibabin reaction:** Pyridine + NaNH₂ → 2-aminopyridine, with loss of hydride
   - **Meisenheimer complex** as intermediate
 
 ### N-Oxidation
 Pyridine + mCPBA → pyridine N-oxide
-- N-oxides: activation for SEAr (position 4) and SNAr
+- N-oxides: activation for SEAr (position 4) and SNAr — the oxide can donate and
+  withdraw electron density, so both reaction types become accessible
 - **Boekelheide rearrangement:** N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine
 
 ### Side-chain reactions
-2-Methylpyridine: α-methylene strongly acidic (analogous to ketones)
+2-Methylpyridine: α-methylene strongly acidic (analogous to ketones), because the
+resulting carbanion is delocalised onto the ring nitrogen
 - Lithiation possible → further reaction with electrophiles
 
 

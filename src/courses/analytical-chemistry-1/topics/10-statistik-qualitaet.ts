@@ -81,6 +81,37 @@ x̄ ± t · s/√n
 
 t = Student-Faktor (abhängig von n und Konfidenzniveau)
 
+Der Faktor t hängt von der Zahl der Freiheitsgrade (n−1) und dem gewählten Niveau ab und
+wird aus einer Tabelle abgelesen. Er ist bei kleinem n deutlich größer als der Wert der
+Normalverteilung: für n = 3 und 95 % steht dort 4,30 statt 1,96. Genau das ist der Grund,
+warum drei Messungen einen so breiten Vertrauensbereich liefern — man bezahlt die
+Unkenntnis der wahren Streuung mit einem größeren Faktor.
+
+## Der Vertrauensbereich schrumpft nur mit der Wurzel
+
+Im Nenner steht √n. Vier Messungen halbieren die Breite gegenüber einer, sechzehn
+vierteln sie. Der Aufwand wächst quadratisch mit der gewünschten Genauigkeit — deshalb
+lohnt sich ab einem gewissen Punkt nicht mehr, öfter zu messen, sondern die Methode
+selbst zu verbessern (kleineres s).
+
+## Welcher Test wofür
+
+- **t-Test:** Vergleicht Mittelwerte. Einstichproben: stimmt mein Mittelwert mit dem
+  zertifizierten Wert überein? Zweistichproben: liefern zwei Methoden dasselbe?
+- **F-Test:** Vergleicht Streuungen. Er kommt **vor** dem Zweistichproben-t-Test, weil
+  dieser gleiche Varianzen voraussetzt.
+- **Q-Test:** Prüft einen einzelnen verdächtigen Wert. Verworfen werden darf nur, wenn
+  Q_exp den Tabellenwert überschreitet — und nur ein Wert je Datensatz.
+
+Wichtig bei allen dreien: Ein nicht signifikantes Ergebnis beweist keine Gleichheit. Es
+heißt nur, dass die Daten nicht ausreichen, um einen Unterschied zu zeigen.
+
+## Nachweis- und Bestimmungsgrenze auseinanderhalten
+
+Die Nachweisgrenze beantwortet „ist etwas da?", die Bestimmungsgrenze „wie viel ist da?".
+Zwischen beiden liegt der Faktor 3 zu 10 in derselben Formel. Ein Messwert zwischen LOD
+und LOQ darf als Nachweis berichtet werden, aber nicht als Zahlenwert.
+
 
 `,
   interactive: {
