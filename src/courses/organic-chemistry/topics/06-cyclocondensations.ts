@@ -8,26 +8,41 @@ export const topic = {
   estimatedMinutes: 80,
   theory: `
 
-
-
 ## What is a Cyclocondensation?
 
-A **cyclocondensation** is a ring-closure reaction with loss of small molecules (H₂O, ROH, NH₃). Unlike cycloadditions, it involves nucleophilic/electrophilic steps (not pericyclic).
+A **cyclocondensation** is a ring-closure reaction with loss of small molecules
+(H₂O, ROH, NH₃). Unlike cycloadditions, it involves nucleophilic/electrophilic steps
+(not pericyclic).
+
+The practical consequence of that difference: a cyclocondensation runs through discrete
+intermediates that can be isolated, interrupted or steered — and it can also combine its
+building blocks in more than one way. A cycloaddition cannot, because everything happens
+in one step.
 
 ## Regioselectivity Problem
 
 With unsymmetrical components A + B → P1 + P2 (regioisomers)
+
+Two carbonyls of different reactivity and a nucleophile with two ends: the nucleophile
+attacks the more electrophilic carbonyl first, but "more electrophilic" is often a small
+difference, so both products form.
 
 **Strategies for regioselectivity:**
 1. **Pre-formed enamines** with defined geometry
 2. **Unsymmetrical dicarbonyl** instead of symmetrical
 3. **Conjugate addition – conjugate elimination** route
 
+The first strategy is the general one: instead of letting the amine choose which carbonyl
+to attack, the C–N bond is made beforehand in a separate step, and the cyclisation then has
+only one option left.
+
 ## Important Cyclocondensation Reactions (exam-relevant)
 
 ### Hantzsch Dihydropyridine [3+3]:
 Enamine + 1,3-dicarbonyl (+ NH₃) → 1,4-dihydropyridine → oxidation → pyridine
 Regioselective when enamine is pre-synthesised!
+The dihydropyridine stage matters in its own right — the calcium channel blockers of the
+nifedipine family are 1,4-dihydropyridines and are never oxidised further.
 
 ### Bohlmann-Rahtz Reaction [3+3]:
 Enaminone + β-ketoester → condensed pyridine
@@ -37,25 +52,35 @@ Selective: enaminone dictates regiochemistry
 Cyanoacetamide + 1,3-dicarbonyl → 2-pyridinone-3-carbonitrile
 
 ### Kröhnke [3+2+1]:
-Pyridinium ylide + unsaturated dicarbonyl + NH₄OAc → pyridine
-Mechanism: 1. Alkylation → pyridinium salt; 2. Knoevenagel + Michael; 3. cyclisation; 4. aromatisation
+Pyridinium ylide + α,β-unsaturated ketone + NH₄OAc → pyridine
+Mechanism: 1. pyridine alkylates the α-bromoketone → pyridinium salt;
+2. deprotonation → ylide; 3. Michael addition to the enone;
+4. ring closure with ammonia from NH₄OAc; 5. pyridine leaves, aromatisation
 
 ### Synthesis of substituted pyrimidines [3+3]:
-1,3-Dicarbonyl + urea/guanidine/amidinate → pyrimidines/pyrimidinones
+1,3-Dicarbonyl + urea/guanidine/amidine → pyrimidines/pyrimidinones
 **Biginelli reaction:** Aldehyde + β-ketoester + urea → dihydropyrimidinone (DHPM)
+A three-component reaction: all reagents go into one flask, and the order of events is
+sorted out by reactivity rather than by the chemist.
 
 ### Synthesis of pyrazoles [3+2]:
 1,3-Dicarbonyl + hydrazine (H₂N-NH₂) → pyrazole
 Regioselectivity: with unsymmetrical dicarbonyls → two possible regioisomers
-Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
+Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred, because the more
+nucleophilic NH₂ end attacks the more electrophilic carbonyl first
 
 ### Synthesis of isoxazoles:
-β-Enolketone + NH₂OH (hydroxylamine) → isoxazole (+ H₂O)
+β-Enolketone (or 1,3-dicarbonyl) + NH₂OH (hydroxylamine) → isoxazole (+ H₂O)
+Same skeleton as the pyrazole case, with the second nitrogen replaced by oxygen — and the
+same regiochemical question, since hydroxylamine also has two different ends.
 
 ### Imidazole synthesis:
-1,2-Dicarbonyl + NH₃ + aldehyde → imidazole (van Leusen: TosMIC)
+- **Debus-Radziszewski:** 1,2-dicarbonyl + aldehyde + 2 NH₃ → imidazole
+- **van Leusen:** TosMIC + an aldimine → imidazole; TosMIC supplies C-2 and one nitrogen,
+  and tosyl sulfinate leaves at the end
 
-
+These are two different reactions with two different disconnections — worth telling apart,
+because the exam question usually asks which fragment ends up where.
 
 `,
   interactive: {

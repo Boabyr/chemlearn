@@ -74,6 +74,24 @@ Tetrazole is an important **bioisostere of the carboxylic acid:**
 **Synthesis of tetrazoles:**
 Nitrile + NaN₃ (azide) → [3+2] cycloaddition → 5-substituted tetrazole
 
+## Why More Nitrogens Mean Less Reactivity
+
+Adding a second nitrogen to a five-membered ring changes it in a predictable direction.
+The pyrrole-type nitrogen donates its lone pair into the π system and activates the ring;
+every additional pyridine-type nitrogen withdraws electron density and deactivates it.
+
+- **Pyrrole** is extremely reactive towards electrophiles
+- **Imidazole and pyrazole** are noticeably less so, and their SEAr goes to the position
+  furthest from the pyridine-type nitrogen
+- **Triazoles and tetrazole** are essentially inert towards electrophiles — which is
+  exactly why tetrazole survives in the body where a carboxylic acid would be conjugated
+  and excreted
+
+The same trend read backwards gives the acidity: the more pyridine-type nitrogens, the
+better the anion is stabilised. Pyrrole has pKa 17.5, imidazole 14.5, 1,2,4-triazole
+around 10, and tetrazole about 4.9 — by then it is as acidic as acetic acid, and that is
+the property the medicinal chemist is after.
+
 
 
 `,

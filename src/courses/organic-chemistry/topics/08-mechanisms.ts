@@ -24,14 +24,25 @@ Each mechanism must be represented with correct electron-flow arrows (curly arro
 2. **Retro-[4+2]:** Thermal cleavage with CO₂ loss → aromatic pyridine
 **Driving force:** Aromatisation + entropy gain (CO₂ gas)
 
-## 2. Boger Reaction (Triazine + Enamine → Pyridine + N₂)
+## 2. Boger Reaction (Azine + Enamine, with loss of N₂)
 
-**Reaction:** 1,2,4,5-Tetrazine (or triazine) + enamine → pyridine/pyridazine + N₂
+Two azines are used here, and they give **different rings**. Keeping them apart is the
+whole point of the section.
 
-**Steps:**
-1. **[4+2] cycloaddition:** Tetrazine (azadiene, 4π) + enamine (2π) → bicyclus
-2. **Retro-[4+2]:** N₂ loss (analogous to CO₂ in Kondrat'eva) → dihydropyridazine
-3. **Oxidation/tautomerisation** → aromatic pyridine
+**a) 1,2,4-Triazine + enamine → pyridine + N₂**
+1. **[4+2] cycloaddition:** the triazine acts as azadiene (4π), the enamine as
+   dienophile (2π) → bridged bicycle
+2. **Retro-[4+2]:** N₂ leaves (analogous to CO₂ in Kondrat'eva) → dihydropyridine
+3. **Elimination of the amine** from the enamine + aromatisation → pyridine
+
+**b) 1,2,4,5-Tetrazine + alkene or alkyne → pyridazine + N₂**
+1. **[4+2] cycloaddition** onto the tetrazine
+2. **Retro-[4+2]:** N₂ leaves → 4,5-dihydropyridazine
+3. **Oxidation/tautomerisation** → aromatic **pyridazine** — two nitrogens stay in the
+   ring, because the tetrazine brought four and only two leave as N₂
+
+Counting nitrogens is the quickest check: triazine has three, one pair leaves as N₂, one
+remains → pyridine. Tetrazine has four, one pair leaves → pyridazine.
 
 ## 3. Paal-Knorr Mechanism (1,4-Dicarbonyl → Pyrrole)
 
@@ -68,6 +79,12 @@ c) Reduced back to pyridine
 ## 7. Mechanism: [4+2] + Retro-[4+2]
 
 Cycloaddition → bicyclic intermediate. Then thermal retro-[4+2] eliminates XY (CO₂, N₂, SO₂, etc.) → new aromatic compound. Driving force: aromatisation + gas evolution.
+
+This two-step pattern is the single most reusable idea in the chapter. Whenever a synthesis
+produces an aromatic ring and a gas, look for the bridged bicycle in between: it is never
+isolated, but it explains where every atom came from. The bridge is always the part that
+leaves — the oxygen bridge of the oxazole adduct leaves as CO₂, the N=N bridge of the
+triazine and tetrazine adducts leaves as N₂.
 
 
 

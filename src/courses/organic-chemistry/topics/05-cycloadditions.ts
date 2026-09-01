@@ -7,12 +7,12 @@ export const topic = {
   icon: "🔄",
   estimatedMinutes: 75,
   theory: `
-
-
-
 ## Overview of Cycloaddition Reactions
 
-Cycloadditions are pericyclic reactions in which **two π systems** react to form a ring. No catalyst, no intermediate (concerted).
+Cycloadditions are pericyclic reactions in which **two π systems** react to form a ring.
+No catalyst, no intermediate — the bonds break and form in one concerted step. That is
+what separates them from the cyclocondensations of the previous chapter, which run
+through discrete ionic intermediates and lose water on the way.
 
 ## [4+2] Diels-Alder Reaction (Aza Variants)
 
@@ -26,22 +26,38 @@ For heterocycle synthesis:
 | Diene | Dienophile | Product |
 |---|---|---|
 | Oxazole | Alkyne | Pyridine (+ CO₂ loss) → Kondrat'eva |
-| Triazine | Enamine | Pyridine (+ N₂ loss) → Boger |
+| 1,2,4-Triazine | Enamine | Pyridine (+ N₂ loss) → Boger |
+| 1,2,4,5-Tetrazine | Alkene/alkyne | Pyridazine (+ N₂ loss) |
 | 1-Azadiene | Dienophile CO₂Me | Dihydropyridine → pyridine |
-| Pyridine N-oxide | Alkyne | Isoxazole + CO loss |
+| 2H-Pyran-2-one | Alkyne | Benzene ring (+ CO₂ loss) |
+
+The last three rows share one idea: the first cycloaddition builds a bridged bicycle,
+and a **retro-[4+2]** then expels a small stable molecule — N₂ or CO₂. The gas leaving
+the solution plus the aromatisation of the product make that second step irreversible.
 
 ## [3+2] 1,3-Dipolar Cycloaddition (Huisgen)
 
 **1,3-Dipole + dipolarophile → 5-membered heterocycle**
 
+A 1,3-dipole is a three-atom unit with four π electrons delocalised over it, drawn with
+formal plus and minus charges at the ends. Both ends attack at once.
+
 ### The most important 1,3-dipoles:
-| 1,3-Dipole | Structure | Product with alkyne | Product with alkene |
-|---|---|---|---|
-| Nitrile oxide R-C≡N⁺-O⁻ | 3 atoms, allene structure | Isoxazole | Isoxazoline |
-| Nitrone R-CH=N⁺(R')-O⁻ | | Isoxazoline | |
-| Azide R-N=N⁺=N⁻ | | 1,2,3-Triazole | |
-| Nitrilimines R-C≡N⁺-N⁻R' | | Pyrazole | Pyrazoline |
-| Diazoalkane R₂C=N⁺=N⁻ | | Pyrazole | |
+| 1,3-Dipole | Product with alkyne | Product with alkene |
+|---|---|---|
+| Nitrile oxide R-C≡N⁺-O⁻ | Isoxazole | Isoxazoline (4,5-dihydroisoxazole) |
+| Nitrone R-CH=N⁺(R')-O⁻ | 4-Isoxazoline | Isoxazolidine |
+| Azide R-N=N⁺=N⁻ | 1,2,3-Triazole | Triazoline |
+| Nitrilimine R-C≡N⁺-N⁻R' | Pyrazole | Pyrazoline |
+| Diazoalkane R₂C=N⁺=N⁻ | Pyrazole | Pyrazoline |
+
+The pattern is worth memorising as a rule rather than a table: an alkyne gives the fully
+unsaturated aromatic ring, an alkene gives the ring with one saturated bond more. Which
+heteroatoms end up in the ring is decided entirely by the dipole.
+
+**Click chemistry:** the azide/alkyne case becomes regiospecific under Cu(I) catalysis
+(CuAAC) and then gives only the 1,4-disubstituted triazole. The uncatalysed thermal
+reaction gives a mixture of the 1,4 and 1,5 isomers.
 
 ### Regioselectivity of [3+2] CA:
 - Electronic control: FMO theory (HOMO-dipole / LUMO-dipolarophile)
@@ -57,7 +73,9 @@ For heterocycle synthesis:
 4. Perform retrosynthetic cut
 5. Write A and B
 
-
+A five-membered ring with two or three adjacent heteroatoms almost always points to a
+[3+2]; a six-membered ring with one nitrogen and no obvious carbonyl origin points to an
+aza-Diels-Alder with loss of N₂ or CO₂.
 
 `,
   interactive: {
