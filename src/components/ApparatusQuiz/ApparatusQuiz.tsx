@@ -14,7 +14,6 @@ interface Props {
   explanation: string
   hint1?: string
   hint2?: string
-  mode?: 'identify' | 'label'
 }
 
 /** Fällt ein, wenn eine Apparatur-ID keine Zeichnung hat. Im Dev-Build meldet

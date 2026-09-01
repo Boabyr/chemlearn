@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "03-five-ring-one-heteroatom",
   title: "5-Membered Heteroaromatics (1 Heteroatom)",
@@ -138,28 +140,34 @@ Mechanism: double condensation (hemi-acetal) + cyclisation + dehydration
 
   flashcards: [
     {
+      id: "057rsia",
       front: "Paal-Knorr Synthesis",
       back: "1,4-Dicarbonyl + NH₃/RNH₂ → pyrrole. 1,4-Dicarbonyl + H⁺ → furan. 1,4-Dicarbonyl + H₂S/P₄S₁₀ → thiophene. Mechanism: double condensation + cyclisation + dehydration.",
     },
     {
+      id: "03q12nj",
       front: "α Selectivity in 5-Membered Heteroaromatics",
       back: "Pyrrole, furan and thiophene react preferentially at C-2 (α position) with electrophiles. Reason: more resonance structures for arenium ion at α attack than at β attack (C-3).",
     },
     {
+      id: "0y0jy5n",
       front: "Indole – SEAr Regioselectivity",
       back: "C-3 (not C-2!) is preferred. At C-3 attack benzene aromaticity is preserved, charge is delocalised onto N. At C-2 attack the charge would have to be on the benzene ring.",
     },
     {
+      id: "0raujxk",
       front: "Pyrrole: Acidity vs. Basicity",
       back: "Not basic (LP in π system). BUT: N-H is acidic! pKa = 17.5. Pyrrolide anion is aromatic → stable. Deprotonation with NaH, BuLi possible → N-metalation.",
     },
     {
+      id: "0w17y2c",
       front: "Furan vs. Pyrrole vs. Thiophene – Reactivity Series",
       back: "Pyrrole > Furan > Thiophene > Benzene for SEAr reactivity. Reason: N (least electronegative) donates lone pair most strongly → highest HOMO in pyrrole.",
     },
     {
+      id: "1o6094w",
       front: "Knorr Pyrrole Synthesis",
       back: "α-Aminoketone + β-ketoester → pyrrole. Classical method for synthesis of 2,3,4,5-substituted pyrroles (e.g. for porphyrin precursors).",
     },
   ],
-};
+} satisfies Thema;

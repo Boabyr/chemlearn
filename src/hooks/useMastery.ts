@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useAttempts } from './useAttempts'
 import { allCourses } from '../lib/courseRegistry'
 import { examQuestionsFor } from '../data/exams'
-import { weakestTopics, readinessByProfessor } from '../lib/learning/mastery'
+import { weakestTopics, readinessByExaminer } from '../lib/learning/mastery'
 
 /**
  * Leitet aus der Antwort-Historie ab, wo der Lernende steht:
@@ -19,7 +19,7 @@ export function useMastery(courseId: string) {
   const questions = useMemo(
     () => examQuestionsFor(courseId).map(q => ({
       id: q.id,
-      professor: q.professor,
+      examiner: q.examiner,
       topicId: q.topicId,
     })),
     [courseId],
@@ -31,7 +31,7 @@ export function useMastery(courseId: string) {
   )
 
   const readiness = useMemo(
-    () => readinessByProfessor(attempts, questions),
+    () => readinessByExaminer(attempts, questions),
     [attempts, questions],
   )
 

@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "04-ftir-raman",
   title: "FT-IR & Raman-Spektroskopie",
@@ -139,11 +141,11 @@ Kein Übergang ist gleichzeitig IR- und Raman-aktiv!
     { id: "q6", question: "Welcher Konkurrenzprozess schränkt die Raman-Spektroskopie am stärksten ein?", options: ["Rayleigh-Streuung", "IR-Absorption", "Fluoreszenz (10⁶× intensiver als Raman)", "Thermische Emission"], correct: 2, explanation: "Fluoreszenz ist 10⁶-mal intensiver als Raman-Streuung und auch ~10⁴-mal langsamer (10⁻⁸ s vs 10⁻¹² s). Fluoreszenz kann das Raman-Signal vollständig überdecken. Lösungen: NIR-Laser verwenden (weniger Fluoreszenz), oder zeitaufgelöste Messung." },
   ],
   flashcards: [
-    { front: "IR-Auswahlregel", back: "Eine Schwingung ist IR-aktiv, wenn sich das Dipolmoment während der Schwingung ändert. Homonukleare Moleküle (N₂, O₂) → IR-inaktiv. H₂O, CO, HCl → IR-aktiv." },
-    { front: "Raman-Auswahlregel", back: "Eine Schwingung ist Raman-aktiv, wenn sich die Polarisierbarkeit während der Schwingung ändert. Komplementär zu IR: CO₂ sym. Streckschwingung IR-inaktiv, Raman-aktiv." },
-    { front: "FT-IR Vorteile", back: "1. Fellgett (Multiplex): alle ν gleichzeitig → besseres S/N. 2. Jacquinot (Throughput): kein Spalt → mehr Licht. 3. Connes: HeNe-Laser Kalibrierung → hohe Reproduzierbarkeit. 4. Schnell." },
-    { front: "Schwingungsfreiheitsgrade", back: "Linear: 3N-5. Nicht-linear: 3N-6. H₂O (N=3, nicht-linear): 3 Schwingungen. CO₂ (N=3, linear): 4 Schwingungen. CH₄ (N=5, nicht-linear): 9 Schwingungen." },
-    { front: "Komplementaritätsprinzip (IR/Raman)", back: "Für zentrosymmetrische Moleküle: kein Übergang ist gleichzeitig IR- und Raman-aktiv. Für nicht-zentrosymmetrische: Überlappung möglich. IR und Raman sind komplementäre Techniken." },
-    { front: "Raman vs. IR – Wasser", back: "IR: Wasser stört stark (starke O-H Absorption). Raman: Wasser stört kaum (schwacher Raman-Streuer). Daher: Raman bevorzugt für wässrige Lösungen und biologische Proben." },
+    { id: "1g42tf7", front: "IR-Auswahlregel", back: "Eine Schwingung ist IR-aktiv, wenn sich das Dipolmoment während der Schwingung ändert. Homonukleare Moleküle (N₂, O₂) → IR-inaktiv. H₂O, CO, HCl → IR-aktiv." },
+    { id: "0z5u3e5", front: "Raman-Auswahlregel", back: "Eine Schwingung ist Raman-aktiv, wenn sich die Polarisierbarkeit während der Schwingung ändert. Komplementär zu IR: CO₂ sym. Streckschwingung IR-inaktiv, Raman-aktiv." },
+    { id: "04slm67", front: "FT-IR Vorteile", back: "1. Fellgett (Multiplex): alle ν gleichzeitig → besseres S/N. 2. Jacquinot (Throughput): kein Spalt → mehr Licht. 3. Connes: HeNe-Laser Kalibrierung → hohe Reproduzierbarkeit. 4. Schnell." },
+    { id: "0g4y1mb", front: "Schwingungsfreiheitsgrade", back: "Linear: 3N-5. Nicht-linear: 3N-6. H₂O (N=3, nicht-linear): 3 Schwingungen. CO₂ (N=3, linear): 4 Schwingungen. CH₄ (N=5, nicht-linear): 9 Schwingungen." },
+    { id: "0gj5icy", front: "Komplementaritätsprinzip (IR/Raman)", back: "Für zentrosymmetrische Moleküle: kein Übergang ist gleichzeitig IR- und Raman-aktiv. Für nicht-zentrosymmetrische: Überlappung möglich. IR und Raman sind komplementäre Techniken." },
+    { id: "0n2uuz4", front: "Raman vs. IR – Wasser", back: "IR: Wasser stört stark (starke O-H Absorption). Raman: Wasser stört kaum (schwacher Raman-Streuer). Daher: Raman bevorzugt für wässrige Lösungen und biologische Proben." },
   ],
-};
+} satisfies Thema;

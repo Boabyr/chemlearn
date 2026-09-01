@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "06-cyclocondensations",
   title: "Cyclocondensation Reactions",
@@ -59,11 +61,11 @@ Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
     { id: "q6", question: "What is the van Leusen synthesis and what does it produce?", options: ["Pyridine from triazine", "Imidazole from tosylmethyl isocyanide (TosMIC) + aldehyde + amine", "Furan from 1,4-dicarbonyl", "Oxazole from isocyanide + carbonyl compound"], correct: 1, explanation: "Van Leusen reaction: aldehyde + R-NH₂ → imine, then + TosMIC (tosylmethyl isocyanide, TosCH₂NC) → 4-tosylimidazole (after tosyl elimination → imidazole). Mild conditions, broad applicability." },
   ],
   flashcards: [
-    { front: "Hantzsch Dihydropyridine Synthesis", back: "[3+3] cyclocondensation: enamine + 1,3-dicarbonyl + NH₃ → 1,4-dihydropyridine → [O] → pyridine. Regioselective: use pre-synthesised enamine." },
-    { front: "Biginelli Reaction", back: "3-component reaction: aldehyde + β-ketoester + urea → DHPM (dihydropyrimidinone). Acid-catalysed. Products: calcium channel blockers." },
-    { front: "Kröhnke Reaction", back: "[3+2+1] cyclocondensation. Steps: 1. α-Br-ketone + pyridine → pyridinium salt. 2. + α,β-unsaturated ketone (Michael). 3. + NH₄OAc → cyclisation + aromatisation → pyridine." },
-    { front: "Pyrazole Synthesis", back: "1,3-Dicarbonyl + H₂N-NH-R → N-substituted pyrazole (regioselective). With H₂N-NH₂ → mixture. Important: 1,3-diketones prefer 3(5)-substituted pyrazole." },
-    { front: "Bohlmann-Rahtz Reaction", back: "[3+3] cyclocondensation: enaminone + β-ketoester → pyridine. Regiochemistry dictated by the enaminone. Propargylamine as alternative." },
-    { front: "Retrosynthesis: Cyclocondensation", back: "Identify: which C-N or C-O bonds were newly formed? Cut them retrosynthetically. Add H₂O (or NH₃, ROH) that was eliminated. That gives A and B." },
+    { id: "1bqsez5", front: "Hantzsch Dihydropyridine Synthesis", back: "[3+3] cyclocondensation: enamine + 1,3-dicarbonyl + NH₃ → 1,4-dihydropyridine → [O] → pyridine. Regioselective: use pre-synthesised enamine." },
+    { id: "0k94jy7", front: "Biginelli Reaction", back: "3-component reaction: aldehyde + β-ketoester + urea → DHPM (dihydropyrimidinone). Acid-catalysed. Products: calcium channel blockers." },
+    { id: "1uvjmpz", front: "Kröhnke Reaction", back: "[3+2+1] cyclocondensation. Steps: 1. α-Br-ketone + pyridine → pyridinium salt. 2. + α,β-unsaturated ketone (Michael). 3. + NH₄OAc → cyclisation + aromatisation → pyridine." },
+    { id: "07k6u7x", front: "Pyrazole Synthesis", back: "1,3-Dicarbonyl + H₂N-NH-R → N-substituted pyrazole (regioselective). With H₂N-NH₂ → mixture. Important: 1,3-diketones prefer 3(5)-substituted pyrazole." },
+    { id: "08fisvj", front: "Bohlmann-Rahtz Reaction", back: "[3+3] cyclocondensation: enaminone + β-ketoester → pyridine. Regiochemistry dictated by the enaminone. Propargylamine as alternative." },
+    { id: "1vwbl7q", front: "Retrosynthesis: Cyclocondensation", back: "Identify: which C-N or C-O bonds were newly formed? Cut them retrosynthetically. Add H₂O (or NH₃, ROH) that was eliminated. That gives A and B." },
   ],
-};
+} satisfies Thema;

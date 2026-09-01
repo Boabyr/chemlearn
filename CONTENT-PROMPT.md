@@ -140,7 +140,6 @@ Wenn eine Variable nicht analytisch auflösbar ist: weglassen und
 ```
 typ: apparatus-quiz
 frage: Chemolumineszenz-Detektor
-modus: name-to-image
 ziel_id: chemoluminescence
 optionen:
 - id: chemoluminescence | label: Chemolumineszenz-Detektor | beschreibung: Keine externe Lichtquelle, nur Probe und Detektor | bauteile: Probe+Reagenz → Detektor
@@ -153,7 +152,6 @@ hinweis2: Aufbau: nur Probenmischer + Detektor. Daher praktisch kein Hintergrund
 ```
 Genau 4 Optionen, eine davon ist `ziel_id`. **Zeichne keine SVGs** — schreib nur
 `bauteile:` als Kette der Komponenten mit `→`. Die Grafik erzeuge ich.
-`modus`: `name-to-image` (Name gegeben, Bild wählen) oder `image-to-name`.
 
 **3. `spectrum-assignment`** — wenn Peaks/Banden zugeordnet werden
 (IR, NMR, MS, Chromatogramm …).
@@ -173,20 +171,20 @@ hinweis2: ...
 `position` = 0–100, Position auf der x-Achse von links. `hoehe`: `klein`|`mittel`|`gross`.
 3–5 Peaks. Jeder Peak: 4 Optionen, `richtig` muss wörtlich in `optionen` vorkommen.
 
-**4. `mechanism`** — nur organische Chemie, Reaktionsmechanismen in Schritten.
+**4. `mechanism`** — Reaktionsmechanismen mit Elektronenpfeilen.
 
-```
-typ: mechanism
-titel: Nucleophile aromatische Substitution an Pyridin
-beschreibung: Verfolge den Angriff des Nucleophils und die Rearomatisierung.
-schritte:
-- nr: 1 | label: Nucleophiler Angriff | beschreibung: Das Nucleophil greift C2 an, da dort die höchste Partialladung sitzt. | pfeil: Nu → C2 | hinweis1: Wo ist der Ring am stärksten positiviert? | hinweis2: Der Stickstoff zieht Elektronendichte ab — ortho/para zu N.
-- nr: 2 | label: ...
-```
-Keine Koordinaten, keine SVG. Nur Schrittlogik + `pfeil: von → nach`.
-Die Strukturzeichnung übernehme ich.
+**Erzeuge diesen Typ nicht.** Ein Mechanismus braucht gesetzte Atomkoordinaten
+(x/y je Atom, Bindungen zwischen Atom-IDs); aus einer Textbeschreibung lässt
+sich das nicht ableiten. Der Importer weist einen Mechanismus ohne Koordinaten
+ausdrücklich zurück, statt ihn still zu verwerfen.
+
+Wenn ein Thema nach einem Mechanismus verlangt: `typ: keiner` schreiben und im
+Bericht vermerken — die Strukturzeichnung entsteht von Hand.
 
 ---
+
+> **Karten-IDs schreibst du nicht.** Der Importer leitet sie aus der
+> Vorderseite ab, damit ein Umsortieren den Lernplan nicht verschiebt.
 
 ## MODUS B — Altprüfung → Prüfungsfragen
 
@@ -202,6 +200,24 @@ pruefer: lieberzeit
 kurs: analytical-chemistry-1
 ```
 `quelle` = `JJJJ-MM-Nachname`. `pruefer` = Nachname klein, ASCII.
+
+Wenn die Altprüfung als **ganze Prüfung** nachgestellt werden soll (Simulator),
+kommt vor die erste Frage ein Aufbau-Block:
+
+```
+# AUFBAU
+id: exam-2019-05
+datum: 2019-05-24
+titel: Prüfung Mai 2019
+bestehen: 36
+abschnitt: lieberzeit | 24 | 12 | L001, L002, L003
+abschnitt: koellensperger | 24 | 12 | K001, K002
+abschnitt: gerner | 24 | 12 | G001, G002
+```
+
+Felder je Abschnitt: `prüfer | Punkte | Punkte zum Bestehen | Fragen-IDs`.
+Ohne diesen Block werden nur die Fragen übernommen; bestehende Prüfungsaufbauten
+bleiben unangetastet.
 
 Dann pro Frage einen Block. Vier Fragetypen:
 

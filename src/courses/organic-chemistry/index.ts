@@ -1,3 +1,5 @@
+import type { Kurs } from '../../content/schema'
+
 export const course = {
   id: "organic-chemistry",
   title: "Heterocyclic Chemistry & Drug Synthesis",
@@ -19,4 +21,5 @@ export const course = {
   ],
   totalTopics: 9,
   estimatedHours: 25,
-};
+  examiners: [],
+} satisfies Kurs;

@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "07-sear-regioselectivity",
   title: "SEAr – Regioselectivity",
@@ -69,10 +71,10 @@ At C-2 or C-4 attack: N⁺ in resonance structure, BUT N already electron-poor (
     { id: "q5", question: "Why is SEAr at pyridine so much slower than at benzene?", options: ["Pyridine is smaller", "The pyridine N withdraws electron density from the ring → lower HOMO → poorer reaction with electrophiles", "Pyridine has no free electrons", "SEAr at pyridine is forbidden"], correct: 1, explanation: "The electronegative N atom in pyridine (sp²) withdraws electron density inductively and by mesomery → the HOMO lies at a lower energy than in benzene → poorer reaction with electrophiles (E⁺). SEAr strongly inhibited; SNAr preferred instead." },
   ],
   flashcards: [
-    { front: "SEAr Regioselectivity – General Rule", back: "Position with most stable arenium ion is preferred. More resonance structures = more stable intermediate = preferred position. Draw all possible resonance structures!" },
-    { front: "α vs. β in 5-membered Heteroaromatics", back: "α (C-2) >> β (C-3) for pyrrole, furan, thiophene. EXCEPTION: indole → C-3 preferred (benzene aromaticity preserved at C-3 attack)." },
-    { front: "SEAr at Pyridine", back: "Strongly deactivated (N withdraws e⁻). If possible: C-3 (meta to N). C-2 and C-4 most strongly deactivated. SNAr at C-2/C-4 preferred instead." },
-    { front: "Bromination of Indole", back: "Indole + NBS (N-bromosuccinimide) or Br⁺ → 3-bromoindole. C-3 is most reactive position. If necessary protect N-H (N-Ts, N-Boc) for selective C-functionalisation." },
-    { front: "Arenium Ion (Sigma Complex)", back: "Intermediate of SEAr. sp³ carbon at attack point. Positive charge delocalised over the remaining π system. Stability → regioselectivity." },
+    { id: "17pa0nq", front: "SEAr Regioselectivity – General Rule", back: "Position with most stable arenium ion is preferred. More resonance structures = more stable intermediate = preferred position. Draw all possible resonance structures!" },
+    { id: "03v55f7", front: "α vs. β in 5-membered Heteroaromatics", back: "α (C-2) >> β (C-3) for pyrrole, furan, thiophene. EXCEPTION: indole → C-3 preferred (benzene aromaticity preserved at C-3 attack)." },
+    { id: "0r3shel", front: "SEAr at Pyridine", back: "Strongly deactivated (N withdraws e⁻). If possible: C-3 (meta to N). C-2 and C-4 most strongly deactivated. SNAr at C-2/C-4 preferred instead." },
+    { id: "18mbgop", front: "Bromination of Indole", back: "Indole + NBS (N-bromosuccinimide) or Br⁺ → 3-bromoindole. C-3 is most reactive position. If necessary protect N-H (N-Ts, N-Boc) for selective C-functionalisation." },
+    { id: "08p5w0q", front: "Arenium Ion (Sigma Complex)", back: "Intermediate of SEAr. sp³ carbon at attack point. Positive charge delocalised over the remaining π system. Stability → regioselectivity." },
   ],
-};
+} satisfies Thema;

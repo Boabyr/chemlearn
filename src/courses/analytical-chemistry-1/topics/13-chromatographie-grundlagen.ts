@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "13-chromatographie-grundlagen",
   title: "Chromatographie – Grundlagen",
@@ -102,13 +104,11 @@ B: tR=9,2min, wB=0,57min
         { id: "dtR", label: "Δ Retentionszeit", symbol: "tR2-tR1", unit: "min", description: "Differenz der Retentionszeiten" },
         { id: "wsum", label: "Summe Peakbreiten", symbol: "w1+w2", unit: "min", description: "Summe der Basispeakbreiten" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor as string;
-        if (sf === "Rs") return { Rs: 2 * inputs.dtR / inputs.wsum };
-        if (sf === "dtR") return { dtR: inputs.Rs * inputs.wsum / 2 };
-        if (sf === "wsum") return { wsum: 2 * inputs.dtR / inputs.Rs };
-        return {};
-      },
+      umstellungen: [
+        { solveFor: "Rs", expr: "2 * dtR / wsum" },
+        { solveFor: "dtR", expr: "Rs * wsum / 2" },
+        { solveFor: "wsum", expr: "2 * dtR / Rs" },
+      ],
       hints: [
         "Rs = 2·ΔtR/(w1+w2). Rs < 1.0: ungenügend. Rs = 1.0: ~98%. Rs = 1.5: Basislinie. Peakbreiten w in gleichen Einheiten wie Retentionszeiten!",
         "Trennstufenzahl: N = 16·(tR/w)². Trennstufenhöhe H = L/N. Rs ∝ √N ∝ √L. Säule verdoppeln → Rs×√2 = 1.41×Rs."
@@ -124,11 +124,11 @@ B: tR=9,2min, wB=0,57min
     { id: "q6", question: "Eine Säule (L=25cm) liefert Rs=1,2. Wie lang muss sie sein für Rs=1,5?", options: ["31,25 cm", "39,06 cm", "45,00 cm", "50,00 cm"], correct: 1, explanation: "Rs ∝ √L. L_neu = L_alt × (Rs_neu/Rs_alt)² = 25 × (1,5/1,2)² = 25 × 1,5625 = 39,06 cm. Quadratische Abhängigkeit! Auflösung verdoppeln: Säule 4× länger." },
   ],
   flashcards: [
-    { front: "Kapazitätsfaktor k'", back: "k' = (tR - tM) / tM. Dimensionslos. k'=0: nicht retardiert. k'=1: gleich viel Zeit in mob. und stat. Phase. Eluierungsreihenfolge: kleinstes k' zuerst. Ideal: k' = 2-10." },
-    { front: "Van-Deemter-Gleichung", back: "H = A + B/u + Cu. A: Eddy-Diffusion (Partikelgröße). B/u: Longitudinale Diffusion (langsam → viel Diffusion). Cu: Massentransfer (schnell → keine Zeit für Gleichgewicht). Optimum: u_opt = √(B/C)." },
-    { front: "Auflösung Rs", back: "Rs = 2·(tR2-tR1)/(w1+w2). Rs < 1.0: ungenügend. Rs ≥ 1.5: Basislinienstrennung. Rs ∝ √N ∝ √L. Für Rs = 1,5 nötige Länge: L = L_alt · (1,5/Rs_alt)²." },
-    { front: "Trennstufenzahl N und H", back: "N = 16·(tR/w)² (Basispeakbreite). H = L/N. Dimensionsloses Maß für Säuleneffizienz. HPLC: N = 5.000-100.000. GC: N > 100.000. Mehr N = schärfere Peaks = bessere Trennung." },
-    { front: "Rf-Wert (DC)", back: "Rf = Wanderstrecke Substanz / Wanderstrecke Lösungsmittelfront. 0 ≤ Rf ≤ 1. Ideal: 0,3-0,7. Rf ≈ 1/( 1 + k'). Größeres Rf = mehr Zeit in mobiler Phase." },
-    { front: "Selektivitätsfaktor α", back: "α = k'B/k'A (k'B > k'A > 0). α = 1: keine Selektivität. α > 1: Trennung möglich. α = tR2-tM / tR1-tM. Steigern durch Änderung stationärer Phase oder Lösungsmittel." },
+    { id: "0klzclp", front: "Kapazitätsfaktor k'", back: "k' = (tR - tM) / tM. Dimensionslos. k'=0: nicht retardiert. k'=1: gleich viel Zeit in mob. und stat. Phase. Eluierungsreihenfolge: kleinstes k' zuerst. Ideal: k' = 2-10." },
+    { id: "0a4h4go", front: "Van-Deemter-Gleichung", back: "H = A + B/u + Cu. A: Eddy-Diffusion (Partikelgröße). B/u: Longitudinale Diffusion (langsam → viel Diffusion). Cu: Massentransfer (schnell → keine Zeit für Gleichgewicht). Optimum: u_opt = √(B/C)." },
+    { id: "0yst425", front: "Auflösung Rs", back: "Rs = 2·(tR2-tR1)/(w1+w2). Rs < 1.0: ungenügend. Rs ≥ 1.5: Basislinienstrennung. Rs ∝ √N ∝ √L. Für Rs = 1,5 nötige Länge: L = L_alt · (1,5/Rs_alt)²." },
+    { id: "0d7xu3n", front: "Trennstufenzahl N und H", back: "N = 16·(tR/w)² (Basispeakbreite). H = L/N. Dimensionsloses Maß für Säuleneffizienz. HPLC: N = 5.000-100.000. GC: N > 100.000. Mehr N = schärfere Peaks = bessere Trennung." },
+    { id: "0xtqwn2", front: "Rf-Wert (DC)", back: "Rf = Wanderstrecke Substanz / Wanderstrecke Lösungsmittelfront. 0 ≤ Rf ≤ 1. Ideal: 0,3-0,7. Rf ≈ 1/( 1 + k'). Größeres Rf = mehr Zeit in mobiler Phase." },
+    { id: "0j0ttvc", front: "Selektivitätsfaktor α", back: "α = k'B/k'A (k'B > k'A > 0). α = 1: keine Selektivität. α > 1: Trennung möglich. α = tR2-tM / tR1-tM. Steigern durch Änderung stationärer Phase oder Lösungsmittel." },
   ],
-};
+} satisfies Thema;

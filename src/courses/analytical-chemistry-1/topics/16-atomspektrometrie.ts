@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "16-atomspektrometrie",
   title: "Atomspektrometrie",
@@ -74,9 +76,9 @@ A = ε · N · d  (N = Atomzahldichte statt Konzentration)
     { id: "q5", question: "Warum wird für die Bestimmung von Al in der AAS N₂O/Acetylen-Flamme statt Luft/Acetylen verwendet?", options: ["Billiger", "N₂O/Acetylen ist heißer (~2700°C) und verhindert Bildung von Al₂O₃ (refraktäres Oxid) – Al-AO₃ kann in kühler Flamme nicht dissoziiert werden", "Al absorbiert nur im NIR", "Sicherheitsgründe"], correct: 1, explanation: "Al bildet in Luft/Acetylen (~2300°C) stabiles Al₂O₃ → kaum freie Al-Atome → schlechtes Signal. N₂O/Acetylen: ~2700°C + reduzierende Atmosphäre → Al₂O₃ dissoziiert → freie Al-Atome messbar. Gleiches gilt für Si, Ti, W (refraktäre Elemente)." },
   ],
   flashcards: [
-    { front: "AAS – Warum Hohlkathodenlampe?", back: "Atomlinien extrem schmal (~0,002nm). Kontinuumslampe: zu wenig Licht genau auf der Linie → schlechtes S/N. HKL: emittiert nur die Linien des jeweiligen Elements → perfekte spektrale Überlappung." },
-    { front: "GFAAS vs. Flammen-AAS", back: "GFAAS (Graphitrohr): Probe vollständig im optischen Weg → LOD: ng/L. Flamme: Probe verdünnt durch Trägergas → LOD: μg/L. GFAAS: 100-1000× empfindlicher. Nachteile: langsamer, teurer, mehr Matrixeffekte." },
-    { front: "ICP-Plasma", back: "Argon-Plasma, 6000-10000°C, RF-Induktion (~27 MHz). Zone höchster Temperatur: Induktionskern. Multielement (70+). ICP-OES: Emission. ICP-MS: Massenspektrometrie (niedrigste LOD: pg/L)." },
-    { front: "Nachweisgrenzen-Reihe", back: "ICP-MS << GFAAS < ICP-OES < Flammen-AAS. ICP-MS: pg/L. GFAAS: ng/L. ICP-OES: μg/L. Flammen-AAS: μg/L. Für Spurenanalytik ppb: GFAAS oder ICP-MS." },
+    { id: "0mvkilc", front: "AAS – Warum Hohlkathodenlampe?", back: "Atomlinien extrem schmal (~0,002nm). Kontinuumslampe: zu wenig Licht genau auf der Linie → schlechtes S/N. HKL: emittiert nur die Linien des jeweiligen Elements → perfekte spektrale Überlappung." },
+    { id: "02leb1m", front: "GFAAS vs. Flammen-AAS", back: "GFAAS (Graphitrohr): Probe vollständig im optischen Weg → LOD: ng/L. Flamme: Probe verdünnt durch Trägergas → LOD: μg/L. GFAAS: 100-1000× empfindlicher. Nachteile: langsamer, teurer, mehr Matrixeffekte." },
+    { id: "1gthgj4", front: "ICP-Plasma", back: "Argon-Plasma, 6000-10000°C, RF-Induktion (~27 MHz). Zone höchster Temperatur: Induktionskern. Multielement (70+). ICP-OES: Emission. ICP-MS: Massenspektrometrie (niedrigste LOD: pg/L)." },
+    { id: "1940k5g", front: "Nachweisgrenzen-Reihe", back: "ICP-MS << GFAAS < ICP-OES < Flammen-AAS. ICP-MS: pg/L. GFAAS: ng/L. ICP-OES: μg/L. Flammen-AAS: μg/L. Für Spurenanalytik ppb: GFAAS oder ICP-MS." },
   ],
-};
+} satisfies Thema;

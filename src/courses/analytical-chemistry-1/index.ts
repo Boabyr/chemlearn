@@ -1,3 +1,5 @@
+import type { Kurs } from '../../content/schema'
+
 export const course = {
   id: "analytical-chemistry-1",
   title: "Analytische Chemie 1",
@@ -28,4 +30,11 @@ export const course = {
   ],
   totalTopics: 18,
   estimatedHours: 40,
-};
+  // Prüfungsabschnitte dieses Fachs. Ein Fach ohne eigene Prüfer lässt die
+  // Liste leer und bekommt einen gemeinsamen Abschnitt.
+  examiners: [
+    { id: "lieberzeit",     label: "Lieberzeit",     icon: "🔭" },
+    { id: "koellensperger", label: "Köllensperger",  icon: "📊" },
+    { id: "gerner",         label: "Gerner",         icon: "🧪" },
+  ],
+} satisfies Kurs;

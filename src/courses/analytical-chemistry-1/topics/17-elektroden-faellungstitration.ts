@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "17-elektroden-faellungstitration",
   title: "Elektroden 2. Art & Fällungstitration",
@@ -73,9 +75,9 @@ c = 68×10⁻⁶ g/L / 408,8 g/mol = 1,66×10⁻⁷ mol/L = 166 nmol/L
     { id: "q5", question: "Warum ist die gesättigte KCl-Lösung in Referenzelektroden wichtig?", options: ["Wegen der hohen Leitfähigkeit", "Hält [Cl⁻] konstant → konstantes Elektrodenpotential + minimiert Diffusionspotential durch gleiche K⁺ und Cl⁻ Beweglichkeiten", "Als Puffer gegen pH-Änderungen", "Verhindert Oxidation der Elektrode"], correct: 1, explanation: "KCl ges.: Zwei Funktionen: 1. [Cl⁻] konstant → E(Ag/AgCl) oder E(Kalomel) konstant. 2. K⁺ und Cl⁻ haben fast gleiche Ionenbeweglichkeit → minimales Diffusionspotential an der Salzbrücke." },
   ],
   flashcards: [
-    { front: "Ag/AgCl Elektrode", back: "AgCl + e⁻ ⇌ Ag + Cl⁻. E = 0,222 - 0,05916·log[Cl⁻]. In ges. KCl: E = +0,197V vs. SHE. Robust, einfach, häufigste Referenzelektrode. Potential konstant durch [Cl⁻] = konstant." },
-    { front: "Kalomel-Elektrode (SCE)", back: "Hg₂Cl₂ + 2e⁻ ⇌ 2Hg + 2Cl⁻. Ges. SCE: +0,241V vs. SHE. Häufig in älteren Geräten. Enthält Hg → weniger umweltfreundlich. Klassische Referenzelektrode." },
-    { front: "Potential-Berechnung Fällungstitration", back: "Vor ÄP: [Ag⁺] = Ksp/[Cl⁻], dann Nernst. Am ÄP: [Ag⁺]=[Cl⁻]=√Ksp → E_ÄP = E°+0,05916/2·log(Ksp). Nach ÄP: [Ag⁺] = cÜberschuss." },
-    { front: "ppm, ppb, Molarität", back: "1 ppm = 1 mg/L (wässrig). 1 ppb = 1 μg/L. 1 ppt = 1 ng/L. Umrechnung: c[mol/L] = c[mg/L] / M[g/mol] × 10⁻³. Beispiel: 68ppb C₂₉H₆₀ (M=409): c = 68×10⁻⁶/409 = 166nmol/L." },
+    { id: "0uzyeji", front: "Ag/AgCl Elektrode", back: "AgCl + e⁻ ⇌ Ag + Cl⁻. E = 0,222 - 0,05916·log[Cl⁻]. In ges. KCl: E = +0,197V vs. SHE. Robust, einfach, häufigste Referenzelektrode. Potential konstant durch [Cl⁻] = konstant." },
+    { id: "0r86tgg", front: "Kalomel-Elektrode (SCE)", back: "Hg₂Cl₂ + 2e⁻ ⇌ 2Hg + 2Cl⁻. Ges. SCE: +0,241V vs. SHE. Häufig in älteren Geräten. Enthält Hg → weniger umweltfreundlich. Klassische Referenzelektrode." },
+    { id: "0a1s9cy", front: "Potential-Berechnung Fällungstitration", back: "Vor ÄP: [Ag⁺] = Ksp/[Cl⁻], dann Nernst. Am ÄP: [Ag⁺]=[Cl⁻]=√Ksp → E_ÄP = E°+0,05916/2·log(Ksp). Nach ÄP: [Ag⁺] = cÜberschuss." },
+    { id: "1cbvcf0", front: "ppm, ppb, Molarität", back: "1 ppm = 1 mg/L (wässrig). 1 ppb = 1 μg/L. 1 ppt = 1 ng/L. Umrechnung: c[mol/L] = c[mg/L] / M[g/mol] × 10⁻³. Beispiel: 68ppb C₂₉H₆₀ (M=409): c = 68×10⁻⁶/409 = 166nmol/L." },
   ],
-};
+} satisfies Thema;

@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "08-mechanisms",
   title: "Reaction Mechanisms",
@@ -72,10 +74,10 @@ Cycloaddition → bicyclic intermediate. Then thermal retro-[4+2] eliminates XY 
     { id: "q5", question: "What makes the [4+2] + retro-[4+2] sequence so useful for heterocycle synthesis?", options: ["It requires no reagents", "It allows loss of a small stable molecule (CO₂, N₂) driving formation of a new aromatic ring", "It only works at room temperature", "It always gives 5-membered rings"], correct: 1, explanation: "The retro-[4+2] step releases a stable gas (CO₂, N₂, SO₂) – this entropy gain plus the aromatisation energy makes the overall transformation thermodynamically highly favourable. The approach is used in Kondrat'eva (CO₂) and Boger (N₂) syntheses." },
   ],
   flashcards: [
-    { front: "Paal-Knorr Mechanism", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. Dehydration → imine; 3. Cyclisation (2nd N attacks 2nd carbonyl); 4. Dehydration → dihydropyrrole; 5. Tautomerisation → pyrrole." },
-    { front: "Kröhnke Pyridine Synthesis – Steps", back: "1. α-BrCO + pyridine → pyridinium ylide. 2. Michael addition to enone. 3. + NH₄OAc → cyclisation. 4. Dehydration + aromatisation → pyridine." },
-    { front: "Azomethine Ylide (1,3-Dipole)", back: "Form: C=N⁺-C⁻ ↔ C⁻-N=C. Generation: from N-oxides, münchnones, thermally from certain aziridines, or by deprotonation of iminium ions. Reaction: [3+2] with alkenes/alkynes." },
-    { front: "N-oxide Chemistry (Pyridine)", back: "Pyridine + mCPBA → pyridine N-oxide. N-oxides: a) more electrophilic at C-4 (SNAr); b) Boekelheide precursor: + Ac₂O, Δ → 2-AcOCH₂-pyridine; c) can be reduced back to pyridine." },
-    { front: "Mechanism: [4+2] + Retro-[4+2]", back: "Cycloaddition → bicyclic intermediate. Thermal retro-[4+2] eliminates XY (CO₂, N₂, SO₂ etc.) → new aromatic. Driving force: aromatisation + gas evolution." },
+    { id: "1cr1y11", front: "Paal-Knorr Mechanism", back: "1,4-Dicarbonyl + RNH₂: 1. Hemiaminal; 2. Dehydration → imine; 3. Cyclisation (2nd N attacks 2nd carbonyl); 4. Dehydration → dihydropyrrole; 5. Tautomerisation → pyrrole." },
+    { id: "161hm3o", front: "Kröhnke Pyridine Synthesis – Steps", back: "1. α-BrCO + pyridine → pyridinium ylide. 2. Michael addition to enone. 3. + NH₄OAc → cyclisation. 4. Dehydration + aromatisation → pyridine." },
+    { id: "0q1ls99", front: "Azomethine Ylide (1,3-Dipole)", back: "Form: C=N⁺-C⁻ ↔ C⁻-N=C. Generation: from N-oxides, münchnones, thermally from certain aziridines, or by deprotonation of iminium ions. Reaction: [3+2] with alkenes/alkynes." },
+    { id: "103q59m", front: "N-oxide Chemistry (Pyridine)", back: "Pyridine + mCPBA → pyridine N-oxide. N-oxides: a) more electrophilic at C-4 (SNAr); b) Boekelheide precursor: + Ac₂O, Δ → 2-AcOCH₂-pyridine; c) can be reduced back to pyridine." },
+    { id: "1mh0qak", front: "Mechanism: [4+2] + Retro-[4+2]", back: "Cycloaddition → bicyclic intermediate. Thermal retro-[4+2] eliminates XY (CO₂, N₂, SO₂ etc.) → new aromatic. Driving force: aromatisation + gas evolution." },
   ],
-};
+} satisfies Thema;

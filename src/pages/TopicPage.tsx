@@ -6,7 +6,7 @@ import { useProgress } from '../hooks/useProgress'
 import { useAttempts } from '../hooks/useAttempts'
 import { useReviews, cardItemId } from '../hooks/useReviews'
 import { GRADES, type Grade } from '../lib/learning/sm2'
-import type { Topic } from '../types/index'
+import type { Thema } from '../content/schema'
 import MechanismBuilder from '../components/MechanismBuilder/MechanismBuilder'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
@@ -26,7 +26,7 @@ export default function TopicPage() {
   const { markTopicSeen, markTopicComplete } = useProgress(courseId)
   const { logAttempt, flush } = useAttempts(courseId)
   const { gradeItem } = useReviews(courseId)
-  const [topic, setTopic] = useState<Topic | null>(null)
+  const [topic, setTopic] = useState<Thema | null>(null)
   const [tab, setTab] = useState<'theory' | 'quiz' | 'flashcards'>('theory')
   const [quizIdx, setQuizIdx] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
@@ -100,9 +100,10 @@ export default function TopicPage() {
   /** Karteikarte bewerten und die naechste aufschlagen. */
   function gradeCard(grade: Grade) {
     if (!courseId || !topicId || !topic) return
+    const karte = topic.flashcards[cardIdx]
     setGradedCards(g => ({ ...g, [cardIdx]: grade }))
     void gradeItem(
-      { itemType: 'card', itemId: cardItemId(topicId, cardIdx), topicId, courseId },
+      { itemType: 'card', itemId: cardItemId(topicId, karte.id), topicId, courseId },
       grade,
     )
     if (cardIdx < topic.flashcards.length - 1) {
@@ -111,7 +112,7 @@ export default function TopicPage() {
     }
   }
 
-  const interactive = (topic as any).interactive
+  const interactive = topic.interactive
 
   return (
     <div className="min-h-screen bg-surface text-ink">
@@ -146,29 +147,23 @@ export default function TopicPage() {
             {interactive && (
               <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
                 <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
-                {interactive.type === 'builder' && interactive.stages && (
-                  <MechanismBuilder title={interactive.title ?? topic.title} description={interactive.description ?? ''} stages={interactive.stages} />
+                {interactive.type === 'mechanism' && (
+                  <MechanismBuilder title={interactive.title} description={interactive.description}
+                    stages={interactive.stages} />
                 )}
-                {interactive.type === 'formula-calculator' && interactive.formula && (
+                {interactive.type === 'formula-calculator' && (
                   <FormulaCalculator formula={interactive.formula} />
                 )}
                 {interactive.type === 'apparatus-quiz' && (
-                  <ApparatusQuiz question={interactive.question} mode={interactive.mode} targetId={interactive.targetId}
-                    options={interactive.options} explanation={interactive.explanation} hint1={interactive.hint1} hint2={interactive.hint2} />
+                  <ApparatusQuiz question={interactive.question} targetId={interactive.targetId}
+                    options={interactive.options} explanation={interactive.explanation}
+                    hint1={interactive.hint1} hint2={interactive.hint2} />
                 )}
                 {interactive.type === 'spectrum-assignment' && (
                   <SpectrumAssignment title={interactive.title} description={interactive.description}
                     xLabel={interactive.xLabel} yLabel={interactive.yLabel} peaks={interactive.peaks}
                     hint1={interactive.hint1} hint2={interactive.hint2} />
                 )}
-              </div>
-            )}
-
-            {(topic as any).mechanism?.type === 'builder' && (topic as any).mechanism?.stages && (
-              <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
-                <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiver Mechanismus</p>
-                <MechanismBuilder title={(topic as any).mechanism.title ?? topic.title}
-                  description={(topic as any).mechanism.description ?? ''} stages={(topic as any).mechanism.stages} />
               </div>
             )}
           </div>

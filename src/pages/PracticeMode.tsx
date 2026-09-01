@@ -2,21 +2,17 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
-import { useReviews } from '../hooks/useReviews'
-import { examQuestionsFor, professorsFor, professorLabel } from '../data/exams'
+import { useReviews, questionItemId } from '../hooks/useReviews'
+import { examQuestionsFor, examinersFor, examinerAnzeige, courseIdsWithExams } from '../data/exams'
 import type { ExamQuestion } from '../data/exams'
 import { buildSession } from '../lib/learning/sessionBuilder'
 import { GRADES } from '../lib/learning/sm2'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 
-const DEFAULT_COURSE = 'analytical-chemistry-1'
 
 /** 'adaptive' zieht nach Fälligkeit und Schwäche, sonst wird nach Prüfer gefiltert. */
 type Filter = 'adaptive' | 'all' | string
 
-const PROF_ICONS: Record<string, string> = {
-  lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪',
-}
 
 /** Länge einer adaptiven Runde. */
 const SESSION_MINUTES = 15
@@ -25,7 +21,7 @@ export default function PracticeMode() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const courseId = params.get('course') ?? DEFAULT_COURSE
+  const courseId = params.get('course') ?? courseIdsWithExams()[0] ?? ''
 
   const { attempts, logAttempt, flush, loading: versucheLaden } = useAttempts(courseId)
   const { dueQuestions, gradeItem, dueCount, loading: planLaden } = useReviews(courseId)
@@ -39,7 +35,7 @@ export default function PracticeMode() {
   const [frageSeit, setFrageSeit] = useState(() => Date.now())
 
   const alleFragen = useMemo(() => examQuestionsFor(courseId), [courseId])
-  const professors = useMemo(() => professorsFor(courseId), [courseId])
+  const examiners = useMemo(() => examinersFor(courseId), [courseId])
 
   const build = useCallback((f: Filter) => {
     let next: ExamQuestion[]
@@ -51,7 +47,7 @@ export default function PracticeMode() {
         minutes: SESSION_MINUTES,
       })
     } else {
-      const gefiltert = f === 'all' ? alleFragen : alleFragen.filter(q => q.professor === f)
+      const gefiltert = f === 'all' ? alleFragen : alleFragen.filter(q => q.examiner === f)
       next = [...gefiltert].sort(() => Math.random() - 0.5)
     }
     setQueue(next)
@@ -94,7 +90,7 @@ export default function PracticeMode() {
 
     // Richtig beantwortet heisst später wieder vorlegen, falsch heisst bald wieder.
     void gradeItem(
-      { itemType: 'question', itemId: q.id, topicId: q.topicId, courseId },
+      { itemType: 'question', itemId: questionItemId(q.id), topicId: q.topicId, courseId },
       correct ? GRADES.GUT : GRADES.NOCHMAL,
     )
   }
@@ -111,7 +107,7 @@ export default function PracticeMode() {
     </div>
   )
 
-  const filters: Filter[] = ['adaptive', 'all', ...professors]
+  const filters: Filter[] = ['adaptive', 'all', ...examiners]
 
   return (
     <div className="min-h-screen bg-surface text-ink">
@@ -136,7 +132,7 @@ export default function PracticeMode() {
               {f === 'adaptive'
                 ? `✨ Für mich${dueCount > 0 ? ` (${dueCount} fällig)` : ''}`
                 : f === 'all' ? 'Alle'
-                : `${PROF_ICONS[f] ?? '📘'} ${professorLabel(f)}`}
+                : examinerAnzeige(f, courseId)}
             </button>
           ))}
         </div>

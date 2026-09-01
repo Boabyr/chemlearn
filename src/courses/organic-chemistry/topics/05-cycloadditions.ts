@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "05-cycloadditions",
   title: "Cycloaddition Reactions",
@@ -60,11 +62,11 @@ For heterocycle synthesis:
     { id: "q5", question: "Which reaction gives a dihydropyridinone from a 1-azadiene and a dienophile?", options: ["[2+2]", "[4+2]", "[3+2]", "[2+2+2]"], correct: 1, explanation: "[4+2] Diels-Alder: 1-azadiene (4π) + dienophile (2π) → 6-membered N-containing product (dihydropyridine or, after oxidation, pyridine)." },
   ],
   flashcards: [
-    { front: "Huisgen 1,3-Dipolar Cycloaddition", back: "[3+2]: 1,3-dipole + dipolarophile → 5-membered ring. Thermally: mixture. Cu-catalysed (CuAAC): regioselective 1,4-triazole. Important dipoles: azides, nitrile oxides, nitrones, nitrilimines." },
-    { front: "Kondrat'eva Synthesis", back: "Oxazole (azadiene) + alkyne → [4+2] → bicyclus → −CO₂ → pyridine. Azadienes: compounds with C=N or N=N as part of the 4π system." },
-    { front: "Boger Reaction", back: "Triazine (azadiene) + enamine → [4+2] → bicyclus → −N₂ → pyridine. N₂ is the 'XY' that leaves in retro-[4+2]." },
-    { front: "Retrosynthesis 5-membered ring", back: "5-ring → find 1,3-dipole (azide, nitrile oxide, nitrone) + dipolarophile (alkyne/alkene). Cut at the 1,2-bond pair and the 4,5-bond pair." },
-    { front: "Retrosynthesis 6-membered ring", back: "6-ring → diene [4C or 3C+N] + dienophile [2C or 1C+heteroatom]. Cut the 1,6- and 3,4-bonds (product bonds in DA)." },
-    { front: "Nitrile oxide as 1,3-dipole", back: "R-C≡N⁺-O⁻ ↔ R-C=N=O. Allene structure. Reaction with alkyne → isoxazole. With alkene → isoxazoline. Preparation: hydroxamic acid + base or chloroxime + base." },
+    { id: "1icba6a", front: "Huisgen 1,3-Dipolar Cycloaddition", back: "[3+2]: 1,3-dipole + dipolarophile → 5-membered ring. Thermally: mixture. Cu-catalysed (CuAAC): regioselective 1,4-triazole. Important dipoles: azides, nitrile oxides, nitrones, nitrilimines." },
+    { id: "11ru87j", front: "Kondrat'eva Synthesis", back: "Oxazole (azadiene) + alkyne → [4+2] → bicyclus → −CO₂ → pyridine. Azadienes: compounds with C=N or N=N as part of the 4π system." },
+    { id: "1cv4imb", front: "Boger Reaction", back: "Triazine (azadiene) + enamine → [4+2] → bicyclus → −N₂ → pyridine. N₂ is the 'XY' that leaves in retro-[4+2]." },
+    { id: "0adoh5e", front: "Retrosynthesis 5-membered ring", back: "5-ring → find 1,3-dipole (azide, nitrile oxide, nitrone) + dipolarophile (alkyne/alkene). Cut at the 1,2-bond pair and the 4,5-bond pair." },
+    { id: "0i3pq53", front: "Retrosynthesis 6-membered ring", back: "6-ring → diene [4C or 3C+N] + dienophile [2C or 1C+heteroatom]. Cut the 1,6- and 3,4-bonds (product bonds in DA)." },
+    { id: "1xgxlfr", front: "Nitrile oxide as 1,3-dipole", back: "R-C≡N⁺-O⁻ ↔ R-C=N=O. Allene structure. Reaction with alkyne → isoxazole. With alkene → isoxazoline. Preparation: hydroxamic acid + base or chloroxime + base." },
   ],
-};
+} satisfies Thema;

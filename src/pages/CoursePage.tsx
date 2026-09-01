@@ -5,7 +5,7 @@ import { useMastery } from '../hooks/useMastery'
 import { useReviews } from '../hooks/useReviews'
 import { allCourses, loadAllTopics } from '../lib/courseRegistry'
 import { examQuestionsFor } from '../data/exams'
-import type { Course } from '../types/index'
+import type { Kurs } from '../content/schema'
 import type { Level } from '../lib/learning/mastery'
 
 const LEVEL_STYLE: Record<Level, { dot: string; label: string }> = {
@@ -18,7 +18,7 @@ export default function CoursePage() {
   const { courseId } = useParams()
   const { loading } = useAuth()
   const navigate = useNavigate()
-  const [course, setCourse] = useState<Course | null>(null)
+  const [course, setCourse] = useState<Kurs | null>(null)
   const [topicTitles, setTopicTitles] = useState<Record<string, string>>({})
 
   const { topics: mastery } = useMastery(courseId ?? '')

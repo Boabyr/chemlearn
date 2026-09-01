@@ -13,7 +13,7 @@ export const QUESTION_SECONDS = 45
 export interface SessionQuestion {
   id: string
   topicId: string
-  professor: string
+  examiner: string
 }
 
 export interface DueItem {
@@ -28,7 +28,7 @@ export interface SessionOptions<Q extends SessionQuestion> {
   minutes: number
   now?: Date
   /** Auf einen Prüfer einschränken. */
-  professor?: string
+  examiner?: string
 }
 
 export function buildSession<Q extends SessionQuestion>({
@@ -37,9 +37,9 @@ export function buildSession<Q extends SessionQuestion>({
   due,
   minutes,
   now = new Date(),
-  professor,
+  examiner,
 }: SessionOptions<Q>): Q[] {
-  const pool = professor ? questions.filter(q => q.professor === professor) : questions
+  const pool = examiner ? questions.filter(q => q.examiner === examiner) : questions
   const wanted = Math.min(pool.length, Math.max(1, Math.round((minutes * 60) / QUESTION_SECONDS)))
 
   const byId = new Map(pool.map(q => [q.id, q]))

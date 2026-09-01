@@ -2,29 +2,24 @@ import { useState, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
-import { examQuestionsFor, examStructuresFor, professorLabel, professorsFor } from '../data/exams'
+import { examQuestionsFor, examStructuresFor, examinerAnzeige, examinersFor, courseIdsWithExams } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import { stilFuer } from '../components/ExamMode/pruefStil'
 
 type Mode = 'select' | 'exam' | 'result'
 
-const DEFAULT_COURSE = 'analytical-chemistry-1'
-
 /** Fragen je Prüferabschnitt in der Zufalls-Prüfung. */
 const FRAGEN_JE_ABSCHNITT = 5
-
-
-const PROF_ICONS: Record<string, string> = { lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪' }
-const labelFor = (p: string) => `${PROF_ICONS[p] ?? '📘'} ${professorLabel(p)}`
 
 export default function ExamSimulator() {
   const { loading } = useAuth()
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const courseId = params.get('course') ?? DEFAULT_COURSE
+  // Ohne Kursangabe das erste Fach mit Prüfungsdaten — kein fest verdrahtetes AC1 mehr.
+  const courseId = params.get('course') ?? courseIdsWithExams()[0] ?? ''
 
   const examQuestions = useMemo(() => examQuestionsFor(courseId), [courseId])
-  const professoren = useMemo(() => professorsFor(courseId), [courseId])
+  const professoren = useMemo(() => examinersFor(courseId), [courseId])
   const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
   const { logAttempt, flush } = useAttempts(courseId)
 
@@ -80,7 +75,7 @@ export default function ExamSimulator() {
 
   // Ergebnisberechnung
   const sectionScores = selectedExam.sections.map(sec => ({
-    professor: sec.professor,
+    examiner: sec.examiner,
     earned: sec.questionIds.reduce((s, id) => s + (scores[id] ?? 0), 0),
     max: sec.points,
     passing: sec.passingPoints,
@@ -93,7 +88,6 @@ export default function ExamSimulator() {
 
   if (loading) return <div className="min-h-screen bg-surface flex items-center justify-center"><div className="text-accent">Laden...</div></div>
 
-
   return (
     <div className="min-h-screen bg-surface text-ink">
       <nav className="bg-raised border-b border-line px-6 py-4 flex items-center justify-between sticky top-0 z-10">
@@ -103,7 +97,7 @@ export default function ExamSimulator() {
         </div>
         {mode === 'exam' && (
           <div className="text-xs text-muted">
-            {labelFor(currentSection.professor)} · Frage {qIdx+1}/{currentSection.questionIds.length}
+            {examinerAnzeige(currentSection.examiner, courseId)} · Frage {qIdx+1}/{currentSection.questionIds.length}
           </div>
         )}
       </nav>
@@ -133,8 +127,8 @@ export default function ExamSimulator() {
                   </div>
                   <div className="flex gap-2">
                     {exam.sections.map(sec => (
-                      <span key={sec.professor} className={`text-xs px-3 py-1 rounded-full ${stilFuer(sec.professor).chip}`}>
-                        {labelFor(sec.professor)} ({sec.points}P)
+                      <span key={sec.examiner} className={`text-xs px-3 py-1 rounded-full ${stilFuer(sec.examiner).chip}`}>
+                        {examinerAnzeige(sec.examiner, courseId)} ({sec.points}P)
                       </span>
                     ))}
                   </div>
@@ -148,10 +142,10 @@ export default function ExamSimulator() {
                   // eine Grenze, die der gezogene Satz gar nicht erreichen konnte.
                   const gemischt = [...examQuestions].sort(() => Math.random() - 0.5)
                   const abschnitte = professoren.map(prof => {
-                    const fragen = gemischt.filter(q => q.professor === prof).slice(0, FRAGEN_JE_ABSCHNITT)
+                    const fragen = gemischt.filter(q => q.examiner === prof).slice(0, FRAGEN_JE_ABSCHNITT)
                     const punkte = fragen.reduce((summe, q) => summe + q.points, 0)
                     return {
-                      professor: prof,
+                      examiner: prof,
                       points: punkte,
                       passingPoints: Math.ceil(punkte / 2),
                       questionIds: fragen.map(q => q.id),
@@ -179,12 +173,12 @@ export default function ExamSimulator() {
         {mode === 'exam' && currentQ && (
           <div>
             {/* Abschnitts-Header */}
-            <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.professor).panel}`}>
-              <p className={`text-sm font-semibold ${stilFuer(currentSection.professor).text}`}>
-                {labelFor(currentSection.professor)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
+            <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.examiner).panel}`}>
+              <p className={`text-sm font-semibold ${stilFuer(currentSection.examiner).text}`}>
+                {examinerAnzeige(currentSection.examiner, courseId)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
               </p>
               <div className="mt-2 h-1.5 bg-sunken rounded-full">
-                <div className={`h-full ${stilFuer(currentSection.professor).bar} rounded-full transition-all`}
+                <div className={`h-full ${stilFuer(currentSection.examiner).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
               </div>
             </div>
@@ -199,7 +193,7 @@ export default function ExamSimulator() {
               disabled={!answered[currentQId]}
               className="mt-4 w-full py-3 bg-sunken border border-line hover:border-subtle disabled:opacity-40 disabled:cursor-not-allowed text-muted font-semibold rounded-xl text-sm transition-colors">
               {qIdx < currentSection.questionIds.length - 1 ? 'Nächste Frage →' :
-               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${labelFor(selectedExam.sections[sectionIdx+1].professor)} →` :
+               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${examinerAnzeige(selectedExam.sections[sectionIdx+1].examiner, courseId)} →` :
                'Prüfung abschließen →'}
             </button>
           </div>
@@ -224,12 +218,12 @@ export default function ExamSimulator() {
 
             <div className="space-y-3 mb-6">
               {sectionScores.map(sec => (
-                <div key={sec.professor} className={`flex items-center justify-between px-5 py-4 rounded-xl border ${
+                <div key={sec.examiner} className={`flex items-center justify-between px-5 py-4 rounded-xl border ${
                   sec.passed ? 'border-success bg-success/10' : 'border-danger bg-danger/10'
                 }`}>
                   <div>
-                    <span className={`font-semibold ${stilFuer(sec.professor).text}`}>
-                      {labelFor(sec.professor)}
+                    <span className={`font-semibold ${stilFuer(sec.examiner).text}`}>
+                      {examinerAnzeige(sec.examiner, courseId)}
                     </span>
                     <span className="text-subtle text-xs ml-2">(min. {sec.passing}P)</span>
                   </div>

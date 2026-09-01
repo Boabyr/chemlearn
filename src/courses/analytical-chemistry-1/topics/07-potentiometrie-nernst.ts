@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "07-potentiometrie-nernst",
   title: "Potentiometrie",
@@ -78,13 +80,11 @@ Die Spannung wird während einer Titration gemessen.
         { id: "logA", label: "log(Aktivität)", symbol: "log(a)", unit: "—", description: "Dekadischer Logarithmus der Ionenaktivität" },
         { id: "const", label: "Konstante", symbol: "E_const", unit: "V", description: "Gerätekonstante (aus Kalibrierung)" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor
-        if (sf === 'E') return { E: inputs.const + (0.05916 / inputs.z) * inputs.logA }
-        if (sf === 'logA') return { logA: (inputs.E - inputs.const) * inputs.z / 0.05916 }
-        if (sf === 'const') return { const: inputs.E - (0.05916 / inputs.z) * inputs.logA }
-        return {}
-      },
+      umstellungen: [
+        { solveFor: "E", expr: "const + (0.05916 / z) * logA" },
+        { solveFor: "logA", expr: "(E - const) * z / 0.05916" },
+        { solveFor: "const", expr: "E - (0.05916 / z) * logA" },
+      ],
       hints: [
         "Für Kationen (z > 0): E steigt mit steigender Konzentration. Für Anionen (z < 0): E sinkt mit steigender Konzentration. Steigung bei 25°C: 59.16/z mV pro Dekade.",
         "pH-Elektrode: z = +1 (H⁺). E = const − 0.05916·pH. Pro pH-Einheit: 59.16 mV Änderung. Kalibrierung mit Puffern pH 4 und 7 (oder 7 und 10)."
@@ -100,11 +100,11 @@ Die Spannung wird während einer Titration gemessen.
     { id: "q6", question: "Was beschreibt der Selektivitätskoeffizient K_ij einer ISE?", options: ["Die Empfindlichkeit für das Primärion i", "Das Verhältnis der Störung durch Ion j gegenüber dem primären Ion i", "Die Temperaturabhängigkeit", "Den linearen Messbereich"], correct: 1, explanation: "K_ij = Selektivitätskoeffizient. Je kleiner K_ij, desto besser die Selektivität: K_ij = 10⁻³ bedeutet, dass Ion j 1000× schlechter detektiert wird als Ion i. In der Nernst-Gleichung: Gesamt-E hängt von a_i + K_ij · a_j^(zi/zj) ab." },
   ],
   flashcards: [
-    { front: "Potentiometrie – Prinzip", back: "Messung der EMK zwischen Mess- und Referenzelektrode bei I=0 (kein Strom!). E_Zelle = E_Mess − E_Ref + E_D. Nernst-Gleichung verknüpft E mit Konzentration." },
-    { front: "Glaselektrode – Aufbau", back: "Dünne Glasmembran (Li₂O·BaO·SiO₂). Innenpuffer pH 7 + Ag/AgCl intern. Externe Ag/AgCl-Referenz. E_Glas = const − 59.16·pH (mV, 25°C). Kalibrierung mit pH-Puffern." },
-    { front: "ISE Nernst-Steigung", back: "S = 0.05916/z V = 59.16/z mV pro Dekade (25°C). z=+1 (Na⁺, K⁺): +59.16 mV. z=+2 (Ca²⁺): +29.58 mV. z=−1 (F⁻, Cl⁻): −59.16 mV." },
-    { front: "Alkalifehler Glaselektrode", back: "pH > 12: Na⁺ interferiert (K_H,Na ≈ 10⁻¹¹ aber [Na⁺] >> [H⁺]). Gemessener pH zu niedrig. Säurefehler: pH < 1, gemessener pH zu hoch. Linearitätsbereich: pH 1–12." },
-    { front: "Potentiometrische Titration", back: "E wird während Titration gemessen. Äquivalenzpunkt = Maximum in dE/dV. Vorteile: objektiv, in trüben Lösungen, mehrere Stufen erkennbar. Beispiele: Säure-Base, Fällung, Komplexometrie, Redox." },
-    { front: "Selektivitätskoeffizient K_ij", back: "Maß für Störung von Ion j auf ISE für Ion i. Kleiner K_ij = bessere Selektivität. Nikolski-Gleichung: E = const + (S/z_i)·log(a_i + Σ K_ij·a_j^(zi/zj))." },
+    { id: "1adsfli", front: "Potentiometrie – Prinzip", back: "Messung der EMK zwischen Mess- und Referenzelektrode bei I=0 (kein Strom!). E_Zelle = E_Mess − E_Ref + E_D. Nernst-Gleichung verknüpft E mit Konzentration." },
+    { id: "085mres", front: "Glaselektrode – Aufbau", back: "Dünne Glasmembran (Li₂O·BaO·SiO₂). Innenpuffer pH 7 + Ag/AgCl intern. Externe Ag/AgCl-Referenz. E_Glas = const − 59.16·pH (mV, 25°C). Kalibrierung mit pH-Puffern." },
+    { id: "0aqggm7", front: "ISE Nernst-Steigung", back: "S = 0.05916/z V = 59.16/z mV pro Dekade (25°C). z=+1 (Na⁺, K⁺): +59.16 mV. z=+2 (Ca²⁺): +29.58 mV. z=−1 (F⁻, Cl⁻): −59.16 mV." },
+    { id: "1ujiprb", front: "Alkalifehler Glaselektrode", back: "pH > 12: Na⁺ interferiert (K_H,Na ≈ 10⁻¹¹ aber [Na⁺] >> [H⁺]). Gemessener pH zu niedrig. Säurefehler: pH < 1, gemessener pH zu hoch. Linearitätsbereich: pH 1–12." },
+    { id: "0m4gkvv", front: "Potentiometrische Titration", back: "E wird während Titration gemessen. Äquivalenzpunkt = Maximum in dE/dV. Vorteile: objektiv, in trüben Lösungen, mehrere Stufen erkennbar. Beispiele: Säure-Base, Fällung, Komplexometrie, Redox." },
+    { id: "0s5g3zz", front: "Selektivitätskoeffizient K_ij", back: "Maß für Störung von Ion j auf ISE für Ion i. Kleiner K_ij = bessere Selektivität. Nikolski-Gleichung: E = const + (S/z_i)·log(a_i + Σ K_ij·a_j^(zi/zj))." },
   ],
-};
+} satisfies Thema;

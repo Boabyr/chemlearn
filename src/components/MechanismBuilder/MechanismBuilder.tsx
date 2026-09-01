@@ -1,38 +1,9 @@
 import { useState, useRef } from 'react'
+import type { MechanismusStufe } from '../../content/schema'
 
-interface Atom {
-  id: string
-  label: string
-  x: number
-  y: number
-  color: string
-  r: number
-  charge?: string
-  sub?: string
-}
-
-interface Bond {
-  a: string
-  b: string
-  dash: boolean
-  color: string
-}
-
-interface Arrow {
-  from: string
-  to: string
-}
-
-interface Stage {
-  id: number
-  label: string
-  description: string
-  hint1: string
-  hint2: string
-  atoms: Atom[]
-  bonds: Bond[]
-  correctArrow: Arrow
-}
+type Stage = MechanismusStufe
+/** Der Pfeil, den die lernende Person gerade gezogen hat. */
+type Arrow = { from: string; to: string }
 
 interface MechanismBuilderProps {
   title: string

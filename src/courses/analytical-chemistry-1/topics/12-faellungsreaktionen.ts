@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "12-faellungsreaktionen",
   title: "Fällungsreaktionen & Gravimetrie",
@@ -78,10 +80,10 @@ s = ∛(Ksp/4)
     { id: "q6", question: "Warum ist Gravimetrie ein 'absolutes' Verfahren?", options: ["Weil es immer absolute Genauigkeit hat", "Weil keine Kalibrierung mit Standardlösungen nötig ist – man wiegt direkt die Substanz", "Weil es der absoluteste Fehler ist", "Weil es für alle Elemente gilt"], correct: 1, explanation: "Absolutes Verfahren: die Masse wird direkt gewogen, keine Kalibrierungsgerade nötig. Nur die stöchiometrische Umrechnung ist erforderlich. Voraussetzung: vollständige, saubere Fällung und definierte Zusammensetzung des Niederschlags." },
   ],
   flashcards: [
-    { front: "Löslichkeitsprodukt Ksp", back: "AB ⇌ A⁺ + B⁻: Ksp = [A⁺][B⁻]. Fällung wenn [A⁺][B⁻] > Ksp. Löslichkeit: s=√Ksp (für 1:1-Salz). AgCl: Ksp=1,8×10⁻¹⁰, s=1,34×10⁻⁵ mol/L." },
-    { front: "Sulfidtrenngang", back: "H₂S bei pH 3: Cu²⁺, Cd²⁺, Hg²⁺ (Ksp sehr klein) → FÄLLT. Fe²⁺, Mn²⁺, Ni²⁺, Co²⁺ (Ksp größer) → fällt NICHT bei pH 3 (erst bei neutral/basisch). Mg²⁺, Ca²⁺, Na⁺ → kein Sulfid." },
-    { front: "Gravimetrie – Schritte", back: "1. Auflösung. 2. Fällung. 3. Verdauen (Ostwald-Reifung). 4. Filtrieren+Waschen. 5. Glühen (→ definierte Verbindung). 6. Wägen. Absolutes Verfahren, keine Kalibrierung." },
-    { front: "Gemeinsamer Ioneneffekt", back: "Zugabe eines gemeinsamen Ions → Löslichkeit sinkt. Ksp = konstant: [Ag⁺] steigt → [Cl⁻] sinkt → AgCl fällt aus. Anwendung: quantitative Fällung durch Reagenzüberschuss." },
-    { front: "Fe gravimetrisch bestimmen", back: "Fe³⁺ → Fe₂O₃ (nach Fällung als Fe(OH)₃ + Glühen). n(Fe) = 2·n(Fe₂O₃). m(Fe) = n·55,85. Umrechnungsfaktor: 2×55,85/159,7 = 0,6994." },
+    { id: "0jwdyrb", front: "Löslichkeitsprodukt Ksp", back: "AB ⇌ A⁺ + B⁻: Ksp = [A⁺][B⁻]. Fällung wenn [A⁺][B⁻] > Ksp. Löslichkeit: s=√Ksp (für 1:1-Salz). AgCl: Ksp=1,8×10⁻¹⁰, s=1,34×10⁻⁵ mol/L." },
+    { id: "1mrtmjs", front: "Sulfidtrenngang", back: "H₂S bei pH 3: Cu²⁺, Cd²⁺, Hg²⁺ (Ksp sehr klein) → FÄLLT. Fe²⁺, Mn²⁺, Ni²⁺, Co²⁺ (Ksp größer) → fällt NICHT bei pH 3 (erst bei neutral/basisch). Mg²⁺, Ca²⁺, Na⁺ → kein Sulfid." },
+    { id: "1jp4bgx", front: "Gravimetrie – Schritte", back: "1. Auflösung. 2. Fällung. 3. Verdauen (Ostwald-Reifung). 4. Filtrieren+Waschen. 5. Glühen (→ definierte Verbindung). 6. Wägen. Absolutes Verfahren, keine Kalibrierung." },
+    { id: "0fcqxnk", front: "Gemeinsamer Ioneneffekt", back: "Zugabe eines gemeinsamen Ions → Löslichkeit sinkt. Ksp = konstant: [Ag⁺] steigt → [Cl⁻] sinkt → AgCl fällt aus. Anwendung: quantitative Fällung durch Reagenzüberschuss." },
+    { id: "1akzsky", front: "Fe gravimetrisch bestimmen", back: "Fe³⁺ → Fe₂O₃ (nach Fällung als Fe(OH)₃ + Glühen). n(Fe) = 2·n(Fe₂O₃). m(Fe) = n·55,85. Umrechnungsfaktor: 2×55,85/159,7 = 0,6994." },
   ],
-};
+} satisfies Thema;

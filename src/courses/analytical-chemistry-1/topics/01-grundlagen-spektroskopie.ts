@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "01-grundlagen-spektroskopie",
   title: "Grundlagen der Spektroskopie",
@@ -62,7 +64,6 @@ A = ε · c · d
   interactive: {
     type: "apparatus-quiz",
     question: "Fluoreszenzspektrometer",
-    mode: "name-to-image",
     targetId: "fluorescence",
     explanation: "Das Fluoreszenzspektrometer hat einen sehr einfachen Aufbau: Die Probe selbst emittiert Licht nach Anregung. Daher wird nur die Probe und ein Detektor (senkrecht zur Anregungsrichtung) benötigt – kein Referenzstrahl nötig. Das macht die Methode sehr empfindlich (kein Hintergrundsignal).",
     hint1: "Fluoreszenzspektrometer messen emittiertes Licht, nicht transmittiertes. Der Detektor steht daher im 90°-Winkel zur Anregungsquelle.",
@@ -99,11 +100,11 @@ A = ε · c · d
     { id: "q6", question: "Welche der folgenden Spektroskopiearten hat den niedrigsten Energiebedarf pro Photon?", options: ["Röntgenspektroskopie", "UV-Spektroskopie", "IR-Spektroskopie", "NMR-Spektroskopie"], correct: 3, explanation: "NMR arbeitet im Radiowellenbereich (0,6–10 m Wellenlänge) → niedrigste Frequenz → niedrigste Photonenenergie (E = h·ν). Röntgen hat die höchste Energie." },
   ],
   flashcards: [
-    { front: "Lambert-Beer-Gesetz (Kurzform)", back: "A = ε · c · d. A = Absorption (dimensionslos), ε = molarer Extinktionskoeffizient (L·mol⁻¹·cm⁻¹), c = Konzentration (mol/L), d = Schichtdicke (cm)." },
-    { front: "Elektromagnetisches Spektrum – Reihenfolge", back: "γ-Strahlung → Röntgen → UV → Vis → NIR → IR → Mikrowelle → Radiowellen. Mit zunehmender Wellenlänge nimmt die Energie ab." },
-    { front: "c = λ · ν", back: "Lichtgeschwindigkeit c = 3×10⁸ m/s = Wellenlänge λ × Frequenz ν. Kurze Wellenlänge = hohe Frequenz = hohe Energie." },
-    { front: "Dispersives vs. FT-Spektrometer", back: "Dispersiv: Monochromator trennt Wellenlängen, sequentielle Messung. FT: Michelson-Interferometer, alle λ gleichzeitig (Multiplex-Vorteil), Fourier-Transformation gibt Spektrum." },
-    { front: "Anregungsarten im elektromagnetischen Spektrum", back: "Röntgen: innere Elektronen. UV/Vis: Valenzelektronen. IR: Schwingungen/Rotationen. Mikrowelle: Rotationen. NMR: Kernspin. ESR: Elektronenspin." },
-    { front: "Fluoreszenzspektrometer – Aufbau", back: "Lichtquelle → (Monochromator) → Probe → Detektor im 90°-Winkel. Sehr empfindlich (kein Hintergrund). Kein Referenzstrahl nötig, da emittiertes Licht gemessen wird." },
+    { id: "0r9xh85", front: "Lambert-Beer-Gesetz (Kurzform)", back: "A = ε · c · d. A = Absorption (dimensionslos), ε = molarer Extinktionskoeffizient (L·mol⁻¹·cm⁻¹), c = Konzentration (mol/L), d = Schichtdicke (cm)." },
+    { id: "1wahz4s", front: "Elektromagnetisches Spektrum – Reihenfolge", back: "γ-Strahlung → Röntgen → UV → Vis → NIR → IR → Mikrowelle → Radiowellen. Mit zunehmender Wellenlänge nimmt die Energie ab." },
+    { id: "1i7e5ou", front: "c = λ · ν", back: "Lichtgeschwindigkeit c = 3×10⁸ m/s = Wellenlänge λ × Frequenz ν. Kurze Wellenlänge = hohe Frequenz = hohe Energie." },
+    { id: "0jll9w1", front: "Dispersives vs. FT-Spektrometer", back: "Dispersiv: Monochromator trennt Wellenlängen, sequentielle Messung. FT: Michelson-Interferometer, alle λ gleichzeitig (Multiplex-Vorteil), Fourier-Transformation gibt Spektrum." },
+    { id: "1iyunxu", front: "Anregungsarten im elektromagnetischen Spektrum", back: "Röntgen: innere Elektronen. UV/Vis: Valenzelektronen. IR: Schwingungen/Rotationen. Mikrowelle: Rotationen. NMR: Kernspin. ESR: Elektronenspin." },
+    { id: "0usyg74", front: "Fluoreszenzspektrometer – Aufbau", back: "Lichtquelle → (Monochromator) → Probe → Detektor im 90°-Winkel. Sehr empfindlich (kein Hintergrund). Kein Referenzstrahl nötig, da emittiertes Licht gemessen wird." },
   ],
-};
+} satisfies Thema;

@@ -14,10 +14,12 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'node:fs'
 import { join, basename } from 'node:path'
 
+import { kartenId } from './lib/kartenId.mjs'
+import { pruefeAusdruck } from '../src/lib/formel/ausdruck.mjs'
 const ROOT = process.cwd()
 const COURSES_DIR = join(ROOT, 'src/courses')
 const EXAMS_DIR = join(ROOT, 'src/data/exams')
-const REGISTRY = join(ROOT, 'src/lib/courseRegistry.ts')
+const EXAMS_JSON = (kursId) => join(EXAMS_DIR, `${kursId}.json`)
 
 // ── Hilfen ────────────────────────────────────────────────────────────────
 
@@ -66,11 +68,11 @@ function inlineFields(line) {
 
 // ── Formeln ───────────────────────────────────────────────────────────────
 
-const MATH = { log: 'Math.log10', ln: 'Math.log', exp: 'Math.exp', sqrt: 'Math.sqrt', abs: 'Math.abs' }
-
 /**
- * `c = A / (eps * d)` in einen JavaScript-Ausdruck über `inputs` übersetzen.
- * Alles, was danach kein bekannter Bezeichner oder Rechenzeichen ist, gilt als Fehler.
+ * `c = A / (eps * d)` als Datensatz prüfen und ablegen.
+ *
+ * Geprüft wird mit demselben Parser, den die App zum Rechnen benutzt
+ * (src/lib/formel/ausdruck.mjs) — was hier durchgeht, rechnet dort auch.
  */
 function uebersetzeFormel(zeile, variablen, ort) {
   const m = zeile.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+?)\s*$/)
@@ -82,24 +84,14 @@ function uebersetzeFormel(zeile, variablen, ort) {
     return null
   }
 
-  let js = ausdruck
-  for (const [name, fn] of Object.entries(MATH)) {
-    js = js.replace(new RegExp(`\\b${name}\\s*\\(`, 'g'), `${fn}(`)
-  }
-  // Bezeichner ersetzen, Math.* dabei in Ruhe lassen
-  js = js.replace(/\b([A-Za-z_][A-Za-z0-9_]*)\b/g, (treffer, name, index, ganz) => {
-    if (ganz.slice(Math.max(0, index - 5), index).endsWith('Math.')) return treffer
-    if (name === 'Math') return treffer
-    if (variablen.includes(name)) return `inputs.${name}`
-    problem(ort, `Unbekannte Größe "${name}" in Umstellung "${zeile}"`)
-    return treffer
-  })
-
-  if (!/^[\sA-Za-z0-9_.()*/+\-]+$/.test(js)) {
-    problem(ort, `Umstellung enthält unerlaubte Zeichen: "${zeile}"`)
+  const erlaubt = variablen.filter(name => name !== ziel)
+  const beanstandung = pruefeAusdruck(ausdruck, erlaubt)
+  if (beanstandung) {
+    problem(ort, `Umstellung "${zeile}": ${beanstandung}`)
     return null
   }
-  return { ziel, js }
+
+  return { solveFor: ziel, expr: ausdruck }
 }
 
 // ── Zerlegen ──────────────────────────────────────────────────────────────
@@ -205,7 +197,7 @@ function leseInteraktiv(block, ort) {
     for (const o of optionen) warnungPruefeApparatur(o.id, ort)
     return {
       art: 'apparatus-quiz',
-      question: kv.frage ?? '', mode: kv.modus ?? 'name-to-image', targetId: kv.ziel_id ?? '',
+      question: kv.frage ?? '', targetId: kv.ziel_id ?? '',
       optionen, explanation: kv.erklaerung ?? '', hint1: kv.hinweis1, hint2: kv.hinweis2,
     }
   }
@@ -230,6 +222,73 @@ function leseInteraktiv(block, ort) {
       title: kv.titel ?? '', description: kv.beschreibung ?? '',
       xLabel: kv.x_achse ?? '', yLabel: kv.y_achse ?? '',
       peaks, hint1: kv.hinweis1, hint2: kv.hinweis2,
+    }
+  }
+
+  if (typ === 'mechanism') {
+    // Mechanismen brauchen gesetzte Atomkoordinaten — die kann keine Textquelle
+    // liefern. Deshalb werden sie hier nur übernommen, wenn `atome:` und
+    // `bindungen:` ausdrücklich dabeistehen, sonst laut abgelehnt.
+    const stufen = []
+    let aktuell = null
+
+    for (const zeile of block.split('\n')) {
+      const schritt = zeile.match(/^-\s*nr:\s*(.+)$/)
+      if (schritt) {
+        if (aktuell) stufen.push(aktuell)
+        const f = inlineFields('nr: ' + schritt[1])
+        aktuell = {
+          id: Number(f.nr) - 1,
+          label: f.label ?? `Schritt ${f.nr}`,
+          description: f.beschreibung ?? '',
+          hint1: f.hinweis1 ?? '', hint2: f.hinweis2 ?? '',
+          atoms: [], bonds: [], correctArrow: null,
+        }
+        const pfeil = (f.pfeil ?? '').split('→').map(t => t.trim())
+        if (pfeil.length === 2) aktuell.correctArrow = { from: pfeil[0], to: pfeil[1] }
+        continue
+      }
+      if (!aktuell) continue
+
+      const atom = zeile.match(/^\s{2,}atom:\s*(.+)$/)
+      if (atom) {
+        const f = inlineFields(atom[1])
+        aktuell.atoms.push({
+          id: f.id, label: f.label ?? f.id,
+          x: Number(f.x), y: Number(f.y),
+          color: f.farbe ?? '#e2e8f0', r: Number(f.r ?? 16),
+          ...(f.ladung ? { charge: f.ladung } : {}),
+          ...(f.index ? { sub: f.index } : {}),
+        })
+        continue
+      }
+      const bindung = zeile.match(/^\s{2,}bindung:\s*(.+)$/)
+      if (bindung) {
+        const f = inlineFields(bindung[1])
+        aktuell.bonds.push({
+          a: f.a, b: f.b,
+          dash: String(f.gestrichelt ?? 'nein') === 'ja',
+          color: f.farbe ?? '#64748b',
+        })
+      }
+    }
+    if (aktuell) stufen.push(aktuell)
+
+    if (stufen.length === 0) { problem(ort, 'mechanism ohne Schritte'); return null }
+    for (const stufe of stufen) {
+      if (stufe.atoms.length < 2) {
+        problem(ort, `Mechanismus-Schritt "${stufe.label}" ohne Atomkoordinaten — Mechanismen lassen sich nicht aus Text ableiten, siehe CONTENT-PROMPT.md`)
+        return null
+      }
+      if (!stufe.correctArrow) {
+        problem(ort, `Mechanismus-Schritt "${stufe.label}" ohne "pfeil: von → nach"`)
+        return null
+      }
+    }
+
+    return {
+      art: 'mechanism',
+      title: kv.titel ?? '', description: kv.beschreibung ?? '', stufen,
     }
   }
 
@@ -333,7 +392,9 @@ function baueFragen(roh, themenIds) {
   const { inhalt, ort } = roh
   sammleMarker(ort, inhalt)
   const teile = inhalt.split(/^---\s*FRAGE\s*---\s*$/m)
-  const kopf = keyValues(teile[0] ?? '')
+  const kopfRoh = teile[0] ?? ''
+  const aufbauBlock = kopfRoh.split(/^#\s+AUFBAU\s*$/m)[1] ?? ''
+  const kopf = keyValues(kopfRoh.split(/^#\s+AUFBAU\s*$/m)[0])
 
   if (!kopf.quelle) problem(ort, 'Prüfungskopf ohne quelle')
   if (!kopf.pruefer) problem(ort, 'Prüfungskopf ohne pruefer')
@@ -400,7 +461,7 @@ function baueFragen(roh, themenIds) {
 
     fragen.push({
       id: kv.id || `${(kopf.pruefer ?? 'X')[0].toUpperCase()}${String(i + 1).padStart(3, '0')}`,
-      source: kopf.quelle ?? '', professor: kopf.pruefer ?? '',
+      source: kopf.quelle ?? '', examiner: kopf.pruefer ?? '',
       topicId: thema, points: Number(kv.punkte ?? 1), type: typ,
       question: kv.frage ?? '', options: optionen.length ? optionen : undefined,
       correct, explanation: erklaerung.trim(),
@@ -408,13 +469,15 @@ function baueFragen(roh, themenIds) {
       unit: kv.einheit,
     })
   })
-  return { kurs: kopf.kurs, fragen }
+  return { kurs: kopf.kurs, fragen, aufbau: leseAufbau(aufbauBlock.trim(), ort) }
 }
 
 // ── Ausgabe erzeugen ──────────────────────────────────────────────────────
 
 function themaAlsTypeScript(t) {
   const zeilen = []
+  zeilen.push("import type { Thema } from '../../../content/schema'")
+  zeilen.push('')
   zeilen.push('export const topic = {')
   zeilen.push(`  id: ${str(t.id)},`)
   zeilen.push(`  title: ${str(t.title)},`)
@@ -437,13 +500,11 @@ function themaAlsTypeScript(t) {
       zeilen.push(`        { id: ${str(v.id)}, label: ${str(v.label)}, symbol: ${str(v.symbol)}, unit: ${str(v.unit)}, description: ${str(v.description)} },`)
     }
     zeilen.push('      ],')
-    zeilen.push('      solve: (inputs: Record<string, any>) => {')
-    zeilen.push('        const sf = inputs.solveFor')
+    zeilen.push('      umstellungen: [')
     for (const u of f.umstellungen) {
-      zeilen.push(`        if (sf === ${str(u.ziel)}) return { ${u.ziel}: ${u.js} }`)
+      zeilen.push(`        { solveFor: ${str(u.solveFor)}, expr: ${str(u.expr)} },`)
     }
-    zeilen.push('        return {}')
-    zeilen.push('      },')
+    zeilen.push('      ],')
     zeilen.push(`      hints: [${f.hints.map(str).join(', ')}],`)
     zeilen.push('    },')
     zeilen.push('  },')
@@ -451,7 +512,6 @@ function themaAlsTypeScript(t) {
     zeilen.push('  interactive: {')
     zeilen.push('    type: "apparatus-quiz",')
     zeilen.push(`    question: ${str(i.question)},`)
-    zeilen.push(`    mode: ${str(i.mode)},`)
     zeilen.push(`    targetId: ${str(i.targetId)},`)
     zeilen.push(`    explanation: ${str(i.explanation)},`)
     if (i.hint1) zeilen.push(`    hint1: ${str(i.hint1)},`)
@@ -459,6 +519,32 @@ function themaAlsTypeScript(t) {
     zeilen.push('    options: [')
     for (const o of i.optionen) {
       zeilen.push(`      { id: ${str(o.id)}, label: ${str(o.label)}, description: ${str(o.description)} },`)
+    }
+    zeilen.push('    ],')
+    zeilen.push('  },')
+  } else if (i?.art === 'mechanism') {
+    zeilen.push('  interactive: {')
+    zeilen.push('    type: "mechanism",')
+    zeilen.push(`    title: ${str(i.title)},`)
+    zeilen.push(`    description: ${str(i.description)},`)
+    zeilen.push('    stages: [')
+    for (const st of i.stufen) {
+      zeilen.push('      {')
+      zeilen.push(`        id: ${st.id}, label: ${str(st.label)}, description: ${str(st.description)},`)
+      zeilen.push(`        hint1: ${str(st.hint1)}, hint2: ${str(st.hint2)},`)
+      zeilen.push('        atoms: [')
+      for (const a of st.atoms) {
+        const zusatz = (a.charge ? `, charge: ${str(a.charge)}` : '') + (a.sub ? `, sub: ${str(a.sub)}` : '')
+        zeilen.push(`          { id: ${str(a.id)}, label: ${str(a.label)}, x: ${a.x}, y: ${a.y}, color: ${str(a.color)}, r: ${a.r}${zusatz} },`)
+      }
+      zeilen.push('        ],')
+      zeilen.push('        bonds: [')
+      for (const b of st.bonds) {
+        zeilen.push(`          { a: ${str(b.a)}, b: ${str(b.b)}, dash: ${b.dash}, color: ${str(b.color)} },`)
+      }
+      zeilen.push('        ],')
+      zeilen.push(`        correctArrow: { from: ${str(st.correctArrow.from)}, to: ${str(st.correctArrow.to)} },`)
+      zeilen.push('      },')
     }
     zeilen.push('    ],')
     zeilen.push('  },')
@@ -486,94 +572,96 @@ function themaAlsTypeScript(t) {
   zeilen.push('  ],')
   zeilen.push('  flashcards: [')
   for (const c of t.flashcards) {
-    zeilen.push(`    { front: ${str(c.front)}, back: ${str(c.back)} },`)
+    zeilen.push(`    { id: ${str(kartenId(c.front))}, front: ${str(c.front)}, back: ${str(c.back)} },`)
   }
   zeilen.push('  ],')
-  zeilen.push('};')
+  zeilen.push('} satisfies Thema;')
   return zeilen.join('\n') + '\n'
 }
 
-function fragenAlsTypeScript(fragen, kursId) {
-  const kopf = `// Prüfungsfragen für ${kursId}
-// Erzeugt von scripts/import-content.mjs — Änderungen hier gehen beim nächsten
-// Import verloren. Stattdessen die Quelldateien in .source/ anpassen.
+/** Prüfungsaufbau aus einem `# AUFBAU`-Block lesen. Optional. */
+function leseAufbau(block, ort) {
+  if (!block) return null
+  const kv = keyValues(block)
+  if (!kv.id) { problem(ort, 'Prüfungsaufbau ohne id'); return null }
 
-export type QuestionType = 'mc-single' | 'mc-multi' | 'numeric' | 'order'
-
-export interface ExamQuestion {
-  id: string
-  source: string
-  professor: string
-  topicId: string
-  points: number
-  type: QuestionType
-  question: string
-  options?: string[]
-  correct: number | number[] | string
-  explanation: string
-  tolerance?: number
-  unit?: string
-}
-
-export interface ExamStructure {
-  id: string
-  date: string
-  title: string
-  totalPoints: number
-  passingPoints: number
-  sections: { professor: string; points: number; passingPoints: number; questionIds: string[] }[]
-}
-
-export const questions: ExamQuestion[] = [
-`
-  const koerper = fragen.map(q => {
-    const felder = [
-      `    id: ${str(q.id)}`,
-      `    source: ${str(q.source)}`,
-      `    professor: ${str(q.professor)}`,
-      `    topicId: ${str(q.topicId)}`,
-      `    points: ${q.points}`,
-      `    type: ${str(q.type)}`,
-      `    question: ${str(q.question)}`,
-    ]
-    if (q.options) felder.push(`    options: [${q.options.map(str).join(', ')}]`)
-    felder.push(`    correct: ${Array.isArray(q.correct) ? `[${q.correct.join(', ')}]` : JSON.stringify(q.correct)}`)
-    felder.push(`    explanation: ${str(q.explanation)}`)
-    if (q.tolerance !== undefined && Number.isFinite(q.tolerance)) felder.push(`    tolerance: ${q.tolerance}`)
-    if (q.unit) felder.push(`    unit: ${str(q.unit)}`)
-    return '  {\n' + felder.join(',\n') + ',\n  },'
-  }).join('\n')
-
-  // Je Prüfung ein Aufbau, Abschnitte nach Prüfer
-  const nachQuelle = new Map()
-  for (const q of fragen) {
-    if (!nachQuelle.has(q.source)) nachQuelle.set(q.source, [])
-    nachQuelle.get(q.source).push(q)
+  const sections = []
+  for (const zeile of block.split('\n')) {
+    const m = zeile.match(/^abschnitt:\s*(.+)$/)
+    if (!m) continue
+    const teile = m[1].split('|').map(t => t.trim())
+    if (teile.length !== 4) { problem(ort, `Abschnitt braucht 4 Felder: "${zeile}"`); continue }
+    const [pruefer, punkte, bestehen, ids] = teile
+    sections.push({
+      examiner: pruefer,
+      points: Number(punkte),
+      passingPoints: Number(bestehen),
+      questionIds: ids.split(',').map(t => t.trim()).filter(Boolean),
+    })
   }
-  const aufbauten = [...nachQuelle.entries()].map(([quelle, qs]) => {
-    const nachProf = new Map()
-    for (const q of qs) {
-      if (!nachProf.has(q.professor)) nachProf.set(q.professor, [])
-      nachProf.get(q.professor).push(q)
-    }
-    const sections = [...nachProf.entries()].map(([prof, pqs]) => {
-      const punkte = pqs.reduce((s, q) => s + q.points, 0)
-      return `      { professor: ${str(prof)}, points: ${punkte}, passingPoints: ${Math.ceil(punkte / 2)}, questionIds: [${pqs.map(q => str(q.id)).join(', ')}] },`
-    }).join('\n')
-    const gesamt = qs.reduce((s, q) => s + q.points, 0)
-    return `  {
-    id: ${str('exam-' + quelle)},
-    date: ${str(quelle)},
-    title: ${str('Prüfung ' + quelle)},
-    totalPoints: ${gesamt},
-    passingPoints: ${Math.ceil(gesamt / 2)},
-    sections: [
-${sections}
-    ],
-  },`
-  }).join('\n')
+  if (sections.length === 0) { problem(ort, `Prüfungsaufbau ${kv.id} ohne Abschnitte`); return null }
 
-  return kopf + koerper + '\n]\n\nexport const structures: ExamStructure[] = [\n' + aufbauten + '\n]\n'
+  const gesamt = sections.reduce((summe, a) => summe + a.points, 0)
+  return {
+    id: kv.id,
+    date: kv.datum ?? '',
+    title: kv.titel ?? kv.id,
+    totalPoints: Number(kv.punkte ?? gesamt),
+    passingPoints: Number(kv.bestehen ?? Math.ceil(gesamt / 2)),
+    sections,
+  }
+}
+
+/**
+ * Neue Fragen und Aufbauten nach Kennung einmischen.
+ *
+ * Vorher erzeugte der Importer die ganze Prüfungsdatei neu — bei leerem
+ * Quellordner hätte ein Lauf die handkuratierten Altprüfungsfragen und beide
+ * echten Prüfungsaufbauten gelöscht. Jetzt wird nur ergänzt und ersetzt.
+ */
+function stabil(objekt) {
+  // Schlüsselreihenfolge darf keinen Unterschied vortäuschen.
+  return JSON.stringify(objekt, Object.keys(objekt).sort())
+}
+
+function mischePruefungsdaten(kursId, neueFragen, neueAufbauten) {
+  const pfad = EXAMS_JSON(kursId)
+  const vorhanden = existsSync(pfad)
+    ? JSON.parse(readFileSync(pfad, 'utf8'))
+    : { questions: [], structures: [] }
+
+  const bilanz = { neu: [], geaendert: [], unveraendert: [], behalten: vorhanden.questions.length }
+
+  const fragen = new Map(vorhanden.questions.map(q => [q.id, q]))
+  for (const frage of neueFragen) {
+    const alt = fragen.get(frage.id)
+    if (!alt) bilanz.neu.push(frage.id)
+    else if (stabil(alt) !== stabil(frage)) bilanz.geaendert.push(frage.id)
+    else bilanz.unveraendert.push(frage.id)
+    fragen.set(frage.id, frage)
+  }
+
+  const aufbauten = new Map((vorhanden.structures ?? []).map(a => [a.id, a]))
+  for (const aufbau of neueAufbauten) aufbauten.set(aufbau.id, aufbau)
+
+  return {
+    daten: {
+      questions: [...fragen.values()].sort((a, b) => a.id.localeCompare(b.id)),
+      structures: [...aufbauten.values()].sort((a, b) => a.id.localeCompare(b.id)),
+    },
+    bilanz,
+  }
+}
+
+/** Dünner TypeScript-Mantel um die JSON-Daten. Wird nur angelegt, nie überschrieben. */
+function pruefungsMantel(kursId) {
+  return `import daten from './${kursId}.json'
+import type { PruefungsDaten } from './typen'
+
+const { questions, structures } = daten as PruefungsDaten
+
+export { questions, structures }
+`
 }
 
 function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
@@ -581,7 +669,14 @@ function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
     id: kursId, title: kursId, subtitle: '', icon: '📘', color: '#3b82f6',
     level: 'Uni', description: '', estimatedHours: themenIds.length * 2,
   }
-  return `export const course = {
+  const pruefer = (meta.examiners ?? []).length
+    ? '  examiners: [\n' + meta.examiners.map(p =>
+        `    { id: ${str(p.id)}, label: ${str(p.label)}${p.icon ? `, icon: ${str(p.icon)}` : ''} },`).join('\n') + '\n  ],\n'
+    : '  examiners: [],\n'
+
+  return `import type { Kurs } from '../../content/schema'
+
+export const course = {
   id: ${str(meta.id)},
   title: ${str(meta.title)},
   subtitle: ${str(meta.subtitle)},
@@ -594,7 +689,7 @@ ${themenIds.map(t => `    ${str(t)},`).join('\n')}
   ],
   totalTopics: ${themenIds.length},
   estimatedHours: ${meta.estimatedHours},
-};
+${pruefer}} satisfies Kurs;
 `
 }
 
@@ -615,44 +710,19 @@ function leseKursMeta(kursId) {
     id: kursId, title: feld('title', kursId), subtitle: feld('subtitle', ''),
     icon: feld('icon', '📘'), color: feld('color', '#3b82f6'), level: feld('level', 'Uni'),
     description: feld('description', ''), estimatedHours: zahl('estimatedHours', 20),
+    examiners: lesePruefer(s),
   }
 }
 
-function aktualisiereRegistry(kursId, themenIds) {
-  let s = readFileSync(REGISTRY, 'utf8')
-  const breite = Math.max(...themenIds.map(t => t.length)) + 3
-  const eintraege = themenIds
-    .map(t => `    ${(str(t) + ':').padEnd(breite + 2)} () => import("../courses/${kursId}/topics/${t}"),`)
-    .join('\n')
-  const block = `  ${str(kursId)}: {\n${eintraege}\n  },`
-
-  const vorhanden = new RegExp(`^  "${kursId}":\\s*\\{[\\s\\S]*?^  \\},$`, 'm')
-  if (vorhanden.test(s)) {
-    s = s.replace(vorhanden, block)
-  } else {
-    s = s.replace(
-      /(const courseTopicLoaders[^{]*\{\n)/,
-      `$1${block}\n`,
-    )
-    if (!s.includes(`courses/${kursId}/index`)) {
-      const varName = kursId.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
-      s = `import { course as ${varName} } from "../courses/${kursId}/index"\n` + s
-      s = s.replace(/export const allCourses = \[([^\]]*)\]/, (_, inhalt) =>
-        `export const allCourses = [${inhalt.trim().replace(/,$/, '')}, ${varName}]`)
-    }
-  }
-  return s
-}
-
-function aktualisiereExamIndex(kursId) {
-  const p = join(EXAMS_DIR, 'index.ts')
-  let s = readFileSync(p, 'utf8')
-  const modul = kursId === 'analytical-chemistry-1' ? 'ac1' : kursId
-  if (s.includes(`'${kursId}':`)) return s
-  s = s.replace(/^import \* as ac1 from '\.\/ac1'$/m, m => `${m}\nimport * as ${modul} from './${modul}'`)
-  s = s.replace(/(\{ questions: ac1\.questions, structures: ac1\.structures \},\n)/,
-    `$1  '${kursId}': { questions: ${modul}.questions, structures: ${modul}.structures },\n`)
-  return s
+/** Prüferliste aus einem bestehenden Kursindex übernehmen. */
+function lesePruefer(quelltext) {
+  const block = quelltext.split(/examiners:\s*\[/)[1]
+  if (!block) return []
+  const bis = block.indexOf(']')
+  return [...block.slice(0, bis).matchAll(/\{([^}]*)\}/g)].map(m => {
+    const felder = inlineFields(m[1].trim())
+    return { id: felder.id, label: felder.label ?? felder.id, icon: felder.icon }
+  }).filter(p => p.id)
 }
 
 // ── Bericht ───────────────────────────────────────────────────────────────
@@ -709,9 +779,8 @@ function main() {
   }
 
   const quellDir = join(ROOT, dir)
-  const kursId = basename(quellDir.replace(/\/$/, '')) === 'ac1'
-    ? 'analytical-chemistry-1'
-    : basename(quellDir.replace(/\/$/, ''))
+  // Ordnername ist die Kurs-Kennung. Kein Sonderfall mehr für ein einzelnes Fach.
+  const kursId = basename(quellDir.replace(/\/$/, ''))
 
   console.log(`Quelle:  ${dir}`)
   console.log(`Kurs:    ${kursId}${dryRun ? '   [Probelauf]' : ''}`)
@@ -736,11 +805,21 @@ function main() {
     : []
   const alleThemenIds = [...new Set([...bestehendeThemen, ...themenIds])].sort()
 
-  const alleFragen = []
-  for (const roh of rohePruefungen) {
-    const { fragen } = baueFragen(roh, alleThemenIds)
-    alleFragen.push(...fragen)
+  // Ein Prüfungsblock darf über `kurs:` ein anderes Fach ansprechen — dann
+  // gehören seine Fragen auch dorthin und nicht in den Quellordner-Kurs.
+  const nachKurs = new Map()
+  const eintrag = (id) => {
+    if (!nachKurs.has(id)) nachKurs.set(id, { fragen: [], aufbauten: [] })
+    return nachKurs.get(id)
   }
+  for (const roh of rohePruefungen) {
+    const { kurs, fragen, aufbau } = baueFragen(roh, alleThemenIds)
+    const ziel = eintrag(kurs || kursId)
+    ziel.fragen.push(...fragen)
+    if (aufbau) ziel.aufbauten.push(aufbau)
+  }
+  const alleFragen = [...nachKurs.values()].flatMap(e => e.fragen)
+  const alleAufbauten = [...nachKurs.values()].flatMap(e => e.aufbauten)
 
   const doppelt = alleFragen.map(f => f.id).filter((id, i, a) => a.indexOf(id) !== i)
   if (doppelt.length) problem('Prüfungsfragen', `doppelte IDs: ${[...new Set(doppelt)].join(', ')}`)
@@ -761,9 +840,26 @@ function main() {
     process.exit(1)
   }
 
+  const zusammengefuehrt = [...nachKurs.entries()].map(([zielKurs, e]) => ({
+    kursId: zielKurs,
+    ...mischePruefungsdaten(zielKurs, e.fragen, e.aufbauten),
+  }))
+  const themenNeu = themen.filter(t => !existsSync(join(COURSES_DIR, kursId, 'topics', `${t.id}.ts`)))
+  const themenVorhanden = themen.filter(t => existsSync(join(COURSES_DIR, kursId, 'topics', `${t.id}.ts`)))
+
+  console.log('')
+  console.log('Unterschied:')
+  console.log(`  Themen      neu ${themenNeu.length}${themenNeu.length ? ' (' + themenNeu.map(t => t.id).join(', ') + ')' : ''}`)
+  console.log(`              vorhanden ${themenVorhanden.length}${force ? ' — werden überschrieben' : ' — bleiben unberührt'}`)
+  for (const z of zusammengefuehrt) {
+    console.log(`  Fragen      ${z.kursId}: neu ${z.bilanz.neu.length}, geändert ${z.bilanz.geaendert.length}, unverändert ${z.bilanz.unveraendert.length}`)
+    console.log(`              ${z.bilanz.behalten} bereits vorhandene bleiben erhalten`)
+    console.log(`  Aufbauten   ${z.kursId}: ${z.daten.structures.length} insgesamt`)
+  }
+
   if (dryRun) {
     console.log('')
-    console.log(`Probelauf in Ordnung, nichts geschrieben. Bericht: ${berichtPfad}`)
+    console.log(`Probelauf, nichts geschrieben. Bericht: ${berichtPfad}`)
     return
   }
 
@@ -781,15 +877,17 @@ function main() {
   }
 
   if (themen.length > 0) {
+    // Kurs- und Prüfungsregister finden sich selbst (import.meta.glob) —
+    // hier ist nichts mehr per Regex nachzupflegen.
     writeFileSync(join(COURSES_DIR, kursId, 'index.ts'), kursIndexAlsTypeScript(meta, kursId, alleThemenIds))
-    writeFileSync(REGISTRY, aktualisiereRegistry(kursId, alleThemenIds))
   }
 
-  if (alleFragen.length > 0) {
-    const modul = kursId === 'analytical-chemistry-1' ? 'ac1' : kursId
+  for (const z of zusammengefuehrt) {
+    if (z.daten.questions.length === 0 && z.daten.structures.length === 0) continue
     mkdirSync(EXAMS_DIR, { recursive: true })
-    writeFileSync(join(EXAMS_DIR, `${modul}.ts`), fragenAlsTypeScript(alleFragen, kursId))
-    writeFileSync(join(EXAMS_DIR, 'index.ts'), aktualisiereExamIndex(kursId))
+    writeFileSync(EXAMS_JSON(z.kursId), JSON.stringify(z.daten, null, 2) + '\n')
+    const mantel = join(EXAMS_DIR, `${z.kursId}.ts`)
+    if (!existsSync(mantel)) writeFileSync(mantel, pruefungsMantel(z.kursId))
   }
 
   console.log('')
@@ -797,7 +895,9 @@ function main() {
   if (uebersprungen.length) {
     console.log(`übersprungen (existiert schon, --force zum Überschreiben): ${uebersprungen.join(', ')}`)
   }
-  if (alleFragen.length) console.log(`geschrieben: src/data/exams/ mit ${alleFragen.length} Fragen`)
+  for (const z of zusammengefuehrt) {
+    if (z.daten.questions.length) console.log(`geschrieben: ${basename(EXAMS_JSON(z.kursId))} mit ${z.daten.questions.length} Fragen`)
+  }
   console.log(`Bericht: ${berichtPfad}`)
   console.log('')
   console.log('Jetzt prüfen: npm run build && npm run test')

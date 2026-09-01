@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "02-pyridines",
   title: "Pyridines",
@@ -77,8 +79,8 @@ Pyridine + mCPBA → pyridine N-oxide
 - Lithiation possible → further reaction with electrophiles
 `,
 
-  mechanism: {
-    type: "builder",
+  interactive: {
+    type: "mechanism",
     title: "Kröhnke Reaction – Mechanism",
     description: "Show the electron flow during cyclisation to the pyridine ring",
     stages: [
@@ -180,36 +182,44 @@ Pyridine + mCPBA → pyridine N-oxide
 
   flashcards: [
     {
+      id: "02lwqyt",
       front: "Kondrat'eva Pyridine Synthesis",
       back: "[4+2] cycloaddition: oxazole (as azadiene) + dienophile (alkyne) → bicyclic intermediate → −CO₂ (retro-[4+2]) → pyridine. Oxazole serves as 1-oxa-1,3-diene.",
     },
     {
+      id: "1cv4imb",
       front: "Boger Reaction",
       back: "Triazine (azadiene) + enamine (dienophile) → [4+2] cycloaddition → intermediate loses N₂ (retro-DA) → substituted pyridine. Key feature: XY = N₂ is eliminated.",
     },
     {
+      id: "1uvjmpz",
       front: "Kröhnke Reaction",
       back: "[3+2+1] cyclocondensation: 1,5-dicarbonyl compound + NH₃ → pyridine. Mechanism: aldol → Michael → cyclisation → aromatisation.",
     },
     {
+      id: "1yj82fg",
       front: "Chichibabin Reaction",
       back: "Pyridine + NaNH₂ → 2-aminopyridine + NaH. SNAr at C-2 (activated by N). Meisenheimer complex as intermediate. Classic method for amination.",
     },
     {
+      id: "08mcu70",
       front: "Guareschi-Thorpe Reaction",
       back: "[3+3] cyclocondensation: cyanoacetamide/cyanoacetyl derivative + 1,3-dicarbonyl (+ NH₃) → 2-pyridinone with CN group. Formation of cyanopyridones.",
     },
     {
+      id: "1k1pd51",
       front: "Bönnemann-Reppe Synthesis",
       back: "[2+2+2] cycloaddition: 1 nitrile + 2 alkynes, cobalt catalysis → pyridine. Trimerisation under metal-catalysed conditions.",
     },
     {
+      id: "1nr4uj3",
       front: "Boekelheide Rearrangement",
       back: "2-Methylpyridine N-oxide + Ac₂O, Δ → 2-(acetoxymethyl)pyridine. [1,2]-O→C acyl migration. Useful for introducing functionality at the 2-methyl group.",
     },
     {
+      id: "0ab3tka",
       front: "SEAr vs. SNAr at Pyridine",
       back: "SEAr: very slow, deactivated, preferred C-3. SNAr: activated at C-2 and C-4 (Meisenheimer complex delocalised onto N). Pyridine prefers SNAr!",
     },
   ],
-};
+} satisfies Thema;

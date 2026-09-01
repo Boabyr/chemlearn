@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "15-kalibrierung-standardaddition",
   title: "Kalibrierung & Standardaddition",
@@ -74,12 +76,10 @@ c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
         { id: "y0", label: "Signal ohne Standard", symbol: "y0", unit: "mV", description: "Messsignal der Originalprobe" },
         { id: "y1", label: "Signal mit Standard", symbol: "y1", unit: "mV", description: "Messsignal nach Standardzugabe" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor as string;
-        if (sf === "cx") return { cx: inputs.cS * inputs.y0 / (inputs.y1 - inputs.y0) };
-        if (sf === "cS") return { cS: inputs.cx * (inputs.y1 - inputs.y0) / inputs.y0 };
-        return {};
-      },
+      umstellungen: [
+        { solveFor: "cx", expr: "cS * y0 / (y1 - y0)" },
+        { solveFor: "cS", expr: "cx * (y1 - y0) / y0" },
+      ],
       hints: [
         "Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!",
         "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."
@@ -94,9 +94,9 @@ c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
     { id: "q5", question: "Was kompensiert ein interner Standard?", options: ["Matrixeffekte in der Probe", "Schwankungen in Injektionsvolumen und Probenvorbereitung durch konstantes Verhältnis Analyt/Standard", "Temperatureffekte", "Kalibrierungsfehler"], correct: 1, explanation: "Interner Standard: bekannte Menge einer Referenzsubstanz (ähnlich dem Analyten aber unterschiedliche tR) wird zur Probe zugegeben. Verhältnis Analyt/IS-Signal wird ausgewertet → kompensiert Injektionsschwankungen, Verluste bei Probenvorbereitung. Standard in GC und HPLC." },
   ],
   flashcards: [
-    { front: "Kalibrierung vs. Eichung", back: "Kalibrierung: allgemeiner Begriff, Zusammenhang Signal-Konzentration. Eichung: amtliche/gesetzliche Kalibrierung (Handelsmessgeräte). Beide mathematisch gleich: y = m·c + b." },
-    { front: "Standardaddition", back: "cx = cS · y0/(y1-y0). Kompensiert Matrixeffekte! Anwendung: wenn Probenmatrix das Signal beeinflusst. Standard wird direkt in Probe zugegeben. Voraussetzung: lineares Signal." },
-    { front: "Interner Standard", back: "Bekannte Menge Referenzsubstanz zur Probe zugeben. Verhältnis Analyt/IS kompensiert: Injektionsschwankungen, Verdampfungsverluste, Probenaufbereitungsverluste. Häufig in GC, HPLC, ICP-MS." },
-    { front: "Verdünnungsreihe", back: "c1·V1 = c2·V2. Schrittweise Verdünnung aus Stammstandard. Nie zu kleine Volumina (Pipettierfehler). Konzentration der Kalibrierlösungen: LOQ bis obere Linearitätsgrenze, Probenkonzentration muss im Bereich liegen." },
+    { id: "1budcvm", front: "Kalibrierung vs. Eichung", back: "Kalibrierung: allgemeiner Begriff, Zusammenhang Signal-Konzentration. Eichung: amtliche/gesetzliche Kalibrierung (Handelsmessgeräte). Beide mathematisch gleich: y = m·c + b." },
+    { id: "1pmoffs", front: "Standardaddition", back: "cx = cS · y0/(y1-y0). Kompensiert Matrixeffekte! Anwendung: wenn Probenmatrix das Signal beeinflusst. Standard wird direkt in Probe zugegeben. Voraussetzung: lineares Signal." },
+    { id: "1m72vlf", front: "Interner Standard", back: "Bekannte Menge Referenzsubstanz zur Probe zugeben. Verhältnis Analyt/IS kompensiert: Injektionsschwankungen, Verdampfungsverluste, Probenaufbereitungsverluste. Häufig in GC, HPLC, ICP-MS." },
+    { id: "18pr0xq", front: "Verdünnungsreihe", back: "c1·V1 = c2·V2. Schrittweise Verdünnung aus Stammstandard. Nie zu kleine Volumina (Pipettierfehler). Konzentration der Kalibrierlösungen: LOQ bis obere Linearitätsgrenze, Probenkonzentration muss im Bereich liegen." },
   ],
-};
+} satisfies Thema;

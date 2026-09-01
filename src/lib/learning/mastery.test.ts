@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { topicMastery, weakestTopics, readinessByProfessor, MIN_ATTEMPTS } from './mastery'
+import { topicMastery, weakestTopics, readinessByExaminer, MIN_ATTEMPTS } from './mastery'
 import type { AttemptLike } from './mastery'
 
 const now = new Date('2026-03-01T10:00:00Z')
@@ -73,16 +73,16 @@ describe('weakestTopics', () => {
   })
 })
 
-describe('readinessByProfessor', () => {
+describe('readinessByExaminer', () => {
   const fragen = [
-    { id: 'L1', professor: 'lieberzeit', topicId: '01' },
-    { id: 'L2', professor: 'lieberzeit', topicId: '02' },
-    { id: 'G1', professor: 'gerner', topicId: '03' },
+    { id: 'L1', examiner: 'lieberzeit', topicId: '01' },
+    { id: 'L2', examiner: 'lieberzeit', topicId: '02' },
+    { id: 'G1', examiner: 'gerner', topicId: '03' },
   ]
 
   it('führt jeden Prüfer auf, auch ohne einen einzigen Versuch', () => {
-    const r = readinessByProfessor([], fragen, now)
-    expect(r.map(x => x.professor).sort()).toEqual(['gerner', 'lieberzeit'])
+    const r = readinessByExaminer([], fragen, now)
+    expect(r.map(x => x.examiner).sort()).toEqual(['gerner', 'lieberzeit'])
     expect(r.every(x => x.level === 'ungelernt')).toBe(true)
   })
 
@@ -92,8 +92,8 @@ describe('readinessByProfessor', () => {
     // Nur eine von zwei beantwortet -> halbe Abdeckung
     const halb = [versuch('01', true, 0, 'L1')]
 
-    const rVoll = readinessByProfessor(voll, fragen, now).find(x => x.professor === 'lieberzeit')!
-    const rHalb = readinessByProfessor(halb, fragen, now).find(x => x.professor === 'lieberzeit')!
+    const rVoll = readinessByExaminer(voll, fragen, now).find(x => x.examiner === 'lieberzeit')!
+    const rHalb = readinessByExaminer(halb, fragen, now).find(x => x.examiner === 'lieberzeit')!
 
     expect(rVoll.coverage).toBe(1)
     expect(rHalb.coverage).toBe(0.5)

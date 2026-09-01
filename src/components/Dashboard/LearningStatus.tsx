@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useMastery } from '../../hooks/useMastery'
 import { useReviews } from '../../hooks/useReviews'
-import { professorLabel } from '../../data/exams'
+import { examinerAnzeige } from '../../data/exams'
 import type { Level } from '../../lib/learning/mastery'
 
 /**
@@ -16,9 +16,6 @@ const LEVEL: Record<Level, { dot: string; bar: string; text: string; word: strin
   ungelernt: { dot: 'bg-subtle', bar: 'var(--c-subtle)', text: 'text-muted', word: 'ungelernt' },
 }
 
-const PROF_ICONS: Record<string, string> = {
-  lieberzeit: '🔭', koellensperger: '📊', gerner: '🧪',
-}
 
 function Meter({ value, color }: { value: number; color: string }) {
   return (
@@ -86,10 +83,10 @@ export default function LearningStatus({ courseId, courseTitle }: {
               {readiness.map(r => {
                 const stil = LEVEL[r.level]
                 return (
-                  <div key={r.professor}>
+                  <div key={r.examiner}>
                     <div className="flex items-baseline justify-between gap-2 mb-1.5">
                       <span className="text-sm text-muted">
-                        {PROF_ICONS[r.professor] ?? '📘'} {professorLabel(r.professor)}
+                        {examinerAnzeige(r.examiner, courseId)}
                       </span>
                       <span className={`text-xs ${stil.text}`}>
                         {stil.word} · {r.answered}/{r.total} Fragen

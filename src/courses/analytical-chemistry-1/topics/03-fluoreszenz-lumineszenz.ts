@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "03-fluoreszenz-lumineszenz",
   title: "Fluoreszenz & Lumineszenz",
@@ -71,7 +73,6 @@ Chemolumineszenz in biologischen Systemen:
   interactive: {
     type: "apparatus-quiz",
     question: "Chemolumineszenz-Detektor",
-    mode: "name-to-image",
     targetId: "chemoluminescence",
     explanation: "Der Chemolumineszenz-Detektor hat den einfachsten Aufbau aller Spektrometer: Da das Licht durch eine chemische Reaktion in der Probe selbst erzeugt wird, ist keine externe Lichtquelle nötig. Nur Probe (Reaktionskammer) und Detektor sind erforderlich.",
     hint1: "Chemolumineszenz erzeugt Licht durch eine chemische Reaktion (A + B → C*). Daher braucht man keine Lichtquelle von außen.",
@@ -108,11 +109,11 @@ Chemolumineszenz in biologischen Systemen:
     { id: "q6", question: "Welche Anwendung hat die Luminol-Chemolumineszenz?", options: ["Messung von CO₂", "Nachweis von H₂O₂ in Atemluft und forensischer Blutnachweis", "Bestimmung von pH-Werten", "Elementaranalyse von Metallen"], correct: 1, explanation: "Luminol + H₂O₂ → Licht (blau, ~425 nm). Anwendungen: H₂O₂ in Atemluft (medizinische Diagnostik), forensischer Blutnachweis (Hämoglobin katalysiert die Reaktion). Sehr empfindlich – Blutspuren noch nach Reinigung nachweisbar." },
   ],
   flashcards: [
-    { front: "Fluoreszenz vs. Phosphoreszenz", back: "Fluoreszenz: S₁→S₀, ~10⁻⁸–10⁻¹⁰ s (sehr schnell). Phosphoreszenz: S₁→T₁ (ISC)→S₀, ms bis s (langsam). Phosphoreszenz: Nachleuchten nach Lichtabschalten." },
-    { front: "Chemolumineszenz – Prinzip", back: "A + B → C* + D. C* → C + hν. Keine externe Lichtquelle nötig. Sehr empfindlich (kein Hintergrund). Signal zeitabhängig → Integration. Beispiel: NO + O₃ → NO₂* → hν." },
-    { front: "Fluoreszenzspektrometer – Aufbau", back: "Lichtquelle → Anregungsmonochromator → Probe → Emissionsmonochromator → Detektor (90°). 90°-Winkel: verhindert direkte Transmission. Misst λ_em > λ_ex (Stokes-Verschiebung)." },
-    { front: "Stokes-Verschiebung", back: "λ_Emission > λ_Anregung. Grund: Schwingungsrelaxation im angeregten Zustand kostet Energie. Vorher Relaxation in niedrigstes Schwingungsniveau von S₁, dann Emission." },
-    { front: "Fluoreszenz – Sensitivität", back: "10–1000× empfindlicher als Absorptionsmessungen. Grund: misst Emission auf dunklem Hintergrund (vs. kleiner Differenz zweier großer Signale bei Absorption). Nachteile: nur für fluoreszierende Verbindungen." },
-    { front: "Biolumineszenz – Beispiele", back: "Glühwürmchen: Luciferin + O₂ + ATP → hν (gelb-grün). GFP (grünes Fluoreszenzprotein): Biomarker in der Molekularbiologie. Bakterien: FMNH₂ + RCHO + O₂ → hν. Quallen: Aequorin + Ca²⁺ → hν." },
+    { id: "0522g49", front: "Fluoreszenz vs. Phosphoreszenz", back: "Fluoreszenz: S₁→S₀, ~10⁻⁸–10⁻¹⁰ s (sehr schnell). Phosphoreszenz: S₁→T₁ (ISC)→S₀, ms bis s (langsam). Phosphoreszenz: Nachleuchten nach Lichtabschalten." },
+    { id: "1d9ei56", front: "Chemolumineszenz – Prinzip", back: "A + B → C* + D. C* → C + hν. Keine externe Lichtquelle nötig. Sehr empfindlich (kein Hintergrund). Signal zeitabhängig → Integration. Beispiel: NO + O₃ → NO₂* → hν." },
+    { id: "0usyg74", front: "Fluoreszenzspektrometer – Aufbau", back: "Lichtquelle → Anregungsmonochromator → Probe → Emissionsmonochromator → Detektor (90°). 90°-Winkel: verhindert direkte Transmission. Misst λ_em > λ_ex (Stokes-Verschiebung)." },
+    { id: "1feba0a", front: "Stokes-Verschiebung", back: "λ_Emission > λ_Anregung. Grund: Schwingungsrelaxation im angeregten Zustand kostet Energie. Vorher Relaxation in niedrigstes Schwingungsniveau von S₁, dann Emission." },
+    { id: "1ao8eit", front: "Fluoreszenz – Sensitivität", back: "10–1000× empfindlicher als Absorptionsmessungen. Grund: misst Emission auf dunklem Hintergrund (vs. kleiner Differenz zweier großer Signale bei Absorption). Nachteile: nur für fluoreszierende Verbindungen." },
+    { id: "12cad58", front: "Biolumineszenz – Beispiele", back: "Glühwürmchen: Luciferin + O₂ + ATP → hν (gelb-grün). GFP (grünes Fluoreszenzprotein): Biomarker in der Molekularbiologie. Bakterien: FMNH₂ + RCHO + O₂ → hν. Quallen: Aequorin + Ca²⁺ → hν." },
   ],
-};
+} satisfies Thema;

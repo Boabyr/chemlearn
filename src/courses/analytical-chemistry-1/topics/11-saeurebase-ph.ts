@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "11-saeurebase-ph",
   title: "Säure-Base-Gleichgewichte & pH",
@@ -97,13 +99,11 @@ pH = 3,38
         { id: "pKs", label: "pKs der Säure", symbol: "pKs", unit: "—", description: "z.B. Essigsäure: 4.76" },
         { id: "ratio", label: "log([A⁻]/[HA])", symbol: "log(c_B/c_S)", unit: "—", description: "log(Konzentration Base / Konzentration Säure)" },
       ],
-      solve: (inputs: Record<string, any>) => {
-        const sf = inputs.solveFor as string;
-        if (sf === "pH") return { pH: inputs.pKs + inputs.ratio };
-        if (sf === "pKs") return { pKs: inputs.pH - inputs.ratio };
-        if (sf === "ratio") return { ratio: inputs.pH - inputs.pKs };
-        return {};
-      },
+      umstellungen: [
+        { solveFor: "pH", expr: "pKs + ratio" },
+        { solveFor: "pKs", expr: "pH - ratio" },
+        { solveFor: "ratio", expr: "pH - pKs" },
+      ],
       hints: [
         "Henderson-Hasselbalch: pH = pKs + log([A⁻]/[HA]). Bei gleichen Konzentrationen: log(1)=0 → pH = pKs. Pufferoptimum bei pH = pKs.",
         "Beispiel Acetat-Puffer: pKs(Essigsäure) = 4,76. Gleiche Teile Essigsäure und NaAcetat → pH = 4,76. 10:1 Acetat:Essigsäure → pH = 4,76 + 1 = 5,76."
@@ -119,11 +119,11 @@ pH = 3,38
     { id: "q6", question: "1ml 1M Essigsäure (pKs=4,6) + 0,5ml 1M NaOH auf 1L: Was entsteht?", options: ["Reine Essigsäurelösung", "Pufferlösung aus Essigsäure und Acetat, pH ≈ pKs = 4,6", "Reine Natriumacetatlösung", "Neutrale Lösung"], correct: 1, explanation: "n(Essigsäure) = 0,001 mol, n(NaOH) = 0,0005 mol. NaOH neutralisiert die Hälfte der Essigsäure: 0,0005 mol Acetat und 0,0005 mol Essigsäure entstehen → Puffer! [A⁻]=[HA] → pH = pKs = 4,6." },
   ],
   flashcards: [
-    { front: "Henderson-Hasselbalch", back: "pH = pKs + log([A⁻]/[HA]). Puffer: schwache Säure + konjugierte Base. pH = pKs bei gleichen Konzentrationen. Pufferbereich: pKs ± 1. Kapazität maximal bei pH = pKs." },
-    { front: "pH starke Säure/Base", back: "Starke Säure: pH = -log(c). Starke Base: pOH = -log(c), pH = 14-pOH. Vollständige Dissoziation! Beispiel: 0,01M HCl → pH = 2; 0,01M NaOH → pH = 12." },
-    { front: "pH schwache Säure", back: "[H⁺] = √(Ka·c₀) wenn Ka << c₀. pH = ½(pKs - log c₀). Nur teilweise Dissoziation! Beispiel: 0,01M Essigsäure (pKs=4,76): pH ≈ ½(4,76+2) = 3,38." },
-    { front: "Isoelektrischer Punkt pI", back: "pI = ½(pKs1 + pKs2). Nettoladung = 0 (Zwitterion). Geringste Löslichkeit. Keine elektrophoretische Wanderung. Wichtig: Aminosäuren, Proteine, isoelektrische Fokussierung (IEF)." },
-    { front: "pKs aus Massenwirkungsgesetz", back: "HA ⇌ H⁺ + A⁻. Ka = [H⁺][A⁻]/[HA]. pKs = -log(Ka). Bei Halbäquivalenzpunkt der Titration: [HA]=[A⁻] → pH = pKs. Direkte Bestimmung aus Titrationskurve!" },
-    { front: "Ionenprodukt des Wassers", back: "Kw = [H⁺][OH⁻] = 10⁻¹⁴ (bei 25°C). pKw = 14. pH + pOH = 14. Reines Wasser: pH = 7 ([H⁺]=[OH⁻]=10⁻⁷ mol/L)." },
+    { id: "1btyvq4", front: "Henderson-Hasselbalch", back: "pH = pKs + log([A⁻]/[HA]). Puffer: schwache Säure + konjugierte Base. pH = pKs bei gleichen Konzentrationen. Pufferbereich: pKs ± 1. Kapazität maximal bei pH = pKs." },
+    { id: "0hppdmo", front: "pH starke Säure/Base", back: "Starke Säure: pH = -log(c). Starke Base: pOH = -log(c), pH = 14-pOH. Vollständige Dissoziation! Beispiel: 0,01M HCl → pH = 2; 0,01M NaOH → pH = 12." },
+    { id: "0bbhvc0", front: "pH schwache Säure", back: "[H⁺] = √(Ka·c₀) wenn Ka << c₀. pH = ½(pKs - log c₀). Nur teilweise Dissoziation! Beispiel: 0,01M Essigsäure (pKs=4,76): pH ≈ ½(4,76+2) = 3,38." },
+    { id: "0nf98ws", front: "Isoelektrischer Punkt pI", back: "pI = ½(pKs1 + pKs2). Nettoladung = 0 (Zwitterion). Geringste Löslichkeit. Keine elektrophoretische Wanderung. Wichtig: Aminosäuren, Proteine, isoelektrische Fokussierung (IEF)." },
+    { id: "18f31up", front: "pKs aus Massenwirkungsgesetz", back: "HA ⇌ H⁺ + A⁻. Ka = [H⁺][A⁻]/[HA]. pKs = -log(Ka). Bei Halbäquivalenzpunkt der Titration: [HA]=[A⁻] → pH = pKs. Direkte Bestimmung aus Titrationskurve!" },
+    { id: "11eel07", front: "Ionenprodukt des Wassers", back: "Kw = [H⁺][OH⁻] = 10⁻¹⁴ (bei 25°C). pKw = 14. pH + pOH = 14. Reines Wasser: pH = 7 ([H⁺]=[OH⁻]=10⁻⁷ mol/L)." },
   ],
-};
+} satisfies Thema;

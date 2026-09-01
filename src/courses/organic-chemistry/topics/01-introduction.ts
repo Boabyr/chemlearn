@@ -1,3 +1,5 @@
+import type { Thema } from '../../../content/schema'
+
 export const topic = {
   id: "01-introduction",
   title: "General Introduction",
@@ -87,8 +89,8 @@ For electrophilic aromatic substitution (SEAr):
 - Pyridine: lower HOMO → less reactive than benzene (deactivated by N)
 `,
 
-  mechanism: {
-    type: "builder",
+  interactive: {
+    type: "mechanism",
     title: "Pyridine vs. Pyrrole – Basicity explained",
     description: "Lone pair orientation determines basicity",
     stages: [
@@ -187,36 +189,44 @@ For electrophilic aromatic substitution (SEAr):
 
   flashcards: [
     {
+      id: "10z74oc",
       front: "Hückel Rule",
       back: "A molecule is aromatic if it is planar and has 4n+2 π electrons (n = 0,1,2,...). Examples: benzene (6e), pyrrole (6e), furan (6e), pyridine (6e).",
     },
     {
+      id: "13x0m4z",
       front: "Pyrrole-N vs. Pyridine-N",
       back: "Pyrrole-N: sp², LP in π system → NOT basic (pKa~0). Pyridine-N: sp², LP in σ system (perpendicular to plane) → BASIC (pKa 5.2).",
     },
     {
+      id: "15q9i2y",
       front: "Hantzsch-Widman Nomenclature",
       back: "System for 3–10-membered heterocycles. Prefix: oxa (O), thia (S), aza (N). Suffix: -irine (3-membered unsat.), -ole (5-membered unsat.), -ine (6-membered N).",
     },
     {
+      id: "07bbr3p",
       front: "Furan",
       back: "Systematic: 1-oxacyclopenta-2,4-diene. 5-membered ring, O heteroatom, 6 π electrons (4 from C=C + 2 from O lone pair). Aromatic but less stable than benzene.",
     },
     {
+      id: "0xgsj8o",
       front: "Imidazole – special properties",
       back: "Contains TWO N atoms: one pyrrole-N (LP in π system, not basic) and one pyridine-N (LP free, basic). pKa = 7.0. Tautomerism possible (NH migrates).",
     },
     {
+      id: "1k2wdlg",
       front: "FMO Theory & Reactivity",
       back: "For SEAr the HOMO is decisive. Electron-rich heteroaromatics (pyrrole, furan, thiophene) have higher HOMO → more reactive than benzene. Pyridine: lower HOMO → less reactive.",
     },
     {
+      id: "1sndyzy",
       front: "Koopmans' Theorem",
       back: "Ionisation energy ≈ negative orbital energy of the removed electron (Iᵢ ≈ −εᵢ). Allows estimation of reactivity of heteroaromatics toward electrophiles.",
     },
     {
+      id: "1mrboe9",
       front: "Basicity series N-heterocycles",
       back: "Piperidine (sp³, pKa~11) > Imidazole (pKa 7.0) > Pyridine (pKa 5.2) > 2,6-di-tBu-pyridine (pKa 3.7, steric) > Pyrimidine (pKa 2.3, inductive EWG) > Pyrrole (pKa~0)",
     },
   ],
-};
+} satisfies Thema;
