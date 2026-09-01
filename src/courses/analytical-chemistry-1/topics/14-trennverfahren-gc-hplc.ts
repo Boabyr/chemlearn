@@ -84,6 +84,38 @@ m_n = m₀ · (V_aq / (V_aq + K·V_org))ⁿ
 **Prüfungsaufgabe:** Jod, K=85: 20ml 100mM Jod-Lösung, 3× mit je 10ml org. LM:
 m_3 = m₀ · (20/(20+85×10))³ = m₀ · (20/870)³ = m₀ · 0,02299³ = m₀ · 1,22×10⁻⁵
 
+Zum Vergleich die einmalige Extraktion mit dem gesamten Volumen von 30 ml:
+m₁ = m₀ · 20/(20+85·30) = m₀ · 20/2570 = m₀ · 7,8×10⁻³.
+Dreimal mit je 10 ml lässt also rund sechshundertmal weniger zurück als einmal mit 30 ml —
+bei gleichem Lösungsmittelverbrauch. Der Grund steht im Exponenten: der Restanteil wird je
+Schritt potenziert statt nur einmal angewendet.
+
+## GC oder HPLC — die Entscheidung
+
+| Frage | GC | HPLC |
+|---|---|---|
+| Flüchtig und thermisch stabil? | Voraussetzung | egal |
+| Molmasse | bis etwa 500 g/mol | praktisch unbegrenzt |
+| Mobile Phase | Trägergas, wirkt nicht auf die Trennung | wirkt mit, zweite Stellschraube |
+| Trennstufenzahl | sehr hoch (10⁵) | mäßig (10⁴) |
+| Proteine, Salze, Zucker | ungeeignet | Standardfall |
+
+Der entscheidende Unterschied liegt in der mobilen Phase. In der GC transportiert das
+Trägergas nur; die Selektivität kommt allein aus der stationären Phase und der Temperatur.
+In der HPLC nimmt das Laufmittel an der Verteilung teil — Zusammensetzung, pH und
+Gradient sind dort die wirksamsten Stellschrauben.
+
+**Derivatisierung** verschiebt die Grenze: Eine Carbonsäure ist zu wenig flüchtig für die
+GC, ihr Methylester nicht mehr. Zuckeranalytik per GC läuft nach Silylierung.
+
+## Umkehrphase im Alltag
+
+RP-HPLC an C18 ist der Normalfall. Die Elutionsreihenfolge ist umgekehrt zur
+Normalphase: polare Substanzen kommen zuerst, unpolare bleiben hängen. Mehr Wasser im
+Laufmittel bedeutet stärkere Retention, mehr Acetonitril oder Methanol schwächere. Ein
+Gradient von wasserreich nach organikreich fächert deshalb ein breites Polaritätsspektrum
+in einem Lauf auf — der Grund, warum fast jede Methodenentwicklung dort beginnt.
+
 
 `,
   interactive: {

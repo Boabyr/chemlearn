@@ -68,6 +68,44 @@ In Chromatographie: zu niedrige Messfrequenz → Peak wird nicht richtig erfasst
 
 **Transformation zur Normalverteilung:** Viele stat. Tests setzen Normalverteilung voraus. Bei schiefer Verteilung: log-Transformation kann Normalverteilung erzeugen → Tests anwendbar.
 
+## Fehlerfortpflanzung in der Praxis
+
+Die Regeln lassen sich auf zwei Sätze eindampfen:
+
+- **Summe und Differenz:** die **absoluten** Fehler addieren sich quadratisch
+- **Produkt und Quotient:** die **relativen** Fehler addieren sich quadratisch
+
+Das Quadrieren hat eine praktische Folge, die man ausnutzen sollte: Der größte Einzelfehler
+dominiert. Bei 5 % und 0,5 % Unsicherheit ergibt sich √(0,05² + 0,005²) = 0,0502 — der
+kleinere Beitrag verschwindet fast vollständig. Wer die Genauigkeit verbessern will, muss
+also an der schlechtesten Größe ansetzen; alles andere ist verschenkte Mühe.
+
+**Besonders heikel: die Differenz zweier ähnlicher Zahlen.** Bei 100,0 ± 0,1 minus
+99,0 ± 0,1 ist das Ergebnis 1,0 ± 0,14 — aus 0,1 % relativem Fehler in den Ausgangswerten
+sind 14 % im Ergebnis geworden. Deshalb ist die Differenzwägung in der Gravimetrie so
+empfindlich, und deshalb misst man Blindwerte, statt sie herauszurechnen.
+
+## Signifikante Stellen als Aussage über die Messung
+
+Die Zahl der angegebenen Stellen ist eine Behauptung über die Genauigkeit. „12,3 mg" heißt:
+die Unsicherheit liegt in der letzten angegebenen Stelle. „12,300 mg" behauptet tausendmal
+mehr — und ist falsch, wenn die Waage das nicht hergibt.
+
+Gerechnet wird mit allen Stellen, **gerundet wird erst am Ende**. Wer zwischendurch rundet,
+schleppt einen Rundungsfehler durch die ganze Rechnung.
+
+## Was Qualitätssicherung tatsächlich abfängt
+
+| Maßnahme | Findet | Findet nicht |
+|---|---|---|
+| Mehrfachmessung | zufällige Fehler | systematische Fehler |
+| Blindwert | Verunreinigung aus Reagenzien und Geräten | Verluste des Analyten |
+| Referenzmaterial | systematische Fehler der Methode | Fehler bei der Probenahme |
+| Wiederfindung | Verluste bei der Aufarbeitung | Fehler der Kalibrierung |
+
+Kein einzelnes Verfahren deckt alles ab — der Grund, warum in der Routineanalytik mehrere
+davon nebeneinander laufen.
+
 
 `,
   interactive: {

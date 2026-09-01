@@ -75,6 +75,46 @@ m = (M · Q)/(n · F) = (M · I · t)/(n · F)
 **Vorteil Coulometrie:** Absolutes Verfahren (keine Kalibrierung nötig)!
 
 **Karl-Fischer-Titration:** Coulometrische Wasserbestimmung – sehr präzise, μg-Bereich.
+
+## Warum drei Elektroden und nicht zwei
+
+In der Potentiometrie fließt kein Strom, deshalb genügen zwei Elektroden. In der
+Voltammetrie fließt Strom — und ein stromdurchflossener Bezugspunkt ist keiner mehr: Die
+Referenzelektrode würde sich polarisieren und ihr Potential verlieren.
+
+Die Aufgaben werden deshalb aufgeteilt:
+- **Arbeitselektrode:** hier läuft die interessierende Reaktion, hier wird das Potential
+  vorgegeben
+- **Referenzelektrode:** legt den Bezugspunkt fest, praktisch stromlos
+- **Gegenelektrode (Hilfselektrode):** schließt den Stromkreis und nimmt den gesamten
+  Strom auf
+
+Damit bleibt das Potential der Arbeitselektrode genau definiert, während beliebig viel
+Strom fließen darf.
+
+## Woher der Grenzstrom kommt
+
+Wird das Potential so weit vorgegeben, dass jedes ankommende Analytmolekül sofort umgesetzt
+wird, ist die Konzentration direkt an der Elektrode null. Der Strom wird dann nicht mehr
+von der Elektrodenreaktion begrenzt, sondern von der **Diffusion** aus der Lösung zur
+Oberfläche — er läuft in ein Plateau.
+
+Dieser Diffusionsgrenzstrom ist der Konzentration proportional und damit die analytische
+Messgröße. Zwei Folgerungen für die Praxis:
+
+- **Nicht rühren während der Messung**, sonst ändert sich die Diffusionsschicht und mit
+  ihr der Strom.
+- **Leitsalz im Überschuss zugeben** (etwa 0,1 M KCl). Sonst wandert der Analyt zusätzlich
+  im elektrischen Feld, und dieser Migrationsanteil verfälscht den Zusammenhang zwischen
+  Strom und Konzentration.
+
+## Coulometrie: Zählen statt Vergleichen
+
+Die Coulometrie misst die Ladung, die für den vollständigen Umsatz nötig war. Weil die
+Faraday-Konstante eine Naturkonstante ist, führt der Weg von der Ladung zur Stoffmenge
+ohne Kalibriergerade — deshalb ein Absolutverfahren. Voraussetzung ist eine
+**Stromausbeute von 100 %**: jedes Elektron muss den Analyten umsetzen und keine
+Nebenreaktion. Genau das prüft man mit einem Blindversuch.
 `,
   interactive: {
     type: "apparatus-quiz",

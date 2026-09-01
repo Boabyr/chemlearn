@@ -69,6 +69,41 @@ Molarität M: c [mol/L] = c [mg/L] / M [g/mol] × 10⁻³
 **Beispiel: 68 ppb C₂₉H₆₀ (M = 408,8 g/mol) in Wasser:**
 c = 68×10⁻⁶ g/L / 408,8 g/mol = 1,66×10⁻⁷ mol/L = 166 nmol/L
 
+## Der Sprung am Äquivalenzpunkt
+
+Warum die Kurve dort steil wird, lässt sich an der Nernst-Gleichung ablesen: E hängt vom
+**Logarithmus** der Konzentration ab. Kurz vor dem Äquivalenzpunkt ist noch reichlich
+Chlorid da und [Ag⁺] bleibt winzig; kurz danach ist das Chlorid verbraucht und jeder
+weitere Tropfen erhöht [Ag⁺] um Zehnerpotenzen. Genau dieser Wechsel um mehrere Dekaden
+in einem kleinen Volumenbereich erzeugt den Sprung.
+
+Daraus folgt: **Je kleiner Ksp, desto größer der Sprung.** AgI (Ksp = 8,5×10⁻¹⁷) liefert
+eine deutlich schärfere Stufe als AgCl (1,8×10⁻¹⁰). Bei zu großem Ksp verschwindet der
+Sprung im Rauschen und die Titration wird unbrauchbar.
+
+## Die drei klassischen Indikatorverfahren
+
+| Verfahren | Prinzip | Bedingung |
+|---|---|---|
+| **Mohr** | Chromat bildet nach dem ÄP rotes Ag₂CrO₄ | pH 6,5–10, sonst fällt Chromat als Dichromat aus |
+| **Volhard** | Rücktitration des Ag⁺-Überschusses mit SCN⁻, Fe³⁺ zeigt rot an | saure Lösung |
+| **Fajans** | Adsorptionsindikator (Fluorescein) schlägt an der Niederschlagsoberfläche um | nahe am Ladungsnullpunkt |
+
+Die potentiometrische Variante braucht keinen davon: Sie misst das Potential direkt und
+funktioniert auch in trüben und gefärbten Lösungen, in denen kein Farbumschlag zu erkennen
+wäre.
+
+## Elektroden erster und zweiter Art
+
+- **Erster Art:** Metall in einer Lösung seiner eigenen Ionen (Ag in Ag⁺). Das Potential
+  folgt der Analytkonzentration — brauchbar als **Indikatorelektrode**.
+- **Zweiter Art:** Metall, sein schwerlösliches Salz und das zugehörige Anion in
+  konstanter Konzentration (Ag/AgCl/KCl gesättigt). Das Potential ist festgenagelt —
+  brauchbar als **Referenzelektrode**.
+
+Beide beruhen auf derselben Nernst-Gleichung. Der Unterschied liegt allein darin, ob die
+bestimmende Konzentration variabel oder festgehalten ist.
+
 
 `,
   interactive: {

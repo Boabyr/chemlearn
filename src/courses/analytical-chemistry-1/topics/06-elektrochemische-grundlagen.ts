@@ -57,6 +57,41 @@ E = (0.05916/n) · log(c₁/c₂)   (bei 25°C)
 Zwischen zwei Lösungen verschiedener Konzentration entsteht ein Diffusionspotential (Flüssigkeitspotential), da Ionen unterschiedlich schnell diffundieren.
 
 → Wird durch Salzbrücke (KCl-Agar) minimiert.
+
+Warum ausgerechnet KCl: K⁺ und Cl⁻ haben nahezu gleiche Ionenbeweglichkeit. Sie wandern
+gleich schnell in entgegengesetzte Richtungen, und damit baut sich an der Grenzfläche
+kaum eine Ladungstrennung auf. Ein Salz mit ungleichen Beweglichkeiten — etwa HCl, wo H⁺
+mehrfach schneller ist als Cl⁻ — würde das Diffusionspotential vergrößern statt es zu
+unterdrücken.
+
+## Die Nernst-Gleichung im Gebrauch
+
+E = E° − (0,05916/n) · log([Red]/[Ox])   (bei 25 °C)
+
+Der Vorfaktor 0,05916 V ist 2,303·RT/F bei 298 K. Daraus folgt die Faustregel, die fast
+jede Rechenaufgabe trägt: **pro Zehnerpotenz Konzentrationsverhältnis ändert sich das
+Potential um 59,16/n Millivolt.** Für n = 1 sind das 59 mV je Dekade, für n = 2 nur noch
+30 mV.
+
+Zwei Fehler passieren dabei regelmäßig:
+- **Bruch verdreht.** Steht [Ox] im Zähler, dreht sich das Vorzeichen und das Potential
+  läuft in die falsche Richtung. Merkhilfe: mehr oxidierte Form heißt höheres Potential.
+- **n falsch gewählt.** n ist die Zahl der Elektronen der *Halbreaktion*, nicht die
+  Ladung des Ions. Bei Fe³⁺/Fe²⁺ ist n = 1, obwohl dreifach geladene Ionen beteiligt sind.
+
+## Galvanische Zelle und Elektrolysezelle
+
+| | Galvanische Zelle | Elektrolysezelle |
+|---|---|---|
+| Triebkraft | läuft freiwillig, ΔG < 0 | erzwungen, Energie von außen |
+| Anode | negativer Pol | positiver Pol |
+| Kathode | positiver Pol | negativer Pol |
+
+Die Pole wechseln, die Definition nicht: **an der Anode läuft immer die Oxidation, an der
+Kathode immer die Reduktion.** Wer sich das merkt, kommt ohne die Vorzeichenregel aus.
+
+Die Zellspannung ergibt sich stets als E(Kathode) − E(Anode). Ein positiver Wert heißt:
+die Reaktion läuft freiwillig in der angeschriebenen Richtung.
 `,
   interactive: {
     type: "formula-calculator",

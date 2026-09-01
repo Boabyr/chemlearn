@@ -67,6 +67,34 @@ Die Spannung wird während einer Titration gemessen.
 - Objektiv (kein Farburteil)
 - Auch in trüben/gefärbten Lösungen
 - Mehrere Stufen erkennbar
+
+## Die Glaselektrode
+
+Die pH-Glaselektrode ist die verbreitetste ionenselektive Elektrode überhaupt. Gemessen
+wird nicht an einem Draht, sondern an einer dünnen Glasmembran: An beiden Oberflächen
+bildet sich eine Quellschicht, in der H⁺ gegen Na⁺ des Glases ausgetauscht wird. Innen
+liegt eine Pufferlösung mit konstantem pH, außen die Probe — die Potentialdifferenz über
+die Membran folgt der Nernst-Gleichung mit z = 1.
+
+**Was daraus folgt:**
+- **Steilheit 59,16 mV je pH-Einheit** bei 25 °C. Reale Elektroden erreichen 95 bis 100 %
+  davon; sinkt die Steilheit darunter, ist die Elektrode alt.
+- **Zwei-Punkt-Kalibrierung** mit Puffern, die den Messbereich einschließen (pH 4 und 7,
+  oder 7 und 10). Die Kalibrierung liefert Nullpunkt *und* Steilheit — ein Punkt genügt
+  nicht.
+- **Hochohmig:** Der Membranwiderstand liegt bei 10⁸ Ω, das Messgerät braucht mindestens
+  10¹² Ω Eingangswiderstand.
+- **Alkalifehler:** Bei pH über 12 und hoher Na⁺-Konzentration spricht die Membran auch
+  auf Na⁺ an, der angezeigte pH liegt zu niedrig.
+- **Die Elektrode darf nicht austrocknen**, sonst verschwindet die Quellschicht.
+
+## Selektivität in Zahlen
+
+Der Selektivitätskoeffizient K_ij sagt, wie stark ein Störion im Vergleich zum Zielion
+wirkt. K_ij = 10⁻³ heißt: das Störion muss tausendfach konzentrierter vorliegen, um
+denselben Beitrag zu leisten. Bei einer Natrium-Elektrode mit K(Na,K) = 10⁻² und
+hundertfachem Kaliumüberschuss ist der Messwert bereits um die Hälfte verfälscht — der
+Grund, warum zu jeder ISE die Matrix mit angegeben werden muss.
 `,
   interactive: {
     type: "formula-calculator",

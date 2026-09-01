@@ -69,6 +69,44 @@ Chemolumineszenz in biologischen Systemen:
 - **Glühwürmchen:** Luciferin + O₂ + ATP → Oxyluciferin + hν (gelb-grün)
 - **Bakterien:** FMNH₂ + RCHO + O₂ → FMN + RCOOH + H₂O + hν
 - **Quallen:** GFP (Green Fluorescent Protein) – Biotechnologie!
+
+## Warum Fluoreszenz empfindlicher ist als Absorption
+
+Die Absorptionsmessung sucht einen kleinen Unterschied zwischen zwei großen Signalen:
+I₀ und I. Bei sehr kleinen Konzentrationen sind beide fast gleich groß, und der
+Unterschied verschwindet im Rauschen der Lampe.
+
+Die Fluoreszenzmessung sucht ein kleines Signal vor schwarzem Hintergrund. Der Detektor
+steht im 90°-Winkel und sieht ohne Probe idealerweise nichts. Jedes Photon ist damit ein
+Zugewinn statt eines fehlenden Anteils — daher die 10- bis 1000-fach besseren
+Nachweisgrenzen.
+
+Der Preis: Das Signal hängt an der Anregungsintensität. Eine doppelt so starke Lampe
+verdoppelt die Fluoreszenz, während die Absorption unverändert bliebe. Fluoreszenzwerte
+sind deshalb Relativwerte und verlangen Kalibrierung am selben Gerät und derselben
+Einstellung.
+
+## Quantenausbeute und Löschung
+
+**Quantenausbeute Φ** = emittierte Photonen / absorbierte Photonen. Sie liegt zwischen 0
+und 1 und entscheidet zusammen mit ε darüber, ob ein Stoff überhaupt fluoreszenztauglich
+ist. Starre, ebene, konjugierte Moleküle (Chinin, Fluorescein, PAK) haben hohe Werte,
+weil ihnen die Wege zur strahlungslosen Relaxation fehlen.
+
+**Löschung (Quenching)** senkt Φ:
+- **Stoßlöschung:** O₂, Halogenide, Schwermetallionen nehmen Energie im Stoß auf.
+  Deshalb wird für genaue Messungen entgast.
+- **Innerer Filtereffekt:** bei hoher Konzentration absorbiert die Probe ihr eigenes
+  Emissionslicht. Die Kalibriergerade biegt ab — Fluoreszenz ist nur bei kleinen
+  Konzentrationen linear, anders als die Absorption, die bei kleinen Werten Probleme hat.
+- **Temperatur:** höhere Temperatur bedeutet mehr Stöße und damit weniger Fluoreszenz.
+
+## Stokes-Verschiebung
+
+Zwischen Absorptions- und Emissionsmaximum liegen typisch 20 bis 100 nm. Der Grund ist
+die Schwingungsrelaxation im angeregten Zustand: ein Teil der aufgenommenen Energie geht
+als Wärme verloren, bevor das Photon abgegeben wird. Praktisch ist das der Grund, warum
+sich Anregungs- und Emissionslicht optisch trennen lassen.
 `,
   interactive: {
     type: "apparatus-quiz",

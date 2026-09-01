@@ -81,6 +81,40 @@ Kein Übergang ist gleichzeitig IR- und Raman-aktiv!
 
 **Nachteil Raman:**
 - Hauptkonkurrenz: Fluoreszenz (10⁶× intensiver, 10⁴× langsamer)
+- Gegenmittel: Anregung im NIR (1064 nm), wo die meisten Stoffe nicht mehr fluoreszieren
+
+## Ein IR-Spektrum lesen
+
+Ein IR-Spektrum zerfällt in zwei Bereiche mit völlig verschiedener Aufgabe:
+
+| Bereich | Wellenzahl | Was dort steht |
+|---|---|---|
+| Gruppenfrequenzen | 4000–1500 cm⁻¹ | O–H, N–H, C–H, C≡N, C=O — funktionelle Gruppen |
+| Fingerprint | 1500–400 cm⁻¹ | Gerüstschwingungen, für jede Substanz eigen |
+
+Der obere Bereich sagt, **welche Gruppen** vorhanden sind; der Fingerprint-Bereich sagt,
+**welche Substanz** es ist — allerdings nur im Vergleich mit einem Referenzspektrum, weil
+sich die einzelnen Banden dort nicht mehr sinnvoll zuordnen lassen.
+
+**Wichtige Lagen zum Auswendiglernen:**
+- 3600–3200 cm⁻¹ breit: O–H (Wasserstoffbrücken verbreitern die Bande)
+- 3500–3300 cm⁻¹ schmal, oft doppelt: N–H
+- 3000 cm⁻¹ als Grenze: darüber =C–H (sp²), darunter C–H (sp³)
+- 2260–2100 cm⁻¹ schwach: C≡N, C≡C
+- 1750–1650 cm⁻¹ scharf und stark: C=O — die auffälligste Bande im ganzen Spektrum
+
+## Warum die Bandenlage überhaupt dort liegt
+
+Für zwei Massen an einer Feder gilt näherungsweise
+ν̃ = (1/2πc)·√(k/μ) mit der Kraftkonstante k und der reduzierten Masse μ.
+
+Daraus folgen zwei Regeln, mit denen sich fast jede Prüfungsfrage zur Bandenlage
+beantworten lässt:
+
+- **Stärkere Bindung, höhere Wellenzahl.** C≡C liegt über C=C liegt über C–C.
+- **Leichtere Atome, höhere Wellenzahl.** C–H liegt weit über C–C, und der Austausch von
+  H gegen D verschiebt die Bande um etwa den Faktor 1/√2 nach unten — der klassische
+  Nachweis, dass eine Bande wirklich von einer Wasserstoffschwingung stammt.
 `,
   interactive: {
     type: "spectrum-assignment",

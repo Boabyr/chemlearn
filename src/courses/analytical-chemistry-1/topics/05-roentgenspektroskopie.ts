@@ -91,6 +91,34 @@ N_A/N_A100 = (μ_A · c_A)/(μ_A · c_A + μ_M · c_M)
 - Leichte Elemente (Z<23) schwierig
 - C, O, N praktisch nicht bestimmbar
 - Teure Instrumentierung
+
+## Warum leichte Elemente schwierig sind
+
+Zwei Effekte arbeiten gegen die leichten Elemente. Erstens liegt ihre charakteristische
+Strahlung bei niedriger Energie und wird schon von wenigen Zentimetern Luft und vom
+Detektorfenster verschluckt — deshalb wird bei leichten Elementen im Vakuum oder unter
+Helium gemessen. Zweitens sinkt die Fluoreszenzausbeute mit der Ordnungszahl: die
+angeregten Atome geben ihre Energie zunehmend als **Auger-Elektron** ab statt als Photon.
+Bei Kohlenstoff geht fast die gesamte Anregung diesen Weg, weshalb praktisch kein
+Fluoreszenzsignal übrig bleibt.
+
+## Die drei Röntgenmethoden auseinanderhalten
+
+| Methode | Was angeregt wird | Was gemessen wird | Aussage |
+|---|---|---|---|
+| RFA | Elektron aus innerer Schale | emittiertes Photon | welches Element, wie viel |
+| ESCA/XPS | Elektron aus innerer Schale | kinetische Energie des Elektrons | Element **und** Oxidationsstufe |
+| XRD | nichts — elastische Streuung | Beugungswinkel | Kristallstruktur, Phasen |
+
+Der Unterschied zwischen RFA und ESCA ist der springende Punkt: Beide schlagen ein
+kernnahes Elektron heraus, aber die RFA misst das nachfolgende Photon, dessen Energie von
+der chemischen Bindung fast unbeeinflusst bleibt. ESCA misst das Elektron selbst, und
+dessen Bindungsenergie verschiebt sich messbar mit dem Oxidationszustand — die chemische
+Verschiebung.
+
+**XRD folgt der Bragg-Gleichung:** n·λ = 2d·sin θ. Aus dem Winkel folgt der
+Netzebenenabstand d. Häufigster Rechenfehler in der Prüfung: das Diffraktogramm ist gegen
+2θ aufgetragen, in die Gleichung gehört aber θ.
 `,
   interactive: {
     type: "apparatus-quiz",
