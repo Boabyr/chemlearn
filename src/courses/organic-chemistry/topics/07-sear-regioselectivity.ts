@@ -193,6 +193,7 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
   },
   abbildungen: [
     {
+      art: "strukturen",
       id: "pyrrol-c2",
       titel: "Arenium ion from attack at C-2 of pyrrole",
       beschreibung: "Three resonance structures. In the third one the nitrogen carries the charge and every atom has a full octet.",
@@ -258,6 +259,7 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
       ],
     },
     {
+      art: "strukturen",
       id: "pyrrol-c3",
       titel: "Arenium ion from attack at C-3 of pyrrole",
       beschreibung: "Only two structures: C-4 and C-5 stay outside the delocalised system.",
@@ -304,6 +306,7 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
       ],
     },
     {
+      art: "strukturen",
       id: "pyridin-c3-gegen-c4",
       titel: "Pyridine: where the charge is allowed to go",
       beschreibung: "Left: attack at C-4 forces a structure with an electron-deficient nitrogen. Right: attack at C-3 never does.",

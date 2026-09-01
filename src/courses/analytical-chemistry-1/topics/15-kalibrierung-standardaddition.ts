@@ -66,6 +66,8 @@ c_x / (c_x + c_S·V_S/V_total) = y₀/y₁
 
 c_x = (c_S · V_S · y₀) / (V_total · (y₁ - y₀))
 
+{{abbildung:standardaddition}}
+
 ## Die drei Kalibrierverfahren im Vergleich
 
 | Verfahren | Kompensiert | Aufwand | Wann |
@@ -122,6 +124,65 @@ Zugabevolumina hoch konzentrierter Standards, oder man rechnet die Verdünnung s
       hints: ["Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!", "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."],
     },
   },
+  abbildungen: [
+    {
+      "art": "diagramm",
+      "id": "standardaddition",
+      "titel": "Standardaddition: die Antwort steht links von null",
+      "beschreibung": "Gemessen wird nur rechts von der y-Achse. Die Gerade wird nach links verlängert; der Betrag ihres Schnittpunkts mit der x-Achse ist die gesuchte Konzentration.",
+      "xAchse": {
+        "titel": "zugesetzter Standard (ppm)",
+        "min": -7,
+        "max": 3.5
+      },
+      "yAchse": {
+        "titel": "Signal (mV)",
+        "min": 0,
+        "max": 900
+      },
+      "kurven": [
+        {
+          "beschriftung": "Messpunkte und ihre Gerade",
+          "punkte": [
+            {
+              "x": -5.12,
+              "y": 0
+            },
+            {
+              "x": 0,
+              "y": 553
+            },
+            {
+              "x": 1,
+              "y": 661
+            },
+            {
+              "x": 2,
+              "y": 769
+            },
+            {
+              "x": 3,
+              "y": 877
+            }
+          ],
+          "farbe": "accent"
+        }
+      ],
+      "marker": [
+        {
+          "x": 0,
+          "y": 553,
+          "beschriftung": "y₀ ohne Zugabe",
+          "hilfslinien": true
+        },
+        {
+          "x": -5.12,
+          "y": 0,
+          "beschriftung": "−c_x"
+        }
+      ]
+    }
+  ],
   quiz: [
     { id: "q1", question: "Was ist der Unterschied zwischen Kalibrierung und Eichung?", options: ["Beide Begriffe bedeuten dasselbe", "Eichung ist die amtlich geregelte Kalibrierung", "Eichung ist grundsätzlich genauer", "Kalibrierung gilt nur in der Spektroskopie"], correct: 1, explanation: "Kalibrierung ist der allgemeine Vorgang: den Zusammenhang zwischen Messsignal und Konzentration feststellen. Eichung ist derselbe Vorgang unter gesetzlicher Regelung, etwa bei Waagen und Füllmengen im Handel. Mathematisch führen beide zum selben Ergebnis, rechtlich nicht." },
     { id: "q2", question: "Wann verwendet man Standardaddition statt externer Kalibrierung?", options: ["Immer, weil sie genauer arbeitet", "Wenn die Probenmatrix das Signal beeinflusst", "Nur bei sehr niedrigen Konzentrationen", "Nur in der Atomspektrometrie"], correct: 1, explanation: "Externe Kalibrierung setzt voraus, dass Standards und Probe dieselbe Matrix haben. Ist die Matrix unbekannt oder von Probe zu Probe verschieden, wird der Standard direkt in die Probe gegeben — dann sehen Analyt und Standard dieselbe Umgebung. Der Preis sind mehrere Messungen je Probe." },

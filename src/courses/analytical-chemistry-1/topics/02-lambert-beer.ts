@@ -61,6 +61,8 @@ Das Lambert-Beer-Gesetz gilt exakt nur unter folgenden Bedingungen:
 - A gegen c auftragen → Gerade durch Ursprung
 - Unbekannte Probe: A messen → c aus Kalibrierung ablesen
 
+{{abbildung:kalibriergerade}}
+
 **Sensitivität:** Steigung der Kalibriergerade = ε · d
 
 **Linearitätsbereich:** Typisch A = 0.1–1.5 (optimal: A ≈ 0.4)
@@ -129,6 +131,99 @@ lineares Gleichungssystem, das die Mehrkomponentenanalyse trägt.
       ],
     },
   },
+  abbildungen: [
+    {
+      "art": "diagramm",
+      "id": "kalibriergerade",
+      "titel": "Kalibriergerade und ihre Grenze",
+      "beschreibung": "Im linearen Bereich fallen Messung und Gerade zusammen. Bei hoher Konzentration biegt die reale Kurve zur Konzentrationsachse ab — Streulicht setzt der Absorption eine Obergrenze.",
+      "xAchse": {
+        "titel": "Konzentration c (mmol/L)",
+        "min": 0,
+        "max": 3
+      },
+      "yAchse": {
+        "titel": "Absorption A",
+        "min": 0,
+        "max": 3
+      },
+      "kurven": [
+        {
+          "beschriftung": "ideal: A = ε·c·d",
+          "punkte": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "x": 1.0,
+              "y": 1.0
+            },
+            {
+              "x": 2.0,
+              "y": 2.0
+            },
+            {
+              "x": 3.0,
+              "y": 3.0
+            }
+          ],
+          "stil": "gestrichelt",
+          "farbe": "subtle"
+        },
+        {
+          "beschriftung": "real gemessen",
+          "punkte": [
+            {
+              "x": 0,
+              "y": 0.0
+            },
+            {
+              "x": 0.25,
+              "y": 0.236
+            },
+            {
+              "x": 0.5,
+              "y": 0.445
+            },
+            {
+              "x": 0.75,
+              "y": 0.631
+            },
+            {
+              "x": 1.0,
+              "y": 0.796
+            },
+            {
+              "x": 1.5,
+              "y": 1.072
+            },
+            {
+              "x": 2.0,
+              "y": 1.29
+            },
+            {
+              "x": 2.5,
+              "y": 1.461
+            },
+            {
+              "x": 3.0,
+              "y": 1.597
+            }
+          ],
+          "farbe": "accent"
+        }
+      ],
+      "marker": [
+        {
+          "x": 0.5,
+          "y": 0.445,
+          "beschriftung": "unbekannte Probe",
+          "hilfslinien": true
+        }
+      ]
+    }
+  ],
   quiz: [
     { id: "q1", question: "Eine Lösung hat A = 0.5 bei ε = 5000 L·mol⁻¹·cm⁻¹ und d = 1 cm. Wie groß ist die Konzentration?", options: ["1×10⁻⁴ mol/L", "2.5×10⁻⁴ mol/L", "1×10⁻³ mol/L", "5×10⁻³ mol/L"], correct: 0, explanation: "c = A/(ε·d) = 0.5/(5000·1) = 1×10⁻⁴ mol/L. Die Formel umstellen: A = ε·c·d → c = A/(ε·d)." },
     { id: "q2", question: "Was bedeutet eine Transmission von T = 0.1 (10%)?", options: ["10 % werden absorbiert, A = 0,1", "90 % werden absorbiert, A = 1", "50 % werden absorbiert, A = 0,3", "Die Küvette ist zu lang gewählt"], correct: 1, explanation: "T = I/I₀ = 0,1 heißt: ein Zehntel des Lichts kommt durch, neun Zehntel werden absorbiert. A = −log(0,1) = 1. Der häufigste Fehler ist, die Transmission direkt als Absorptionsanteil zu lesen. Zur Orientierung: T = 0,5 gibt A = 0,30, T = 0,01 gibt A = 2." },

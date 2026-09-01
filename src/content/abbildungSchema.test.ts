@@ -18,6 +18,7 @@ const struktur = (teil: Record<string, unknown> = {}) => ({
 })
 
 const abbildung = (teil: Record<string, unknown> = {}) => ({
+  art: 'strukturen',
   id: 'pyrrol-c2',
   titel: 'Areniumion',
   verknuepfung: 'resonanz',
@@ -106,5 +107,55 @@ describe('Abbildungen im Thema', () => {
 
   it('kommt ohne Abbildungen aus', () => {
     expect(themaSchema.safeParse(thema()).success).toBe(true)
+  })
+})
+
+describe('Diagramm', () => {
+  const diagramm = (teil: Record<string, unknown> = {}) => ({
+    art: 'diagramm',
+    id: 'kalibriergerade',
+    titel: 'Kalibriergerade',
+    xAchse: { titel: 'c', min: 0, max: 3 },
+    yAchse: { titel: 'A', min: 0, max: 3 },
+    kurven: [{ beschriftung: 'ideal', punkte: [{ x: 0, y: 0 }, { x: 3, y: 3 }] }],
+    ...teil,
+  })
+
+  it('nimmt ein sauberes Diagramm an', () => {
+    const ergebnis = abbildungSchema.safeParse(diagramm())
+    expect(ergebnis.success, JSON.stringify(ergebnis.error?.issues)).toBe(true)
+  })
+
+  it('verlangt mindestens zwei Punkte je Kurve', () => {
+    expect(abbildungSchema.safeParse(diagramm({
+      kurven: [{ beschriftung: 'k', punkte: [{ x: 0, y: 0 }] }],
+    })).success).toBe(false)
+  })
+
+  it('weist einen Punkt außerhalb der Achsen ab', () => {
+    expect(abbildungSchema.safeParse(diagramm({
+      kurven: [{ beschriftung: 'k', punkte: [{ x: 0, y: 0 }, { x: 99, y: 1 }] }],
+    })).success).toBe(false)
+  })
+
+  it('weist einen Marker außerhalb der Achsen ab', () => {
+    expect(abbildungSchema.safeParse(diagramm({
+      marker: [{ x: 0, y: 99, beschriftung: 'daneben' }],
+    })).success).toBe(false)
+  })
+
+  it('weist eine Achse mit min über max ab', () => {
+    expect(abbildungSchema.safeParse(diagramm({
+      xAchse: { titel: 'c', min: 5, max: 1 },
+    })).success).toBe(false)
+  })
+
+  it('weist doppelte Kurvenbeschriftungen ab', () => {
+    expect(abbildungSchema.safeParse(diagramm({
+      kurven: [
+        { beschriftung: 'gleich', punkte: [{ x: 0, y: 0 }, { x: 1, y: 1 }] },
+        { beschriftung: 'gleich', punkte: [{ x: 0, y: 1 }, { x: 1, y: 2 }] },
+      ],
+    })).success).toBe(false)
   })
 })

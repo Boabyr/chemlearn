@@ -125,6 +125,8 @@ H = A + B/u + C·u
 
 Weil B mit 1/u fällt und C mit u steigt, hat H ein Minimum — die optimale Flussrate. In
 der GC liegt sie höher als in der HPLC, weil Gase deutlich schneller diffundieren.
+
+{{abbildung:van-deemter}}
 `,
   interactive: {
     type: "formula-calculator",
@@ -148,6 +150,493 @@ der GC liegt sie höher als in der HPLC, weil Gase deutlich schneller diffundier
       ],
     },
   },
+  abbildungen: [
+    {
+      "art": "diagramm",
+      "id": "van-deemter",
+      "titel": "Van-Deemter: warum es eine optimale Flussrate gibt",
+      "beschreibung": "H ist die Summe dreier Beiträge. B/u fällt, C·u steigt, A bleibt gleich — dazwischen liegt das Minimum.",
+      "xAchse": {
+        "titel": "Fließgeschwindigkeit u (mm/s)",
+        "min": 0,
+        "max": 4.2
+      },
+      "yAchse": {
+        "titel": "Trennstufenhöhe H (µm)",
+        "min": 0,
+        "max": 34
+      },
+      "kurven": [
+        {
+          "beschriftung": "H gesamt",
+          "punkte": [
+            {
+              "x": 0.2,
+              "y": 34
+            },
+            {
+              "x": 0.35,
+              "y": 26.368
+            },
+            {
+              "x": 0.5,
+              "y": 21.75
+            },
+            {
+              "x": 0.65,
+              "y": 19.506
+            },
+            {
+              "x": 0.8,
+              "y": 18.3
+            },
+            {
+              "x": 0.95,
+              "y": 17.641
+            },
+            {
+              "x": 1.1,
+              "y": 17.305
+            },
+            {
+              "x": 1.25,
+              "y": 17.175
+            },
+            {
+              "x": 1.4,
+              "y": 17.186
+            },
+            {
+              "x": 1.55,
+              "y": 17.296
+            },
+            {
+              "x": 1.7,
+              "y": 17.479
+            },
+            {
+              "x": 1.85,
+              "y": 17.718
+            },
+            {
+              "x": 2.0,
+              "y": 18.0
+            },
+            {
+              "x": 2.15,
+              "y": 18.316
+            },
+            {
+              "x": 2.3,
+              "y": 18.659
+            },
+            {
+              "x": 2.45,
+              "y": 19.024
+            },
+            {
+              "x": 2.6,
+              "y": 19.408
+            },
+            {
+              "x": 2.75,
+              "y": 19.807
+            },
+            {
+              "x": 2.9,
+              "y": 20.219
+            },
+            {
+              "x": 3.05,
+              "y": 20.642
+            },
+            {
+              "x": 3.2,
+              "y": 21.075
+            },
+            {
+              "x": 3.35,
+              "y": 21.516
+            },
+            {
+              "x": 3.5,
+              "y": 21.964
+            },
+            {
+              "x": 3.65,
+              "y": 22.419
+            },
+            {
+              "x": 3.8,
+              "y": 22.879
+            },
+            {
+              "x": 3.95,
+              "y": 23.344
+            },
+            {
+              "x": 4.1,
+              "y": 23.813
+            }
+          ],
+          "farbe": "accent"
+        },
+        {
+          "beschriftung": "A — Eddy-Diffusion",
+          "punkte": [
+            {
+              "x": 0.2,
+              "y": 8.0
+            },
+            {
+              "x": 0.35,
+              "y": 8.0
+            },
+            {
+              "x": 0.5,
+              "y": 8.0
+            },
+            {
+              "x": 0.65,
+              "y": 8.0
+            },
+            {
+              "x": 0.8,
+              "y": 8.0
+            },
+            {
+              "x": 0.95,
+              "y": 8.0
+            },
+            {
+              "x": 1.1,
+              "y": 8.0
+            },
+            {
+              "x": 1.25,
+              "y": 8.0
+            },
+            {
+              "x": 1.4,
+              "y": 8.0
+            },
+            {
+              "x": 1.55,
+              "y": 8.0
+            },
+            {
+              "x": 1.7,
+              "y": 8.0
+            },
+            {
+              "x": 1.85,
+              "y": 8.0
+            },
+            {
+              "x": 2.0,
+              "y": 8.0
+            },
+            {
+              "x": 2.15,
+              "y": 8.0
+            },
+            {
+              "x": 2.3,
+              "y": 8.0
+            },
+            {
+              "x": 2.45,
+              "y": 8.0
+            },
+            {
+              "x": 2.6,
+              "y": 8.0
+            },
+            {
+              "x": 2.75,
+              "y": 8.0
+            },
+            {
+              "x": 2.9,
+              "y": 8.0
+            },
+            {
+              "x": 3.05,
+              "y": 8.0
+            },
+            {
+              "x": 3.2,
+              "y": 8.0
+            },
+            {
+              "x": 3.35,
+              "y": 8.0
+            },
+            {
+              "x": 3.5,
+              "y": 8.0
+            },
+            {
+              "x": 3.65,
+              "y": 8.0
+            },
+            {
+              "x": 3.8,
+              "y": 8.0
+            },
+            {
+              "x": 3.95,
+              "y": 8.0
+            },
+            {
+              "x": 4.1,
+              "y": 8.0
+            }
+          ],
+          "stil": "gestrichelt",
+          "farbe": "subtle"
+        },
+        {
+          "beschriftung": "B/u — Längsdiffusion",
+          "punkte": [
+            {
+              "x": 0.2,
+              "y": 30.0
+            },
+            {
+              "x": 0.35,
+              "y": 17.143
+            },
+            {
+              "x": 0.5,
+              "y": 12.0
+            },
+            {
+              "x": 0.65,
+              "y": 9.231
+            },
+            {
+              "x": 0.8,
+              "y": 7.5
+            },
+            {
+              "x": 0.95,
+              "y": 6.316
+            },
+            {
+              "x": 1.1,
+              "y": 5.455
+            },
+            {
+              "x": 1.25,
+              "y": 4.8
+            },
+            {
+              "x": 1.4,
+              "y": 4.286
+            },
+            {
+              "x": 1.55,
+              "y": 3.871
+            },
+            {
+              "x": 1.7,
+              "y": 3.529
+            },
+            {
+              "x": 1.85,
+              "y": 3.243
+            },
+            {
+              "x": 2.0,
+              "y": 3.0
+            },
+            {
+              "x": 2.15,
+              "y": 2.791
+            },
+            {
+              "x": 2.3,
+              "y": 2.609
+            },
+            {
+              "x": 2.45,
+              "y": 2.449
+            },
+            {
+              "x": 2.6,
+              "y": 2.308
+            },
+            {
+              "x": 2.75,
+              "y": 2.182
+            },
+            {
+              "x": 2.9,
+              "y": 2.069
+            },
+            {
+              "x": 3.05,
+              "y": 1.967
+            },
+            {
+              "x": 3.2,
+              "y": 1.875
+            },
+            {
+              "x": 3.35,
+              "y": 1.791
+            },
+            {
+              "x": 3.5,
+              "y": 1.714
+            },
+            {
+              "x": 3.65,
+              "y": 1.644
+            },
+            {
+              "x": 3.8,
+              "y": 1.579
+            },
+            {
+              "x": 3.95,
+              "y": 1.519
+            },
+            {
+              "x": 4.1,
+              "y": 1.463
+            }
+          ],
+          "stil": "gestrichelt",
+          "farbe": "warning"
+        },
+        {
+          "beschriftung": "C·u — Stoffaustausch",
+          "punkte": [
+            {
+              "x": 0.2,
+              "y": 0.7
+            },
+            {
+              "x": 0.35,
+              "y": 1.225
+            },
+            {
+              "x": 0.5,
+              "y": 1.75
+            },
+            {
+              "x": 0.65,
+              "y": 2.275
+            },
+            {
+              "x": 0.8,
+              "y": 2.8
+            },
+            {
+              "x": 0.95,
+              "y": 3.325
+            },
+            {
+              "x": 1.1,
+              "y": 3.85
+            },
+            {
+              "x": 1.25,
+              "y": 4.375
+            },
+            {
+              "x": 1.4,
+              "y": 4.9
+            },
+            {
+              "x": 1.55,
+              "y": 5.425
+            },
+            {
+              "x": 1.7,
+              "y": 5.95
+            },
+            {
+              "x": 1.85,
+              "y": 6.475
+            },
+            {
+              "x": 2.0,
+              "y": 7.0
+            },
+            {
+              "x": 2.15,
+              "y": 7.525
+            },
+            {
+              "x": 2.3,
+              "y": 8.05
+            },
+            {
+              "x": 2.45,
+              "y": 8.575
+            },
+            {
+              "x": 2.6,
+              "y": 9.1
+            },
+            {
+              "x": 2.75,
+              "y": 9.625
+            },
+            {
+              "x": 2.9,
+              "y": 10.15
+            },
+            {
+              "x": 3.05,
+              "y": 10.675
+            },
+            {
+              "x": 3.2,
+              "y": 11.2
+            },
+            {
+              "x": 3.35,
+              "y": 11.725
+            },
+            {
+              "x": 3.5,
+              "y": 12.25
+            },
+            {
+              "x": 3.65,
+              "y": 12.775
+            },
+            {
+              "x": 3.8,
+              "y": 13.3
+            },
+            {
+              "x": 3.95,
+              "y": 13.825
+            },
+            {
+              "x": 4.1,
+              "y": 14.35
+            }
+          ],
+          "stil": "gestrichelt",
+          "farbe": "success"
+        }
+      ],
+      "marker": [
+        {
+          "x": 1.31,
+          "y": 17.17,
+          "beschriftung": "u optimal",
+          "hilfslinien": true
+        }
+      ]
+    }
+  ],
   quiz: [
     { id: "q1", question: "Ein Rf-Wert von 0,9 bei der DC bedeutet:", options: ["Die Substanz bleibt am Startpunkt liegen", "Sie läuft fast mit der Front, kaum Retention", "Die Trennung verläuft optimal", "Die Substanz löst sich in der mobilen Phase nicht"], correct: 1, explanation: "Rf ist die Laufstrecke der Substanz geteilt durch die der Front. Rf = 0,9 heißt: fast keine Wechselwirkung mit der stationären Phase. Der brauchbare Bereich liegt bei 0,3 bis 0,7. Abhilfe: polarere stationäre oder weniger polare mobile Phase." },
     { id: "q2", question: "Was sagt der Retentionsfaktor k' über die Elutionsreihenfolge aus?", options: ["Große k'-Werte eluieren zuerst", "Kleine k'-Werte eluieren zuerst", "k' sagt nichts über die Reihenfolge", "k' hängt nur von der Molmasse ab"], correct: 1, explanation: "k' = (tR − tM)/tM misst, wie lange eine Substanz im Verhältnis zur Totzeit auf der Säule festgehalten wird. Kleines k' heißt geringe Affinität zur stationären Phase und damit frühe Elution. Bei k' = 0 läuft die Substanz mit der Totzeit durch, ist also gar nicht getrennt." },

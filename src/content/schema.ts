@@ -332,13 +332,82 @@ export const strukturBildSchema = z.object({
  * beschrieben durch mehrere Grenzstrukturen. `reihe` stellt sie nur
  * nebeneinander, etwa zum Vergleich zweier Angriffsorte.
  */
-export const abbildungSchema = z.object({
+const abbildungsKopf = {
   id: z.string().regex(/^[a-z0-9-]+$/, 'Abbildungs-Kennung klein, ohne Umlaute'),
   titel: nichtLeer,
   beschreibung: z.string().optional(),
+}
+
+export const strukturAbbildungSchema = z.object({
+  ...abbildungsKopf,
+  art: z.literal('strukturen'),
   verknuepfung: z.enum(['resonanz', 'reihe']),
   strukturen: z.array(strukturBildSchema).min(2, 'Eine Abbildung zeigt mindestens zwei Strukturen'),
 })
+
+const achsenSchema = z.object({
+  titel: nichtLeer,
+  min: z.number(),
+  max: z.number(),
+}).refine(a => a.min < a.max, { message: 'min muss kleiner als max sein' })
+
+const punktSchema = z.object({ x: z.number(), y: z.number() })
+
+const kurveSchema = z.object({
+  beschriftung: nichtLeer,
+  punkte: z.array(punktSchema).min(2, 'Eine Kurve braucht mindestens zwei Punkte'),
+  stil: z.enum(['linie', 'gestrichelt']).optional(),
+  farbe: z.enum(['accent', 'success', 'warning', 'danger', 'subtle']).optional(),
+})
+
+const markerSchema = z.object({
+  x: z.number(),
+  y: z.number(),
+  beschriftung: nichtLeer,
+  /** Gestrichelte Linien auf beide Achsen — für "Signal messen, Wert ablesen". */
+  hilfslinien: z.boolean().optional(),
+})
+
+/**
+ * Kurvendiagramm für den Theorietext.
+ *
+ * Kurven sind Punktlisten, kein Code — dieselbe Regel wie bei den Formeln:
+ * Inhalt bleibt Inhalt. Was der Text als Form beschreibt (die Gerade, das
+ * Minimum, der Sprung), steht damit auch als Bild da.
+ */
+export const diagrammSchema = z.object({
+  ...abbildungsKopf,
+  art: z.literal('diagramm'),
+  xAchse: achsenSchema,
+  yAchse: achsenSchema,
+  kurven: z.array(kurveSchema).min(1),
+  marker: z.array(markerSchema).default([]),
+}).superRefine((d, ctx) => {
+  const melde = (path: (string | number)[], message: string) =>
+    ctx.addIssue({ code: 'custom', path, message })
+
+  const namen = d.kurven.map(k => k.beschriftung)
+  if (new Set(namen).size !== namen.length) melde(['kurven'], 'Doppelte Kurvenbeschriftung')
+
+  const drin = (x: number, y: number) =>
+    x >= d.xAchse.min && x <= d.xAchse.max && y >= d.yAchse.min && y <= d.yAchse.max
+
+  for (const [i, kurve] of d.kurven.entries()) {
+    for (const [j, punkt] of kurve.punkte.entries()) {
+      if (!drin(punkt.x, punkt.y)) {
+        melde(['kurven', i, 'punkte', j], `Punkt (${punkt.x}, ${punkt.y}) liegt außerhalb der Achsen`)
+      }
+    }
+  }
+  for (const [i, m] of d.marker.entries()) {
+    if (!drin(m.x, m.y)) melde(['marker', i], `Marker "${m.beschriftung}" liegt außerhalb der Achsen`)
+  }
+})
+
+export const abbildungSchema = z.discriminatedUnion('art', [
+  strukturAbbildungSchema,
+  diagrammSchema,
+])
 
 export const interaktivSchema = z.discriminatedUnion('type', [
   apparaturQuizSchema,
@@ -437,6 +506,8 @@ export type ApparaturQuiz = z.infer<typeof apparaturQuizSchema>
 export type SpektrumZuordnung = z.infer<typeof spektrumZuordnungSchema>
 export type FormelRechner = z.infer<typeof formelRechnerSchema>
 export type StrukturBild = z.infer<typeof strukturBildSchema>
+export type StrukturAbbildung = z.infer<typeof strukturAbbildungSchema>
+export type Diagramm = z.infer<typeof diagrammSchema>
 export type Abbildung = z.infer<typeof abbildungSchema>
 export type Mechanismus = z.infer<typeof mechanismusSchema>
 export type MechanismusStufe = z.infer<typeof mechanismusStufeSchema>

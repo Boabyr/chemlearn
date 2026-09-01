@@ -5,9 +5,10 @@ import TheoryRenderer from './TheoryRenderer'
 import { zerlegeAnAbbildungen } from './abbildungsMarken'
 import { loadAllTopics } from '../../lib/courseRegistry'
 import { BUEHNE } from '../Mechanismus/strukturTypen'
-import type { Abbildung as AbbildungDaten } from '../../content/schema'
+import type { StrukturAbbildung } from '../../content/schema'
 
-const daten: AbbildungDaten = {
+const daten: StrukturAbbildung = {
+  art: 'strukturen',
   id: 'pyrrol-c2',
   titel: 'Areniumion aus dem Angriff an C-2',
   beschreibung: 'Drei Grenzstrukturen.',
@@ -92,6 +93,7 @@ describe('Abbildungen der Kurse', () => {
     for (const kurs of ['organic-chemistry', 'analytical-chemistry-1']) {
       for (const thema of await loadAllTopics(kurs)) {
         for (const abbildung of thema.abbildungen ?? []) {
+          if (abbildung.art !== 'strukturen') continue
           for (const struktur of abbildung.strukturen) {
             for (const atom of struktur.atome) {
               if (atom.x < 0 || atom.x > BUEHNE.breite || atom.y < 0 || atom.y > BUEHNE.hoehe) {
@@ -109,6 +111,7 @@ describe('Abbildungen der Kurse', () => {
     let gezeichnet = 0
     for (const thema of await loadAllTopics('organic-chemistry')) {
       for (const abbildung of thema.abbildungen ?? []) {
+        if (abbildung.art !== 'strukturen') continue
         const { container, unmount } = render(<Abbildung abbildung={abbildung} />)
         expect(container.querySelectorAll('svg')).toHaveLength(abbildung.strukturen.length)
         gezeichnet++
