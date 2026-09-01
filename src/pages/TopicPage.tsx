@@ -14,13 +14,14 @@ import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
 // import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
 import { ampelText } from '../lib/scoreColor'
+import { richtige, prozent } from '../lib/learning/quizScore'
 
 // Markdown- und Formelsatz wiegen schwer und werden nur im Theorie-Reiter gebraucht.
 const TheoryRenderer = lazy(() => import('../components/Theory/TheoryRenderer'))
 
 export default function TopicPage() {
   const { courseId, topicId } = useParams()
-  const { user, loading } = useAuth()
+  const { loading } = useAuth()
   const navigate = useNavigate()
   const { markTopicSeen, markTopicComplete } = useProgress(courseId)
   const { logAttempt, flush } = useAttempts(courseId)
@@ -30,16 +31,12 @@ export default function TopicPage() {
   const [quizIdx, setQuizIdx] = useState(0)
   const [selected, setSelected] = useState<number | null>(null)
   const [answered, setAnswered] = useState(false)
-  const [score, setScore] = useState(0)
+  const [ergebnisse, setErgebnisse] = useState<boolean[]>([])
   const [quizDone, setQuizDone] = useState(false)
   const [cardIdx, setCardIdx] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [gradedCards, setGradedCards] = useState<Record<number, Grade>>({})
   const [questionStart, setQuestionStart] = useState(() => Date.now())
-
-  useEffect(() => {
-    if (!loading && !user) navigate('/login')
-  }, [user, loading])
 
   useEffect(() => {
     if (courseId && topicId) {
@@ -64,7 +61,7 @@ export default function TopicPage() {
     if (selected === null || !courseId || !topicId) return
     const richtig = selected === q.correct
     setAnswered(true)
-    if (richtig) setScore(s => s + 1)
+    setErgebnisse(bisher => [...bisher, richtig])
 
     logAttempt({
       courseId,
@@ -85,9 +82,8 @@ export default function TopicPage() {
     } else {
       setQuizDone(true)
       void flush()
-      if (courseId && topicId) {
-        const finalScore = topic ? (score + (selected === q.correct ? 1 : 0)) : 0
-        markTopicComplete(topicId, courseId, topic ? Math.round(finalScore / topic.quiz.length * 100) : 0)
+      if (courseId && topicId && topic) {
+        markTopicComplete(topicId, courseId, prozent(ergebnisse, topic.quiz.length))
       }
     }
   }
@@ -96,7 +92,7 @@ export default function TopicPage() {
     setQuizIdx(0)
     setSelected(null)
     setAnswered(false)
-    setScore(0)
+    setErgebnisse([])
     setQuizDone(false)
     setQuestionStart(Date.now())
   }
@@ -184,9 +180,9 @@ export default function TopicPage() {
               <div className="text-center py-12">
                 <div className="text-5xl mb-4">🎉</div>
                 <h2 className="text-2xl font-light text-accent mb-2">Quiz abgeschlossen!</h2>
-                <p className="text-muted mb-6">{score} von {topic.quiz.length} Fragen richtig</p>
-                <div className={`text-5xl font-bold mb-8 ${ampelText(score / topic.quiz.length)}`}>
-                  {Math.round(score / topic.quiz.length * 100)}%
+                <p className="text-muted mb-6">{richtige(ergebnisse)} von {topic.quiz.length} Fragen richtig</p>
+                <div className={`text-5xl font-bold mb-8 ${ampelText(richtige(ergebnisse) / topic.quiz.length)}`}>
+                  {prozent(ergebnisse, topic.quiz.length)}%
                 </div>
                 <p className="text-accent text-sm mb-6">✓ Fortschritt gespeichert!</p>
                 <button onClick={resetQuiz} className="bg-accent hover:bg-accent-strong text-on-accent font-semibold px-6 py-3 rounded-xl transition-colors">
@@ -197,7 +193,7 @@ export default function TopicPage() {
               <div>
                 <div className="flex justify-between text-xs text-subtle mb-2">
                   <span>Frage {quizIdx + 1} von {topic.quiz.length}</span>
-                  <span>{score} richtig</span>
+                  <span>{richtige(ergebnisse)} richtig</span>
                 </div>
                 <div className="h-1.5 bg-sunken rounded-full mb-8">
                   <div className="h-full bg-accent rounded-full transition-all"

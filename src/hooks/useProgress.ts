@@ -1,6 +1,16 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { useAuth } from './useAuth'
+import { qk } from '../lib/queryKeys'
+import { lokalesDatum } from '../lib/zeit/datum'
+import { naechsterStreak } from '../lib/learning/streak'
+
+/** Die Funktion gibt es in dieser Datenbank (noch) nicht — Migration 002 fehlt. */
+function rpcFehlt(code?: string, meldung?: string): boolean {
+  return code === 'PGRST202' || code === '42883' ||
+    (meldung?.includes('Could not find the function') ?? false)
+}
 
 export interface TopicProgress {
   topicId: string
@@ -16,97 +26,139 @@ export interface StreakData {
   lastActiveDate: string
 }
 
+const LEERE_SERIE: StreakData = { currentStreak: 0, longestStreak: 0, lastActiveDate: '' }
+
+async function fortschrittLaden(userId: string, courseId?: string): Promise<TopicProgress[]> {
+  let query = supabase.from('progress').select('*').eq('user_id', userId)
+  if (courseId) query = query.eq('course_id', courseId)
+  const { data, error } = await query
+  if (error) throw new Error(error.message)
+  return (data ?? []).map(d => ({
+    topicId: d.topic_id,
+    courseId: d.course_id,
+    completed: d.completed,
+    quizScore: d.quiz_score,
+    lastSeen: d.last_seen,
+  }))
+}
+
+async function serieLaden(userId: string): Promise<StreakData> {
+  // maybeSingle: für neue Konten gibt es die Zeile noch nicht, und `single()`
+  // warf dafür jedes Mal einen Fehler in die Konsole.
+  const { data, error } = await supabase
+    .from('streaks').select('*').eq('user_id', userId).maybeSingle()
+  if (error) throw new Error(error.message)
+  if (!data) return LEERE_SERIE
+  return {
+    currentStreak: data.current_streak,
+    longestStreak: data.longest_streak,
+    lastActiveDate: data.last_active_date ?? '',
+  }
+}
+
 export function useProgress(courseId?: string) {
   const { user } = useAuth()
-  const [progress, setProgress] = useState<TopicProgress[]>([])
-  const [streak, setStreak] = useState<StreakData>({ currentStreak: 0, longestStreak: 0, lastActiveDate: '' })
-  const [loading, setLoading] = useState(true)
+  const qc = useQueryClient()
+  const userId = user?.id ?? 'anonym'
 
-  const fetchProgress = useCallback(async () => {
+  const progressQuery = useQuery({
+    queryKey: qk.progress(userId, courseId),
+    queryFn: () => fortschrittLaden(user!.id, courseId),
+    enabled: !!user,
+  })
+
+  const streakQuery = useQuery({
+    queryKey: qk.streak(userId),
+    queryFn: () => serieLaden(user!.id),
+    enabled: !!user,
+  })
+
+  /**
+   * Serie fortschreiben — atomar in der Datenbank, mit dem Kalendertag des Geräts.
+   *
+   * Solange Migration 002 nicht eingespielt ist, läuft der alte Weg über zwei
+   * Anweisungen weiter. Dann bleibt der Doppelzähl-Fall bei zwei offenen Tabs,
+   * aber der Fortschritt geht nicht verloren.
+   */
+  const serieAntippen = useCallback(async () => {
     if (!user) return
-    setLoading(true)
-    try {
-      let query = supabase.from('progress').select('*').eq('user_id', user.id)
-      if (courseId) query = query.eq('course_id', courseId)
-      const { data } = await query
-      if (data) {
-        setProgress(data.map(d => ({
-          topicId: d.topic_id,
-          courseId: d.course_id,
-          completed: d.completed,
-          quizScore: d.quiz_score,
-          lastSeen: d.last_seen,
-        })))
-      }
+    const heute = lokalesDatum()
 
-      const { data: streakData } = await supabase
-        .from('streaks').select('*').eq('user_id', user.id).single()
-      if (streakData) {
-        setStreak({
-          currentStreak: streakData.current_streak,
-          longestStreak: streakData.longest_streak,
-          lastActiveDate: streakData.last_active_date,
-        })
-      }
-    } catch (e) {
-      console.error('Progress fetch error:', e)
-    }
-    setLoading(false)
-  }, [user, courseId])
-
-  useEffect(() => { fetchProgress() }, [fetchProgress])
-
-  const markTopicSeen = useCallback(async (topicId: string, cId: string) => {
-    if (!user) return
-    await supabase.from('progress').upsert({
-      user_id: user.id,
-      course_id: cId,
-      topic_id: topicId,
-      last_seen: new Date().toISOString(),
-    }, { onConflict: 'user_id,course_id,topic_id' })
-    await updateStreak()
-    fetchProgress()
-  }, [user, fetchProgress])
-
-  const markTopicComplete = useCallback(async (topicId: string, cId: string, quizScore: number) => {
-    if (!user) return
-    await supabase.from('progress').upsert({
-      user_id: user.id,
-      course_id: cId,
-      topic_id: topicId,
-      completed: true,
-      quiz_score: quizScore,
-      last_seen: new Date().toISOString(),
-    }, { onConflict: 'user_id,course_id,topic_id' })
-    await updateStreak()
-    fetchProgress()
-  }, [user, fetchProgress])
-
-  const updateStreak = useCallback(async () => {
-    if (!user) return
-    const today = new Date().toISOString().split('T')[0]
-    const { data } = await supabase.from('streaks').select('*').eq('user_id', user.id).single()
-
-    if (!data) {
-      await supabase.from('streaks').insert({
-        user_id: user.id, current_streak: 1, longest_streak: 1, last_active_date: today
-      })
+    const { error } = await supabase.rpc('streak_touch', { p_today: heute })
+    if (error && !rpcFehlt(error.code, error.message)) {
+      console.error('Serie fortschreiben fehlgeschlagen:', error.message)
       return
     }
 
-    const last = data.last_active_date
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+    if (error) {
+      const bisher = await serieLaden(user.id)
+      const naechster = naechsterStreak(bisher.lastActiveDate ? bisher : null, heute)
+      if (naechster) {
+        await supabase.from('streaks').upsert({
+          user_id: user.id,
+          current_streak: naechster.currentStreak,
+          longest_streak: naechster.longestStreak,
+          last_active_date: naechster.lastActiveDate,
+        })
+      }
+    }
 
-    if (last === today) return // schon heute aktiv
-    const newStreak = last === yesterday ? data.current_streak + 1 : 1
-    const longest = Math.max(newStreak, data.longest_streak)
+    await qc.invalidateQueries({ queryKey: qk.streak(user.id) })
+  }, [user, qc])
 
-    await supabase.from('streaks').update({
-      current_streak: newStreak,
-      longest_streak: longest,
-      last_active_date: today,
-    }).eq('user_id', user.id)
-  }, [user])
+  const beruehren = useMutation({
+    mutationFn: async (
+      { topicId, courseId: cId, completed, quizScore }:
+      { topicId: string; courseId: string; completed?: boolean; quizScore?: number },
+    ) => {
+      const { error } = await supabase.rpc('progress_touch', {
+        p_course_id: cId,
+        p_topic_id: topicId,
+        p_completed: completed ?? false,
+        p_quiz_score: quizScore ?? null,
+      })
+      if (!error) return
+      if (!rpcFehlt(error.code, error.message)) throw new Error(error.message)
 
-  return { progress, streak, loading, markTopicSeen, markTopicComplete, refetch: fetchProgress }
+      // Ohne Migration 002: Bestwert im Client bilden, damit ein schlechterer
+      // Durchlauf den gespeicherten Wert wenigstens hier nicht drückt.
+      const vorhanden = qc.getQueryData<TopicProgress[]>(qk.progress(userId, cId))
+        ?.find(p => p.topicId === topicId && p.courseId === cId)
+      const { error: fehler } = await supabase.from('progress').upsert({
+        user_id: user!.id,
+        course_id: cId,
+        topic_id: topicId,
+        completed: (vorhanden?.completed ?? false) || (completed ?? false),
+        quiz_score: Math.max(vorhanden?.quizScore ?? 0, quizScore ?? 0),
+        last_seen: new Date().toISOString(),
+      }, { onConflict: 'user_id,course_id,topic_id' })
+      if (fehler) throw new Error(fehler.message)
+    },
+    onSuccess: async (_daten, variablen) => {
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: qk.progress(userId, variablen.courseId) }),
+        qc.invalidateQueries({ queryKey: qk.progress(userId, undefined) }),
+      ])
+      await serieAntippen()
+    },
+  })
+
+  const markTopicSeen = useCallback((topicId: string, cId: string) => {
+    if (!user) return
+    beruehren.mutate({ topicId, courseId: cId })
+  }, [user, beruehren])
+
+  const markTopicComplete = useCallback((topicId: string, cId: string, quizScore: number) => {
+    if (!user) return
+    beruehren.mutate({ topicId, courseId: cId, completed: true, quizScore })
+  }, [user, beruehren])
+
+  return {
+    progress: progressQuery.data ?? [],
+    streak: streakQuery.data ?? LEERE_SERIE,
+    loading: !!user && (progressQuery.isPending || streakQuery.isPending),
+    markTopicSeen,
+    markTopicComplete,
+    refetch: () => qc.invalidateQueries({ queryKey: qk.progress(userId, courseId) }),
+  }
 }

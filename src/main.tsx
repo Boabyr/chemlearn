@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './index.css'
 import Dashboard       from './pages/Dashboard'
 import LoginPage       from './pages/LoginPage'
@@ -10,26 +11,46 @@ import TutorDashboard  from './pages/TutorDashboard'
 import PracticeMode    from './pages/PracticeMode'
 import ExamSimulator   from './pages/ExamSimulator'
 import ErrorBoundary   from './components/Shell/ErrorBoundary'
+import RequireAuth     from './components/Shell/RequireAuth'
+import { AuthProvider } from './context/AuthProvider'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'))
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Lernstand ändert sich durch eigene Eingaben, nicht durch andere Leute.
+      staleTime: 60_000,
+      gcTime: 10 * 60_000,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+})
+
+const geschuetzt = (element: React.ReactNode) => <RequireAuth>{element}</RequireAuth>
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
-      <Routes>
-        <Route path='/'                            element={<Dashboard />} />
-        <Route path='/login'                       element={<LoginPage />} />
-        <Route path='/course/:courseId'            element={<CoursePage />} />
-        <Route path='/course/:courseId/:topicId'   element={<TopicPage />} />
-        <Route path='/tutor'                       element={<TutorDashboard />} />
-        <Route path='/practice'                    element={<PracticeMode />} />
-        <Route path='/exam-simulator'              element={<ExamSimulator />} />
-        <Route path='*'                            element={<Navigate to='/' replace />} />
-      </Routes>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/login'                     element={<LoginPage />} />
+              <Route path='/'                          element={geschuetzt(<Dashboard />)} />
+              <Route path='/course/:courseId'          element={geschuetzt(<CoursePage />)} />
+              <Route path='/course/:courseId/:topicId' element={geschuetzt(<TopicPage />)} />
+              <Route path='/tutor'                     element={geschuetzt(<TutorDashboard />)} />
+              <Route path='/practice'                  element={geschuetzt(<PracticeMode />)} />
+              <Route path='/exam-simulator'            element={geschuetzt(<ExamSimulator />)} />
+              <Route path='*'                          element={<Navigate to='/' replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   </React.StrictMode>
 )

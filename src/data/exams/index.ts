@@ -26,6 +26,12 @@ export function professorsFor(courseId: string): string[] {
 }
 
 /** Anzeigename für einen Prüferschlüssel. */
+const ANZEIGENAMEN: Record<string, string> = {
+  lieberzeit: 'Lieberzeit',
+  koellensperger: 'Köllensperger',
+  gerner: 'Gerner',
+}
+
 export function professorLabel(professor: string): string {
-  return professor.charAt(0).toUpperCase() + professor.slice(1)
+  return ANZEIGENAMEN[professor] ?? professor.charAt(0).toUpperCase() + professor.slice(1)
 }

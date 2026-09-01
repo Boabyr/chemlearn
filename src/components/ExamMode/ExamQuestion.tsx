@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import type { ExamQuestion } from '../../data/exams'
+import { professorLabel, type ExamQuestion } from '../../data/exams'
+import { stilFuer } from './pruefStil'
+import { bewerte, leseZahl } from '../../lib/learning/bewerten'
 
 interface Props {
   question: ExamQuestion
@@ -35,54 +37,36 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
 
   function submit() {
     if (submitted) return
-    let isCorrect = false
+    const bewertung = bewerte(question, {
+      auswahl: selected,
+      zahl: numInput,
+      reihenfolge: orderArr,
+    })
+    // Ohne auswertbare Eingabe entsteht kein Versuch — sonst verdirbt ein
+    // versehentliches Absenden den Lernstand.
+    if (!bewertung.gueltig) return
 
-    if (question.type === 'mc-single') {
-      isCorrect = selected[0] === question.correct
-    } else if (question.type === 'mc-multi') {
-      const corr = question.correct as number[]
-      isCorrect = corr.length === selected.length &&
-        corr.every(c => selected.includes(c))
-    } else if (question.type === 'numeric') {
-      const val = parseFloat(numInput.replace(',', '.'))
-      const target = question.correct as number
-      const tol = question.tolerance ?? Math.abs(target) * 0.02
-      isCorrect = Math.abs(val - target) <= tol
-    } else if (question.type === 'order') {
-      const corr = question.correct as number[]
-      isCorrect = orderArr.every((v, i) => v === corr[i])
-    }
-
-    setCorrect(isCorrect)
+    setCorrect(bewertung.korrekt)
     setSubmitted(true)
-    onAnswer(isCorrect, isCorrect ? question.points : 0)
+    onAnswer(bewertung.korrekt, bewertung.punkte)
   }
 
-  const profColor = {
-    lieberzeit: 'teal',
-    koellensperger: 'blue',
-    gerner: 'purple',
-  }[question.professor]
-
-  const profLabel = {
-    lieberzeit: 'Lieberzeit',
-    koellensperger: 'Köllensperger',
-    gerner: 'Gerner',
-  }[question.professor]
+  const stil = stilFuer(question.professor)
+  const profLabel = professorLabel(question.professor)
 
   return (
     <div className="bg-raised border border-line rounded-2xl overflow-hidden">
       {/* Header */}
       <div className={`px-5 py-3 flex items-center justify-between border-b border-line bg-raised/80`}>
         <div className="flex items-center gap-3">
-          <span className={`text-xs font-mono uppercase tracking-widest text-${profColor}-400`}>
+          <span className={`text-xs font-mono uppercase tracking-widest ${stil.text}`}>
             {profLabel}
           </span>
           {showSource && (
             <span className="text-xs text-subtle">{question.source}</span>
           )}
         </div>
-        <span className={`text-xs font-semibold text-${profColor}-400`}>
+        <span className={`text-xs font-semibold ${stil.text}`}>
           {question.points}P
         </span>
       </div>
@@ -103,7 +87,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
                 else if (isSel) cls = 'border-danger bg-danger/10 text-danger'
                 else cls = 'border-line bg-raised text-subtle'
               } else if (isSel) {
-                cls = `border-${profColor}-400 bg-${profColor}-900/20 text-${profColor}-300`
+                cls = stil.auswahl
               }
               return (
                 <button key={i} onClick={() => toggle(i)}
@@ -182,7 +166,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
             disabled={
               (question.type === 'mc-single' && selected.length === 0) ||
               (question.type === 'mc-multi' && selected.length === 0) ||
-              (question.type === 'numeric' && numInput === '')
+              (question.type === 'numeric' && leseZahl(numInput) === null)
             }
             className="mt-4 w-full bg-accent hover:bg-accent-strong disabled:opacity-40 disabled:cursor-not-allowed text-on-accent font-semibold py-3 rounded-xl text-sm transition-colors">
             Antwort prüfen ✓
