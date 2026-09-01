@@ -347,6 +347,14 @@ folgen nur die Abschnitte, die dazukommen sollen — `# QUIZ`, `# FLASHCARDS`,
 > npm run fragen:aehnlich          # Paare mit hoher Wortüberlappung, kursweit
 > ```
 >
+> **Und die Ablenker müssen mithalten.** Die richtige Antwort darf nicht die
+> längste sein — sie trug früher die Begründung mit sich, während die Ablenker
+> Schlagworte blieben, und war dadurch in vier von fünf Fällen ohne Chemie zu
+> erraten. Die Begründung gehört in `ERKLÄRUNG:`, die Optionen sind knappe
+> Behauptungen von ähnlicher Länge. Jeder Ablenker soll ein echter Denkfehler
+> sein: verwechselte Reaktion, verdrehte Richtung, richtige Formel mit falschem
+> Vorzeichen. Der Test in `inhalte.test.ts` misst das kursweit mit.
+>
 > Dubletten entstehen besonders leicht über Themengrenzen hinweg: dieselbe
 > Regioselektivität wird im Ringkapitel und im SEAr-Kapitel gefragt, dieselbe
 > Definition im Grundlagen- und im Anwendungskapitel. Faustregel: die Frage
