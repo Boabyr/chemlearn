@@ -8,78 +8,70 @@ export const topic = {
   estimatedMinutes: 60,
   theory: `
 
-
-
 ## Electrophilic Aromatic Substitution (SEAr) at Heteroaromatics
 
 ### General Principle
-1. Electrophile E⁺ attacks HOMO of aromatic → arenium ion (sigma complex)
+1. Electrophile E⁺ attacks the HOMO of the aromatic → arenium ion (sigma complex)
 2. Deprotonation → aromatic product
 
-**Regioselectivity = stability of the arenium ion**
-→ more resonance structures → more stable → preferred position
+**Regioselectivity = stability of the arenium ion.** Which position reacts is decided by
+the cation that forms, not by the ring you started from. That is the whole chapter, and
+everything below is an application of it.
 
-### Electron-rich Heteroaromatics (activated)
-
-**Pyrrole:**
-- C-2 (α) >> C-3 (β)
-- Rationale: 3 resonance structures at α attack (incl. N⁺ structure), only 2 at β attack
-
-**Furan:**
-- C-2 >> C-3 (same logic as pyrrole)
-- Note: furan can also undergo 1,2- and 1,4-addition under harsh conditions (less aromatic than benzene)
-
-**Thiophene:**
-- C-2 >> C-3 (same logic)
-- Thiophene is more stable than furan (more aromatic)
-
-**Indole:**
-- C-3 >> C-2 (EXCEPTION!)
-- Rationale: attack at C-3 preserves benzene aromaticity; charge on N without destroying the benzene π system
-
-### Electron-poor Heteroaromatics (deactivated)
-
-**Pyridine:**
-- SEAr very slow
-- If possible: C-3 preferred (meta to N)
-- C-2 and C-4 particularly deactivated by N (N withdraws electrons)
-
-## Drawing Resonance Structures (exam-relevant)
-
-**For SEAr at pyrrole (C-2 attack by Br⁺):**
-Structure 1: Br and H at C-2, positive charge at C-3
-Structure 2: charge at C-5
-Structure 3: charge at N (N⁺) → particularly stable
-→ 3 resonance structures → more stable arenium ion than at C-3
-
-**For SEAr at pyridine (C-3 attack):**
-No resonance structure places the positive charge on nitrogen → this is the **least bad**
-option, and therefore the preferred position.
-
-**At C-2 or C-4 attack:** one resonance structure puts the positive charge directly on the
-nitrogen. Nitrogen is the most electronegative atom in the ring and is already withdrawing
-electron density from it — asking it to carry a formal positive charge as well is
-expensive, so those structures do not stabilise, they destabilise. (The pKa of pyridinium
-says something about the *basicity* of the free lone pair and has nothing to do with the
-stability of the arenium ion.)
+Which position each ring prefers is covered where the rings themselves are: the
+five-membered rings in the chapter on pyrrole, furan and thiophene, pyridine in the
+chapter on six-membered rings. Here we do the part that has to be **drawn**.
 
 ## Why the arenium ion decides everything
 
-The electrophile itself does not choose the position. All positions are attacked; only the
-one whose arenium ion is most stable proceeds fast enough to matter, because that step is
-rate-determining. So the whole question of regioselectivity reduces to drawing the possible
-cationic intermediates and counting how well each one spreads the charge.
+The electrophile does not choose the position. All positions are attacked; only the one
+whose arenium ion is most stable proceeds fast enough to matter, because that step is
+rate-determining and its transition state resembles the cation that follows.
 
-Two rules follow from that:
+Two rules follow:
 
-- **Electron-rich rings** (pyrrole, furan, thiophene, indole) react faster than benzene,
-  because the heteroatom can donate its lone pair into the ring and take the charge itself.
-- **Electron-poor rings** (pyridine, pyrimidine) react slower than benzene and prefer the
-  position *furthest* from the heteroatom, because there the charge never has to sit on it.
+- **Electron-rich rings** react faster than benzene, because the heteroatom can donate its
+  lone pair and take the charge itself.
+- **Electron-poor rings** react slower and prefer the position *furthest* from the
+  heteroatom, because there the charge never has to sit on it.
 
-The same reasoning, run backwards, explains why pyridine is the easy substrate for
-nucleophilic substitution: an anionic intermediate with the negative charge on nitrogen is
-exactly what an electronegative atom likes.
+## Drawing the structures: pyrrole
+
+Attack at C-2 spreads the positive charge over three atoms. The third structure is the
+valuable one — nitrogen carries the charge while every atom keeps a full octet, because
+the lone pair moves into the ring.
+
+{{abbildung:pyrrol-c2}}
+
+Attack at C-3 leaves only two structures. The carbon bearing the electrophile cuts the
+conjugated chain in a place that isolates C-4 and C-5, so one of the delocalisation paths
+disappears.
+
+{{abbildung:pyrrol-c3}}
+
+Three structures against two — that difference in delocalisation is the entire reason for
+the α selectivity. Furan and thiophene follow the same count with O and S in place of N.
+
+**How to draw this in an exam:** put the electrophile and the hydrogen on the attacked
+carbon, mark it as sp³, then push the remaining π electrons around the ring one position
+at a time and note where the positive charge lands. Count the structures. The position
+with more of them wins, and a structure that puts the charge on the heteroatom with a
+complete octet counts double in the argument.
+
+## Drawing the structures: pyridine
+
+Pyridine turns the argument around. Here the heteroatom does not take the charge — it
+refuses it.
+
+{{abbildung:pyridin-c3-gegen-c4}}
+
+In the left structure the nitrogen has only six electrons around it. For the most
+electronegative atom in the ring, one that is already withdrawing density, that is very
+expensive — the structure destabilises rather than stabilises. Attack at C-3 avoids it
+entirely, which is why C-3 is the least bad option. The reaction stays slow either way.
+
+(The pKa of pyridinium says something about the basicity of the free lone pair and has
+nothing to do with the stability of the arenium ion — a popular but wrong justification.)
 
 ## Important Reactions Summary
 
@@ -90,8 +82,6 @@ exactly what an electronegative atom likes.
 | Pyrrole | Br⁺ | C-2 | 2-Bromopyrrole |
 | Thiophene | Br⁺ | C-2 | 2-Bromothiophene |
 | Pyridine | Br₂/very harsh | C-3 | 3-Bromopyridine |
-
-
 
 `,
   interactive: {
@@ -201,6 +191,169 @@ exactly what an electronegative atom likes.
       ],
     },
   },
+  abbildungen: [
+    {
+      id: "pyrrol-c2",
+      titel: "Arenium ion from attack at C-2 of pyrrole",
+      beschreibung: "Three resonance structures. In the third one the nitrogen carries the charge and every atom has a full octet.",
+      verknuepfung: "resonanz",
+      strukturen: [
+        {
+          beschriftung: "charge at C-3",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
+            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "c4", element: "C", x: 199, y: 207 },
+            { id: "c5", element: "C", x: 173, y: 128 },
+            { id: "br", element: "Br", x: 392, y: 96 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 1 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 1 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 2 },
+            { id: "b5", von: "c5", nach: "n1", ordnung: 1 },
+            { id: "b6", von: "c2", nach: "br", ordnung: 1 },
+          ],
+        },
+        {
+          beschriftung: "charge at C-5",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
+            { id: "c3", element: "C", x: 281, y: 207 },
+            { id: "c4", element: "C", x: 199, y: 207 },
+            { id: "c5", element: "C", x: 173, y: 128, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "br", element: "Br", x: 392, y: 96 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 1 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 2 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 1 },
+            { id: "b5", von: "c5", nach: "n1", ordnung: 1 },
+            { id: "b6", von: "c2", nach: "br", ordnung: 1 },
+          ],
+        },
+        {
+          beschriftung: "charge at N — full octet",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, ladung: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
+            { id: "c3", element: "C", x: 281, y: 207 },
+            { id: "c4", element: "C", x: 199, y: 207 },
+            { id: "c5", element: "C", x: 173, y: 128 },
+            { id: "br", element: "Br", x: 392, y: 96 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 1 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 2 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 1 },
+            { id: "b5", von: "c5", nach: "n1", ordnung: 2 },
+            { id: "b6", von: "c2", nach: "br", ordnung: 1 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "pyrrol-c3",
+      titel: "Arenium ion from attack at C-3 of pyrrole",
+      beschreibung: "Only two structures: C-4 and C-5 stay outside the delocalised system.",
+      verknuepfung: "resonanz",
+      strukturen: [
+        {
+          beschriftung: "charge at C-2",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1 },
+            { id: "c4", element: "C", x: 199, y: 207 },
+            { id: "c5", element: "C", x: 173, y: 128 },
+            { id: "br", element: "Br", x: 366, y: 262 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 1 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 1 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 2 },
+            { id: "b5", von: "c5", nach: "n1", ordnung: 1 },
+            { id: "b6", von: "c3", nach: "br", ordnung: 1 },
+          ],
+        },
+        {
+          beschriftung: "charge at N",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, ladung: 1 },
+            { id: "c2", element: "C", x: 307, y: 128 },
+            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1 },
+            { id: "c4", element: "C", x: 199, y: 207 },
+            { id: "c5", element: "C", x: 173, y: 128 },
+            { id: "br", element: "Br", x: 366, y: 262 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 2 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 1 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 2 },
+            { id: "b5", von: "c5", nach: "n1", ordnung: 1 },
+            { id: "b6", von: "c3", nach: "br", ordnung: 1 },
+          ],
+        },
+      ],
+    },
+    {
+      id: "pyridin-c3-gegen-c4",
+      titel: "Pyridine: where the charge is allowed to go",
+      beschreibung: "Left: attack at C-4 forces a structure with an electron-deficient nitrogen. Right: attack at C-3 never does.",
+      verknuepfung: "reihe",
+      strukturen: [
+        {
+          beschriftung: "C-4 attack — charge on N",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 75, ladung: 1 },
+            { id: "c2", element: "C", x: 305, y: 113 },
+            { id: "c3", element: "C", x: 305, y: 188 },
+            { id: "c4", element: "C", x: 240, y: 225, zeigen: true, wasserstoffe: 1 },
+            { id: "c5", element: "C", x: 175, y: 188 },
+            { id: "c6", element: "C", x: 175, y: 113 },
+            { id: "br", element: "Br", x: 240, y: 285 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 2 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 1 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 1 },
+            { id: "b5", von: "c5", nach: "c6", ordnung: 2 },
+            { id: "b6", von: "c6", nach: "n1", ordnung: 1 },
+            { id: "b7", von: "c4", nach: "br", ordnung: 1 },
+          ],
+        },
+        {
+          beschriftung: "C-3 attack — charge stays on carbon",
+          atome: [
+            { id: "n1", element: "N", x: 240, y: 75, freiePaare: 1 },
+            { id: "c2", element: "C", x: 305, y: 113, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "c3", element: "C", x: 305, y: 188, zeigen: true, wasserstoffe: 1 },
+            { id: "c4", element: "C", x: 240, y: 225 },
+            { id: "c5", element: "C", x: 175, y: 188 },
+            { id: "c6", element: "C", x: 175, y: 113 },
+            { id: "br", element: "Br", x: 388, y: 225 },
+          ],
+          bindungen: [
+            { id: "b1", von: "n1", nach: "c2", ordnung: 1 },
+            { id: "b2", von: "c2", nach: "c3", ordnung: 1 },
+            { id: "b3", von: "c3", nach: "c4", ordnung: 1 },
+            { id: "b4", von: "c4", nach: "c5", ordnung: 2 },
+            { id: "b5", von: "c5", nach: "c6", ordnung: 1 },
+            { id: "b6", von: "c6", nach: "n1", ordnung: 2 },
+            { id: "b7", von: "c3", nach: "br", ordnung: 1 },
+          ],
+        },
+      ],
+    },
+  ],
   quiz: [
     { id: "q1", question: "Why is C-2 (α position) preferred over C-3 in SEAr of furan?", options: ["C-2 is the sterically easier position", "C-2 attack gives three resonance structures", "C-2 carries more density in the HOMO", "The oxygen sits right next to C-2"], correct: 1, explanation: "Attack at C-2 delocalises the positive charge over three structures, one of which places it on oxygen with a full octet everywhere. Attack at C-3 offers only two. Proximity to the heteroatom is not the argument by itself — indole sits next to nitrogen at C-2 and still reacts at C-3." },
     { id: "q2", question: "Indole reacts with Br⁺ at which position?", options: ["C-1 (N)", "C-2", "C-3", "C-7"], correct: 2, explanation: "C-3 is preferred for SEAr at indole. Rationale: attack at C-3 preserves benzene aromaticity; positive charge delocalised onto N without interrupting the benzene ring → most stable arenium ion." },

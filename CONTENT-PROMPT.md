@@ -219,6 +219,49 @@ Regeln, auf denen der Importer besteht:
 
 ---
 
+## Abbildungen im Theorietext
+
+Strukturen, die der Text bespricht, gehören gezeichnet — Grenzstrukturen vor
+allem. Sie stehen in einem eigenen Abschnitt und werden im Theorietext über eine
+Marke auf eigener Zeile gerufen:
+
+```
+# THEORIE
+... Angriff an C-2 verteilt die Ladung über drei Atome.
+
+{{abbildung:pyrrol-c2}}
+
+Angriff an C-3 lässt nur zwei Grenzstrukturen zu.
+
+# ABBILDUNGEN
+- id: pyrrol-c2 | titel: Areniumion aus dem Angriff an C-2 | beschreibung: Drei Grenzstrukturen. | verknuepfung: resonanz
+  struktur: beschriftung: Ladung an C-3
+    atom: id: n1 | element: N | x: 240 | y: 80 | h: 1 | paare: 1
+    atom: id: c2 | element: C | x: 307 | y: 128 | zeigen: ja | h: 1
+    bindung: id: b1 | von: n1 | nach: c2 | ordnung: 1
+  struktur: beschriftung: Ladung am N
+    atom: id: n1 | element: N | x: 240 | y: 80 | h: 1 | ladung: 1
+    atom: id: c2 | element: C | x: 307 | y: 128 | zeigen: ja | h: 1
+    bindung: id: b1 | von: n1 | nach: c2 | ordnung: 2
+```
+
+`verknuepfung: resonanz` setzt den Doppelpfeil ↔ zwischen die Bilder — ein
+Molekül, mehrere Grenzstrukturen. `reihe` stellt sie nur nebeneinander, etwa zum
+Vergleich zweier Angriffsorte.
+
+Atome und Bindungen sind dieselben wie im Mechanismus. Kohlenstoff bleibt ohne
+Buchstabe, außer `zeigen: ja` steht dabei — das lohnt am sp³-Zentrum und dort, wo
+eine Ladung sitzt. Die Bühne ist 480 × 300.
+
+**Erzeuge diesen Abschnitt nicht.** Wie beim Mechanismus sind die Koordinaten
+Handarbeit; aus einer Textquelle lassen sie sich nicht ableiten. Wenn eine Stelle
+nach einem Bild verlangt, vermerke das im Bericht.
+
+Der Importer prüft beides gegeneinander: eine Marke ohne Abbildung und eine
+Abbildung, die niemand ruft, brechen den Lauf ab.
+
+---
+
 ## MODUS B — Altprüfung → Prüfungsfragen
 
 Extrahiere **jede** Frage aus der Altprüfung. Nichts zusammenfassen, nichts

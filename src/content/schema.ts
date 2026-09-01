@@ -283,6 +283,63 @@ export const mechanismusSchema = z.object({
   }
 })
 
+/**
+ * Eine gezeichnete Struktur ohne Aufgabe.
+ *
+ * Dieselben Atome und Bindungen wie im Mechanismus — ein zweites Datenmodell
+ * für dasselbe wäre eine Quelle für zwei Wahrheiten.
+ */
+export const strukturBildSchema = z.object({
+  beschriftung: nichtLeer,
+  atome: z.array(atomSchema).min(2),
+  bindungen: z.array(bindungSchema),
+}).superRefine((bild, ctx) => {
+  const melde = (path: (string | number)[], message: string) =>
+    ctx.addIssue({ code: 'custom', path, message })
+
+  const atomIds = bild.atome.map(a => a.id)
+  if (new Set(atomIds).size !== atomIds.length) melde(['atome'], 'Doppelte Atom-Kennung')
+
+  for (let i = 0; i < bild.atome.length; i++) {
+    for (let j = i + 1; j < bild.atome.length; j++) {
+      const a = bild.atome[i]
+      const b = bild.atome[j]
+      if (Math.hypot(a.x - b.x, a.y - b.y) < MIN_ABSTAND) {
+        melde(['atome', j], `"${b.id}" liegt zu dicht an "${a.id}"`)
+      }
+    }
+  }
+
+  const gebunden = new Set<string>()
+  for (const [i, bindung] of bild.bindungen.entries()) {
+    for (const ende of ['von', 'nach'] as const) {
+      if (!atomIds.includes(bindung[ende])) melde(['bindungen', i, ende], `Atom "${bindung[ende]}" gibt es nicht`)
+    }
+    gebunden.add(bindung.von)
+    gebunden.add(bindung.nach)
+  }
+  for (const [i, atom] of bild.atome.entries()) {
+    if (!gebunden.has(atom.id) && !atom.frei) {
+      melde(['atome', i], `"${atom.id}" hängt an keiner Bindung — als Reagenz "frei: true" setzen`)
+    }
+  }
+})
+
+/**
+ * Eine Reihe von Strukturen im Theorietext.
+ *
+ * `resonanz` setzt den Doppelpfeil zwischen die Bilder: es ist ein Molekül,
+ * beschrieben durch mehrere Grenzstrukturen. `reihe` stellt sie nur
+ * nebeneinander, etwa zum Vergleich zweier Angriffsorte.
+ */
+export const abbildungSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/, 'Abbildungs-Kennung klein, ohne Umlaute'),
+  titel: nichtLeer,
+  beschreibung: z.string().optional(),
+  verknuepfung: z.enum(['resonanz', 'reihe']),
+  strukturen: z.array(strukturBildSchema).min(2, 'Eine Abbildung zeigt mindestens zwei Strukturen'),
+})
+
 export const interaktivSchema = z.discriminatedUnion('type', [
   apparaturQuizSchema,
   spektrumZuordnungSchema,
@@ -298,6 +355,8 @@ export const themaSchema = z.object({
   estimatedMinutes: z.number().int().positive(),
   theory: z.string().min(50, 'Theorie ist zu dünn'),
   interactive: z.unknown().optional(),
+  /** Gezeichnete Strukturen, im Theorietext über {{abbildung:id}} gerufen. */
+  abbildungen: z.array(abbildungSchema).default([]),
   quiz: z.array(quizFrageSchema).min(1),
   flashcards: z.array(karteikarteSchema).min(1),
 }).superRefine((thema, ctx) => {
@@ -318,6 +377,25 @@ export const themaSchema = z.object({
   const quizIds = thema.quiz.map(f => f.id)
   if (new Set(quizIds).size !== quizIds.length) {
     ctx.addIssue({ code: 'custom', path: ['quiz'], message: 'Doppelte Frage-ID im Thema' })
+  }
+
+  // Eine Abbildung, die niemand ruft, sieht niemand; eine Marke ohne Abbildung
+  // bleibt als roher Text stehen. Beides fällt sonst still unter den Tisch.
+  const vorhanden = thema.abbildungen.map(a => a.id)
+  if (new Set(vorhanden).size !== vorhanden.length) {
+    ctx.addIssue({ code: 'custom', path: ['abbildungen'], message: 'Doppelte Abbildungs-Kennung' })
+  }
+  const gerufen = [...thema.theory.matchAll(/\{\{abbildung:([a-z0-9-]+)\}\}/g)].map(m => m[1])
+
+  for (const id of gerufen) {
+    if (!vorhanden.includes(id)) {
+      ctx.addIssue({ code: 'custom', path: ['theory'], message: `{{abbildung:${id}}} — dazu gibt es keine Abbildung` })
+    }
+  }
+  for (const [i, abbildung] of thema.abbildungen.entries()) {
+    if (!gerufen.includes(abbildung.id)) {
+      ctx.addIssue({ code: 'custom', path: ['abbildungen', i], message: `"${abbildung.id}" wird im Text nirgends gerufen` })
+    }
   }
 })
 
@@ -358,6 +436,8 @@ export type Formel = z.infer<typeof formelSchema>
 export type ApparaturQuiz = z.infer<typeof apparaturQuizSchema>
 export type SpektrumZuordnung = z.infer<typeof spektrumZuordnungSchema>
 export type FormelRechner = z.infer<typeof formelRechnerSchema>
+export type StrukturBild = z.infer<typeof strukturBildSchema>
+export type Abbildung = z.infer<typeof abbildungSchema>
 export type Mechanismus = z.infer<typeof mechanismusSchema>
 export type MechanismusStufe = z.infer<typeof mechanismusStufeSchema>
 export type MechanismusAtom = z.infer<typeof atomSchema>
@@ -366,5 +446,6 @@ export type MechanismusPfeil = z.infer<typeof pfeilSchema>
 export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus
 export type Pruefer = z.infer<typeof prueferSchema>
 
-export type Thema = Omit<z.infer<typeof themaSchema>, 'interactive'> & { interactive?: Interaktiv }
+export type Thema = Omit<z.infer<typeof themaSchema>, 'interactive' | 'abbildungen'>
+  & { interactive?: Interaktiv; abbildungen?: Abbildung[] }
 export type Kurs = z.infer<typeof kursSchema>

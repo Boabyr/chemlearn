@@ -16,6 +16,8 @@ export const BUEHNE = { breite: 480, hoehe: 300 } as const
  * Renderer und Inhalt nicht auseinanderlaufen können.
  */
 export type {
+  Abbildung,
+  StrukturBild,
   MechanismusAtom as Atom,
   MechanismusBindung as Bindung,
   MechanismusPfeil as Pfeil,
