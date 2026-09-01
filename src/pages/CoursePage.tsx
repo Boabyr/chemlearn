@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useMastery } from '../hooks/useMastery'
 import { useReviews } from '../hooks/useReviews'
-import { allCourses, loadAllTopics } from '../lib/courseRegistry'
-import { examQuestionsFor } from '../data/exams'
+import { allCourses, loadAllTopics, spracheVon } from '../lib/courseRegistry'
+import { examQuestionsFor, examStructuresFor } from '../data/exams'
 import type { Level } from '../lib/learning/mastery'
 
 const LEVEL_STYLE: Record<Level, { dot: string; label: string }> = {
@@ -42,6 +42,7 @@ export default function CoursePage() {
   )
 
   const fragenZahl = examQuestionsFor(course.id).length
+  const pruefungenZahl = examStructuresFor(course.id).length
   const levelOf = (topicId: string): Level =>
     mastery.find(m => m.topicId === topicId)?.level ?? 'ungelernt'
 
@@ -52,7 +53,7 @@ export default function CoursePage() {
         <span className="text-accent font-mono text-xs uppercase tracking-widest">{course.title}</span>
       </nav>
 
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <main lang={spracheVon(course.id)} className="max-w-3xl mx-auto px-4 py-8">
         <div className="mb-8">
           <span className="text-4xl">{course.icon}</span>
           <h1 className="text-2xl font-light mt-3 mb-1">{course.title}</h1>
@@ -66,13 +67,18 @@ export default function CoursePage() {
               className="text-left bg-raised border border-line hover:border-accent rounded-xl px-5 py-4 transition-colors">
               <p className="font-medium">🎯 Übungsmodus</p>
               <p className="text-subtle text-xs mt-1">
-                {dueCount > 0 ? `${dueCount} Wiederholungen fällig` : `${fragenZahl} Altprüfungsfragen`}
+                {dueCount > 0 ? `${dueCount} Wiederholungen fällig` : `${fragenZahl} Fragen im Katalog`}
               </p>
             </button>
             <button onClick={() => navigate(`/exam-simulator?course=${course.id}`)}
               className="text-left bg-raised border border-line hover:border-purple-500 rounded-xl px-5 py-4 transition-colors">
               <p className="font-medium">📝 Prüfungssimulator</p>
-              <p className="text-subtle text-xs mt-1">Ganze Prüfung unter Zeitdruck</p>
+              <p className="text-subtle text-xs mt-1">
+                {/* Ohne hinterlegte Prüfung führte der Knopf auf eine leere Liste. */}
+                {pruefungenZahl > 0
+                  ? `${pruefungenZahl} ${pruefungenZahl === 1 ? 'Prüfung' : 'Prüfungen'} unter Zeitdruck`
+                  : 'Zufallsrunde unter Zeitdruck'}
+              </p>
             </button>
           </div>
         )}
@@ -102,7 +108,7 @@ export default function CoursePage() {
             )
           })}
         </div>
-      </div>
+      </main>
     </div>
   )
 }

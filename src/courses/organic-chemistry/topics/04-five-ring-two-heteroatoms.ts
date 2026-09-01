@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 80,
   theory: `
 
+
+
 ## Overview: 5-Membered Rings with Two or More Heteroatoms
 
 | Compound | Heteroatoms | Special feature |
@@ -72,33 +74,87 @@ Tetrazole is an important **bioisostere of the carboxylic acid:**
 **Synthesis of tetrazoles:**
 Nitrile + NaN₃ (azide) → [3+2] cycloaddition → 5-substituted tetrazole
 
+
+
 `,
   interactive: {
     type: "mechanism",
-    title: "Imidazole — which nitrogen is basic?",
-    description: "Only one of the two nitrogens can pick up a proton. Show which lone pair does the work.",
+    title: "Imidazole — two nitrogens, two roles",
+    description: "Nur eines der beiden Stickstoffatome ist basisch. Zeichne die Protonierung und die Tautomerie, die daraus folgt.",
     stages: [
       {
-        id: 0, label: "Protonation at N-3", description: "Draw the arrow from the lone pair of the pyridine-type nitrogen to the proton.",
-        hint1: "N-1 carries the N–H and donates its lone pair to the aromatic π system — it is not available.", hint2: "The lone pair of N-3 sits in an sp² orbital in the ring plane, perpendicular to the π system. Using it costs no aromaticity, which is why the pKa is around 7.",
-        atoms: [
-          { id: "N1", label: "N1-H", x: 150, y: 90, color: "#60a5fa", r: 20 },
-          { id: "C2", label: "C2", x: 215, y: 65, color: "#e2e8f0", r: 18 },
-          { id: "N3", label: "N3", x: 265, y: 120, color: "#60a5fa", r: 20 },
-          { id: "C4", label: "C4", x: 225, y: 185, color: "#e2e8f0", r: 18 },
-          { id: "C5", label: "C5", x: 155, y: 165, color: "#e2e8f0", r: 18 },
-          { id: "H", label: "H⁺", x: 380, y: 120, color: "#cbd5e1", r: 16, charge: "+" },
+        id: 0, titel: "Protonierung an N-3",
+        aufgabe: "HCl protoniert das Imidazol. Zeichne beide Pfeile: das freie Elektronenpaar von N-3 zum Wasserstoff, und die H–Cl-Bindung zum Chlor.",
+        erklaerung: "N-1 trägt bereits ein Wasserstoffatom und steckt sein Elektronenpaar ins aromatische System — es steht nicht zur Verfügung. Das Paar von N-3 liegt dagegen in der Ringebene und ist frei. Mit einem pKs von etwa 7 ist Imidazol bei physiologischem pH halb protoniert, und genau deshalb arbeitet Histidin in Enzymen als Säure und als Base.",
+        hinweise: ["Zwei Stickstoffatome, aber nur eines hat ein Elektronenpaar zu vergeben. Schau, welches schon ein H trägt.", "Wie bei jeder Protonierung: die neue Bindung entsteht, die alte H–Cl-Bindung muss brechen."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "n3", element: "N", x: 182, y: 121, freiePaare: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "h1", element: "H", x: 320, y: 90, frei: true },
+          { id: "cl1", element: "Cl", x: 385, y: 90, freiePaare: 3, frei: true },
         ],
-        bonds: [
-          { a: "N1", b: "C2", dash: false, color: "#64748b" },
-          { a: "C2", b: "N3", dash: false, color: "#64748b" },
-          { a: "N3", b: "C4", dash: false, color: "#64748b" },
-          { a: "C4", b: "C5", dash: false, color: "#64748b" },
-          { a: "C5", b: "N1", dash: false, color: "#64748b" },
+        bindungen: [
+          { id: "i1", von: "n1", nach: "c5", ordnung: 1 },
+          { id: "i2", von: "c5", nach: "c4", ordnung: 2 },
+          { id: "i3", von: "c4", nach: "n3", ordnung: 1 },
+          { id: "i4", von: "n3", nach: "c2", ordnung: 2 },
+          { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
+          { id: "hcl", von: "h1", nach: "cl1", ordnung: 1 },
         ],
-        correctArrow: { from: "N3", to: "H" },
+        pfeile: [
+          { von: { art: "freiesPaar", id: "n3" }, nach: { art: "atom", id: "h1" } },
+          { von: { art: "bindung", id: "hcl" }, nach: { art: "atom", id: "cl1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Tautomerie",
+        aufgabe: "Eine Base nimmt dem Imidazolium den Wasserstoff an N-1 ab. Zeichne beide Pfeile.",
+        erklaerung: "Das Imidazolium-Kation ist symmetrisch: beide Stickstoffatome tragen jetzt ein Wasserstoffatom und sind gleichwertig. Wird eines abgenommen, entsteht wieder neutrales Imidazol — aber der Wasserstoff kann nun am anderen Stickstoff sitzen. Genau dieser rasche Wechsel macht die beiden Tautomere im unsubstituierten Imidazol ununterscheidbar.",
+        hinweise: ["Nimm den Wasserstoff von N-1 weg, nicht den gerade angelagerten.", "Das Elektronenpaar der N–H-Bindung bleibt am Stickstoff — sonst wäre das Ergebnis nicht neutral."],
+        atome: [
+          { id: "n1", element: "N", x: 150, y: 220 },
+          { id: "c5", element: "C", x: 98, y: 182 },
+          { id: "c4", element: "C", x: 118, y: 121 },
+          { id: "n3", element: "N", x: 182, y: 121, ladung: 1, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 202, y: 182 },
+          { id: "h2", element: "H", x: 150, y: 275 },
+          { id: "o1", element: "O", x: 330, y: 240, ladung: -1, freiePaare: 3, wasserstoffe: 1, frei: true },
+        ],
+        bindungen: [
+          { id: "i1", von: "n1", nach: "c5", ordnung: 1 },
+          { id: "i2", von: "c5", nach: "c4", ordnung: 2 },
+          { id: "i3", von: "c4", nach: "n3", ordnung: 1 },
+          { id: "i4", von: "n3", nach: "c2", ordnung: 2 },
+          { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
+          { id: "nh", von: "n1", nach: "h2", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "o1" }, nach: { art: "atom", id: "h2" } },
+          { von: { art: "bindung", id: "nh" }, nach: { art: "atom", id: "n1" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "Das andere Tautomer",
+      beschreibung: "Derselbe Ring, der Wasserstoff sitzt jetzt an N-3. Im unsubstituierten Imidazol sind beide Formen gleichwertig und wandeln sich in Lösung rasch ineinander um.",
+      atome: [
+        { id: "n1", element: "N", x: 150, y: 220, freiePaare: 1 },
+        { id: "c5", element: "C", x: 98, y: 182 },
+        { id: "c4", element: "C", x: 118, y: 121 },
+        { id: "n3", element: "N", x: 182, y: 121, wasserstoffe: 1 },
+        { id: "c2", element: "C", x: 202, y: 182 },
+      ],
+      bindungen: [
+        { id: "i1", von: "n1", nach: "c5", ordnung: 2 },
+        { id: "i2", von: "c5", nach: "c4", ordnung: 1 },
+        { id: "i3", von: "c4", nach: "n3", ordnung: 2 },
+        { id: "i4", von: "n3", nach: "c2", ordnung: 1 },
+        { id: "i5", von: "c2", nach: "n1", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "Why does imidazole have a pKa of 7.0 despite containing two N atoms?", options: ["Both N atoms are equally basic", "One N atom is pyrrole-like (LP in π) and one is pyridine-like (LP free). Protonation at pyridine-N → pKa 7.0", "The O atom increases the basicity", "Imidazole has 8 π electrons"], correct: 1, explanation: "In imidazole there is N-1 (pyrrole-N, LP in π, not basic) and N-3 (pyridine-N, LP free → basic). The high pKa of 7.0 (vs. pyridine 5.2) is explained by the stabilisation of the imidazolium cation: positive charge delocalised through both N atoms." },

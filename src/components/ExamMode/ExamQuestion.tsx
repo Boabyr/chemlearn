@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react'
 import { examinerLabel, type ExamQuestion } from '../../data/exams'
 import { stilFuer } from './pruefStil'
+import { spracheVon } from '../../lib/courseRegistry'
 import { bewerte, leseZahl } from '../../lib/learning/bewerten'
 
 interface Props {
   question: ExamQuestion
   onAnswer: (correct: boolean, points: number) => void
   showSource?: boolean
+  /** Kurs der Frage — bestimmt die Sprache des Inhalts. */
+  courseId?: string
 }
 
-export default function ExamQuestionCard({ question, onAnswer, showSource }: Props) {
+export default function ExamQuestionCard({ question, onAnswer, showSource, courseId }: Props) {
   const [selected, setSelected] = useState<number[]>([])
   const [numInput, setNumInput] = useState('')
   const [orderArr, setOrderArr] = useState<number[]>(
@@ -73,7 +76,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource }: Pro
   const profLabel = examinerLabel(question.examiner)
 
   return (
-    <div className="bg-raised border border-line rounded-2xl overflow-hidden">
+    <div lang={spracheVon(courseId)} className="bg-raised border border-line rounded-2xl overflow-hidden">
       {/* Header */}
       <div className={`px-5 py-3 flex items-center justify-between border-b border-line bg-raised/80`}>
         <div className="flex items-center gap-3">

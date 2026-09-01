@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 55,
   theory: `
 
+
 ## Signifikante Stellen
 
 **Regeln:**
@@ -66,6 +67,7 @@ In Chromatographie: zu niedrige Messfrequenz → Peak wird nicht richtig erfasst
 **χ²-Test:** Anpassung an Verteilung
 
 **Transformation zur Normalverteilung:** Viele stat. Tests setzen Normalverteilung voraus. Bei schiefer Verteilung: log-Transformation kann Normalverteilung erzeugen → Tests anwendbar.
+
 
 `,
   interactive: {

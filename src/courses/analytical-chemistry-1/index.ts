@@ -29,7 +29,7 @@ export const course = {
     "18-fehlerrechnung",
   ],
   totalTopics: 18,
-  estimatedHours: 40,
+  estimatedHours: 21,
   // Prüfungsabschnitte dieses Fachs. Ein Fach ohne eigene Prüfer lässt die
   // Liste leer und bekommt einen gemeinsamen Abschnitt.
   sprache: "de",

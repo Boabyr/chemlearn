@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 75,
   theory: `
 
+
 ## Grundprinzip
 
 Atomspektrometrie: Messung von Absorption oder Emission einzelner Atome.
@@ -68,6 +69,7 @@ A = ε · N · d  (N = Atomzahldichte statt Konzentration)
 | GFAAS | ~2700°C | 1 | ng/L |
 | ICP-OES | ~8000°C | 70+ | μg/L |
 | ICP-MS | ~8000°C | 70+ | ng/L–pg/L |
+
 
 `,
   interactive: {

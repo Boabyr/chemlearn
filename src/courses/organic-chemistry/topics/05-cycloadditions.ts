@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 75,
   theory: `
 
+
+
 ## Overview of Cycloaddition Reactions
 
 Cycloadditions are pericyclic reactions in which **two π systems** react to form a ring. No catalyst, no intermediate (concerted).
@@ -55,31 +57,87 @@ For heterocycle synthesis:
 4. Perform retrosynthetic cut
 5. Write A and B
 
+
+
 `,
   interactive: {
     type: "mechanism",
-    title: "Huisgen [3+2] — azide meets alkyne",
-    description: "The 1,3-dipole and the dipolarophile form two new bonds at once. Show the first of them.",
+    title: "Nitrile oxide — making the dipole, then using it",
+    description: "Eine [3+2]-Cycloaddition braucht erst einmal ein 1,3-Dipol. Zeichne, wie es entsteht und wie es zuschlägt.",
     stages: [
       {
-        id: 0, label: "Terminal nitrogen attacks the alkyne", description: "Draw the arrow from the terminal azide nitrogen to the nearer alkyne carbon.",
-        hint1: "In the azide R–N=N⁺=N⁻ the negative charge sits at the terminal nitrogen — that is the nucleophilic end.", hint2: "The reaction is concerted: while N-3 bonds to one alkyne carbon, N-1 bonds to the other. The result is the 1,2,3-triazole ring.",
-        atoms: [
-          { id: "N1", label: "N1", x: 120, y: 90, color: "#60a5fa", r: 18 },
-          { id: "N2", label: "N2", x: 190, y: 70, color: "#60a5fa", r: 18, charge: "+" },
-          { id: "N3", label: "N3", x: 260, y: 90, color: "#60a5fa", r: 18, charge: "−" },
-          { id: "Ca", label: "C", x: 260, y: 190, color: "#e2e8f0", r: 18 },
-          { id: "Cb", label: "C", x: 150, y: 190, color: "#e2e8f0", r: 18 },
+        id: 0, titel: "Das Dipol entsteht",
+        aufgabe: "Eine Base nimmt dem Hydroximoylchlorid den Wasserstoff ab und Chlorid geht weg. Zeichne alle drei Pfeile.",
+        erklaerung: "Das 1,3-Dipol fällt nicht vom Himmel. Aus R–CCl=N–OH macht eine Base in einem Zug das Nitriloxid R–C≡N⁺–O⁻: der Wasserstoff geht an die Base, das Elektronenpaar der O–H-Bindung wandert in die C=N-Bindung, und das Chlorid tritt aus. Danach liegen drei Atome mit vier Elektronen in einer Reihe — genau das, was eine [3+2]-Addition braucht.",
+        hinweise: ["Drei Pfeile in einer Kette: Base holt den Wasserstoff, dessen Bindungselektronen schieben weiter, und am Ende muss etwas den Platz räumen.", "Was am Kohlenstoff wegmuss, damit dort eine Dreifachbindung Platz hat, ist das Chlorid."],
+        atome: [
+          { id: "cc", element: "C", x: 150, y: 170 },
+          { id: "nn", element: "N", x: 215, y: 140 },
+          { id: "oo", element: "O", x: 280, y: 170, freiePaare: 2, wasserstoffe: 1 },
+          { id: "ho", element: "H", x: 330, y: 210 },
+          { id: "cl1", element: "Cl", x: 100, y: 235, freiePaare: 3 },
+          { id: "rr", element: "R", x: 90, y: 120 },
+          { id: "base", element: "N", x: 390, y: 100, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
         ],
-        bonds: [
-          { a: "N1", b: "N2", dash: false, color: "#64748b" },
-          { a: "N2", b: "N3", dash: false, color: "#64748b" },
-          { a: "Ca", b: "Cb", dash: false, color: "#64748b" },
-          { a: "N1", b: "Cb", dash: true, color: "#475569" },
+        bindungen: [
+          { id: "d1", von: "cc", nach: "nn", ordnung: 2 },
+          { id: "d2", von: "nn", nach: "oo", ordnung: 1 },
+          { id: "d3", von: "oo", nach: "ho", ordnung: 1 },
+          { id: "d4", von: "cc", nach: "cl1", ordnung: 1 },
+          { id: "d5", von: "cc", nach: "rr", ordnung: 1 },
         ],
-        correctArrow: { from: "N3", to: "Ca" },
+        pfeile: [
+          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "ho" } },
+          { von: { art: "bindung", id: "d3" }, nach: { art: "bindung", id: "d1" } },
+          { von: { art: "bindung", id: "d4" }, nach: { art: "atom", id: "cl1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Die Cycloaddition",
+        aufgabe: "Das Nitriloxid trifft auf ein Alken. Zeichne die drei Pfeile, die den Fünfring in einem Zug schließen.",
+        erklaerung: "Beide neuen Bindungen entstehen gleichzeitig — es gibt kein Zwischenprodukt und keine Ladung unterwegs. Der Sauerstoff des Dipols bindet an das eine Alken-Kohlenstoffatom, der Kohlenstoff des Dipols an das andere. Aus C≡N wird C=N, und der Ring ist geschlossen. Mit einem Alkin an dieser Stelle entstünde statt des Isoxazolins ein Isoxazol.",
+        hinweise: ["Drei Pfeile im Kreis: Dipol-Ende, Alken-Doppelbindung, Dipol-Mitte. Reihenfolge egal.", "Der Sauerstoff trägt die negative Ladung — er ist das nucleophile Ende des Dipols."],
+        atome: [
+          { id: "cc", element: "C", x: 150, y: 120 },
+          { id: "nn", element: "N", x: 210, y: 100, ladung: 1 },
+          { id: "oo", element: "O", x: 270, y: 120, ladung: -1, freiePaare: 3 },
+          { id: "rr", element: "R", x: 100, y: 85 },
+          { id: "ca", element: "C", x: 160, y: 215 },
+          { id: "cb", element: "C", x: 265, y: 215 },
+        ],
+        bindungen: [
+          { id: "d1", von: "cc", nach: "nn", ordnung: 3 },
+          { id: "d2", von: "nn", nach: "oo", ordnung: 1 },
+          { id: "d5", von: "cc", nach: "rr", ordnung: 1 },
+          { id: "alken", von: "ca", nach: "cb", ordnung: 2 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "oo" }, nach: { art: "atom", id: "cb" } },
+          { von: { art: "bindung", id: "alken" }, nach: { art: "atom", id: "ca" } },
+          { von: { art: "bindung", id: "d1" }, nach: { art: "atom", id: "cc" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "Isoxazolin",
+      beschreibung: "Der Fünfring mit Sauerstoff und Stickstoff nebeneinander. Die schwache N–O-Bindung lässt sich später reduktiv spalten — deshalb dient das Isoxazolin oft als maskiertes β-Hydroxyketon.",
+      atome: [
+        { id: "oo", element: "O", x: 150, y: 220, freiePaare: 2 },
+        { id: "nn", element: "N", x: 202, y: 182 },
+        { id: "cc", element: "C", x: 182, y: 121 },
+        { id: "ca", element: "C", x: 118, y: 121 },
+        { id: "cb", element: "C", x: 98, y: 182 },
+        { id: "rr", element: "R", x: 215, y: 65 },
+      ],
+      bindungen: [
+        { id: "e1", von: "oo", nach: "nn", ordnung: 1 },
+        { id: "e2", von: "nn", nach: "cc", ordnung: 2 },
+        { id: "e3", von: "cc", nach: "ca", ordnung: 1 },
+        { id: "e4", von: "ca", nach: "cb", ordnung: 1 },
+        { id: "e5", von: "cb", nach: "oo", ordnung: 1 },
+        { id: "e6", von: "cc", nach: "rr", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "Which 1,3-dipole reacts regioselectively with a terminal alkyne to give a 1,2,3-triazole?", options: ["Nitrone", "Organic azide", "Nitrile oxide", "Nitrilimines"], correct: 1, explanation: "Organic azides (R-N₃ = R-N=N⁺=N⁻) react with alkynes in [3+2] cycloaddition to give 1,2,3-triazoles. Thermally: mixture of 1,4 and 1,5-isomers. Cu-catalysed: selectively 1,4." },
@@ -92,9 +150,9 @@ For heterocycle synthesis:
   flashcards: [
     { id: "1icba6a", front: "Huisgen 1,3-Dipolar Cycloaddition", back: "[3+2]: 1,3-dipole + dipolarophile → 5-membered ring. Thermally: mixture. Cu-catalysed (CuAAC): regioselective 1,4-triazole. Important dipoles: azides, nitrile oxides, nitrones, nitrilimines." },
     { id: "11ru87j", front: "Kondrat'eva Synthesis", back: "Oxazole (azadiene) + alkyne → [4+2] → bicyclus → −CO₂ → pyridine. Azadienes: compounds with C=N or N=N as part of the 4π system." },
-    { id: "1cv4imb", front: "Boger Reaction", back: "Triazine (azadiene) + enamine → [4+2] → bicyclus → −N₂ → pyridine. N₂ is the 'XY' that leaves in retro-[4+2]." },
     { id: "0adoh5e", front: "Retrosynthesis 5-membered ring", back: "5-ring → find 1,3-dipole (azide, nitrile oxide, nitrone) + dipolarophile (alkyne/alkene). Cut at the 1,2-bond pair and the 4,5-bond pair." },
     { id: "0i3pq53", front: "Retrosynthesis 6-membered ring", back: "6-ring → diene [4C or 3C+N] + dienophile [2C or 1C+heteroatom]. Cut the 1,6- and 3,4-bonds (product bonds in DA)." },
     { id: "1xgxlfr", front: "Nitrile oxide as 1,3-dipole", back: "R-C≡N⁺-O⁻ ↔ R-C=N=O. Allene structure. Reaction with alkyne → isoxazole. With alkene → isoxazoline. Preparation: hydroxamic acid + base or chloroxime + base." },
+    { id: "1rhpkuz", front: "Wo das 1,3-Dipol herkommt", back: "Ein Nitriloxid entsteht in situ aus einem Hydroximoylchlorid: eine Base nimmt das Proton der Oximgruppe ab, und Chlorid tritt aus. Dipole dieser Art sind meist zu reaktiv, um sie zu isolieren — sie werden im selben Kolben erzeugt und sofort abgefangen." },
   ],
 } satisfies Thema;

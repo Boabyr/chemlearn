@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
@@ -61,12 +61,18 @@ export default function PracticeMode() {
   // Erste Runde erst zusammenstellen, wenn Historie und Fälligkeiten wirklich
   // geladen sind. Vorher lief der Aufbau sofort los, mit leeren Listen — die
   // "adaptive" Runde war dann bloß der Fragenkatalog in Dateireihenfolge.
-  const [initialised, setInitialised] = useState(false)
+  // Merker als Ref, nicht als State: der Aufbau soll genau einmal laufen und
+  // dabei keine zusätzliche Renderrunde auslösen.
+  const aufgebaut = useRef(false)
   useEffect(() => {
-    if (initialised || !user || versucheLaden || planLaden) return
+    if (aufgebaut.current || !user || versucheLaden || planLaden) return
+    aufgebaut.current = true
+    // Die Runde lässt sich erst zusammenstellen, wenn Historie und
+    // Fälligkeiten da sind — das ist genau der Fall, für den ein Effekt da
+    // ist. Die Regel sieht nur das setState und kennt den Grund nicht.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     build('adaptive')
-    setInitialised(true)
-  }, [initialised, user, versucheLaden, planLaden, build])
+  }, [user, versucheLaden, planLaden, build])
 
   const total = useMemo(() => queue.reduce((s, q) => s + q.points, 0), [queue])
   const pct = total > 0 ? Math.round((score / total) * 100) : 0
@@ -177,6 +183,7 @@ export default function PracticeMode() {
         ) : queue.length > 0 ? (
           <div className="space-y-4">
             <ExamQuestionCard
+              courseId={courseId}
               key={queue[idx].id}
               question={queue[idx]}
               onAnswer={onAnswer}

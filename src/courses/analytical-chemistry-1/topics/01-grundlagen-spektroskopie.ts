@@ -7,6 +7,7 @@ export const topic = {
   icon: "🌈",
   estimatedMinutes: 60,
   theory: `
+
 ## Spektroskopie als Rückgrat der Analytik
 
 Spektroskopie, Chromatographie und Elektroanalytik bilden das "Rückgrat" der modernen Analytischen Chemie. Spektroskopische Methoden beruhen auf der Wechselwirkung von elektromagnetischer Strahlung mit Materie.
@@ -60,6 +61,7 @@ Breitbandlichtquelle → Interferometer (Michelson) → Probe → Detektor → F
 **Lambert-Beer'sches Gesetz (Grundlage der Absorptionsspektrometrie):**
 A = ε · c · d
 (wird in Thema 02 detailliert behandelt)
+
 `,
   interactive: {
     type: "apparatus-quiz",
@@ -69,26 +71,10 @@ A = ε · c · d
     hint1: "Fluoreszenzspektrometer messen emittiertes Licht, nicht transmittiertes. Der Detektor steht daher im 90°-Winkel zur Anregungsquelle.",
     hint2: "Beim Fluoreszenzspektrometer: Lichtquelle → Probe → Detektor (90°). Kein Referenzstrahl nötig, weil kein Licht durch die Probe 'hindurchgeht'.",
     options: [
-      {
-        id: "fluorescence",
-        label: "Fluoreszenzspektrometer",
-        description: "Detektor im 90°-Winkel, misst Emission",
-      },
-      {
-        id: "uv-vis",
-        label: "UV/Vis-Absorptionsspektrometer",
-        description: "Detektor hinter der Probe, misst Transmission",
-      },
-      {
-        id: "chemoluminescence",
-        label: "Chemolumineszenz-Detektor",
-        description: "Einfachster Aufbau: nur Probe und Detektor",
-      },
-      {
-        id: "ftir",
-        label: "FT-IR Spektrometer",
-        description: "Mit Michelson-Interferometer",
-      },
+      { id: "fluorescence", label: "Fluoreszenzspektrometer", description: "Detektor im 90°-Winkel, misst Emission" },
+      { id: "uv-vis", label: "UV/Vis-Absorptionsspektrometer", description: "Detektor hinter der Probe, misst Transmission" },
+      { id: "chemoluminescence", label: "Chemolumineszenz-Detektor", description: "Einfachster Aufbau: nur Probe und Detektor" },
+      { id: "ftir", label: "FT-IR Spektrometer", description: "Mit Michelson-Interferometer" },
     ],
   },
   quiz: [
@@ -105,6 +91,6 @@ A = ε · c · d
     { id: "1i7e5ou", front: "c = λ · ν", back: "Lichtgeschwindigkeit c = 3×10⁸ m/s = Wellenlänge λ × Frequenz ν. Kurze Wellenlänge = hohe Frequenz = hohe Energie." },
     { id: "0jll9w1", front: "Dispersives vs. FT-Spektrometer", back: "Dispersiv: Monochromator trennt Wellenlängen, sequentielle Messung. FT: Michelson-Interferometer, alle λ gleichzeitig (Multiplex-Vorteil), Fourier-Transformation gibt Spektrum." },
     { id: "1iyunxu", front: "Anregungsarten im elektromagnetischen Spektrum", back: "Röntgen: innere Elektronen. UV/Vis: Valenzelektronen. IR: Schwingungen/Rotationen. Mikrowelle: Rotationen. NMR: Kernspin. ESR: Elektronenspin." },
-    { id: "0usyg74", front: "Fluoreszenzspektrometer – Aufbau", back: "Lichtquelle → (Monochromator) → Probe → Detektor im 90°-Winkel. Sehr empfindlich (kein Hintergrund). Kein Referenzstrahl nötig, da emittiertes Licht gemessen wird." },
+    { id: "0d4yobt", front: "Warum der Detektor beim Photometer in Strahlrichtung steht", back: "Beim Absorptionsphotometer misst man das Licht, das die Probe durchgelassen hat — Detektor also in der Achse Lichtquelle–Küvette. Bei der Fluoreszenz misst man dagegen neu ausgesandtes Licht und stellt den Detektor im rechten Winkel, damit das Anregungslicht nicht mitgemessen wird." },
   ],
 } satisfies Thema;

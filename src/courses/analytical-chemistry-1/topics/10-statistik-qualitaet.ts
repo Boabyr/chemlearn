@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 70,
   theory: `
 
+
 ## Grundbegriffe der Analytischen Statistik
 
 ### Lage- und Streumaße
@@ -79,6 +80,7 @@ c_LOQ = 10 · s_Blind / m
 x̄ ± t · s/√n
 
 t = Student-Faktor (abhängig von n und Konfidenzniveau)
+
 
 `,
   interactive: {

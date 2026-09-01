@@ -8,6 +8,7 @@ export const topic = {
   estimatedMinutes: 80,
   theory: `
 
+
 ## Gaschromatographie (GC)
 
 **Einsatz:** Flüchtige, thermisch stabile Verbindungen
@@ -82,6 +83,7 @@ m_n = m₀ · (V_aq / (V_aq + K·V_org))ⁿ
 
 **Prüfungsaufgabe:** Jod, K=85: 20ml 100mM Jod-Lösung, 3× mit je 10ml org. LM:
 m_3 = m₀ · (20/(20+85×10))³ = m₀ · (20/870)³ = m₀ · 0,02299³ = m₀ · 1,22×10⁻⁵
+
 
 `,
   interactive: {

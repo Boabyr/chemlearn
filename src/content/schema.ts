@@ -117,54 +117,170 @@ export const formelRechnerSchema = z.object({
   formula: formelSchema,
 })
 
+/*
+ * Mechanismen als Strukturformel.
+ *
+ * Die frühere Form zeichnete beschriftete Kreise: Bindungsordnung stand als
+ * Text im Label ("C=O"), freie Elektronenpaare gab es nicht, und ein Pfeil
+ * konnte nur von Atom zu Atom laufen — genau ein Pfeil je Stufe. Damit ließ
+ * sich kein Mechanismus abbilden. Die Regeln hier verlangen, was damals
+ * fehlte, statt nur zu zählen.
+ */
+
+const BUEHNE = { breite: 480, hoehe: 300 }
+const RAND = 10
+const MIN_ABSTAND = 22
+
 const atomSchema = z.object({
   id: nichtLeer,
-  label: nichtLeer,
-  x: z.number(),
-  y: z.number(),
-  color: nichtLeer,
-  r: z.number(),
-  charge: z.string().optional(),
-  sub: z.string().optional(),
+  /** Elementsymbol oder Gruppe. Ohne Ladungszeichen — die steht im Feld. */
+  element: z.string().regex(/^[A-Za-z][A-Za-z0-9']*$/, 'Elementsymbol ohne Ladungszeichen'),
+  x: z.number().min(RAND).max(BUEHNE.breite - RAND),
+  y: z.number().min(RAND).max(BUEHNE.hoehe - RAND),
+  ladung: z.number().int().min(-2).max(2).optional(),
+  freiePaare: z.number().int().min(0).max(3).optional(),
+  wasserstoffe: z.number().int().min(0).max(4).optional(),
+  zeigen: z.boolean().optional(),
+  /** Eintretendes Reagenz: darf ohne Bindung dastehen. */
+  frei: z.boolean().optional(),
 })
 
 const bindungSchema = z.object({
-  a: nichtLeer,
-  b: nichtLeer,
-  dash: z.boolean(),
-  color: nichtLeer,
+  id: nichtLeer,
+  von: nichtLeer,
+  nach: nichtLeer,
+  ordnung: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+  art: z.enum(['normal', 'entsteht', 'bricht']).optional(),
 })
+
+const zielSchema = z.object({
+  art: z.enum(['bindung', 'freiesPaar', 'atom']),
+  id: nichtLeer,
+})
+
+const pfeilSchema = z.object({
+  von: zielSchema,
+  nach: zielSchema,
+}).refine(
+  pfeil => !(pfeil.von.art === pfeil.nach.art && pfeil.von.id === pfeil.nach.id),
+  { message: 'Ein Pfeil endet nicht dort, wo er beginnt' },
+).refine(
+  pfeil => pfeil.nach.art !== 'freiesPaar',
+  { message: 'Ein Pfeil zeigt auf eine Bindung oder ein Atom, nicht auf ein freies Paar' },
+)
 
 export const mechanismusStufeSchema = z.object({
   id: z.number().int(),
-  label: nichtLeer,
-  description: z.string(),
-  hint1: z.string(),
-  hint2: z.string(),
-  atoms: z.array(atomSchema).min(2),
-  bonds: z.array(bindungSchema),
-  correctArrow: z.object({ from: nichtLeer, to: nichtLeer }),
+  titel: nichtLeer,
+  /** Was zu tun ist. */
+  aufgabe: nichtLeer,
+  /** Warum diese Pfeile — nach der Lösung gezeigt. */
+  erklaerung: nichtLeer,
+  hinweise: z.array(nichtLeer).min(1).max(3),
+  atome: z.array(atomSchema).min(2),
+  bindungen: z.array(bindungSchema),
+  pfeile: z.array(pfeilSchema).min(1),
 }).superRefine((stufe, ctx) => {
-  const ids = stufe.atoms.map(a => a.id)
-  for (const [i, bindung] of stufe.bonds.entries()) {
-    for (const ende of ['a', 'b'] as const) {
-      if (!ids.includes(bindung[ende])) {
-        ctx.addIssue({ code: 'custom', path: ['bonds', i, ende], message: `Atom "${bindung[ende]}" gibt es nicht` })
+  const melde = (path: (string | number)[], message: string) =>
+    ctx.addIssue({ code: 'custom', path, message })
+
+  const atomIds = stufe.atome.map(a => a.id)
+  if (new Set(atomIds).size !== atomIds.length) melde(['atome'], 'Doppelte Atom-Kennung')
+
+  // Atome dürfen einander nicht überlagern — sonst ist nicht zu treffen,
+  // was man anklicken soll.
+  for (let i = 0; i < stufe.atome.length; i++) {
+    for (let j = i + 1; j < stufe.atome.length; j++) {
+      const a = stufe.atome[i]
+      const b = stufe.atome[j]
+      if (Math.hypot(a.x - b.x, a.y - b.y) < MIN_ABSTAND) {
+        melde(['atome', j], `"${b.id}" liegt zu dicht an "${a.id}"`)
       }
     }
   }
-  for (const ende of ['from', 'to'] as const) {
-    if (!ids.includes(stufe.correctArrow[ende])) {
-      ctx.addIssue({ code: 'custom', path: ['correctArrow', ende], message: `Atom "${stufe.correctArrow[ende]}" gibt es nicht` })
+
+  const gebunden = new Set<string>()
+  const paare = new Set<string>()
+  for (const [i, bindung] of stufe.bindungen.entries()) {
+    for (const ende of ['von', 'nach'] as const) {
+      if (!atomIds.includes(bindung[ende])) melde(['bindungen', i, ende], `Atom "${bindung[ende]}" gibt es nicht`)
+    }
+    if (bindung.von === bindung.nach) melde(['bindungen', i], 'Bindung auf sich selbst')
+    const schluessel = [bindung.von, bindung.nach].sort().join('—')
+    if (paare.has(schluessel)) melde(['bindungen', i], `Bindung ${schluessel} steht doppelt`)
+    paare.add(schluessel)
+    gebunden.add(bindung.von)
+    gebunden.add(bindung.nach)
+  }
+
+  // Ein Atom ohne Bindung ist entweder ein Reagenz oder ein Versehen.
+  for (const [i, atom] of stufe.atome.entries()) {
+    if (!gebunden.has(atom.id) && !atom.frei) {
+      melde(['atome', i], `"${atom.id}" hängt an keiner Bindung — als Reagenz "frei: true" setzen`)
     }
   }
+
+  const bindungsIds = stufe.bindungen.map(b => b.id)
+  for (const [i, pfeil] of stufe.pfeile.entries()) {
+    for (const ende of ['von', 'nach'] as const) {
+      const ziel = pfeil[ende]
+      if (ziel.art === 'bindung' && !bindungsIds.includes(ziel.id)) {
+        melde(['pfeile', i, ende], `Bindung "${ziel.id}" gibt es nicht`)
+      }
+      if (ziel.art !== 'bindung' && !atomIds.includes(ziel.id)) {
+        melde(['pfeile', i, ende], `Atom "${ziel.id}" gibt es nicht`)
+      }
+      if (ziel.art === 'freiesPaar') {
+        const atom = stufe.atome.find(a => a.id === ziel.id)
+        if (atom && !(atom.freiePaare && atom.freiePaare > 0)) {
+          melde(['pfeile', i, ende], `"${ziel.id}" hat kein freies Elektronenpaar`)
+        }
+      }
+    }
+  }
+})
+
+/**
+ * Schlussbild ohne Aufgabe.
+ *
+ * Jede Stufe ist eine Aufgabe; das Produkt des letzten Schritts hätte damit
+ * niemand je gesehen. Hier steht es.
+ */
+export const mechanismusErgebnisSchema = z.object({
+  titel: nichtLeer,
+  beschreibung: nichtLeer,
+  atome: z.array(atomSchema).min(2),
+  bindungen: z.array(bindungSchema),
 })
 
 export const mechanismusSchema = z.object({
   type: z.literal('mechanism'),
   title: nichtLeer,
-  description: z.string(),
-  stages: z.array(mechanismusStufeSchema).min(1),
+  description: nichtLeer,
+  stages: z.array(mechanismusStufeSchema).min(2, 'Ein Mechanismus hat mehr als einen Schritt'),
+  ergebnis: mechanismusErgebnisSchema,
+}).superRefine((mechanismus, ctx) => {
+  /*
+   * Die Struktur muss sich wandeln, nicht ausgetauscht werden.
+   *
+   * Im alten Bestand verschwanden zwischen zwei Stufen einfach Atome und ein
+   * Plus tauchte aus dem Nichts auf. Wer eine Stufe löst, soll im nächsten
+   * Bild dasselbe Molekül wiedererkennen.
+   */
+  for (let i = 1; i < mechanismus.stages.length; i++) {
+    const vorher = new Set(mechanismus.stages[i - 1].atome.map(a => a.id))
+    const jetzt = mechanismus.stages[i].atome.map(a => a.id)
+    const gemeinsam = jetzt.filter(id => vorher.has(id)).length
+    const anteil = gemeinsam / Math.max(vorher.size, jetzt.length)
+    if (anteil <= 0.5) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['stages', i],
+        message: `Schritt ${i + 1} teilt nur ${Math.round(anteil * 100)} % seiner Atome mit dem vorigen — `
+          + 'die Struktur wird ausgetauscht statt umgeformt',
+      })
+    }
+  }
 })
 
 export const interaktivSchema = z.discriminatedUnion('type', [
@@ -244,6 +360,9 @@ export type SpektrumZuordnung = z.infer<typeof spektrumZuordnungSchema>
 export type FormelRechner = z.infer<typeof formelRechnerSchema>
 export type Mechanismus = z.infer<typeof mechanismusSchema>
 export type MechanismusStufe = z.infer<typeof mechanismusStufeSchema>
+export type MechanismusAtom = z.infer<typeof atomSchema>
+export type MechanismusBindung = z.infer<typeof bindungSchema>
+export type MechanismusPfeil = z.infer<typeof pfeilSchema>
 export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus
 export type Pruefer = z.infer<typeof prueferSchema>
 

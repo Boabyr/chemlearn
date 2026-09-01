@@ -8,6 +8,8 @@ export const topic = {
   estimatedMinutes: 60,
   theory: `
 
+
+
 ## Electrophilic Aromatic Substitution (SEAr) at Heteroaromatics
 
 ### General Principle
@@ -64,33 +66,115 @@ At C-2 or C-4 attack: N⁺ in resonance structure, BUT N already electron-poor (
 | Thiophene | Br⁺ | C-2 | 2-Bromothiophene |
 | Pyridine | Br₂/very harsh | C-3 | 3-Bromopyridine |
 
+
+
 `,
   interactive: {
     type: "mechanism",
-    title: "Indole — the exception attacks at C-3",
-    description: "Pyrrole prefers C-2, indole prefers C-3. Show the attack that keeps the benzene ring aromatic.",
+    title: "Indole attacks at C-3 — the exception explained",
+    description: "Pyrrol bevorzugt C-2, Indol dagegen C-3. Zeichne den Angriff, der den Benzolring unangetastet lässt.",
     stages: [
       {
-        id: 0, label: "Electrophilic attack at C-3", description: "Draw the arrow from C-3 of the pyrrole ring to the electrophile.",
-        hint1: "Compare the two arenium ions: which one still contains an intact benzene ring?", hint2: "Attack at C-2 would delocalise the positive charge into the benzene ring and destroy its aromaticity. At C-3 the charge stays on nitrogen and the benzo ring is untouched.",
-        atoms: [
-          { id: "N1", label: "N-H", x: 205, y: 190, color: "#60a5fa", r: 20 },
-          { id: "C2", label: "C2", x: 265, y: 150, color: "#e2e8f0", r: 18 },
-          { id: "C3", label: "C3", x: 245, y: 80, color: "#e2e8f0", r: 20 },
-          { id: "C3a", label: "C3a", x: 170, y: 75, color: "#94a3b8", r: 16 },
-          { id: "C7a", label: "C7a", x: 140, y: 150, color: "#94a3b8", r: 16 },
-          { id: "E", label: "E⁺", x: 360, y: 60, color: "#4ade80", r: 18, charge: "+" },
+        id: 0, titel: "Angriff an C-3",
+        aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Elektrophil.",
+        erklaerung: "Der Angriff an C-3 lässt die positive Ladung am Stickstoff enden, ohne dass der ankondensierte Benzolring seine Aromatizität verliert. Bei einem Angriff an C-2 müsste die Ladung in den Sechsring hinein delokalisiert werden — das kostet dessen Sextett. Deshalb kehrt sich hier die Regel um, die für Pyrrol, Furan und Thiophen gilt.",
+        hinweise: ["Der Benzolring ist mitgezeichnet. Frage dich bei jeder Möglichkeit, ob er intakt bleibt.", "Wie beim Pyrrol beginnt der Pfeil an der Doppelbindung des Fünfrings, nicht am Stickstoff."],
+        atome: [
+          { id: "n1", element: "N", x: 250, y: 215, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 300, y: 180 },
+          { id: "c3", element: "C", x: 282, y: 122 },
+          { id: "c3a", element: "C", x: 222, y: 122 },
+          { id: "c7a", element: "C", x: 204, y: 180 },
+          { id: "c4", element: "C", x: 181, y: 77 },
+          { id: "c5", element: "C", x: 122, y: 91 },
+          { id: "c6", element: "C", x: 104, y: 149 },
+          { id: "c7", element: "C", x: 145, y: 193 },
+          { id: "e1", element: "E", x: 390, y: 80, ladung: 1, frei: true },
         ],
-        bonds: [
-          { a: "N1", b: "C2", dash: false, color: "#64748b" },
-          { a: "C2", b: "C3", dash: false, color: "#64748b" },
-          { a: "C3", b: "C3a", dash: false, color: "#64748b" },
-          { a: "C3a", b: "C7a", dash: false, color: "#475569" },
-          { a: "C7a", b: "N1", dash: false, color: "#64748b" },
+        bindungen: [
+          { id: "f1", von: "n1", nach: "c2", ordnung: 1 },
+          { id: "f2", von: "c2", nach: "c3", ordnung: 2 },
+          { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
+          { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
+          { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
+          { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
+          { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
+          { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
         ],
-        correctArrow: { from: "C3", to: "E" },
+        pfeile: [
+          { von: { art: "bindung", id: "f2" }, nach: { art: "atom", id: "e1" } },
+        ],
+      },
+      {
+        id: 1, titel: "Rearomatisierung",
+        aufgabe: "Eine Base nimmt das Proton von C-3 ab. Zeichne beide Pfeile.",
+        erklaerung: "Der Benzolring hat die ganze Zeit sein Sextett behalten — nur der Fünfring war kurz gestört. Mit der Deprotonierung kehrt auch dort die Aromatizität zurück, und das Elektrophil bleibt an C-3 stehen. Genau deshalb bromiert Indol zu 3-Bromindol und nicht zu 2-Bromindol.",
+        hinweise: ["An C-3 sitzen jetzt vier Bindungspartner. Einer davon muss weichen.", "Das Elektronenpaar der C–H-Bindung geht in den Ring zurück, nicht zur Base."],
+        atome: [
+          { id: "n1", element: "N", x: 250, y: 215, ladung: 1, wasserstoffe: 1 },
+          { id: "c2", element: "C", x: 300, y: 180 },
+          { id: "c3", element: "C", x: 282, y: 122 },
+          { id: "c3a", element: "C", x: 222, y: 122 },
+          { id: "c7a", element: "C", x: 204, y: 180 },
+          { id: "c4", element: "C", x: 181, y: 77 },
+          { id: "c5", element: "C", x: 122, y: 91 },
+          { id: "c6", element: "C", x: 104, y: 149 },
+          { id: "c7", element: "C", x: 145, y: 193 },
+          { id: "e1", element: "E", x: 340, y: 75 },
+          { id: "h3", element: "H", x: 300, y: 55 },
+          { id: "base", element: "N", x: 415, y: 175, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
+        ],
+        bindungen: [
+          { id: "f1", von: "n1", nach: "c2", ordnung: 2 },
+          { id: "f2", von: "c2", nach: "c3", ordnung: 1 },
+          { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
+          { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
+          { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
+          { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
+          { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
+          { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
+          { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
+          { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
+          { id: "ce", von: "c3", nach: "e1", ordnung: 1 },
+          { id: "ch", von: "c3", nach: "h3", ordnung: 1 },
+        ],
+        pfeile: [
+          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "h3" } },
+          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "f2" } },
+        ],
       },
     ],
+    ergebnis: {
+      titel: "3-substituiertes Indol",
+      beschreibung: "Beide Ringe sind aromatisch, das Elektrophil sitzt an C-3. Die Ausnahme zur α-Regel, erklärt durch den Benzolring.",
+      atome: [
+        { id: "n1", element: "N", x: 250, y: 215, wasserstoffe: 1 },
+        { id: "c2", element: "C", x: 300, y: 180 },
+        { id: "c3", element: "C", x: 282, y: 122 },
+        { id: "c3a", element: "C", x: 222, y: 122 },
+        { id: "c7a", element: "C", x: 204, y: 180 },
+        { id: "c4", element: "C", x: 181, y: 77 },
+        { id: "c5", element: "C", x: 122, y: 91 },
+        { id: "c6", element: "C", x: 104, y: 149 },
+        { id: "c7", element: "C", x: 145, y: 193 },
+        { id: "e1", element: "E", x: 340, y: 75 },
+      ],
+      bindungen: [
+        { id: "f1", von: "n1", nach: "c2", ordnung: 1 },
+        { id: "f2", von: "c2", nach: "c3", ordnung: 2 },
+        { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
+        { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
+        { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
+        { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
+        { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
+        { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
+        { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
+        { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
+        { id: "ce", von: "c3", nach: "e1", ordnung: 1 },
+      ],
+    },
   },
   quiz: [
     { id: "q1", question: "Why is C-2 (α position) preferred over C-3 in SEAr of furan?", options: ["Steric preference for C-2", "C-2 attack gives 3 resonance structures (incl. O⁺), C-3 attack only 2", "C-2 has higher π density in HOMO", "The O atom is directly adjacent to C-2"], correct: 1, explanation: "Electrophile attack at C-2: 3 resonance structures for arenium ion (incl. O⁺ structure). At C-3: only 2 resonance structures → C-2 intermediate more stable → C-2 preferred (Hammond postulate)." },
