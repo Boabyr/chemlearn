@@ -52,7 +52,7 @@ export default function TopicPage() {
         })
         .catch(() => navigate(`/course/${courseId}`))
     }
-  }, [courseId, topicId])
+  }, [courseId, topicId, markTopicSeen, navigate])
 
   // Quizantwort per Zahlentaste wählen.
   useEffect(() => {
