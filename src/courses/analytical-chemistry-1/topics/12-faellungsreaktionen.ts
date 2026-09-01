@@ -7,6 +7,7 @@ export const topic = {
   icon: "🧪",
   estimatedMinutes: 65,
   theory: `
+
 ## Löslichkeitsprodukt Ksp
 
 Für schwerlösliches Salz AB:
@@ -70,7 +71,25 @@ Nachweis über Potentiometrie oder Indikator (Mohr, Volhard, Fajans)
 **Berechnung der Löslichkeit:**
 Ksp(CaF₂) = [Ca²⁺][F⁻]² = s · (2s)² = 4s³
 s = ∛(Ksp/4)
+
 `,
+  interactive: {
+    type: "formula-calculator",
+    formula: {
+      id: "loeslichkeitsprodukt",
+      name: "Löslichkeitsprodukt eines 1:1-Salzes",
+      equation: "Ksp = s²",
+      variables: [
+        { id: "Ksp", label: "Löslichkeitsprodukt", symbol: "Ksp", unit: "mol²/L²", description: "Ionenprodukt der gesättigten Lösung" },
+        { id: "s", label: "Löslichkeit", symbol: "s", unit: "mol/L", description: "Molare Löslichkeit des Salzes" },
+      ],
+      umstellungen: [
+        { solveFor: "Ksp", expr: "s ^ 2" },
+        { solveFor: "s", expr: "sqrt(Ksp)" },
+      ],
+      hints: ["Gilt nur für Salze vom Typ AB, bei denen [A⁺] = [B⁻] = s ist. AgCl: Ksp = 1,8·10⁻¹⁰ führt auf s = 1,34·10⁻⁵ mol/L.", "Bei CaF₂ (Typ AB₂) gilt Ksp = 4s³, also s = ∛(Ksp/4). Die Stöchiometrie geht als Exponent ein — nicht einfach die Wurzel ziehen."],
+    },
+  },
   quiz: [
     { id: "q1", question: "Welche Ionen werden aus einer Lösung mit Cu²⁺, Cd²⁺, Fe²⁺, Mn²⁺ bei pH 3 durch H₂S quantitativ gefällt?", options: ["Alle vier Ionen", "Nur Fe²⁺ und Mn²⁺", "Nur Cu²⁺ und Cd²⁺ (sehr kleines Ksp)", "Keiner der Ionen"], correct: 2, explanation: "Bei pH 3: [S²⁻] ist niedrig. Nur Sulfide mit sehr kleinem Ksp (Cu²⁺, Cd²⁺) fallen quantitativ aus. FeS und MnS haben größere Ksp → fallen erst bei höherem pH (weniger sauer). Klassischer Sulfidtrenngang!" },
     { id: "q2", question: "Was ist das Löslichkeitsprodukt Ksp?", options: ["Konzentration eines gesättigten Salzes", "Gleichgewichtskonstante für die Dissoziation eines schwerlöslichen Salzes: Ksp = [Kation]·[Anion]", "Produkt der Fällungsreagenz-Konzentrationen", "pH bei der Fällung"], correct: 1, explanation: "Ksp = [Kation]ˢ·[Anion]ᵗ für AB ⇌ A⁺ + B⁻. Fällt aus wenn Ionenprodukt > Ksp. Löslichkeit s aus Ksp: für AB: s=√Ksp; für CaF₂: s=∛(Ksp/4)." },
@@ -85,5 +104,6 @@ s = ∛(Ksp/4)
     { id: "1jp4bgx", front: "Gravimetrie – Schritte", back: "1. Auflösung. 2. Fällung. 3. Verdauen (Ostwald-Reifung). 4. Filtrieren+Waschen. 5. Glühen (→ definierte Verbindung). 6. Wägen. Absolutes Verfahren, keine Kalibrierung." },
     { id: "0fcqxnk", front: "Gemeinsamer Ioneneffekt", back: "Zugabe eines gemeinsamen Ions → Löslichkeit sinkt. Ksp = konstant: [Ag⁺] steigt → [Cl⁻] sinkt → AgCl fällt aus. Anwendung: quantitative Fällung durch Reagenzüberschuss." },
     { id: "1akzsky", front: "Fe gravimetrisch bestimmen", back: "Fe³⁺ → Fe₂O₃ (nach Fällung als Fe(OH)₃ + Glühen). n(Fe) = 2·n(Fe₂O₃). m(Fe) = n·55,85. Umrechnungsfaktor: 2×55,85/159,7 = 0,6994." },
+    { id: "1kw37bw", front: "Warum CuS bei pH 3 fällt und FeS nicht", back: "H₂S liefert bei pH 3 nur sehr wenig S²⁻. Das reicht, um das winzige Ksp von CuS (6·10⁻³⁶) zu überschreiten, aber nicht das von FeS (6·10⁻¹⁸). Genau darauf beruht der Sulfidtrenngang: erst sauer fällen (Cu, Cd, Hg), dann neutral bis basisch (Mn, Fe)." },
   ],
 } satisfies Thema;

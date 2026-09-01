@@ -186,6 +186,8 @@ Bericht vermerken — die Strukturzeichnung entsteht von Hand.
 > **Karten-IDs schreibst du nicht.** Der Importer leitet sie aus der
 > Vorderseite ab, damit ein Umsortieren den Lernplan nicht verschiebt.
 
+---
+
 ## MODUS B — Altprüfung → Prüfungsfragen
 
 Extrahiere **jede** Frage aus der Altprüfung. Nichts zusammenfassen, nichts
@@ -282,6 +284,45 @@ Regeln Modus B:
   und `[UNSICHER: Lösung nicht in Angabe, selbst berechnet]` anhängen.
 - Handschriftliche/unleserliche Stellen: `[UNSICHER: unleserlich]` statt raten.
 - Punkte nicht angegeben: aus dem Aufwand schätzen und `[ERGÄNZT]` dahinter.
+
+---
+
+## MODUS C — vorhandenes Thema aufstocken
+
+Der häufigste Fall, sobald ein Kurs steht: die Theorie ist da, der Übungsteil
+ist zu dünn. Dann wird **kein ganzes Thema neu geschrieben**, sondern nur das
+Fehlende nachgereicht.
+
+Kopf der Datei:
+
+```
+=== DATEI: 16-atomspektrometrie.md ===
+
+# META
+modus: ergaenzen
+```
+
+`modus: ergaenzen` heißt: **kein THEORIE-Abschnitt, kein titel, kein icon.**
+Das steht schon in der Datei und bleibt Zeichen für Zeichen erhalten. Danach
+folgen nur die Abschnitte, die dazukommen sollen — `# QUIZ`, `# FLASHCARDS`,
+`# INTERAKTIV`, einzeln oder zusammen.
+
+Der Importer hängt an, statt zu ersetzen:
+
+- Quizfragen bekommen fortlaufende Kennungen (`q7`, `q8`, …). Eine Frage, deren
+  Wortlaut schon im Thema steht, fällt weg.
+- Karteikarten mit bereits vorhandener Vorderseite fallen weg. Es lohnt sich
+  also, vorher in die Datei zu schauen — sonst schreibst du umsonst.
+- Ein Interaktivteil wird nur übernommen, wenn das Thema noch keinen hat.
+- Mehrere Quelldateien dürfen dasselbe Thema ergänzen; sie werden nacheinander
+  aufgetragen.
+
+**Vorgabe:** sechs Quizfragen, sechs Karteikarten und ein Interaktivteil je
+Thema. Der Test `src/content/inhalte.test.ts` besteht darauf.
+
+**Arbeitsauftrag für diesen Modus:** „Hier ist die Theorie von Thema X. Schreib
+N zusätzliche Quizfragen und M zusätzliche Karteikarten zu dem Stoff, der
+bisher nicht abgefragt wird. Keine Wiederholung vorhandener Fragen."
 
 ---
 

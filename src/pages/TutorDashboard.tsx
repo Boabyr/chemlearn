@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRole } from '../hooks/useRole'
 import type { ContentReportRow, ContentSuggestionRow } from '../lib/database.types'
+import { vorschlaegeAlsQuelle } from '../lib/vorschlaegeAlsQuelle'
 import { supabase } from '../lib/supabase'
 
 type Tab = 'reports' | 'suggestions' | 'content'
@@ -15,6 +16,21 @@ export default function TutorDashboard() {
   const [reports, setReports] = useState<ContentReportRow[]>([])
   const [suggestions, setSuggestions] = useState<ContentSuggestionRow[]>([])
   const [resolveNote, setResolveNote] = useState<Record<string, string>>({})
+  const [quelltext, setQuelltext] = useState<string | null>(null)
+
+  /**
+   * Freigegebene Vorschläge holen und als Quelltext zeigen.
+   *
+   * Ohne diesen Schritt endet jede Freigabe in der Datenbank: die Kursinhalte
+   * sind Dateien, kein Vorschlag findet von allein hinein.
+   */
+  async function quelltextBauen() {
+    const { data, error } = await supabase
+      .from('content_suggestions').select('*').eq('status', 'approved')
+    if (error) { setQuelltext(`Laden fehlgeschlagen: ${error.message}`); return }
+    const text = vorschlaegeAlsQuelle(data ?? [])
+    setQuelltext(text || 'Keine freigegebenen Vorschläge vorhanden.')
+  }
 
   useEffect(() => {
     if (!roleLoading && !isTutor) navigate('/')
@@ -106,6 +122,24 @@ export default function TutorDashboard() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-4">
+
+        {tab === 'suggestions' && (
+          <div className="rounded-2xl border border-line bg-raised p-5">
+            <div className="flex flex-wrap items-center gap-3">
+              <button onClick={quelltextBauen}
+                className="rounded-xl bg-accent px-4 py-2 text-sm font-medium text-on-accent hover:bg-accent-strong">
+                Freigegebene Vorschläge als Quelltext
+              </button>
+              <span className="text-xs text-subtle">
+                Inhalt nach <code className="font-mono">.source/&lt;kurs&gt;/vorschlaege.md</code> kopieren, dann <code className="font-mono">npm run import</code>
+              </span>
+            </div>
+            {quelltext !== null && (
+              <textarea readOnly value={quelltext} rows={12} aria-label="Quelltext der freigegebenen Vorschläge"
+                className="mt-4 w-full rounded-xl border border-line bg-surface p-3 font-mono text-xs text-ink" />
+            )}
+          </div>
+        )}
 
         {/* ── FEHLER-BERICHTE ── */}
         {tab === 'reports' && (

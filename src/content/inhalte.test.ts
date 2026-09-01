@@ -73,6 +73,30 @@ describe('Themen', () => {
   })
 })
 
+describe('Sollstärke der Themen', () => {
+  // Die Vorgabe aus CONTENT-PROMPT.md: sechs Quizfragen, sechs Karten,
+  // ein Interaktivteil. Dazu mindestens eine Prüfungsfrage je Thema, sonst
+  // kann das Thema in einer Übungsrunde nie vorkommen.
+  it.each(allCourses.map(k => [k.id] as const))('%s: kein Thema bleibt unter der Vorgabe', async (kursId) => {
+    const themen = await loadAllTopics(kursId)
+    const fragenJeThema = new Map<string, number>()
+    for (const frage of examQuestionsFor(kursId)) {
+      fragenJeThema.set(frage.topicId, (fragenJeThema.get(frage.topicId) ?? 0) + 1)
+    }
+
+    const duenn = themen.flatMap(thema => {
+      const mangel: string[] = []
+      if (thema.quiz.length < 6) mangel.push(`nur ${thema.quiz.length} Quizfragen`)
+      if (thema.flashcards.length < 6) mangel.push(`nur ${thema.flashcards.length} Karten`)
+      if (!thema.interactive) mangel.push('kein Interaktivteil')
+      if (!fragenJeThema.get(thema.id)) mangel.push('keine Prüfungsfrage')
+      return mangel.length ? [`${thema.id}: ${mangel.join(', ')}`] : []
+    })
+
+    expect(duenn).toEqual([])
+  })
+})
+
 describe('Prüfungsdaten', () => {
   it.each(allCourses.map(k => [k.id] as const))('%s: Fragen zeigen auf vorhandene Themen', async (kursId) => {
     const kurs = allCourses.find(k => k.id === kursId)!

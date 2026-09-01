@@ -7,6 +7,7 @@ export const topic = {
   icon: "⚡",
   estimatedMinutes: 80,
   theory: `
+
 ## What is a Cyclocondensation?
 
 A **cyclocondensation** is a ring-closure reaction with loss of small molecules (H₂O, ROH, NH₃). Unlike cycloadditions, it involves nucleophilic/electrophilic steps (not pericyclic).
@@ -51,7 +52,36 @@ Solution: monosubstituted hydrazine H₂N-NHR → one isomer preferred
 
 ### Imidazole synthesis:
 1,2-Dicarbonyl + NH₃ + aldehyde → imidazole (van Leusen: TosMIC)
+
 `,
+  interactive: {
+    type: "mechanism",
+    title: "Pyrazole from a 1,3-diketone and hydrazine",
+    description: "A cyclocondensation starts like any carbonyl chemistry — with a nucleophilic attack.",
+    stages: [
+      {
+        id: 0, label: "First attack of the hydrazine", description: "Draw the arrow from the terminal hydrazine nitrogen to one carbonyl carbon.",
+        hint1: "Hydrazine has two nucleophilic nitrogens; one attacks each carbonyl, which is why exactly a five-membered ring closes.", hint2: "After the attack comes dehydration to the hydrazone, then the second nitrogen closes the ring and a second molecule of water leaves. Aromatisation drives the whole sequence.",
+        atoms: [
+          { id: "C1", label: "C=O", x: 150, y: 110, color: "#e2e8f0", r: 20 },
+          { id: "O1", label: "O", x: 150, y: 45, color: "#f87171", r: 16 },
+          { id: "C2", label: "CH₂", x: 215, y: 150, color: "#e2e8f0", r: 20 },
+          { id: "C3", label: "C=O", x: 285, y: 110, color: "#e2e8f0", r: 20 },
+          { id: "O3", label: "O", x: 285, y: 45, color: "#f87171", r: 16 },
+          { id: "Na", label: "NH₂", x: 100, y: 205, color: "#60a5fa", r: 20 },
+          { id: "Nb", label: "NH₂", x: 340, y: 205, color: "#60a5fa", r: 20 },
+        ],
+        bonds: [
+          { a: "C1", b: "O1", dash: false, color: "#64748b" },
+          { a: "C1", b: "C2", dash: false, color: "#64748b" },
+          { a: "C2", b: "C3", dash: false, color: "#64748b" },
+          { a: "C3", b: "O3", dash: false, color: "#64748b" },
+          { a: "Na", b: "Nb", dash: false, color: "#64748b" },
+        ],
+        correctArrow: { from: "Na", to: "C1" },
+      },
+    ],
+  },
   quiz: [
     { id: "q1", question: "Which components does the Hantzsch dihydropyridine synthesis require?", options: ["Azide + alkyne", "Enamine (or aldehyde) + 1,3-dicarbonyl + NH₃", "Diene + dienophile", "Hydrazine + 1,3-dicarbonyl"], correct: 1, explanation: "Hantzsch synthesis [3+3]: enamine (3C unit) + 1,3-dicarbonyl compound (3C unit) + NH₃ (1N unit). Alternative: aldehyde + 2× β-ketoester + NH₃. Product: 1,4-dihydropyridine; after oxidation: pyridine." },
     { id: "q2", question: "How can regioselectivity in the Hantzsch synthesis with unsymmetrical components be ensured?", options: ["By temperature control", "By pre-synthesising the enamine with defined regiochemistry", "By solvent choice", "By excess of one component"], correct: 1, explanation: "When the enamine is prepared separately beforehand (from ketone + primary amine), its regiochemistry is fixed. The subsequent reaction with the 1,3-dicarbonyl then gives regioselectively only one pyridine isomer." },

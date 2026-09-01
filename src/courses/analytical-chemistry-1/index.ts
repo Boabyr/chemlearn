@@ -36,5 +36,8 @@ export const course = {
     { id: "lieberzeit",     label: "Lieberzeit",     icon: "🔭" },
     { id: "koellensperger", label: "Köllensperger",  icon: "📊" },
     { id: "gerner",         label: "Gerner",         icon: "🧪" },
+    // Nicht aus einer Altprüfung, sondern zum Fragenkatalog dazugeschrieben.
+    // Eigener Abschnitt, damit die Prüfungsreife-Anzeige echte Prüfer nicht vermischt.
+    { id: "uebung",         label: "Übungsfragen",   icon: "📝" },
   ],
 } satisfies Kurs;

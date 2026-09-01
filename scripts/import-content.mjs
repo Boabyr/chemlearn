@@ -309,7 +309,7 @@ function warnungPruefeApparatur(id, ort) {
   }
 }
 
-function leseQuiz(block, ort) {
+function leseQuiz(block, ort, opt = {}) {
   if (!block) return []
   const fragen = []
   const bloecke = block.split(/^F\d+:\s*/m).slice(1)
@@ -333,11 +333,11 @@ function leseQuiz(block, ort) {
     if (!erklaerung) warnung(ort, `${nr}: ohne Erklärung`)
     fragen.push({ id: `q${i + 1}`, question: frage, options: optionen, correct: (richtig ?? 1) - 1, explanation: erklaerung })
   })
-  if (fragen.length === 0) problem(ort, 'kein Quiz gefunden')
+  if (fragen.length === 0 && !opt.optional) problem(ort, 'kein Quiz gefunden')
   return fragen
 }
 
-function leseFlashcards(block, ort) {
+function leseFlashcards(block, ort, opt = {}) {
   if (!block) return []
   const karten = []
   let aktuell = null
@@ -351,7 +351,7 @@ function leseFlashcards(block, ort) {
   if (aktuell) karten.push(aktuell)
   const ohneRueckseite = karten.filter(k => !k.back)
   if (ohneRueckseite.length) problem(ort, `${ohneRueckseite.length} Karteikarte(n) ohne Rückseite`)
-  if (karten.length === 0) problem(ort, 'keine Karteikarten gefunden')
+  if (karten.length === 0 && !opt.optional) problem(ort, 'keine Karteikarten gefunden')
   return karten
 }
 
@@ -360,12 +360,16 @@ function baueThema(roh) {
   sammleMarker(ort, inhalt)
   const s = abschnitte(inhalt)
   const meta = keyValues(s.META ?? '')
+  const ergaenzen = String(meta.modus ?? '').trim() === 'ergaenzen'
 
   if (!/^\d{2}-[a-z0-9-]+$/.test(name)) problem(ort, `Dateiname "${name}" folgt nicht dem Muster NN-slug`)
-  if (!meta.titel) problem(ort, 'META ohne titel')
-  if (!s.THEORIE) problem(ort, 'kein Theorieteil')
+  if (!ergaenzen) {
+    if (!meta.titel) problem(ort, 'META ohne titel')
+    if (!s.THEORIE) problem(ort, 'kein Theorieteil')
+  }
 
   return {
+    ergaenzen,
     id: name,
     title: meta.titel ?? name,
     subtitle: meta.untertitel ?? '',
@@ -373,9 +377,123 @@ function baueThema(roh) {
     estimatedMinutes: Number(meta.dauer_minuten ?? 60),
     theory: s.THEORIE ?? '',
     interactive: leseInteraktiv(s.INTERAKTIV, ort),
-    quiz: leseQuiz(s.QUIZ, ort),
-    flashcards: leseFlashcards(s.FLASHCARDS, ort),
+    quiz: leseQuiz(s.QUIZ, ort, { optional: ergaenzen }),
+    flashcards: leseFlashcards(s.FLASHCARDS, ort, { optional: ergaenzen }),
     ort,
+  }
+}
+
+/**
+ * Ein vorhandenes Thema zurücklesen.
+ *
+ * Seit Phase 3 sind Themendateien reine Daten — kein `solve` mehr, keine
+ * Funktion. Deshalb lässt sich das Objektliteral wieder auswerten, statt die
+ * Datei beim Ergänzen neu erfinden zu müssen. So bleibt die Theorie Zeichen
+ * für Zeichen erhalten.
+ */
+function leseVorhandenesThema(kursId, themaId) {
+  const pfad = join(COURSES_DIR, kursId, 'topics', `${themaId}.ts`)
+  if (!existsSync(pfad)) return null
+  const quelltext = readFileSync(pfad, 'utf8')
+  const start = quelltext.indexOf('export const topic =')
+  if (start < 0) return null
+  const literal = quelltext
+    .slice(quelltext.indexOf('{', start))
+    .replace(/\s*satisfies\s+Thema\s*;?\s*$/, '')
+    .replace(/;\s*$/, '')
+  try {
+    return new Function(`return ${literal}`)()
+  } catch (fehler) {
+    problem(`${kursId}/${themaId}`, `vorhandenes Thema nicht lesbar: ${fehler.message}`)
+    return null
+  }
+}
+
+/**
+ * Einen gespeicherten Interaktivteil in die Form bringen, die der Erzeuger
+ * erwartet.
+ *
+ * Die Datei trägt die Endform (`type`, `variables`, `options`, `stages`), der
+ * Erzeuger arbeitet mit der Parserform (`art`, `variablen`, `optionen`,
+ * `stufen`). Ohne diese Übersetzung fällt beim Ergänzen jeder vorhandene
+ * Interaktivteil stillschweigend heraus.
+ */
+function alsParserForm(interaktiv) {
+  if (!interaktiv) return null
+  switch (interaktiv.type) {
+    case 'formula-calculator':
+      return {
+        art: 'formula-calculator',
+        formel: {
+          id: interaktiv.formula.id,
+          name: interaktiv.formula.name,
+          equation: interaktiv.formula.equation,
+          variablen: interaktiv.formula.variables,
+          umstellungen: interaktiv.formula.umstellungen,
+          hints: interaktiv.formula.hints,
+        },
+      }
+    case 'apparatus-quiz':
+      return {
+        art: 'apparatus-quiz',
+        question: interaktiv.question, targetId: interaktiv.targetId,
+        optionen: interaktiv.options, explanation: interaktiv.explanation,
+        hint1: interaktiv.hint1, hint2: interaktiv.hint2,
+      }
+    case 'spectrum-assignment':
+      return {
+        art: 'spectrum-assignment',
+        title: interaktiv.title, description: interaktiv.description,
+        xLabel: interaktiv.xLabel, yLabel: interaktiv.yLabel,
+        peaks: interaktiv.peaks, hint1: interaktiv.hint1, hint2: interaktiv.hint2,
+      }
+    case 'mechanism':
+      return {
+        art: 'mechanism',
+        title: interaktiv.title, description: interaktiv.description,
+        stufen: interaktiv.stages,
+      }
+    default:
+      return null
+  }
+}
+
+/**
+ * Neue Fragen und Karten an ein vorhandenes Thema anhängen.
+ * Doppelte Karten (gleiche Vorderseite) und doppelte Fragen fallen weg.
+ */
+function ergaenzeThema(vorhanden, zusatz, ort) {
+  const quizIds = new Set(vorhanden.quiz.map(f => f.id))
+  const bekannteFragen = new Set(vorhanden.quiz.map(f => f.question.trim()))
+  let naechste = vorhanden.quiz.length
+
+  const neueFragen = []
+  for (const frage of zusatz.quiz) {
+    if (bekannteFragen.has(frage.question.trim())) continue
+    let id = frage.id
+    while (!id || quizIds.has(id)) { naechste += 1; id = `q${naechste}` }
+    quizIds.add(id)
+    neueFragen.push({ ...frage, id })
+  }
+
+  const bekannteKarten = new Set(vorhanden.flashcards.map(k => kartenId(k.front)))
+  const neueKarten = zusatz.flashcards.filter(k => !bekannteKarten.has(kartenId(k.front)))
+
+  // Nach dem ersten Auftrag liegt der Interaktivteil bereits in Parserform vor.
+  let interactive = vorhanden.interactive?.art ? vorhanden.interactive : alsParserForm(vorhanden.interactive)
+  if (zusatz.interactive) {
+    if (interactive) warnung(ort, `${vorhanden.id} hat schon einen Interaktivteil — der neue wird ignoriert`)
+    else interactive = zusatz.interactive
+  }
+
+  return {
+    thema: {
+      ...vorhanden,
+      interactive,
+      quiz: [...vorhanden.quiz, ...neueFragen],
+      flashcards: [...vorhanden.flashcards, ...neueKarten],
+    },
+    bilanz: { fragen: neueFragen.length, karten: neueKarten.length, interaktiv: !vorhanden.interactive && !!zusatz.interactive },
   }
 }
 
@@ -795,8 +913,10 @@ function main() {
     rohePruefungen.push(...pruefungen)
   }
 
-  const themen = roheThemen.map(baueThema).sort((a, b) => a.id.localeCompare(b.id))
-  const themenIds = themen.map(t => t.id)
+  const alleRohThemen = roheThemen.map(baueThema).sort((a, b) => a.id.localeCompare(b.id))
+  const themen = alleRohThemen.filter(t => !t.ergaenzen)
+  const ergaenzungen = alleRohThemen.filter(t => t.ergaenzen)
+  const themenIds = alleRohThemen.map(t => t.id)
 
   // Fragen dürfen sich auch auf schon vorhandene Themen beziehen
   const meta = leseKursMeta(kursId)
@@ -824,7 +944,32 @@ function main() {
   const doppelt = alleFragen.map(f => f.id).filter((id, i, a) => a.indexOf(id) !== i)
   if (doppelt.length) problem('Prüfungsfragen', `doppelte IDs: ${[...new Set(doppelt)].join(', ')}`)
 
-  console.log(`${themen.length} Themen geparst`)
+  // Ergänzungen gegen das vorhandene Thema legen. Mehrere Quelldateien dürfen
+  // dasselbe Thema ergänzen — sie werden nacheinander aufgetragen, sonst
+  // überschriebe die zweite die Arbeit der ersten.
+  const ergaenzt = []
+  const jeThema = new Map()
+  for (const zusatz of ergaenzungen) {
+    if (!jeThema.has(zusatz.id)) jeThema.set(zusatz.id, [])
+    jeThema.get(zusatz.id).push(zusatz)
+  }
+
+  for (const [themaId, stapel] of jeThema) {
+    let stand = leseVorhandenesThema(kursId, themaId)
+    if (!stand) { problem(stapel[0].ort, `Ergänzung für "${themaId}", das es noch nicht gibt`); continue }
+
+    const summe = { fragen: 0, karten: 0, interaktiv: false }
+    for (const zusatz of stapel) {
+      const { thema, bilanz } = ergaenzeThema(stand, zusatz, zusatz.ort)
+      stand = thema
+      summe.fragen += bilanz.fragen
+      summe.karten += bilanz.karten
+      summe.interaktiv = summe.interaktiv || bilanz.interaktiv
+    }
+    ergaenzt.push({ thema: stand, bilanz: summe, id: themaId })
+  }
+
+  console.log(`${themen.length} Themen geparst${ergaenzungen.length ? `, ${ergaenzungen.length} Ergänzungen` : ''}`)
   console.log(`${alleFragen.length} Prüfungsfragen geparst`)
 
   const berichtPfad = schreibeBericht(quellDir, themen, alleFragen)
@@ -851,6 +996,11 @@ function main() {
   console.log('Unterschied:')
   console.log(`  Themen      neu ${themenNeu.length}${themenNeu.length ? ' (' + themenNeu.map(t => t.id).join(', ') + ')' : ''}`)
   console.log(`              vorhanden ${themenVorhanden.length}${force ? ' — werden überschrieben' : ' — bleiben unberührt'}`)
+  for (const e of ergaenzt) {
+    const teile = [`${e.bilanz.fragen} Fragen`, `${e.bilanz.karten} Karten`]
+    if (e.bilanz.interaktiv) teile.push('Interaktivteil')
+    console.log(`  Ergänzung   ${e.id}: +${teile.join(', +')}`)
+  }
   for (const z of zusammengefuehrt) {
     console.log(`  Fragen      ${z.kursId}: neu ${z.bilanz.neu.length}, geändert ${z.bilanz.geaendert.length}, unverändert ${z.bilanz.unveraendert.length}`)
     console.log(`              ${z.bilanz.behalten} bereits vorhandene bleiben erhalten`)
@@ -875,6 +1025,17 @@ function main() {
     writeFileSync(p, themaAlsTypeScript(t))
     geschrieben.push(t.id)
   }
+
+  for (const e of ergaenzt) {
+    const text = themaAlsTypeScript(e.thema)
+    // Notbremse: ein Ergänzungslauf darf nie Inhalt verlieren.
+    if (e.thema.interactive && !text.includes('  interactive: {')) {
+      console.error(`Abbruch: Interaktivteil von ${e.id} würde verloren gehen.`)
+      process.exit(1)
+    }
+    writeFileSync(join(topicsDir, `${e.id}.ts`), text)
+  }
+  if (ergaenzt.length) console.log(`ergänzt: ${ergaenzt.length} Themen`)
 
   if (themen.length > 0) {
     // Kurs- und Prüfungsregister finden sich selbst (import.meta.glob) —

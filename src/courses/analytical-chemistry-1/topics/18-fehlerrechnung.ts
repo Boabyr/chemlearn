@@ -7,6 +7,7 @@ export const topic = {
   icon: "🔢",
   estimatedMinutes: 55,
   theory: `
+
 ## Signifikante Stellen
 
 **Regeln:**
@@ -65,7 +66,27 @@ In Chromatographie: zu niedrige Messfrequenz → Peak wird nicht richtig erfasst
 **χ²-Test:** Anpassung an Verteilung
 
 **Transformation zur Normalverteilung:** Viele stat. Tests setzen Normalverteilung voraus. Bei schiefer Verteilung: log-Transformation kann Normalverteilung erzeugen → Tests anwendbar.
+
 `,
+  interactive: {
+    type: "formula-calculator",
+    formula: {
+      id: "fehlerfortpflanzung-produkt",
+      name: "Fehlerfortpflanzung bei Produkt und Quotient",
+      equation: "Δf/f = √[(Δx/x)² + (Δy/y)²]",
+      variables: [
+        { id: "relf", label: "Relativer Fehler des Ergebnisses", symbol: "Δf/f", unit: "—", description: "Als Anteil, nicht in Prozent" },
+        { id: "dx", label: "Absoluter Fehler von x", symbol: "Δx", unit: "wie x", description: "Unsicherheit der ersten Größe" },
+        { id: "x", label: "Messwert x", symbol: "x", unit: "—", description: "Erste Größe" },
+        { id: "dy", label: "Absoluter Fehler von y", symbol: "Δy", unit: "wie y", description: "Unsicherheit der zweiten Größe" },
+        { id: "y", label: "Messwert y", symbol: "y", unit: "—", description: "Zweite Größe" },
+      ],
+      umstellungen: [
+        { solveFor: "relf", expr: "sqrt((dx / x) ^ 2 + (dy / y) ^ 2)" },
+      ],
+      hints: ["Bei Produkt und Quotient addieren sich die relativen Fehler quadratisch, bei Summe und Differenz die absoluten. Nicht verwechseln.", "Weil quadriert wird, dominiert der größte Einzelfehler. Eine Größe mit 5 % Unsicherheit macht eine andere mit 0,5 % praktisch bedeutungslos — dort lohnt das Verbessern."],
+    },
+  },
   quiz: [
     { id: "q1", question: "Welche statistischen Tests sind in der Analytischen Chemie besonders wichtig?", options: ["Nur der t-Test", "Q-Test (Ausreißer), t-Test (Mittelwertvergleich), F-Test (Varianzvergleich)", "Nur F-Test", "Chi-Quadrat-Test ist der einzige relevante"], correct: 1, explanation: "Q-Test: Ausreißer erkennen. t-Test: Mittelwert vs. Sollwert oder zwei Mittelwerte vergleichen. F-Test: Vergleich von Standardabweichungen zweier Methoden/Messreihen. Alle drei prüfungsrelevant!" },
     { id: "q2", question: "Was ist eine Wiederfindungsrate und welcher Wert ist ideal?", options: ["Anteil des gefundenen am eingesetzten Analyten, ideal: 95-105%", "Anteil der wiederholten Messungen, ideal: 100%", "Anteil der verworfenen Ausreißer, ideal: <5%", "Verhältnis Messwert zu Blindwert, ideal: >10"], correct: 0, explanation: "Recovery = (c_gemessen/c_zugesetzt) × 100%. Zugesetzter Standard: Known addition (Spike). Ideal: 95-105%. Abweichungen zeigen systematische Fehler (Matrix, Verluste bei Aufschluss) an." },
@@ -79,5 +100,7 @@ In Chromatographie: zu niedrige Messfrequenz → Peak wird nicht richtig erfasst
     { id: "0de3zex", front: "Fehlerfortpflanzung", back: "Δf = √[Σ(∂f/∂xᵢ)²·(Δxᵢ)²]. Addition: Δf=√(Δx²+Δy²). Multiplikation: Δf/f=√((Δx/x)²+(Δy/y)²). Relative Fehler addieren sich quadratisch!" },
     { id: "16rrnhr", front: "Qualitätssicherung – Maßnahmen", back: "1. Blindversuche. 2. Mehrfachmessungen. 3. Referenzmaterialien (CRM). 4. Wiederfindungsrate (Recovery, ideal 95-105%). 5. Parallelanalysen. 6. Ringversuche (extern)." },
     { id: "0rn311e", front: "F-Test vs. t-Test", back: "F-Test: Vergleich zweier Varianzen (s₁²/s₂²). Gleiche Präzision? t-Test: Vergleich zweier Mittelwerte. Gleiche Richtigkeit? Beide setzen Normalverteilung voraus. Beide haben Tabellenwerte für verschiedene n und α." },
+    { id: "0y3v1cv", front: "Wiederfindungsrate", back: "R = (gemessene Konzentration / zugesetzte Konzentration) · 100 %. Man gibt einer Probe eine bekannte Menge Analyt zu und prüft, wie viel davon die Methode wiederfindet. Als gut gilt der Bereich 95 bis 105 %; niedrigere Werte deuten auf Verluste bei der Probenvorbereitung hin." },
+    { id: "0a864p9", front: "t-Test, F-Test und Q-Test auseinanderhalten", back: "Der t-Test vergleicht Mittelwerte (Probe gegen Referenzwert oder zwei Messreihen). Der F-Test vergleicht Varianzen, also die Streuung zweier Messreihen. Der Q-Test prüft einen einzelnen verdächtigen Wert auf Ausreißer. Alle drei setzen näherungsweise Normalverteilung voraus." },
   ],
 } satisfies Thema;

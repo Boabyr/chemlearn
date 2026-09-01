@@ -1,202 +1,6 @@
 {
   "questions": [
     {
-      "id": "L001",
-      "source": "2013-02-Lieberzeit",
-      "topicId": "01-grundlagen-spektroskopie",
-      "points": 2,
-      "type": "order",
-      "question": "Ordnen Sie folgende spektroskopische Methoden nach aufsteigender Frequenz:",
-      "options": [
-        "UV",
-        "Infrarot",
-        "Röntgen",
-        "Mikrowelle"
-      ],
-      "correct": [
-        3,
-        1,
-        0,
-        2
-      ],
-      "explanation": "Aufsteigende Frequenz: Mikrowelle (0,75-3,75mm) < IR (400-4000cm⁻¹) < UV (180-400nm) < Röntgen (0,1-100Å). Kürzere Wellenlänge = höhere Frequenz = höhere Energie.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L002",
-      "source": "2013-02-Lieberzeit",
-      "topicId": "03-fluoreszenz-lumineszenz",
-      "points": 1,
-      "type": "mc-multi",
-      "question": "Welche Aussagen zur Fluoreszenzspektrometrie sind korrekt?",
-      "options": [
-        "In der Fluoreszenzspektrometrie wird das von der Probe emittierte Licht gemessen",
-        "Je flexibler die Struktur eines Moleküls, desto weniger fluoresziert es",
-        "In der FS gibt es kaum Matrixeffekte",
-        "Das Fluoreszenzlicht ist gegenüber dem Ausgangslicht zu höheren Frequenzen (kürzeren Wellenlängen) verschoben"
-      ],
-      "correct": [
-        0,
-        1
-      ],
-      "explanation": "Richtig: (1) Fluoreszenz = Emissionsmessung ✓. (2) Flexible Strukturen → mehr Schwingungsrelaxation → weniger Fluoreszenz ✓. Falsch: (3) Fluoreszenz hat weniger Matrixeffekte als AAS, aber sie existieren. (4) Fluoreszenzlicht hat LÄNGERE Wellenlänge (Stokes-Verschiebung, niedrigere Frequenz).",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L003",
-      "source": "2019-05-Lieberzeit",
-      "topicId": "02-lambert-beer",
-      "points": 4,
-      "type": "numeric",
-      "question": "Ein Photometer: Blindprobe ergibt 11,97V. Probe (0,2 mmol/L, d=0,1cm) ergibt 4,24V. Berechnen Sie die Transmission der Probe in %.",
-      "correct": 35.42,
-      "tolerance": 0.5,
-      "unit": "%",
-      "explanation": "T = I/I₀ = 4,24V/11,97V = 0,3542 = 35,42%. Der Detektor ist linear auf Lichtintensität → Spannung ∝ Intensität.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L004",
-      "source": "2019-05-Lieberzeit",
-      "topicId": "02-lambert-beer",
-      "points": 4,
-      "type": "numeric",
-      "question": "Blindprobe: 11,97V. Probe (0,2mmol/L, d=0,1cm): 4,24V. Berechnen Sie die Absorption A der Probe.",
-      "correct": 0.45,
-      "tolerance": 0.01,
-      "unit": "—",
-      "explanation": "A = -log(T) = -log(4,24/11,97) = -log(0,3542) = 0,451. Alternativ: A = log(I₀/I) = log(11,97/4,24) = log(2,823) = 0,451.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L005",
-      "source": "2019-05-Lieberzeit",
-      "topicId": "02-lambert-beer",
-      "points": 4,
-      "type": "numeric",
-      "question": "Blindprobe: 11,97V. Probe (c=0,2mmol/L=2×10⁻⁴mol/L, d=0,1cm): 4,24V. Berechnen Sie den molaren Extinktionskoeffizienten ε in L/(mol·cm).",
-      "correct": 22550,
-      "tolerance": 200,
-      "unit": "L/(mol·cm)",
-      "explanation": "A = 0,451 (aus vorheriger Frage). ε = A/(c·d) = 0,451/(2×10⁻⁴ mol/L × 0,1cm) = 0,451/2×10⁻⁵ = 22550 L/(mol·cm). Hinweis: c in mol/L, d in cm einsetzen!",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L006",
-      "source": "2019-05-Lieberzeit",
-      "topicId": "07-potentiometrie-nernst",
-      "points": 2,
-      "type": "mc-single",
-      "question": "Bei welchen Methoden fließt Strom durch die Zelle? (Mehrfachauswahl möglich)",
-      "options": [
-        "Potentiometrie",
-        "Stripping-Voltammetrie",
-        "Amperometrie",
-        "Glaselektrode"
-      ],
-      "correct": [
-        1,
-        2
-      ],
-      "explanation": "Potentiometrie + Glaselektrode: KEIN Strom (Gleichgewichtsmessung, hochohmiger Voltmeter). Stripping-Voltammetrie + Amperometrie: Strom fließt (elektrochemische Reaktion an Elektrode).",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L007",
-      "source": "2013-02-Lieberzeit",
-      "topicId": "07-potentiometrie-nernst",
-      "points": 2,
-      "type": "numeric",
-      "question": "25ml HCl (c=0,1mol/L) haben pH=1. Nach Zugabe von 25ml NaOH (c=50mmol/L): Um wieviel mV ändert sich die Glaselektrode? (Angabe als positive Zahl, Vorzeichen ignorieren)",
-      "correct": 59.16,
-      "tolerance": 1,
-      "unit": "mV",
-      "explanation": "n(HCl)=2,5mmol, n(NaOH)=1,25mmol → verbleibt 1,25mmol HCl in 50ml → c(H⁺)=0,025mol/L → pH=1,60. ΔpH=0,60. ΔE=0,05916×ΔpH×1000=0,05916×1=59,16mV... Warte: ΔpH=0,60 → ΔE=59,16×0,60=35,5mV. Korrekte Antwort: ~35,5mV.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L008",
-      "source": "2020-07-Lieberzeit",
-      "topicId": "08-voltammetrie-coulometrie",
-      "points": 1,
-      "type": "mc-single",
-      "question": "Muss man bei einer voltammetrischen Messung davon ausgehen, dass auch Ströme auftreten, die NICHT auf einer Redoxreaktion beruhen?",
-      "options": [
-        "Ja",
-        "Nein"
-      ],
-      "correct": 0,
-      "explanation": "JA! Kapazitive Ströme (Doppelschicht-Umladung) fließen immer wenn das Potential geändert wird – auch ohne Redoxreaktion. Diese sind der Hauptgrund für den Untergrundstrom in der Voltammetrie und begrenzen die Empfindlichkeit.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L009",
-      "source": "2020-07-Lieberzeit",
-      "topicId": "08-voltammetrie-coulometrie",
-      "points": 1,
-      "type": "mc-multi",
-      "question": "Welche Aussagen zu Elektroden in der Voltammetrie sind RICHTIG?",
-      "options": [
-        "Quecksilber ist ein universell einsetzbares Elektrodenmaterial",
-        "Normalwasserstoffelektroden sind als Referenzelektrode ungeeignet",
-        "Ein Platindraht stellt eine sinnvolle Referenzelektrode dar",
-        "Mittels Polarographie kann Cr⁶⁺ bei +1,5V bestimmt werden (E°Cr⁶⁺/Cr³⁺ = +1,33V)"
-      ],
-      "correct": [
-        1,
-        3
-      ],
-      "explanation": "(1) Falsch: Hg nur als Kathode (oxidiert leicht als Anode). (2) Richtig: NHE unpraktisch (H₂-Gas, Platin). (3) Falsch: Pt ist polarisierbar, kein konstantes Potential. (4) Richtig: Cr⁶⁺ Reduktion bei E° +1,33V → bei +1,5V (positiver als E°) erfolgt keine Reduktion → erst bei negativeren Werten.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L010",
-      "source": "2019-05-Lieberzeit",
-      "topicId": "09-chemosensoren",
-      "points": 1,
-      "type": "mc-single",
-      "question": "Welches ist der kommerziell erfolgreichste Biosensor?",
-      "options": [
-        "Harnstoffsensor (Urease)",
-        "Glucosesensor (Glucose-Oxidase, amperometrisch)",
-        "DNA-Hybridisierungssensor",
-        "Antikörper-basierter Immunosensor"
-      ],
-      "correct": 1,
-      "explanation": "Der amperometrische Glucosesensor (GOD, Glucose-Oxidase) ist der weltweit erfolgreichste Biosensor. Analyt: Glucose. Erkennungsspezies: GOD. Methode: Amperometrie (H₂O₂ an Pt-Elektrode). Millionen Diabetiker nutzen ihn täglich.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L011",
-      "source": "2020-09-Lieberzeit",
-      "topicId": "08-voltammetrie-coulometrie",
-      "points": 3,
-      "type": "numeric",
-      "question": "Coulometrie: Abscheidung von 207mg Co(II) als Co₃O₄ bei I=0,600A. Die Anodenreaktion ist: Co²⁺ → Co³⁺ + e⁻. Wie lange dauert es in Minuten? (M(Co)=58,93 g/mol, F=96485 C/mol)",
-      "correct": 18.84,
-      "tolerance": 0.1,
-      "unit": "min",
-      "explanation": "Co₃O₄: 3Co-Atome, 2×Co³⁺ + 1×Co²⁺ → Durchschnitt 8/3 Elektronen pro Co? Vereinfacht: Co²⁺ → Co³⁺, n=1 Elektron pro Co. n(Co)=0,207/58,93=3,513×10⁻³mol. Q=n×F×n_e=3,513×10⁻³×96485×1=338,9C... aber Co₃O₄ braucht 8 e⁻ pro Formel → 8/3 e⁻ per Co. Q=3,513×10⁻³×96485×(8/3)=903C. t=Q/I=903/0,600=1504s=25,1min. Antwort: ~25 min.",
-      "examiner": "lieberzeit"
-    },
-    {
-      "id": "L012",
-      "source": "2020-07-Lieberzeit",
-      "topicId": "01-grundlagen-spektroskopie",
-      "points": 2,
-      "type": "mc-single",
-      "question": "Die allgemeine Reaktionsgleichung für einen 1-Elektronen-Reduktionsprozess in der Voltammetrie ist:",
-      "options": [
-        "Ox + 2e⁻ → Red",
-        "Ox + e⁻ → Red",
-        "Red → Ox + e⁻",
-        "Red + e⁻ → Ox"
-      ],
-      "correct": 1,
-      "explanation": "Allgemeine Reduktion: Ox + ne⁻ → Red. Für n=1: Ox + e⁻ → Red. An der Kathode: Reduktion (Elektronen aufnehmen). An der Anode: Oxidation (Red → Ox + ne⁻).",
-      "examiner": "lieberzeit"
-    },
-    {
       "id": "G001",
       "source": "2013-02-Gerner",
       "topicId": "10-statistik-qualitaet",
@@ -500,6 +304,202 @@
       "examiner": "koellensperger"
     },
     {
+      "id": "L001",
+      "source": "2013-02-Lieberzeit",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 2,
+      "type": "order",
+      "question": "Ordnen Sie folgende spektroskopische Methoden nach aufsteigender Frequenz:",
+      "options": [
+        "UV",
+        "Infrarot",
+        "Röntgen",
+        "Mikrowelle"
+      ],
+      "correct": [
+        3,
+        1,
+        0,
+        2
+      ],
+      "explanation": "Aufsteigende Frequenz: Mikrowelle (0,75-3,75mm) < IR (400-4000cm⁻¹) < UV (180-400nm) < Röntgen (0,1-100Å). Kürzere Wellenlänge = höhere Frequenz = höhere Energie.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L002",
+      "source": "2013-02-Lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 1,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zur Fluoreszenzspektrometrie sind korrekt?",
+      "options": [
+        "In der Fluoreszenzspektrometrie wird das von der Probe emittierte Licht gemessen",
+        "Je flexibler die Struktur eines Moleküls, desto weniger fluoresziert es",
+        "In der FS gibt es kaum Matrixeffekte",
+        "Das Fluoreszenzlicht ist gegenüber dem Ausgangslicht zu höheren Frequenzen (kürzeren Wellenlängen) verschoben"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "Richtig: (1) Fluoreszenz = Emissionsmessung ✓. (2) Flexible Strukturen → mehr Schwingungsrelaxation → weniger Fluoreszenz ✓. Falsch: (3) Fluoreszenz hat weniger Matrixeffekte als AAS, aber sie existieren. (4) Fluoreszenzlicht hat LÄNGERE Wellenlänge (Stokes-Verschiebung, niedrigere Frequenz).",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L003",
+      "source": "2019-05-Lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Ein Photometer: Blindprobe ergibt 11,97V. Probe (0,2 mmol/L, d=0,1cm) ergibt 4,24V. Berechnen Sie die Transmission der Probe in %.",
+      "correct": 35.42,
+      "tolerance": 0.5,
+      "unit": "%",
+      "explanation": "T = I/I₀ = 4,24V/11,97V = 0,3542 = 35,42%. Der Detektor ist linear auf Lichtintensität → Spannung ∝ Intensität.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L004",
+      "source": "2019-05-Lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Blindprobe: 11,97V. Probe (0,2mmol/L, d=0,1cm): 4,24V. Berechnen Sie die Absorption A der Probe.",
+      "correct": 0.45,
+      "tolerance": 0.01,
+      "unit": "—",
+      "explanation": "A = -log(T) = -log(4,24/11,97) = -log(0,3542) = 0,451. Alternativ: A = log(I₀/I) = log(11,97/4,24) = log(2,823) = 0,451.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L005",
+      "source": "2019-05-Lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Blindprobe: 11,97V. Probe (c=0,2mmol/L=2×10⁻⁴mol/L, d=0,1cm): 4,24V. Berechnen Sie den molaren Extinktionskoeffizienten ε in L/(mol·cm).",
+      "correct": 22550,
+      "tolerance": 200,
+      "unit": "L/(mol·cm)",
+      "explanation": "A = 0,451 (aus vorheriger Frage). ε = A/(c·d) = 0,451/(2×10⁻⁴ mol/L × 0,1cm) = 0,451/2×10⁻⁵ = 22550 L/(mol·cm). Hinweis: c in mol/L, d in cm einsetzen!",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L006",
+      "source": "2019-05-Lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Bei welchen Methoden fließt Strom durch die Zelle? (Mehrfachauswahl möglich)",
+      "options": [
+        "Potentiometrie",
+        "Stripping-Voltammetrie",
+        "Amperometrie",
+        "Glaselektrode"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Potentiometrie + Glaselektrode: KEIN Strom (Gleichgewichtsmessung, hochohmiger Voltmeter). Stripping-Voltammetrie + Amperometrie: Strom fließt (elektrochemische Reaktion an Elektrode).",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L007",
+      "source": "2013-02-Lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "numeric",
+      "question": "25ml HCl (c=0,1mol/L) haben pH=1. Nach Zugabe von 25ml NaOH (c=50mmol/L): Um wieviel mV ändert sich die Glaselektrode? (Angabe als positive Zahl, Vorzeichen ignorieren)",
+      "correct": 59.16,
+      "tolerance": 1,
+      "unit": "mV",
+      "explanation": "n(HCl)=2,5mmol, n(NaOH)=1,25mmol → verbleibt 1,25mmol HCl in 50ml → c(H⁺)=0,025mol/L → pH=1,60. ΔpH=0,60. ΔE=0,05916×ΔpH×1000=0,05916×1=59,16mV... Warte: ΔpH=0,60 → ΔE=59,16×0,60=35,5mV. Korrekte Antwort: ~35,5mV.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L008",
+      "source": "2020-07-Lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 1,
+      "type": "mc-single",
+      "question": "Muss man bei einer voltammetrischen Messung davon ausgehen, dass auch Ströme auftreten, die NICHT auf einer Redoxreaktion beruhen?",
+      "options": [
+        "Ja",
+        "Nein"
+      ],
+      "correct": 0,
+      "explanation": "JA! Kapazitive Ströme (Doppelschicht-Umladung) fließen immer wenn das Potential geändert wird – auch ohne Redoxreaktion. Diese sind der Hauptgrund für den Untergrundstrom in der Voltammetrie und begrenzen die Empfindlichkeit.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L009",
+      "source": "2020-07-Lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 1,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zu Elektroden in der Voltammetrie sind RICHTIG?",
+      "options": [
+        "Quecksilber ist ein universell einsetzbares Elektrodenmaterial",
+        "Normalwasserstoffelektroden sind als Referenzelektrode ungeeignet",
+        "Ein Platindraht stellt eine sinnvolle Referenzelektrode dar",
+        "Mittels Polarographie kann Cr⁶⁺ bei +1,5V bestimmt werden (E°Cr⁶⁺/Cr³⁺ = +1,33V)"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "(1) Falsch: Hg nur als Kathode (oxidiert leicht als Anode). (2) Richtig: NHE unpraktisch (H₂-Gas, Platin). (3) Falsch: Pt ist polarisierbar, kein konstantes Potential. (4) Richtig: Cr⁶⁺ Reduktion bei E° +1,33V → bei +1,5V (positiver als E°) erfolgt keine Reduktion → erst bei negativeren Werten.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L010",
+      "source": "2019-05-Lieberzeit",
+      "topicId": "09-chemosensoren",
+      "points": 1,
+      "type": "mc-single",
+      "question": "Welches ist der kommerziell erfolgreichste Biosensor?",
+      "options": [
+        "Harnstoffsensor (Urease)",
+        "Glucosesensor (Glucose-Oxidase, amperometrisch)",
+        "DNA-Hybridisierungssensor",
+        "Antikörper-basierter Immunosensor"
+      ],
+      "correct": 1,
+      "explanation": "Der amperometrische Glucosesensor (GOD, Glucose-Oxidase) ist der weltweit erfolgreichste Biosensor. Analyt: Glucose. Erkennungsspezies: GOD. Methode: Amperometrie (H₂O₂ an Pt-Elektrode). Millionen Diabetiker nutzen ihn täglich.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L011",
+      "source": "2020-09-Lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 3,
+      "type": "numeric",
+      "question": "Coulometrie: Abscheidung von 207mg Co(II) als Co₃O₄ bei I=0,600A. Die Anodenreaktion ist: Co²⁺ → Co³⁺ + e⁻. Wie lange dauert es in Minuten? (M(Co)=58,93 g/mol, F=96485 C/mol)",
+      "correct": 18.84,
+      "tolerance": 0.1,
+      "unit": "min",
+      "explanation": "Co₃O₄: 3Co-Atome, 2×Co³⁺ + 1×Co²⁺ → Durchschnitt 8/3 Elektronen pro Co? Vereinfacht: Co²⁺ → Co³⁺, n=1 Elektron pro Co. n(Co)=0,207/58,93=3,513×10⁻³mol. Q=n×F×n_e=3,513×10⁻³×96485×1=338,9C... aber Co₃O₄ braucht 8 e⁻ pro Formel → 8/3 e⁻ per Co. Q=3,513×10⁻³×96485×(8/3)=903C. t=Q/I=903/0,600=1504s=25,1min. Antwort: ~25 min.",
+      "examiner": "lieberzeit"
+    },
+    {
+      "id": "L012",
+      "source": "2020-07-Lieberzeit",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Die allgemeine Reaktionsgleichung für einen 1-Elektronen-Reduktionsprozess in der Voltammetrie ist:",
+      "options": [
+        "Ox + 2e⁻ → Red",
+        "Ox + e⁻ → Red",
+        "Red → Ox + e⁻",
+        "Red + e⁻ → Ox"
+      ],
+      "correct": 1,
+      "explanation": "Allgemeine Reduktion: Ox + ne⁻ → Red. Für n=1: Ox + e⁻ → Red. An der Kathode: Reduktion (Elektronen aufnehmen). An der Anode: Oxidation (Red → Ox + ne⁻).",
+      "examiner": "lieberzeit"
+    },
+    {
       "id": "M001",
       "source": "2019-05-Lieberzeit",
       "topicId": "03-fluoreszenz-lumineszenz",
@@ -575,9 +575,214 @@
       "correct": 0,
       "explanation": "E=h·c/λ → λ=h·c/E. E=2,5×1,6022×10⁻¹⁹=4,006×10⁻¹⁹J. λ=6,626×10⁻³⁴×3×10⁸/4,006×10⁻¹⁹=1,988×10⁻²⁵/4,006×10⁻¹⁹=4,96×10⁻⁷m=496nm. Diese Verbindung absorbiert bei 496nm (grün) → erscheint rot/magenta.",
       "examiner": "lieberzeit"
+    },
+    {
+      "id": "U001",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Warum liefert die Röntgenfluoreszenzanalyse (RFA) elementspezifische Linien, deren Energie kaum von der chemischen Bindung abhängt?",
+      "options": [
+        "Weil nur Valenzelektronen beteiligt sind, die in allen Verbindungen gleich gebunden sind",
+        "Weil die Übergänge zwischen kernnahen Schalen stattfinden, deren Energien von der Bindungssituation fast unbeeinflusst bleiben",
+        "Weil die Anregung mit monochromatischem Licht erfolgt",
+        "Weil die Probe vorher atomisiert wird"
+      ],
+      "correct": 1,
+      "explanation": "Bei der RFA wird ein Elektron aus einer inneren Schale (K oder L) herausgeschlagen, ein äußeres Elektron fällt nach. Diese Schalen liegen tief im Kernpotential und spüren von der chemischen Umgebung praktisch nichts. Deshalb ist die RFA eine Elementanalyse und keine Strukturanalyse — anders als ESCA, wo genau diese kleinen Verschiebungen ausgewertet werden."
+    },
+    {
+      "id": "U002",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 4,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über ESCA/XPS treffen zu?",
+      "options": [
+        "Gemessen wird die kinetische Energie herausgelöster Photoelektronen",
+        "Die Bindungsenergie verschiebt sich mit dem Oxidationszustand (chemische Verschiebung)",
+        "Die Methode ist oberflächenempfindlich, typisch wenige Nanometer Informationstiefe",
+        "Die Methode benötigt keine Vakuumbedingungen"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "ESCA misst die kinetische Energie der durch Röntgenstrahlung ausgelösten Photoelektronen; daraus folgt die Bindungsenergie. Deren chemische Verschiebung verrät den Oxidationszustand. Weil Elektronen in Materie nur wenige Nanometer weit kommen, ist die Methode oberflächenempfindlich — und genau deshalb ist Ultrahochvakuum zwingend, sonst würden die Elektronen mit Gasmolekülen stoßen."
+    },
+    {
+      "id": "U003",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Ein Pulverdiffraktogramm zeigt einen Reflex bei 2θ = 30°. Mit Cu-Kα-Strahlung (λ = 154 pm) folgt daraus welcher Netzebenenabstand?",
+      "options": [
+        "154 pm",
+        "298 pm",
+        "77 pm",
+        "596 pm"
+      ],
+      "correct": 1,
+      "explanation": "Bragg: nλ = 2d·sin θ. Mit n = 1, θ = 15° ist sin θ = 0,259, also d = 154/(2·0,259) pm = 298 pm. Häufigster Fehler: 2θ statt θ in den Sinus einsetzen — dann kommt etwa die Hälfte heraus."
+    },
+    {
+      "id": "U004",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "06-elektrochemische-grundlagen",
+      "points": 4,
+      "type": "numeric",
+      "question": "Eine Halbzelle Cu²⁺/Cu (E° = +0,34 V, n = 2) enthält das Konzentrationsverhältnis [Red]/[Ox] = 100. Welches Potential stellt sich bei 25 °C ein? Angabe in Volt.",
+      "correct": 0.2817,
+      "explanation": "E = E° − (0,05916/n)·log([Red]/[Ox]) = 0,34 − (0,05916/2)·log(100) = 0,34 − 0,02958·2 = 0,2817 V. Ein Überschuss der reduzierten Form drückt das Potential — pro Zehnerpotenz um 59,16/n Millivolt.",
+      "tolerance": 0.005,
+      "unit": "V"
+    },
+    {
+      "id": "U005",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "06-elektrochemische-grundlagen",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Warum arbeitet die Potentiometrie stromlos, also mit einem sehr hochohmigen Voltmeter?",
+      "options": [
+        "Damit die Elektrode nicht korrodiert",
+        "Weil fließender Strom die Zusammensetzung an der Elektrode verändert und das gemessene Gleichgewichtspotential verfälscht",
+        "Weil sonst der Innenwiderstand der Lösung mitgemessen wird",
+        "Weil die Nernst-Gleichung nur für Wechselstrom gilt"
+      ],
+      "correct": 1,
+      "explanation": "Gemessen wird das Gleichgewichtspotential. Sobald nennenswert Strom fließt, läuft an der Elektrode Elektrolyse ab, die Konzentrationen an der Phasengrenze verschieben sich und das Potential wandert. Deshalb Voltmeter mit Eingangswiderstand über 10¹² Ω, besonders bei der hochohmigen Glaselektrode."
+    },
+    {
+      "id": "U006",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "06-elektrochemische-grundlagen",
+      "points": 3,
+      "type": "order",
+      "question": "Ordnen Sie nach steigendem Standardpotential E° (negativstes zuerst).",
+      "options": [
+        "Zn²⁺/Zn (−0,76 V)",
+        "2H⁺/H₂ (0,00 V)",
+        "Cu²⁺/Cu (+0,34 V)",
+        "Ag⁺/Ag (+0,80 V)"
+      ],
+      "correct": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "explanation": "Die Reihenfolge der Standardpotentiale ist zugleich die Spannungsreihe. Je negativer E°, desto stärker das Reduktionsmittel: Zink gibt Elektronen bereitwillig ab und löst sich in Säure, Silber nicht. Aus zwei Halbzellen ergibt sich die Zellspannung als Differenz, hier Zn/Ag also 1,56 V."
+    },
+    {
+      "id": "U007",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "16-atomspektrometrie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Weshalb ist die Graphitrohr-AAS rund hundertmal empfindlicher als die Flammen-AAS?",
+      "options": [
+        "Weil das Graphitrohr heißer ist als jede Flamme",
+        "Weil im Graphitrohr alle Atome der Probe gleichzeitig im Strahlengang stehen, statt kontinuierlich durchzuströmen",
+        "Weil eine stärkere Hohlkathodenlampe verwendet wird",
+        "Weil kein Monochromator nötig ist"
+      ],
+      "correct": 1,
+      "explanation": "Bei der Flamme wird die Probe fortlaufend zerstäubt, nur ein winziger Bruchteil ist zu einem Zeitpunkt im Lichtweg. Im Graphitrohr wird die ganze eingebrachte Menge auf einmal atomisiert und bleibt kurz im Strahlengang — die Atomzahldichte N und damit A = k·N·d steigt entsprechend. Die Temperatur (2700 gegen 2300 °C) erklärt den Faktor nicht."
+    },
+    {
+      "id": "U008",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "16-atomspektrometrie",
+      "points": 4,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über ICP-OES treffen zu?",
+      "options": [
+        "Das Argonplasma erreicht 6000 bis 10000 K",
+        "Über 70 Elemente lassen sich in einem Durchgang bestimmen",
+        "Die hohe Temperatur verringert chemische Interferenzen",
+        "Die Nachweisgrenzen liegen unter denen der ICP-MS"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Die ersten drei Punkte sind die Stärken des ICP: sehr hohe Temperatur, vollständige Atomisierung, Multielementfähigkeit. Bei den Nachweisgrenzen liegt jedoch die ICP-MS vorn (ng/L bis pg/L gegen µg/L), weil sie Ionen zählt statt Licht zu messen."
+    },
+    {
+      "id": "U009",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "16-atomspektrometrie",
+      "points": 4,
+      "type": "numeric",
+      "question": "Eine Flammen-AAS liefert für einen 5,0 mg/L-Standard die Absorption 0,250. Die Probe zeigt 0,160. Welche Konzentration hat die Probe in mg/L? Linearer Bereich vorausgesetzt.",
+      "correct": 3.2,
+      "explanation": "Im linearen Bereich ist A proportional zu c, also c = 5,0 · 0,160/0,250 = 3,2 mg/L. Voraussetzung ist, dass beide Messwerte im linearen Bereich liegen und dieselbe Matrix vorliegt — sonst wäre Standardaddition der richtige Weg.",
+      "tolerance": 0.05,
+      "unit": "mg/L"
     }
   ],
   "structures": [
+    {
+      "id": "exam-2013-02",
+      "date": "06.02.2013",
+      "title": "AC1 Prüfung WS 2012/13",
+      "totalPoints": 72,
+      "passingPoints": 36,
+      "sections": [
+        {
+          "points": 24,
+          "passingPoints": 12,
+          "questionIds": [
+            "L001",
+            "L002",
+            "L006",
+            "L007",
+            "M002"
+          ],
+          "examiner": "lieberzeit"
+        },
+        {
+          "points": 24,
+          "passingPoints": 12,
+          "questionIds": [
+            "K001",
+            "K002",
+            "K008"
+          ],
+          "examiner": "koellensperger"
+        },
+        {
+          "points": 24,
+          "passingPoints": 12,
+          "questionIds": [
+            "G001",
+            "G002",
+            "G003",
+            "G004",
+            "G005",
+            "G006",
+            "G007",
+            "G009",
+            "G012"
+          ],
+          "examiner": "gerner"
+        }
+      ]
+    },
     {
       "id": "exam-2019-05",
       "date": "27.05.2020",
@@ -625,53 +830,6 @@
             "G007",
             "G008",
             "G010"
-          ],
-          "examiner": "gerner"
-        }
-      ]
-    },
-    {
-      "id": "exam-2013-02",
-      "date": "06.02.2013",
-      "title": "AC1 Prüfung WS 2012/13",
-      "totalPoints": 72,
-      "passingPoints": 36,
-      "sections": [
-        {
-          "points": 24,
-          "passingPoints": 12,
-          "questionIds": [
-            "L001",
-            "L002",
-            "L006",
-            "L007",
-            "M002"
-          ],
-          "examiner": "lieberzeit"
-        },
-        {
-          "points": 24,
-          "passingPoints": 12,
-          "questionIds": [
-            "K001",
-            "K002",
-            "K008"
-          ],
-          "examiner": "koellensperger"
-        },
-        {
-          "points": 24,
-          "passingPoints": 12,
-          "questionIds": [
-            "G001",
-            "G002",
-            "G003",
-            "G004",
-            "G005",
-            "G006",
-            "G007",
-            "G009",
-            "G012"
           ],
           "examiner": "gerner"
         }
