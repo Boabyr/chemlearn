@@ -108,23 +108,25 @@ gravimetrisches Ergebnis systematisch zu hoch.
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "loeslichkeitsprodukt",
-      name: "Löslichkeitsprodukt eines 1:1-Salzes",
-      equation: "Ksp = s²",
-      variables: [
-        { id: "Ksp", label: "Löslichkeitsprodukt", symbol: "Ksp", unit: "mol²/L²", description: "Ionenprodukt der gesättigten Lösung" },
-        { id: "s", label: "Löslichkeit", symbol: "s", unit: "mol/L", description: "Molare Löslichkeit des Salzes" },
-      ],
-      umstellungen: [
-        { solveFor: "Ksp", expr: "s ^ 2" },
-        { solveFor: "s", expr: "sqrt(Ksp)" },
-      ],
-      hints: ["Gilt nur für Salze vom Typ AB, bei denen [A⁺] = [B⁻] = s ist. AgCl: Ksp = 1,8·10⁻¹⁰ führt auf s = 1,34·10⁻⁵ mol/L.", "Bei CaF₂ (Typ AB₂) gilt Ksp = 4s³, also s = ∛(Ksp/4). Die Stöchiometrie geht als Exponent ein — nicht einfach die Wurzel ziehen."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "loeslichkeitsprodukt",
+        name: "Löslichkeitsprodukt eines 1:1-Salzes",
+        equation: "Ksp = s²",
+        variables: [
+          { id: "Ksp", label: "Löslichkeitsprodukt", symbol: "Ksp", unit: "mol²/L²", description: "Ionenprodukt der gesättigten Lösung" },
+          { id: "s", label: "Löslichkeit", symbol: "s", unit: "mol/L", description: "Molare Löslichkeit des Salzes" },
+        ],
+        umstellungen: [
+          { solveFor: "Ksp", expr: "s ^ 2" },
+          { solveFor: "s", expr: "sqrt(Ksp)" },
+        ],
+        hints: ["Gilt nur für Salze vom Typ AB, bei denen [A⁺] = [B⁻] = s ist. AgCl: Ksp = 1,8·10⁻¹⁰ führt auf s = 1,34·10⁻⁵ mol/L.", "Bei CaF₂ (Typ AB₂) gilt Ksp = 4s³, also s = ∛(Ksp/4). Die Stöchiometrie geht als Exponent ein — nicht einfach die Wurzel ziehen."],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Welche Ionen werden aus einer Lösung mit Cu²⁺, Cd²⁺, Fe²⁺, Mn²⁺ bei pH 3 durch H₂S quantitativ gefällt?", options: ["Alle vier Ionen fallen aus", "Nur Fe²⁺ und Mn²⁺ fallen aus", "Nur Cu²⁺ und Cd²⁺ fallen aus", "Bei pH 3 fällt keines der Ionen"], correct: 2, explanation: "Bei pH 3 liefert H₂S nur sehr wenig S²⁻. Das reicht, um die winzigen Löslichkeitsprodukte von CuS (6·10⁻³⁶) und CdS (8·10⁻²⁷) zu überschreiten, nicht aber die von FeS (6·10⁻¹⁸) und MnS (3·10⁻¹⁴). Genau darauf beruht der Sulfidtrenngang: erst sauer fällen, dann neutral bis basisch." },
     { id: "q2", question: "Was ist das Löslichkeitsprodukt Ksp?", options: ["Die Konzentration eines gesättigten Salzes in Wasser", "Die Gleichgewichtskonstante Ksp = [Kation]·[Anion]", "Das Produkt der Reagenzkonzentrationen", "Der pH-Wert, bei dem die Fällung einsetzt"], correct: 1, explanation: "Ksp ist die Gleichgewichtskonstante des Lösevorgangs eines schwerlöslichen Salzes. Übersteigt das Ionenprodukt in der Lösung diesen Wert, fällt der Feststoff aus. Die Koeffizienten der Formel gehen als Exponenten ein: für CaF₂ gilt Ksp = [Ca²⁺][F⁻]² = 4s³, nicht s²." },

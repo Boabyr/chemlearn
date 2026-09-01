@@ -116,56 +116,58 @@ beantworten lässt:
   H gegen D verschiebt die Bande um etwa den Faktor 1/√2 nach unten — der klassische
   Nachweis, dass eine Bande wirklich von einer Wasserstoffschwingung stammt.
 `,
-  interactive: {
-    type: "spectrum-assignment",
-    title: "IR-Spektrum von Wasser – Schwingungszuordnung",
-    description: "Weise den markierten Peaks des H₂O-IR-Spektrums die richtigen Schwingungstypen zu.",
-    xLabel: "Wellenzahl (cm⁻¹) →",
-    yLabel: "Absorption",
-    peaks: [
-      {
-        id: "p1",
-        position: 12,
-        yTop: 95,
-        yBottom: 10,
-        correctLabel: "O-H Streckschwingung (νₐₛ, νₛ)",
-        options: [
-          "O-H Streckschwingung (νₐₛ, νₛ)",
-          "O-H Deformationsschwingung (δ)",
-          "C-H Streckschwingung",
-          "C=O Streckschwingung"
-        ]
-      },
-      {
-        id: "p2",
-        position: 45,
-        yTop: 75,
-        yBottom: 10,
-        correctLabel: "O-H Deformationsschwingung (δ)",
-        options: [
-          "O-H Streckschwingung (νₐₛ, νₛ)",
-          "O-H Deformationsschwingung (δ)",
-          "Librationsschwingung",
-          "C-O Streckschwingung"
-        ]
-      },
-      {
-        id: "p3",
-        position: 75,
-        yTop: 60,
-        yBottom: 10,
-        correctLabel: "Librationsschwingung",
-        options: [
-          "O-H Streckschwingung (νₐₛ, νₛ)",
-          "O-H Deformationsschwingung (δ)",
-          "Librationsschwingung",
-          "Translationsschwingung"
-        ]
-      }
-    ],
-    hint1: "H₂O hat 3 Atome (N=3), nicht-linear: 3×3–6 = 3 Grundschwingungen. Die O-H Streckschwingungen liegen im Bereich 3000–3700 cm⁻¹ (hohe Energie = hohe Wellenzahl).",
-    hint2: "Reihenfolge nach Wellenzahl: Streckschwingungen ν > Deformationsschwingungen δ > Librationsschwingungen. Streckschwingungen ~3000–4000 cm⁻¹, Deformation ~1000–1700 cm⁻¹, Libration <1000 cm⁻¹.",
-  },
+  interactives: [
+    {
+      type: "spectrum-assignment",
+      title: "IR-Spektrum von Wasser – Schwingungszuordnung",
+      description: "Weise den markierten Peaks des H₂O-IR-Spektrums die richtigen Schwingungstypen zu.",
+      xLabel: "Wellenzahl (cm⁻¹) →",
+      yLabel: "Absorption",
+      peaks: [
+        {
+          id: "p1",
+          position: 12,
+          yTop: 95,
+          yBottom: 10,
+          correctLabel: "O-H Streckschwingung (νₐₛ, νₛ)",
+          options: [
+            "O-H Streckschwingung (νₐₛ, νₛ)",
+            "O-H Deformationsschwingung (δ)",
+            "C-H Streckschwingung",
+            "C=O Streckschwingung"
+          ]
+        },
+        {
+          id: "p2",
+          position: 45,
+          yTop: 75,
+          yBottom: 10,
+          correctLabel: "O-H Deformationsschwingung (δ)",
+          options: [
+            "O-H Streckschwingung (νₐₛ, νₛ)",
+            "O-H Deformationsschwingung (δ)",
+            "Librationsschwingung",
+            "C-O Streckschwingung"
+          ]
+        },
+        {
+          id: "p3",
+          position: 75,
+          yTop: 60,
+          yBottom: 10,
+          correctLabel: "Librationsschwingung",
+          options: [
+            "O-H Streckschwingung (νₐₛ, νₛ)",
+            "O-H Deformationsschwingung (δ)",
+            "Librationsschwingung",
+            "Translationsschwingung"
+          ]
+        }
+      ],
+      hint1: "H₂O hat 3 Atome (N=3), nicht-linear: 3×3–6 = 3 Grundschwingungen. Die O-H Streckschwingungen liegen im Bereich 3000–3700 cm⁻¹ (hohe Energie = hohe Wellenzahl).",
+      hint2: "Reihenfolge nach Wellenzahl: Streckschwingungen ν > Deformationsschwingungen δ > Librationsschwingungen. Streckschwingungen ~3000–4000 cm⁻¹, Deformation ~1000–1700 cm⁻¹, Libration <1000 cm⁻¹.",
+    },
+  ],
   quiz: [
     { id: "q1", question: "Warum ist N₂ IR-inaktiv?", options: ["N₂ ist als Molekül zu leicht", "Das Dipolmoment ändert sich nicht", "N₂ absorbiert ausschließlich im UV", "N₂ hat keinen Schwingungsfreiheitsgrad"], correct: 1, explanation: "Eine Schwingung ist nur dann IR-aktiv, wenn sich dabei das Dipolmoment ändert. N₂ ist homonuklear und hat in jeder Auslenkung das Dipolmoment null — die Streckschwingung existiert, sie ist nur unsichtbar für IR. Im Raman ist sie sichtbar, weil sich die Polarisierbarkeit sehr wohl ändert." },
     { id: "q2", question: "Was ist der Fellgett-Vorteil (Multiplex-Vorteil) des FT-IR?", options: ["Der Stromverbrauch ist geringer", "Alle Frequenzen werden gleichzeitig gemessen", "Der zugängliche Messbereich ist größer", "Eine Kalibrierung entfällt vollständig"], correct: 1, explanation: "Ein dispersives Gerät misst jede Wellenlänge nur einen Bruchteil der Messzeit. Das FT-Gerät erfasst alle über die gesamte Zeit und gewinnt dadurch Signal-Rausch-Verhältnis — oder liefert dieselbe Qualität in kürzerer Zeit. Der zweite Vorteil ist der Durchsatz: ohne engen Spalt kommt mehr Licht an den Detektor (Jacquinot)." },

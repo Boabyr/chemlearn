@@ -7,9 +7,6 @@ export const topic = {
   icon: "🔬",
   estimatedMinutes: 90,
   theory: `
-
-
-
 ## Overview: Exam-Relevant Mechanisms
 
 The following mechanisms are tested in exercises and the exam.
@@ -85,153 +82,664 @@ produces an aromatic ring and a gas, look for the bridged bicycle in between: it
 isolated, but it explains where every atom came from. The bridge is always the part that
 leaves — the oxygen bridge of the oxazole adduct leaves as CO₂, the N=N bridge of the
 triazine and tetrazine adducts leaves as N₂.
-
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Kröhnke pyridine synthesis — the full sequence",
-    description: "Drei Schritte vom Bromketon zum Pyridinium-Ylid und zur Michael-Addition. Pyridin ist hier Reagenz, nicht Produkt.",
-    stages: [
-      {
-        id: 0, titel: "Alkylierung des Pyridins",
-        aufgabe: "Pyridin greift das α-Bromketon an. Zeichne beide Pfeile.",
-        erklaerung: "Pyridin wirkt hier als Nucleophil, nicht als Base — sein Elektronenpaar liegt in der Ringebene und ist ungehindert. Der Angriff verläuft nach Sₙ2 am Kohlenstoff neben der Carbonylgruppe; Bromid geht mit dem Bindungselektronenpaar ab. Es entsteht ein Pyridiniumsalz.",
-        hinweise: ["Zwei Pfeile: einer bildet die C–N-Bindung, einer schiebt das Bromid weg.", "Der Kohlenstoff darf nie fünf Bindungen haben — deshalb geht Brom im selben Zug."],
-        atome: [
-          { id: "n1", element: "N", x: 72, y: 132, freiePaare: 1 },
-          { id: "c2", element: "C", x: 120, y: 105 },
-          { id: "c3", element: "C", x: 168, y: 132 },
-          { id: "c4", element: "C", x: 168, y: 188 },
-          { id: "c5", element: "C", x: 120, y: 215 },
-          { id: "c6", element: "C", x: 72, y: 188 },
-          { id: "ca", element: "C", x: 265, y: 105 },
-          { id: "br", element: "Br", x: 265, y: 45, freiePaare: 3 },
-          { id: "ck", element: "C", x: 325, y: 140 },
-          { id: "ok", element: "O", x: 325, y: 200, freiePaare: 2 },
-          { id: "rr", element: "R", x: 385, y: 105 },
-        ],
-        bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "cbr", von: "ca", nach: "br", ordnung: 1 },
-          { id: "cc", von: "ca", nach: "ck", ordnung: 1 },
-          { id: "co", von: "ck", nach: "ok", ordnung: 2 },
-          { id: "cr", von: "ck", nach: "rr", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "n1" }, nach: { art: "atom", id: "ca" } },
-          { von: { art: "bindung", id: "cbr" }, nach: { art: "atom", id: "br" } },
-        ],
-      },
-      {
-        id: 1, titel: "Das Ylid entsteht",
-        aufgabe: "Eine Base nimmt dem α-Kohlenstoff den Wasserstoff ab. Zeichne beide Pfeile.",
-        erklaerung: "Der Wasserstoff am α-Kohlenstoff ist sauer, weil die entstehende negative Ladung gleich zweifach stabilisiert wird: vom Carbonyl daneben und vom positiv geladenen Pyridiniumstickstoff. Das Ergebnis ist ein Ylid — ein Molekül mit benachbarter positiver und negativer Ladung, und genau das ist das Nucleophil für den nächsten Schritt.",
-        hinweise: ["Warum ist gerade dieser Wasserstoff sauer? Schau, was rechts und links vom Kohlenstoff sitzt.", "Die Elektronen der C–H-Bindung bleiben am Kohlenstoff zurück."],
-        atome: [
-          { id: "n1", element: "N", x: 72, y: 132, ladung: 1 },
-          { id: "c2", element: "C", x: 120, y: 105 },
-          { id: "c3", element: "C", x: 168, y: 132 },
-          { id: "c4", element: "C", x: 168, y: 188 },
-          { id: "c5", element: "C", x: 120, y: 215 },
-          { id: "c6", element: "C", x: 72, y: 188 },
-          { id: "ca", element: "C", x: 140, y: 60 },
-          { id: "ha", element: "H", x: 140, y: 20 },
-          { id: "ck", element: "C", x: 205, y: 45 },
-          { id: "ok", element: "O", x: 205, y: 100, freiePaare: 2 },
-          { id: "rr", element: "R", x: 262, y: 20 },
-          { id: "base", element: "O", x: 380, y: 210, ladung: -1, freiePaare: 3, wasserstoffe: 1, frei: true },
-        ],
-        bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "nc", von: "n1", nach: "ca", ordnung: 1 },
-          { id: "cha", von: "ca", nach: "ha", ordnung: 1 },
-          { id: "cc", von: "ca", nach: "ck", ordnung: 1 },
-          { id: "co", von: "ck", nach: "ok", ordnung: 2 },
-          { id: "cr", von: "ck", nach: "rr", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "ha" } },
-          { von: { art: "bindung", id: "cha" }, nach: { art: "atom", id: "ca" } },
-        ],
-      },
-      {
-        id: 2, titel: "Michael-Addition",
-        aufgabe: "Das Ylid greift den β-Kohlenstoff des Enons an. Zeichne beide Pfeile.",
-        erklaerung: "Das Carbanion addiert sich an das β-Kohlenstoffatom des α,β-ungesättigten Ketons — konjugate Addition, nicht Angriff am Carbonyl. Damit stehen alle fünf Kohlenstoffatome des künftigen Pyridinrings in einer Kette. Ammoniumacetat liefert danach den Ringstickstoff, und die Oxidation zum Aromaten schließt die Synthese ab.",
-        hinweise: ["Nicht das Carbonyl angreifen — beim Michael-System ist das β-Kohlenstoffatom die elektrophile Stelle.", "Die π-Elektronen der C=C-Bindung weichen zum α-Kohlenstoff aus."],
-        atome: [
-          { id: "n1", element: "N", x: 72, y: 132, ladung: 1 },
-          { id: "c2", element: "C", x: 120, y: 105 },
-          { id: "c3", element: "C", x: 168, y: 132 },
-          { id: "c4", element: "C", x: 168, y: 188 },
-          { id: "c5", element: "C", x: 120, y: 215 },
-          { id: "c6", element: "C", x: 72, y: 188 },
-          { id: "ca", element: "C", x: 140, y: 60, ladung: -1, freiePaare: 1 },
-          { id: "ck", element: "C", x: 205, y: 45 },
-          { id: "ok", element: "O", x: 205, y: 100, freiePaare: 2 },
-          { id: "rr", element: "R", x: 262, y: 20 },
-          { id: "cbeta", element: "C", x: 300, y: 150 },
-          { id: "calpha", element: "C", x: 360, y: 185 },
-          { id: "ckk", element: "C", x: 420, y: 150 },
-          { id: "okk", element: "O", x: 420, y: 90, freiePaare: 2 },
-        ],
-        bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "nc", von: "n1", nach: "ca", ordnung: 1 },
-          { id: "cc", von: "ca", nach: "ck", ordnung: 1 },
-          { id: "co", von: "ck", nach: "ok", ordnung: 2 },
-          { id: "cr", von: "ck", nach: "rr", ordnung: 1 },
-          { id: "en", von: "cbeta", nach: "calpha", ordnung: 2 },
-          { id: "ec", von: "calpha", nach: "ckk", ordnung: 1 },
-          { id: "eo", von: "ckk", nach: "okk", ordnung: 2 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "ca" }, nach: { art: "atom", id: "cbeta" } },
-          { von: { art: "bindung", id: "en" }, nach: { art: "atom", id: "calpha" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "1,5-Diketon am Pyridiniumsalz",
-      beschreibung: "Fünf Kohlenstoffatome in Reihe, zwei Carbonylgruppen an den Enden. Ammoniumacetat bringt den Stickstoff, dann wird zum Pyridin aromatisiert — und das eingesetzte Pyridin geht wieder ab.",
-      atome: [
-        { id: "ck", element: "C", x: 90, y: 120 },
-        { id: "ok", element: "O", x: 90, y: 60, freiePaare: 2 },
-        { id: "ca", element: "C", x: 150, y: 160 },
-        { id: "cbeta", element: "C", x: 215, y: 125 },
-        { id: "calpha", element: "C", x: 280, y: 160 },
-        { id: "ckk", element: "C", x: 345, y: 125 },
-        { id: "okk", element: "O", x: 345, y: 65, freiePaare: 2 },
-        { id: "rr", element: "R", x: 40, y: 160 },
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Kröhnke pyridine synthesis — the full sequence",
+      description: "Drei Schritte vom Bromketon zum Pyridinium-Ylid und zur Michael-Addition. Pyridin ist hier Reagenz, nicht Produkt.",
+      stages: [
+        {
+          id: 0,
+          titel: "Alkylierung des Pyridins",
+          aufgabe: "Pyridin greift das α-Bromketon an. Zeichne beide Pfeile.",
+          erklaerung: "Pyridin wirkt hier als Nucleophil, nicht als Base — sein Elektronenpaar liegt in der Ringebene und ist ungehindert. Der Angriff verläuft nach Sₙ2 am Kohlenstoff neben der Carbonylgruppe; Bromid geht mit dem Bindungselektronenpaar ab. Es entsteht ein Pyridiniumsalz.",
+          hinweise: [
+            "Zwei Pfeile: einer bildet die C–N-Bindung, einer schiebt das Bromid weg.",
+            "Der Kohlenstoff darf nie fünf Bindungen haben — deshalb geht Brom im selben Zug."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 72,
+              y: 132,
+              freiePaare: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 120,
+              y: 105
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 168,
+              y: 132
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 168,
+              y: 188
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 120,
+              y: 215
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 72,
+              y: 188
+            },
+            {
+              id: "ca",
+              element: "C",
+              x: 265,
+              y: 105
+            },
+            {
+              id: "br",
+              element: "Br",
+              x: 265,
+              y: 45,
+              freiePaare: 3
+            },
+            {
+              id: "ck",
+              element: "C",
+              x: 325,
+              y: 140
+            },
+            {
+              id: "ok",
+              element: "O",
+              x: 325,
+              y: 200,
+              freiePaare: 2
+            },
+            {
+              id: "rr",
+              element: "R",
+              x: 385,
+              y: 105
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "cbr",
+              von: "ca",
+              nach: "br",
+              ordnung: 1
+            },
+            {
+              id: "cc",
+              von: "ca",
+              nach: "ck",
+              ordnung: 1
+            },
+            {
+              id: "co",
+              von: "ck",
+              nach: "ok",
+              ordnung: 2
+            },
+            {
+              id: "cr",
+              von: "ck",
+              nach: "rr",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "n1"
+              },
+              nach: {
+                art: "atom",
+                id: "ca"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "cbr"
+              },
+              nach: {
+                art: "atom",
+                id: "br"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Das Ylid entsteht",
+          aufgabe: "Eine Base nimmt dem α-Kohlenstoff den Wasserstoff ab. Zeichne beide Pfeile.",
+          erklaerung: "Der Wasserstoff am α-Kohlenstoff ist sauer, weil die entstehende negative Ladung gleich zweifach stabilisiert wird: vom Carbonyl daneben und vom positiv geladenen Pyridiniumstickstoff. Das Ergebnis ist ein Ylid — ein Molekül mit benachbarter positiver und negativer Ladung, und genau das ist das Nucleophil für den nächsten Schritt.",
+          hinweise: [
+            "Warum ist gerade dieser Wasserstoff sauer? Schau, was rechts und links vom Kohlenstoff sitzt.",
+            "Die Elektronen der C–H-Bindung bleiben am Kohlenstoff zurück."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 72,
+              y: 132,
+              ladung: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 120,
+              y: 105
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 168,
+              y: 132
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 168,
+              y: 188
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 120,
+              y: 215
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 72,
+              y: 188
+            },
+            {
+              id: "ca",
+              element: "C",
+              x: 140,
+              y: 60
+            },
+            {
+              id: "ha",
+              element: "H",
+              x: 140,
+              y: 20
+            },
+            {
+              id: "ck",
+              element: "C",
+              x: 205,
+              y: 45
+            },
+            {
+              id: "ok",
+              element: "O",
+              x: 205,
+              y: 100,
+              freiePaare: 2
+            },
+            {
+              id: "rr",
+              element: "R",
+              x: 262,
+              y: 20
+            },
+            {
+              id: "base",
+              element: "O",
+              x: 380,
+              y: 210,
+              ladung: -1,
+              freiePaare: 3,
+              wasserstoffe: 1,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "nc",
+              von: "n1",
+              nach: "ca",
+              ordnung: 1
+            },
+            {
+              id: "cha",
+              von: "ca",
+              nach: "ha",
+              ordnung: 1
+            },
+            {
+              id: "cc",
+              von: "ca",
+              nach: "ck",
+              ordnung: 1
+            },
+            {
+              id: "co",
+              von: "ck",
+              nach: "ok",
+              ordnung: 2
+            },
+            {
+              id: "cr",
+              von: "ck",
+              nach: "rr",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "base"
+              },
+              nach: {
+                art: "atom",
+                id: "ha"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "cha"
+              },
+              nach: {
+                art: "atom",
+                id: "ca"
+              }
+            }
+          ]
+        },
+        {
+          id: 2,
+          titel: "Michael-Addition",
+          aufgabe: "Das Ylid greift den β-Kohlenstoff des Enons an. Zeichne beide Pfeile.",
+          erklaerung: "Das Carbanion addiert sich an das β-Kohlenstoffatom des α,β-ungesättigten Ketons — konjugate Addition, nicht Angriff am Carbonyl. Damit stehen alle fünf Kohlenstoffatome des künftigen Pyridinrings in einer Kette. Ammoniumacetat liefert danach den Ringstickstoff, und die Oxidation zum Aromaten schließt die Synthese ab.",
+          hinweise: [
+            "Nicht das Carbonyl angreifen — beim Michael-System ist das β-Kohlenstoffatom die elektrophile Stelle.",
+            "Die π-Elektronen der C=C-Bindung weichen zum α-Kohlenstoff aus."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 72,
+              y: 132,
+              ladung: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 120,
+              y: 105
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 168,
+              y: 132
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 168,
+              y: 188
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 120,
+              y: 215
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 72,
+              y: 188
+            },
+            {
+              id: "ca",
+              element: "C",
+              x: 140,
+              y: 60,
+              ladung: -1,
+              freiePaare: 1
+            },
+            {
+              id: "ck",
+              element: "C",
+              x: 205,
+              y: 45
+            },
+            {
+              id: "ok",
+              element: "O",
+              x: 205,
+              y: 100,
+              freiePaare: 2
+            },
+            {
+              id: "rr",
+              element: "R",
+              x: 262,
+              y: 20
+            },
+            {
+              id: "cbeta",
+              element: "C",
+              x: 300,
+              y: 150
+            },
+            {
+              id: "calpha",
+              element: "C",
+              x: 360,
+              y: 185
+            },
+            {
+              id: "ckk",
+              element: "C",
+              x: 420,
+              y: 150
+            },
+            {
+              id: "okk",
+              element: "O",
+              x: 420,
+              y: 90,
+              freiePaare: 2
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "nc",
+              von: "n1",
+              nach: "ca",
+              ordnung: 1
+            },
+            {
+              id: "cc",
+              von: "ca",
+              nach: "ck",
+              ordnung: 1
+            },
+            {
+              id: "co",
+              von: "ck",
+              nach: "ok",
+              ordnung: 2
+            },
+            {
+              id: "cr",
+              von: "ck",
+              nach: "rr",
+              ordnung: 1
+            },
+            {
+              id: "en",
+              von: "cbeta",
+              nach: "calpha",
+              ordnung: 2
+            },
+            {
+              id: "ec",
+              von: "calpha",
+              nach: "ckk",
+              ordnung: 1
+            },
+            {
+              id: "eo",
+              von: "ckk",
+              nach: "okk",
+              ordnung: 2
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "ca"
+              },
+              nach: {
+                art: "atom",
+                id: "cbeta"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "en"
+              },
+              nach: {
+                art: "atom",
+                id: "calpha"
+              }
+            }
+          ]
+        }
       ],
-      bindungen: [
-        { id: "co", von: "ck", nach: "ok", ordnung: 2 },
-        { id: "cr", von: "ck", nach: "rr", ordnung: 1 },
-        { id: "cc", von: "ck", nach: "ca", ordnung: 1 },
-        { id: "c1", von: "ca", nach: "cbeta", ordnung: 1 },
-        { id: "c2", von: "cbeta", nach: "calpha", ordnung: 1 },
-        { id: "c3", von: "calpha", nach: "ckk", ordnung: 1 },
-        { id: "eo", von: "ckk", nach: "okk", ordnung: 2 },
-      ],
+      ergebnis: {
+        titel: "1,5-Diketon am Pyridiniumsalz",
+        beschreibung: "Fünf Kohlenstoffatome in Reihe, zwei Carbonylgruppen an den Enden. Ammoniumacetat bringt den Stickstoff, dann wird zum Pyridin aromatisiert — und das eingesetzte Pyridin geht wieder ab.",
+        atome: [
+          {
+            id: "ck",
+            element: "C",
+            x: 90,
+            y: 120
+          },
+          {
+            id: "ok",
+            element: "O",
+            x: 90,
+            y: 60,
+            freiePaare: 2
+          },
+          {
+            id: "ca",
+            element: "C",
+            x: 150,
+            y: 160
+          },
+          {
+            id: "cbeta",
+            element: "C",
+            x: 215,
+            y: 125
+          },
+          {
+            id: "calpha",
+            element: "C",
+            x: 280,
+            y: 160
+          },
+          {
+            id: "ckk",
+            element: "C",
+            x: 345,
+            y: 125
+          },
+          {
+            id: "okk",
+            element: "O",
+            x: 345,
+            y: 65,
+            freiePaare: 2
+          },
+          {
+            id: "rr",
+            element: "R",
+            x: 40,
+            y: 160
+          }
+        ],
+        bindungen: [
+          {
+            id: "co",
+            von: "ck",
+            nach: "ok",
+            ordnung: 2
+          },
+          {
+            id: "cr",
+            von: "ck",
+            nach: "rr",
+            ordnung: 1
+          },
+          {
+            id: "cc",
+            von: "ck",
+            nach: "ca",
+            ordnung: 1
+          },
+          {
+            id: "c1",
+            von: "ca",
+            nach: "cbeta",
+            ordnung: 1
+          },
+          {
+            id: "c2",
+            von: "cbeta",
+            nach: "calpha",
+            ordnung: 1
+          },
+          {
+            id: "c3",
+            von: "calpha",
+            nach: "ckk",
+            ordnung: 1
+          },
+          {
+            id: "eo",
+            von: "ckk",
+            nach: "okk",
+            ordnung: 2
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "What is the first step in the Paal-Knorr mechanism for pyrrole synthesis?", options: ["Oxidation of the 1,4-dicarbonyl compound", "Attack of the amine on a protonated carbonyl", "A Diels-Alder reaction of the diketone", "Radical initiation by heat or light"], correct: 1, explanation: "Acid protonates one carbonyl and makes it more electrophilic; the amine adds to give a hemiaminal. Dehydration then produces the imine, the second carbonyl is attacked by the same nitrogen, water leaves again, and tautomerisation delivers the aromatic pyrrole. Aromatisation is what pays for the whole sequence." },
     { id: "q2", question: "What is the driving force of the Kondrat'eva pyridine synthesis?", options: ["Catalysis by a strong acid", "Aromatisation plus escape of CO₂ as a gas", "Reduction of the azadiene component", "Nothing — the reaction is endothermic"], correct: 1, explanation: "The bridged bicycle formed in the first step is strained and not aromatic. Fragmenting it expels CO₂, which leaves the solution, and produces an aromatic pyridine. Gas evolution and aromatisation together make the step effectively irreversible — no catalyst required, only heat." },

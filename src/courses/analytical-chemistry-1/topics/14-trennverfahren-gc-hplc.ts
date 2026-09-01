@@ -118,27 +118,52 @@ in einem Lauf auf — der Grund, warum fast jede Methodenentwicklung dort beginn
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "mehrfachextraktion",
-      name: "Restmenge nach n-facher Extraktion",
-      equation: "mₙ = m₀ · (V_aq / (V_aq + K · V_org))ⁿ",
-      variables: [
-        { id: "mn", label: "Restmenge in der wässrigen Phase", symbol: "mₙ", unit: "mmol", description: "Was nach n Extraktionsschritten übrig bleibt" },
-        { id: "m0", label: "Ausgangsmenge", symbol: "m₀", unit: "mmol", description: "Stoffmenge vor der ersten Extraktion" },
-        { id: "Vaq", label: "Volumen der wässrigen Phase", symbol: "V_aq", unit: "mL", description: "Bleibt über alle Schritte gleich" },
-        { id: "Vorg", label: "Volumen je Extraktionsschritt", symbol: "V_org", unit: "mL", description: "Organisches Lösungsmittel pro Schritt" },
-        { id: "K", label: "Verteilungskoeffizient", symbol: "K", unit: "—", description: "Nernst-Koeffizient c_org / c_aq" },
-        { id: "n", label: "Anzahl der Schritte", symbol: "n", unit: "—", description: "Wie oft ausgeschüttelt wird" },
-      ],
-      umstellungen: [
-        { solveFor: "mn", expr: "m0 * (Vaq / (Vaq + K * Vorg)) ^ n" },
-        { solveFor: "m0", expr: "mn / ((Vaq / (Vaq + K * Vorg)) ^ n)" },
-      ],
-      hints: ["Rechne den Klammerausdruck zuerst aus — er ist der Anteil, der pro Schritt zurückbleibt. Bei Vaq = 20 mL, Vorg = 10 mL und K = 85 sind das 20/870 = 0,023.", "Dreimal mit 10 mL schlägt einmal mit 30 mL deutlich, weil der Restanteil pro Schritt potenziert wird. Genau danach wird in der Prüfung gefragt."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "mehrfachextraktion",
+        name: "Restmenge nach n-facher Extraktion",
+        equation: "mₙ = m₀ · (V_aq / (V_aq + K · V_org))ⁿ",
+        variables: [
+          { id: "mn", label: "Restmenge in der wässrigen Phase", symbol: "mₙ", unit: "mmol", description: "Was nach n Extraktionsschritten übrig bleibt" },
+          { id: "m0", label: "Ausgangsmenge", symbol: "m₀", unit: "mmol", description: "Stoffmenge vor der ersten Extraktion" },
+          { id: "Vaq", label: "Volumen der wässrigen Phase", symbol: "V_aq", unit: "mL", description: "Bleibt über alle Schritte gleich" },
+          { id: "Vorg", label: "Volumen je Extraktionsschritt", symbol: "V_org", unit: "mL", description: "Organisches Lösungsmittel pro Schritt" },
+          { id: "K", label: "Verteilungskoeffizient", symbol: "K", unit: "—", description: "Nernst-Koeffizient c_org / c_aq" },
+          { id: "n", label: "Anzahl der Schritte", symbol: "n", unit: "—", description: "Wie oft ausgeschüttelt wird" },
+        ],
+        umstellungen: [
+          { solveFor: "mn", expr: "m0 * (Vaq / (Vaq + K * Vorg)) ^ n" },
+          { solveFor: "m0", expr: "mn / ((Vaq / (Vaq + K * Vorg)) ^ n)" },
+        ],
+        hints: ["Rechne den Klammerausdruck zuerst aus — er ist der Anteil, der pro Schritt zurückbleibt. Bei Vaq = 20 mL, Vorg = 10 mL und K = 85 sind das 20/870 = 0,023.", "Dreimal mit 10 mL schlägt einmal mit 30 mL deutlich, weil der Restanteil pro Schritt potenziert wird. Genau danach wird in der Prüfung gefragt."],
+      },
     },
-  },
+      {
+      "type": "apparatus-matching",
+      "title": "Drei Trenntechniken",
+      "description": "Woran erkennt man, was die Probe durch die Trennstrecke treibt?",
+      "explanation": "In der GC treibt ein Trägergas, die Säule ist eine dünne, meterlange Kapillare in einem Ofen — die Selektivität kommt allein aus stationärer Phase und Temperatur. In der HPLC presst eine Pumpe das Laufmittel durch eine kurze, dicht gepackte Säule; hier wirkt die mobile Phase mit. Die Kapillarelektrophorese braucht überhaupt keine Pumpe: der elektroosmotische Fluss im Hochspannungsfeld bewegt die Flüssigkeit.",
+      "paare": [
+        {
+          "apparaturId": "gc",
+          "label": "Gaschromatograph",
+          "hinweis": "Trägergas, Kapillare im Ofen."
+        },
+        {
+          "apparaturId": "hplc",
+          "label": "HPLC",
+          "hinweis": "Pumpe und kurze gepackte Säule."
+        },
+        {
+          "apparaturId": "capillary-electrophoresis",
+          "label": "Kapillarelektrophorese",
+          "hinweis": "Hochspannung statt Pumpe."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Warum muss Kieselgel für die RP-HPLC deaktiviert werden?", options: ["Um die Partikelgröße des Materials weiter zu verringern", "Um freie Silanolgruppen der Oberfläche zu blockieren", "Um die Säule mechanisch stabiler zu machen", "Kieselgel wird für RP-HPLC nicht deaktiviert"], correct: 1, explanation: "Nach dem Aufbringen der C18-Ketten bleiben freie Si–OH-Gruppen übrig. Diese adsorbieren polare und basische Analyten zusätzlich zur eigentlichen Verteilung, was zu breiten und schiefen Peaks führt. Beim Endcapping werden sie mit kleinen Silanen abgesättigt." },
     { id: "q2", question: "In der Umkehrphasen-HPLC (RP-HPLC) mit C18-Säule und Wasser/Acetonitril: Welche Substanz eluiert zuerst?", options: ["Die unpolarste Substanz zuerst", "Die polarste Substanz zuerst", "Die Substanz mit der größten Molmasse", "Die Substanz mit dem höchsten Rf-Wert"], correct: 1, explanation: "Die stationäre Phase ist unpolar (C18), die mobile polar (Wasser/Acetonitril). Polare Analyten halten sich lieber in der mobilen Phase auf und eluieren früh, unpolare bleiben an der C18-Kette hängen. Mehr Acetonitril im Laufmittel beschleunigt alle Substanzen — das ist der Gradient." },

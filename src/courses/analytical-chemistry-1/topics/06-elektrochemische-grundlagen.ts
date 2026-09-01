@@ -93,29 +93,31 @@ Kathode immer die Reduktion.** Wer sich das merkt, kommt ohne die Vorzeichenrege
 Die Zellspannung ergibt sich stets als E(Kathode) − E(Anode). Ein positiver Wert heißt:
 die Reaktion läuft freiwillig in der angeschriebenen Richtung.
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "nernst",
-      name: "Nernst-Gleichung (25°C)",
-      equation: "E = E° − (0.05916/n) · log([Red]/[Ox])",
-      variables: [
-        { id: "E", label: "Elektrodenpotential", symbol: "E", unit: "V", description: "Gemessenes Potential" },
-        { id: "E0", label: "Standardpotential", symbol: "E°", unit: "V", description: "Standardelektrodenpotential" },
-        { id: "n", label: "Elektronenzahl", symbol: "n", unit: "—", description: "Anzahl übertragener Elektronen" },
-        { id: "ratio", label: "Konzentrationsverhältnis", symbol: "[Red]/[Ox]", unit: "—", description: "c(Red)/c(Ox)" },
-      ],
-      umstellungen: [
-        { solveFor: "E", expr: "E0 - (0.05916 / n) * log(ratio)" },
-        { solveFor: "E0", expr: "E + (0.05916 / n) * log(ratio)" },
-        { solveFor: "ratio", expr: "(10) ^ ((E0 - E) * n / 0.05916)" },
-      ],
-      hints: [
-        "E = E° − (0.05916/n) · log([Red]/[Ox]). Bei 25°C ist RT/F = 0.02569 V, und 2.303·RT/F = 0.05916 V. Typisch: n = 1 oder 2.",
-        "log([Red]/[Ox]): Bei hoher [Red] → positive log → E sinkt. Bei hoher [Ox] → negative log → E steigt. Oxidierte Form bevorzugt höhere Potentiale."
-      ],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "nernst",
+        name: "Nernst-Gleichung (25°C)",
+        equation: "E = E° − (0.05916/n) · log([Red]/[Ox])",
+        variables: [
+          { id: "E", label: "Elektrodenpotential", symbol: "E", unit: "V", description: "Gemessenes Potential" },
+          { id: "E0", label: "Standardpotential", symbol: "E°", unit: "V", description: "Standardelektrodenpotential" },
+          { id: "n", label: "Elektronenzahl", symbol: "n", unit: "—", description: "Anzahl übertragener Elektronen" },
+          { id: "ratio", label: "Konzentrationsverhältnis", symbol: "[Red]/[Ox]", unit: "—", description: "c(Red)/c(Ox)" },
+        ],
+        umstellungen: [
+          { solveFor: "E", expr: "E0 - (0.05916 / n) * log(ratio)" },
+          { solveFor: "E0", expr: "E + (0.05916 / n) * log(ratio)" },
+          { solveFor: "ratio", expr: "(10) ^ ((E0 - E) * n / 0.05916)" },
+        ],
+        hints: [
+          "E = E° − (0.05916/n) · log([Red]/[Ox]). Bei 25°C ist RT/F = 0.02569 V, und 2.303·RT/F = 0.05916 V. Typisch: n = 1 oder 2.",
+          "log([Red]/[Ox]): Bei hoher [Red] → positive log → E sinkt. Bei hoher [Ox] → negative log → E steigt. Oxidierte Form bevorzugt höhere Potentiale."
+        ],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Was misst die Nernst-Gleichung?", options: ["Den Strom in einer Elektrolysezelle bei fester Spannung", "Das Potential in Abhängigkeit von der Konzentration", "Die Leitfähigkeit einer Elektrolytlösung", "Die Zellspannung bei Standardbedingungen"], correct: 1, explanation: "Die Nernst-Gleichung verknüpft das Elektrodenpotential mit dem Konzentrationsverhältnis von oxidierter und reduzierter Form: E = E° − (0,05916/n)·log([Red]/[Ox]). Bei Standardbedingungen ist das Verhältnis eins, der Logarithmus null und E = E° — der Standardfall ist also nur ein Sonderfall der Gleichung." },
     { id: "q2", question: "Was ist der Vorfaktor bei 25°C in der Nernst-Gleichung (mit log₁₀)?", options: ["0.02569 V", "0.05916 V", "96485 V", "8.314 V"], correct: 1, explanation: "Bei 25°C: 2.303·RT/F = 2.303 × 8.314 × 298 / 96485 = 0.05916 V. Pro Dekade Konzentrationsänderung verschiebt sich E um 0.05916/n Volt." },

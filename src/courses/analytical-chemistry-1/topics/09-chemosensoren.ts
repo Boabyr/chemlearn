@@ -104,36 +104,66 @@ Potential stören Ascorbinsäure und Harnsäure weniger.
 - **Drift und Standzeit:** Wie lange bleibt die Kalibrierung gültig? Enzyme denaturieren,
   Membranen verschmutzen — der Grund, warum Teststreifen Wegwerfartikel sind.
 `,
-  interactive: {
-    type: "apparatus-quiz",
-    question: "Amperometrischer Glucosesensor (Clark-Elektrode Typ)",
-    targetId: "glucose-sensor",
-    explanation: "Der amperometrische Glucosesensor: GOD (Glucoseoxidase) oxidiert Glucose mit O₂ → H₂O₂. Das H₂O₂ wird an einer Pt-Elektrode (+0.65 V) oxidiert → messbarer Strom proportional zur Glucosekonzentration. Klassischer Biosensor (1. Generation).",
-    hint1: "GOD = Glucoseoxidase. Glucose → Gluconolacton + H₂O₂. H₂O₂ wird elektrochemisch detektiert.",
-    hint2: "Amperometrisch: Strom wird gemessen (im Gegensatz zu potentiometrisch = Spannung). Strom ∝ Glucosekonzentration. Wichtig: O₂-Abhängigkeit ist eine Limitation der 1. Generation.",
-    options: [
+  interactives: [
+    {
+      type: "apparatus-quiz",
+      question: "Amperometrischer Glucosesensor (Clark-Elektrode Typ)",
+      targetId: "glucose-sensor",
+      explanation: "Der amperometrische Glucosesensor: GOD (Glucoseoxidase) oxidiert Glucose mit O₂ → H₂O₂. Das H₂O₂ wird an einer Pt-Elektrode (+0.65 V) oxidiert → messbarer Strom proportional zur Glucosekonzentration. Klassischer Biosensor (1. Generation).",
+      hint1: "GOD = Glucoseoxidase. Glucose → Gluconolacton + H₂O₂. H₂O₂ wird elektrochemisch detektiert.",
+      hint2: "Amperometrisch: Strom wird gemessen (im Gegensatz zu potentiometrisch = Spannung). Strom ∝ Glucosekonzentration. Wichtig: O₂-Abhängigkeit ist eine Limitation der 1. Generation.",
+      options: [
+        {
+          id: "glucose-sensor",
+          label: "Amperometrischer Glucosesensor (1. Generation)",
+          description: "GOD-Enzym + Pt-Elektrode, misst H₂O₂",
+        },
+        {
+          id: "qcm",
+          label: "Quarzoszillator (QCM)",
+          description: "Massenempfindlich, Frequenzänderung",
+        },
+        {
+          id: "potentiometric-sensor",
+          label: "Potentiometrischer Sensor (ISE)",
+          description: "Spannungsmessung, Nernst-Gleichung",
+        },
+        {
+          id: "optical-sensor",
+          label: "Optischer Fasersensor",
+          description: "Fluoreszenz oder Absorption am Faserende",
+        },
+      ],
+    },
       {
-        id: "glucose-sensor",
-        label: "Amperometrischer Glucosesensor (1. Generation)",
-        description: "GOD-Enzym + Pt-Elektrode, misst H₂O₂",
-      },
-      {
-        id: "qcm",
-        label: "Quarzoszillator (QCM)",
-        description: "Massenempfindlich, Frequenzänderung",
-      },
-      {
-        id: "potentiometric-sensor",
-        label: "Potentiometrischer Sensor (ISE)",
-        description: "Spannungsmessung, Nernst-Gleichung",
-      },
-      {
-        id: "optical-sensor",
-        label: "Optischer Fasersensor",
-        description: "Fluoreszenz oder Absorption am Faserende",
-      },
-    ],
-  },
+      "type": "apparatus-matching",
+      "title": "Vier Sensoren, vier Wandlerprinzipien",
+      "description": "Jeder Sensor erkennt anders — und wandelt anders um.",
+      "explanation": "Der Glucosesensor arbeitet amperometrisch: das Enzym erzeugt H₂O₂, der Strom wird gemessen. Der QCM wiegt: angelagerte Masse senkt die Resonanzfrequenz des Schwingquarzes. Der potentiometrische Sensor misst eine Spannung über eine ionenselektive Membran, stromlos. Der optische Sensor misst eine Änderung von Absorption oder Fluoreszenz an einer Indikatorschicht.",
+      "paare": [
+        {
+          "apparaturId": "glucose-sensor",
+          "label": "Amperometrischer Glucosesensor",
+          "hinweis": "Enzym plus Elektrode, gemessen wird Strom."
+        },
+        {
+          "apparaturId": "qcm",
+          "label": "Schwingquarz-Waage (QCM)",
+          "hinweis": "Gemessen wird eine Frequenz."
+        },
+        {
+          "apparaturId": "potentiometric-sensor",
+          "label": "Potentiometrischer Sensor",
+          "hinweis": "Membran, gemessen wird eine Spannung."
+        },
+        {
+          "apparaturId": "optical-sensor",
+          "label": "Optischer Sensor",
+          "hinweis": "Indikatorschicht und Licht."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Welches sind die zwei Hauptkomponenten eines Chemosensors?", options: ["Lichtquelle und zugehöriger Detektor", "Rezeptorelement und Transducer", "Kathode und Anode einer Messzelle", "Monochromator und Auswerteeinheit"], correct: 1, explanation: "Der Rezeptor erkennt den Analyten selektiv — daher kommt die Spezifität. Der Transducer wandelt dieses Erkennungsereignis in ein elektrisches, optisches oder akustisches Signal um. Alles Weitere ist Auswerteelektronik und gehört nicht zur Definition." },
     { id: "q2", question: "Was misst ein Quarzoszillator (QCM) und warum ist er so empfindlich?", options: ["Er misst Ströme im Pikoampere-Bereich an einer Mikroelektrode", "Er misst die Frequenzänderung durch Massenanlagerung", "Er misst die Intensität der Fluoreszenz", "Er misst Änderungen der Impedanz"], correct: 1, explanation: "Lagert sich Masse auf dem Schwingquarz an, sinkt seine Resonanzfrequenz — der Zusammenhang steht in der Sauerbrey-Gleichung. Weil sich Frequenzen extrem genau messen lassen, reicht die Empfindlichkeit bis in den Nanogramm-pro-Quadratzentimeter-Bereich." },

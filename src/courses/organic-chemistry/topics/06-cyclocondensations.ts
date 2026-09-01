@@ -7,7 +7,6 @@ export const topic = {
   icon: "⚡",
   estimatedMinutes: 80,
   theory: `
-
 ## What is a Cyclocondensation?
 
 A **cyclocondensation** is a ring-closure reaction with loss of small molecules
@@ -81,111 +80,426 @@ same regiochemical question, since hydroxylamine also has two different ends.
 
 These are two different reactions with two different disconnections — worth telling apart,
 because the exam question usually asks which fragment ends up where.
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Pyrazole from a 1,3-diketone — three condensation steps",
-    description: "Eine Cyclokondensation ist gewöhnliche Carbonylchemie, zweimal hintereinander. Zeichne alle drei Schritte.",
-    stages: [
-      {
-        id: 0, titel: "Angriff am ersten Carbonyl",
-        aufgabe: "Das erste Stickstoffatom des Hydrazins greift C-1 an. Zeichne beide Pfeile.",
-        erklaerung: "Der Carbonylkohlenstoff ist elektrophil, weil der Sauerstoff Elektronendichte abzieht. Das Elektronenpaar des Stickstoffs bildet die neue Bindung, und die π-Elektronen der C=O-Bindung weichen auf den Sauerstoff aus — sonst hätte der Kohlenstoff fünf Bindungen. Es entsteht ein Halbaminal.",
-        hinweise: ["Nucleophil greift an, π-Elektronen weichen aus. Dasselbe Muster wie bei jeder Addition an ein Carbonyl.", "Der Sauerstoff nimmt die Elektronen und damit die negative Ladung auf."],
-        atome: [
-          { id: "c1", element: "C", x: 130, y: 160 },
-          { id: "o1", element: "O", x: 130, y: 95, freiePaare: 2 },
-          { id: "c2", element: "C", x: 190, y: 200 },
-          { id: "c3", element: "C", x: 250, y: 160 },
-          { id: "o3", element: "O", x: 250, y: 95, freiePaare: 2 },
-          { id: "na", element: "N", x: 350, y: 215, freiePaare: 1, wasserstoffe: 2 },
-          { id: "nb", element: "N", x: 410, y: 180, freiePaare: 1, wasserstoffe: 2 },
-        ],
-        bindungen: [
-          { id: "k1", von: "c1", nach: "o1", ordnung: 2 },
-          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
-          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
-          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "na" }, nach: { art: "atom", id: "c1" } },
-          { von: { art: "bindung", id: "k1" }, nach: { art: "atom", id: "o1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Wasser tritt aus",
-        aufgabe: "Aus dem Halbaminal wird das Hydrazon. Zeichne beide Pfeile: das Elektronenpaar am Stickstoff in die N–C-Bindung, und die C–O-Bindung zum Sauerstoff.",
-        erklaerung: "Das Elektronenpaar des Stickstoffs schiebt in die Bindung zum Kohlenstoff und macht daraus eine Doppelbindung. Damit der Kohlenstoff nicht überladen wird, muss die C–O-Bindung brechen — der Sauerstoff geht mit seinen Elektronen als Wasser weg. Diesen Wasseraustritt meint das Wort Kondensation.",
-        hinweise: ["Eine C=N-Doppelbindung entsteht. Was muss dafür den Platz räumen?", "Der zweite Pfeil zeigt auf den Sauerstoff, nicht von ihm weg."],
-        atome: [
-          { id: "c1", element: "C", x: 130, y: 160 },
-          { id: "o1", element: "O", x: 90, y: 105, freiePaare: 2, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 190, y: 200 },
-          { id: "c3", element: "C", x: 250, y: 160 },
-          { id: "o3", element: "O", x: 250, y: 95, freiePaare: 2 },
-          { id: "na", element: "N", x: 190, y: 105, freiePaare: 1, wasserstoffe: 1 },
-          { id: "nb", element: "N", x: 250, y: 65, freiePaare: 1, wasserstoffe: 2 },
-        ],
-        bindungen: [
-          { id: "k1", von: "c1", nach: "o1", ordnung: 1 },
-          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
-          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
-          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
-          { id: "k6", von: "c1", nach: "na", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "na" }, nach: { art: "bindung", id: "k6" } },
-          { von: { art: "bindung", id: "k1" }, nach: { art: "atom", id: "o1" } },
-        ],
-      },
-      {
-        id: 2, titel: "Ringschluss",
-        aufgabe: "Das zweite Stickstoffatom greift das verbliebene Carbonyl an. Zeichne beide Pfeile.",
-        erklaerung: "Jetzt schließt sich der Ring: der zweite Stickstoff sitzt genau in Reichweite von C-3. Nach einem weiteren Wasseraustritt und der Tautomerie steht das aromatische Pyrazol da — und die gewonnene Aromatizität ist es, die die ganze Kette antreibt. Ist das Diketon unsymmetrisch, entstehen an dieser Stelle zwei Regioisomere.",
-        hinweise: ["Derselbe Angriff wie im ersten Schritt, nur am anderen Ende der Kette.", "Zähle die Ringglieder: N, N, C, C, C — fünf, das passt."],
-        atome: [
-          { id: "c1", element: "C", x: 130, y: 160 },
-          { id: "c2", element: "C", x: 190, y: 200 },
-          { id: "c3", element: "C", x: 250, y: 160 },
-          { id: "o3", element: "O", x: 300, y: 205, freiePaare: 2 },
-          { id: "na", element: "N", x: 130, y: 100 },
-          { id: "nb", element: "N", x: 190, y: 60, freiePaare: 1, wasserstoffe: 2 },
-        ],
-        bindungen: [
-          { id: "k2", von: "c1", nach: "c2", ordnung: 1 },
-          { id: "k3", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "k4", von: "c3", nach: "o3", ordnung: 2 },
-          { id: "k5", von: "na", nach: "nb", ordnung: 1 },
-          { id: "k6", von: "c1", nach: "na", ordnung: 2 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "nb" }, nach: { art: "atom", id: "c3" } },
-          { von: { art: "bindung", id: "k4" }, nach: { art: "atom", id: "o3" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "Pyrazol",
-      beschreibung: "Nach dem zweiten Wasseraustritt und der Tautomerie ist der Fünfring aromatisch. Zwei Stickstoffatome nebeneinander, sechs π-Elektronen.",
-      atome: [
-        { id: "nb", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-        { id: "na", element: "N", x: 98, y: 182, freiePaare: 1 },
-        { id: "c1", element: "C", x: 118, y: 121 },
-        { id: "c2", element: "C", x: 182, y: 121 },
-        { id: "c3", element: "C", x: 202, y: 182 },
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Pyrazole from a 1,3-diketone — three condensation steps",
+      description: "Eine Cyclokondensation ist gewöhnliche Carbonylchemie, zweimal hintereinander. Zeichne alle drei Schritte.",
+      stages: [
+        {
+          id: 0,
+          titel: "Angriff am ersten Carbonyl",
+          aufgabe: "Das erste Stickstoffatom des Hydrazins greift C-1 an. Zeichne beide Pfeile.",
+          erklaerung: "Der Carbonylkohlenstoff ist elektrophil, weil der Sauerstoff Elektronendichte abzieht. Das Elektronenpaar des Stickstoffs bildet die neue Bindung, und die π-Elektronen der C=O-Bindung weichen auf den Sauerstoff aus — sonst hätte der Kohlenstoff fünf Bindungen. Es entsteht ein Halbaminal.",
+          hinweise: [
+            "Nucleophil greift an, π-Elektronen weichen aus. Dasselbe Muster wie bei jeder Addition an ein Carbonyl.",
+            "Der Sauerstoff nimmt die Elektronen und damit die negative Ladung auf."
+          ],
+          atome: [
+            {
+              id: "c1",
+              element: "C",
+              x: 130,
+              y: 160
+            },
+            {
+              id: "o1",
+              element: "O",
+              x: 130,
+              y: 95,
+              freiePaare: 2
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 190,
+              y: 200
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 250,
+              y: 160
+            },
+            {
+              id: "o3",
+              element: "O",
+              x: 250,
+              y: 95,
+              freiePaare: 2
+            },
+            {
+              id: "na",
+              element: "N",
+              x: 350,
+              y: 215,
+              freiePaare: 1,
+              wasserstoffe: 2
+            },
+            {
+              id: "nb",
+              element: "N",
+              x: 410,
+              y: 180,
+              freiePaare: 1,
+              wasserstoffe: 2
+            }
+          ],
+          bindungen: [
+            {
+              id: "k1",
+              von: "c1",
+              nach: "o1",
+              ordnung: 2
+            },
+            {
+              id: "k2",
+              von: "c1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "k3",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "k4",
+              von: "c3",
+              nach: "o3",
+              ordnung: 2
+            },
+            {
+              id: "k5",
+              von: "na",
+              nach: "nb",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "na"
+              },
+              nach: {
+                art: "atom",
+                id: "c1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "k1"
+              },
+              nach: {
+                art: "atom",
+                id: "o1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Wasser tritt aus",
+          aufgabe: "Aus dem Halbaminal wird das Hydrazon. Zeichne beide Pfeile: das Elektronenpaar am Stickstoff in die N–C-Bindung, und die C–O-Bindung zum Sauerstoff.",
+          erklaerung: "Das Elektronenpaar des Stickstoffs schiebt in die Bindung zum Kohlenstoff und macht daraus eine Doppelbindung. Damit der Kohlenstoff nicht überladen wird, muss die C–O-Bindung brechen — der Sauerstoff geht mit seinen Elektronen als Wasser weg. Diesen Wasseraustritt meint das Wort Kondensation.",
+          hinweise: [
+            "Eine C=N-Doppelbindung entsteht. Was muss dafür den Platz räumen?",
+            "Der zweite Pfeil zeigt auf den Sauerstoff, nicht von ihm weg."
+          ],
+          atome: [
+            {
+              id: "c1",
+              element: "C",
+              x: 130,
+              y: 160
+            },
+            {
+              id: "o1",
+              element: "O",
+              x: 90,
+              y: 105,
+              freiePaare: 2,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 190,
+              y: 200
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 250,
+              y: 160
+            },
+            {
+              id: "o3",
+              element: "O",
+              x: 250,
+              y: 95,
+              freiePaare: 2
+            },
+            {
+              id: "na",
+              element: "N",
+              x: 190,
+              y: 105,
+              freiePaare: 1,
+              wasserstoffe: 1
+            },
+            {
+              id: "nb",
+              element: "N",
+              x: 250,
+              y: 65,
+              freiePaare: 1,
+              wasserstoffe: 2
+            }
+          ],
+          bindungen: [
+            {
+              id: "k1",
+              von: "c1",
+              nach: "o1",
+              ordnung: 1
+            },
+            {
+              id: "k2",
+              von: "c1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "k3",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "k4",
+              von: "c3",
+              nach: "o3",
+              ordnung: 2
+            },
+            {
+              id: "k5",
+              von: "na",
+              nach: "nb",
+              ordnung: 1
+            },
+            {
+              id: "k6",
+              von: "c1",
+              nach: "na",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "na"
+              },
+              nach: {
+                art: "bindung",
+                id: "k6"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "k1"
+              },
+              nach: {
+                art: "atom",
+                id: "o1"
+              }
+            }
+          ]
+        },
+        {
+          id: 2,
+          titel: "Ringschluss",
+          aufgabe: "Das zweite Stickstoffatom greift das verbliebene Carbonyl an. Zeichne beide Pfeile.",
+          erklaerung: "Jetzt schließt sich der Ring: der zweite Stickstoff sitzt genau in Reichweite von C-3. Nach einem weiteren Wasseraustritt und der Tautomerie steht das aromatische Pyrazol da — und die gewonnene Aromatizität ist es, die die ganze Kette antreibt. Ist das Diketon unsymmetrisch, entstehen an dieser Stelle zwei Regioisomere.",
+          hinweise: [
+            "Derselbe Angriff wie im ersten Schritt, nur am anderen Ende der Kette.",
+            "Zähle die Ringglieder: N, N, C, C, C — fünf, das passt."
+          ],
+          atome: [
+            {
+              id: "c1",
+              element: "C",
+              x: 130,
+              y: 160
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 190,
+              y: 200
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 250,
+              y: 160
+            },
+            {
+              id: "o3",
+              element: "O",
+              x: 300,
+              y: 205,
+              freiePaare: 2
+            },
+            {
+              id: "na",
+              element: "N",
+              x: 130,
+              y: 100
+            },
+            {
+              id: "nb",
+              element: "N",
+              x: 190,
+              y: 60,
+              freiePaare: 1,
+              wasserstoffe: 2
+            }
+          ],
+          bindungen: [
+            {
+              id: "k2",
+              von: "c1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "k3",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "k4",
+              von: "c3",
+              nach: "o3",
+              ordnung: 2
+            },
+            {
+              id: "k5",
+              von: "na",
+              nach: "nb",
+              ordnung: 1
+            },
+            {
+              id: "k6",
+              von: "c1",
+              nach: "na",
+              ordnung: 2
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "nb"
+              },
+              nach: {
+                art: "atom",
+                id: "c3"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "k4"
+              },
+              nach: {
+                art: "atom",
+                id: "o3"
+              }
+            }
+          ]
+        }
       ],
-      bindungen: [
-        { id: "p1", von: "nb", nach: "na", ordnung: 1 },
-        { id: "p2", von: "na", nach: "c1", ordnung: 2 },
-        { id: "p3", von: "c1", nach: "c2", ordnung: 1 },
-        { id: "p4", von: "c2", nach: "c3", ordnung: 2 },
-        { id: "p5", von: "c3", nach: "nb", ordnung: 1 },
-      ],
+      ergebnis: {
+        titel: "Pyrazol",
+        beschreibung: "Nach dem zweiten Wasseraustritt und der Tautomerie ist der Fünfring aromatisch. Zwei Stickstoffatome nebeneinander, sechs π-Elektronen.",
+        atome: [
+          {
+            id: "nb",
+            element: "N",
+            x: 150,
+            y: 220,
+            wasserstoffe: 1
+          },
+          {
+            id: "na",
+            element: "N",
+            x: 98,
+            y: 182,
+            freiePaare: 1
+          },
+          {
+            id: "c1",
+            element: "C",
+            x: 118,
+            y: 121
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 182,
+            y: 121
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 202,
+            y: 182
+          }
+        ],
+        bindungen: [
+          {
+            id: "p1",
+            von: "nb",
+            nach: "na",
+            ordnung: 1
+          },
+          {
+            id: "p2",
+            von: "na",
+            nach: "c1",
+            ordnung: 2
+          },
+          {
+            id: "p3",
+            von: "c1",
+            nach: "c2",
+            ordnung: 1
+          },
+          {
+            id: "p4",
+            von: "c2",
+            nach: "c3",
+            ordnung: 2
+          },
+          {
+            id: "p5",
+            von: "c3",
+            nach: "nb",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Which components does the Hantzsch dihydropyridine synthesis require?", options: ["An azide together with a terminal alkyne", "An enamine, a 1,3-dicarbonyl and ammonia", "A conjugated diene and a dienophile", "Hydrazine together with a 1,3-dicarbonyl"], correct: 1, explanation: "Classically all in one pot: aldehyde, two equivalents of β-ketoester and ammonia. The first product is a 1,4-dihydropyridine, which is oxidised to the pyridine — unless the dihydropyridine is the target, as with the nifedipine-type calcium channel blockers. Hydrazine plus 1,3-dicarbonyl gives a pyrazole instead." },
     { id: "q2", question: "How can regioselectivity in the Hantzsch synthesis with unsymmetrical components be ensured?", options: ["By carefully controlling the temperature", "By pre-forming the enamine with defined geometry", "By choosing a suitable solvent", "By using a large excess of one component"], correct: 1, explanation: "Left to itself, the amine has to choose which of two similar carbonyls to attack, and both products form. Making the C–N bond beforehand in a separate step removes that choice: the cyclisation then has only one way left to close. Temperature and solvent shift the ratio at best, they do not fix it." },

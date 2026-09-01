@@ -108,25 +108,27 @@ bestimmende Konzentration variabel oder festgehalten ist.
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "silberpotential",
-      name: "Silberelektrode in der Fällungstitration",
-      equation: "E = E° + 0,05916 · log[Ag⁺]",
-      variables: [
-        { id: "E", label: "Gemessenes Potential", symbol: "E", unit: "V", description: "Gegen die Standardwasserstoffelektrode" },
-        { id: "E0", label: "Standardpotential", symbol: "E°", unit: "V", description: "Für Ag⁺/Ag sind das +0,799 V" },
-        { id: "cAg", label: "Silberionenkonzentration", symbol: "[Ag⁺]", unit: "mol/L", description: "Freie Ag⁺-Ionen in der Lösung" },
-      ],
-      umstellungen: [
-        { solveFor: "E", expr: "E0 + 0.05916 * log(cAg)" },
-        { solveFor: "E0", expr: "E - 0.05916 * log(cAg)" },
-        { solveFor: "cAg", expr: "10 ^ ((E - E0) / 0.05916)" },
-      ],
-      hints: ["Vor dem Äquivalenzpunkt bekommst du [Ag⁺] nicht direkt, sondern über das Löslichkeitsprodukt: [Ag⁺] = Ksp/[Cl⁻] mit Ksp(AgCl) = 1,8·10⁻¹⁰.", "Am Äquivalenzpunkt ist [Ag⁺] = [Cl⁻] = √Ksp. Eingesetzt ergibt das E = E° + 0,05916/2 · log(Ksp) — der Wendepunkt der Titrationskurve."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "silberpotential",
+        name: "Silberelektrode in der Fällungstitration",
+        equation: "E = E° + 0,05916 · log[Ag⁺]",
+        variables: [
+          { id: "E", label: "Gemessenes Potential", symbol: "E", unit: "V", description: "Gegen die Standardwasserstoffelektrode" },
+          { id: "E0", label: "Standardpotential", symbol: "E°", unit: "V", description: "Für Ag⁺/Ag sind das +0,799 V" },
+          { id: "cAg", label: "Silberionenkonzentration", symbol: "[Ag⁺]", unit: "mol/L", description: "Freie Ag⁺-Ionen in der Lösung" },
+        ],
+        umstellungen: [
+          { solveFor: "E", expr: "E0 + 0.05916 * log(cAg)" },
+          { solveFor: "E0", expr: "E - 0.05916 * log(cAg)" },
+          { solveFor: "cAg", expr: "10 ^ ((E - E0) / 0.05916)" },
+        ],
+        hints: ["Vor dem Äquivalenzpunkt bekommst du [Ag⁺] nicht direkt, sondern über das Löslichkeitsprodukt: [Ag⁺] = Ksp/[Cl⁻] mit Ksp(AgCl) = 1,8·10⁻¹⁰.", "Am Äquivalenzpunkt ist [Ag⁺] = [Cl⁻] = √Ksp. Eingesetzt ergibt das E = E° + 0,05916/2 · log(Ksp) — der Wendepunkt der Titrationskurve."],
+      },
     },
-  },
+  ],
   abbildungen: [
     {
       "art": "diagramm",

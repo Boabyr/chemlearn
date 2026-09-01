@@ -108,25 +108,27 @@ davon nebeneinander laufen.
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "fehlerfortpflanzung-produkt",
-      name: "Fehlerfortpflanzung bei Produkt und Quotient",
-      equation: "Δf/f = √[(Δx/x)² + (Δy/y)²]",
-      variables: [
-        { id: "relf", label: "Relativer Fehler des Ergebnisses", symbol: "Δf/f", unit: "—", description: "Als Anteil, nicht in Prozent" },
-        { id: "dx", label: "Absoluter Fehler von x", symbol: "Δx", unit: "wie x", description: "Unsicherheit der ersten Größe" },
-        { id: "x", label: "Messwert x", symbol: "x", unit: "—", description: "Erste Größe" },
-        { id: "dy", label: "Absoluter Fehler von y", symbol: "Δy", unit: "wie y", description: "Unsicherheit der zweiten Größe" },
-        { id: "y", label: "Messwert y", symbol: "y", unit: "—", description: "Zweite Größe" },
-      ],
-      umstellungen: [
-        { solveFor: "relf", expr: "sqrt((dx / x) ^ 2 + (dy / y) ^ 2)" },
-      ],
-      hints: ["Bei Produkt und Quotient addieren sich die relativen Fehler quadratisch, bei Summe und Differenz die absoluten. Nicht verwechseln.", "Weil quadriert wird, dominiert der größte Einzelfehler. Eine Größe mit 5 % Unsicherheit macht eine andere mit 0,5 % praktisch bedeutungslos — dort lohnt das Verbessern."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "fehlerfortpflanzung-produkt",
+        name: "Fehlerfortpflanzung bei Produkt und Quotient",
+        equation: "Δf/f = √[(Δx/x)² + (Δy/y)²]",
+        variables: [
+          { id: "relf", label: "Relativer Fehler des Ergebnisses", symbol: "Δf/f", unit: "—", description: "Als Anteil, nicht in Prozent" },
+          { id: "dx", label: "Absoluter Fehler von x", symbol: "Δx", unit: "wie x", description: "Unsicherheit der ersten Größe" },
+          { id: "x", label: "Messwert x", symbol: "x", unit: "—", description: "Erste Größe" },
+          { id: "dy", label: "Absoluter Fehler von y", symbol: "Δy", unit: "wie y", description: "Unsicherheit der zweiten Größe" },
+          { id: "y", label: "Messwert y", symbol: "y", unit: "—", description: "Zweite Größe" },
+        ],
+        umstellungen: [
+          { solveFor: "relf", expr: "sqrt((dx / x) ^ 2 + (dy / y) ^ 2)" },
+        ],
+        hints: ["Bei Produkt und Quotient addieren sich die relativen Fehler quadratisch, bei Summe und Differenz die absoluten. Nicht verwechseln.", "Weil quadriert wird, dominiert der größte Einzelfehler. Eine Größe mit 5 % Unsicherheit macht eine andere mit 0,5 % praktisch bedeutungslos — dort lohnt das Verbessern."],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Welche statistischen Tests sind in der Analytischen Chemie besonders wichtig?", options: ["Ausschließlich der t-Test", "Q-Test, t-Test und F-Test", "Ausschließlich der F-Test", "Ausschließlich der Chi-Quadrat-Test"], correct: 1, explanation: "Der Q-Test prüft einen einzelnen verdächtigen Wert auf Ausreißer, der t-Test vergleicht Mittelwerte, der F-Test vergleicht Streuungen. Die Reihenfolge ist wichtig: erst Ausreißer prüfen, dann mit dem F-Test die Varianzen vergleichen, und erst dann den passenden t-Test wählen." },
     { id: "q2", question: "Was ist eine Wiederfindungsrate und welcher Wert ist ideal?", options: ["Anteil des gefundenen am eingesetzten Analyten, ideal: 95-105%", "Anteil der wiederholten Messungen im Vertrauensbereich, ideal: 100%", "Anteil der verworfenen Ausreißer, ideal: <5%", "Verhältnis Messwert zu Blindwert, ideal: >10"], correct: 0, explanation: "Recovery = (c_gemessen/c_zugesetzt) × 100%. Zugesetzter Standard: Known addition (Spike). Ideal: 95-105%. Abweichungen zeigen systematische Fehler (Matrix, Verluste bei Aufschluss) an." },

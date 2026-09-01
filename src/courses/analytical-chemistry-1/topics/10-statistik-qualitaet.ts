@@ -114,25 +114,27 @@ und LOQ darf als Nachweis berichtet werden, aber nicht als Zahlenwert.
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "nachweisgrenze",
-      name: "Nachweisgrenze aus der Kalibriergerade",
-      equation: "LOD = 3 · s_Blind / m",
-      variables: [
-        { id: "LOD", label: "Nachweisgrenze", symbol: "LOD", unit: "mg/L", description: "Kleinste sicher nachweisbare Konzentration" },
-        { id: "sBlind", label: "Streuung des Blindwerts", symbol: "s_Blind", unit: "Signaleinheit", description: "Standardabweichung des Blindwertsignals" },
-        { id: "m", label: "Steigung", symbol: "m", unit: "Signal je mg/L", description: "Steigung der Kalibriergerade" },
-      ],
-      umstellungen: [
-        { solveFor: "LOD", expr: "3 * sBlind / m" },
-        { solveFor: "sBlind", expr: "LOD * m / 3" },
-        { solveFor: "m", expr: "3 * sBlind / LOD" },
-      ],
-      hints: ["Die Bestimmungsgrenze LOQ benutzt denselben Bruch mit dem Faktor 10 statt 3. LOQ liegt also immer gut dreimal höher als LOD.", "Eine steilere Kalibriergerade (großes m) drückt die Nachweisgrenze — deshalb misst man bei λmax, wo ε und damit m am größten sind."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "nachweisgrenze",
+        name: "Nachweisgrenze aus der Kalibriergerade",
+        equation: "LOD = 3 · s_Blind / m",
+        variables: [
+          { id: "LOD", label: "Nachweisgrenze", symbol: "LOD", unit: "mg/L", description: "Kleinste sicher nachweisbare Konzentration" },
+          { id: "sBlind", label: "Streuung des Blindwerts", symbol: "s_Blind", unit: "Signaleinheit", description: "Standardabweichung des Blindwertsignals" },
+          { id: "m", label: "Steigung", symbol: "m", unit: "Signal je mg/L", description: "Steigung der Kalibriergerade" },
+        ],
+        umstellungen: [
+          { solveFor: "LOD", expr: "3 * sBlind / m" },
+          { solveFor: "sBlind", expr: "LOD * m / 3" },
+          { solveFor: "m", expr: "3 * sBlind / LOD" },
+        ],
+        hints: ["Die Bestimmungsgrenze LOQ benutzt denselben Bruch mit dem Faktor 10 statt 3. LOQ liegt also immer gut dreimal höher als LOD.", "Eine steilere Kalibriergerade (großes m) drückt die Nachweisgrenze — deshalb misst man bei λmax, wo ε und damit m am größten sind."],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Was unterscheidet zufällige von systematischen Fehlern?", options: ["Zufällige Fehler sind grundsätzlich größer als systematische", "Zufällige streuen, systematische zeigen in eine Richtung", "Systematische Fehler zeigt die Wiederholung an", "Zufällige Fehler stammen aus der Kalibrierung"], correct: 1, explanation: "Zufällige Fehler streuen um den Mittelwert und lassen sich durch Mehrfachmessung verkleinern; sie bestimmen die Präzision. Systematische Fehler verschieben alle Werte in dieselbe Richtung, bleiben bei Wiederholung unentdeckt und bestimmen die Richtigkeit. Erkennen lassen sie sich nur über Blindwerte und zertifizierte Referenzmaterialien." },
     { id: "q2", question: "Die Nachweisgrenze LOD berechnet sich als:", options: ["LOD = s_Blind / m", "LOD = 3 · s_Blind / m", "LOD = 10 · s_Blind / m", "LOD = s_Blind · m"], correct: 1, explanation: "LOD = 3 · s_Blind / m. Der Faktor 3 entspricht einem Signal, das 3σ über dem Rauschen liegt (99,7% Sicherheit). LOQ = 10 · s_Blind / m (quantitative Bestimmung möglich)." },

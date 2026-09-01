@@ -7,7 +7,6 @@ export const topic = {
   icon: "⚖️",
   estimatedMinutes: 60,
   theory: `
-
 ## Electrophilic Aromatic Substitution (SEAr) at Heteroaromatics
 
 ### General Principle
@@ -82,115 +81,486 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
 | Pyrrole | Br⁺ | C-2 | 2-Bromopyrrole |
 | Thiophene | Br⁺ | C-2 | 2-Bromothiophene |
 | Pyridine | Br₂/very harsh | C-3 | 3-Bromopyridine |
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Indole attacks at C-3 — the exception explained",
-    description: "Pyrrol bevorzugt C-2, Indol dagegen C-3. Zeichne den Angriff, der den Benzolring unangetastet lässt.",
-    stages: [
-      {
-        id: 0, titel: "Angriff an C-3",
-        aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Elektrophil.",
-        erklaerung: "Der Angriff an C-3 lässt die positive Ladung am Stickstoff enden, ohne dass der ankondensierte Benzolring seine Aromatizität verliert. Bei einem Angriff an C-2 müsste die Ladung in den Sechsring hinein delokalisiert werden — das kostet dessen Sextett. Deshalb kehrt sich hier die Regel um, die für Pyrrol, Furan und Thiophen gilt.",
-        hinweise: ["Der Benzolring ist mitgezeichnet. Frage dich bei jeder Möglichkeit, ob er intakt bleibt.", "Wie beim Pyrrol beginnt der Pfeil an der Doppelbindung des Fünfrings, nicht am Stickstoff."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Indole attacks at C-3 — the exception explained",
+      description: "Pyrrol bevorzugt C-2, Indol dagegen C-3. Zeichne den Angriff, der den Benzolring unangetastet lässt.",
+      stages: [
+        {
+          id: 0,
+          titel: "Angriff an C-3",
+          aufgabe: "Zeichne den Pfeil von der C2=C3-Bindung zum Elektrophil.",
+          erklaerung: "Der Angriff an C-3 lässt die positive Ladung am Stickstoff enden, ohne dass der ankondensierte Benzolring seine Aromatizität verliert. Bei einem Angriff an C-2 müsste die Ladung in den Sechsring hinein delokalisiert werden — das kostet dessen Sextett. Deshalb kehrt sich hier die Regel um, die für Pyrrol, Furan und Thiophen gilt.",
+          hinweise: [
+            "Der Benzolring ist mitgezeichnet. Frage dich bei jeder Möglichkeit, ob er intakt bleibt.",
+            "Wie beim Pyrrol beginnt der Pfeil an der Doppelbindung des Fünfrings, nicht am Stickstoff."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 250,
+              y: 215,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 300,
+              y: 180
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 282,
+              y: 122
+            },
+            {
+              id: "c3a",
+              element: "C",
+              x: 222,
+              y: 122
+            },
+            {
+              id: "c7a",
+              element: "C",
+              x: 204,
+              y: 180
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 181,
+              y: 77
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 122,
+              y: 91
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 104,
+              y: 149
+            },
+            {
+              id: "c7",
+              element: "C",
+              x: 145,
+              y: 193
+            },
+            {
+              id: "e1",
+              element: "E",
+              x: 390,
+              y: 80,
+              ladung: 1,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "f1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "f2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 2
+            },
+            {
+              id: "f3",
+              von: "c3",
+              nach: "c3a",
+              ordnung: 1
+            },
+            {
+              id: "f4",
+              von: "c3a",
+              nach: "c7a",
+              ordnung: 1
+            },
+            {
+              id: "f5",
+              von: "c7a",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "b1",
+              von: "c3a",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "b2",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "b3",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "b4",
+              von: "c6",
+              nach: "c7",
+              ordnung: 1
+            },
+            {
+              id: "b5",
+              von: "c7",
+              nach: "c7a",
+              ordnung: 2
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "bindung",
+                id: "f2"
+              },
+              nach: {
+                art: "atom",
+                id: "e1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Rearomatisierung",
+          aufgabe: "Eine Base nimmt das Proton von C-3 ab. Zeichne beide Pfeile.",
+          erklaerung: "Der Benzolring hat die ganze Zeit sein Sextett behalten — nur der Fünfring war kurz gestört. Mit der Deprotonierung kehrt auch dort die Aromatizität zurück, und das Elektrophil bleibt an C-3 stehen. Genau deshalb bromiert Indol zu 3-Bromindol und nicht zu 2-Bromindol.",
+          hinweise: [
+            "An C-3 sitzen jetzt vier Bindungspartner. Einer davon muss weichen.",
+            "Das Elektronenpaar der C–H-Bindung geht in den Ring zurück, nicht zur Base."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 250,
+              y: 215,
+              ladung: 1,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 300,
+              y: 180
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 282,
+              y: 122
+            },
+            {
+              id: "c3a",
+              element: "C",
+              x: 222,
+              y: 122
+            },
+            {
+              id: "c7a",
+              element: "C",
+              x: 204,
+              y: 180
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 181,
+              y: 77
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 122,
+              y: 91
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 104,
+              y: 149
+            },
+            {
+              id: "c7",
+              element: "C",
+              x: 145,
+              y: 193
+            },
+            {
+              id: "e1",
+              element: "E",
+              x: 340,
+              y: 75
+            },
+            {
+              id: "h3",
+              element: "H",
+              x: 300,
+              y: 55
+            },
+            {
+              id: "base",
+              element: "N",
+              x: 415,
+              y: 175,
+              ladung: -1,
+              freiePaare: 2,
+              wasserstoffe: 2,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "f1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "f2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "f3",
+              von: "c3",
+              nach: "c3a",
+              ordnung: 1
+            },
+            {
+              id: "f4",
+              von: "c3a",
+              nach: "c7a",
+              ordnung: 1
+            },
+            {
+              id: "f5",
+              von: "c7a",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "b1",
+              von: "c3a",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "b2",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "b3",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "b4",
+              von: "c6",
+              nach: "c7",
+              ordnung: 1
+            },
+            {
+              id: "b5",
+              von: "c7",
+              nach: "c7a",
+              ordnung: 2
+            },
+            {
+              id: "ce",
+              von: "c3",
+              nach: "e1",
+              ordnung: 1
+            },
+            {
+              id: "ch",
+              von: "c3",
+              nach: "h3",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "base"
+              },
+              nach: {
+                art: "atom",
+                id: "h3"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "ch"
+              },
+              nach: {
+                art: "bindung",
+                id: "f2"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "3-substituiertes Indol",
+        beschreibung: "Beide Ringe sind aromatisch, das Elektrophil sitzt an C-3. Die Ausnahme zur α-Regel, erklärt durch den Benzolring.",
         atome: [
-          { id: "n1", element: "N", x: 250, y: 215, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 300, y: 180 },
-          { id: "c3", element: "C", x: 282, y: 122 },
-          { id: "c3a", element: "C", x: 222, y: 122 },
-          { id: "c7a", element: "C", x: 204, y: 180 },
-          { id: "c4", element: "C", x: 181, y: 77 },
-          { id: "c5", element: "C", x: 122, y: 91 },
-          { id: "c6", element: "C", x: 104, y: 149 },
-          { id: "c7", element: "C", x: 145, y: 193 },
-          { id: "e1", element: "E", x: 390, y: 80, ladung: 1, frei: true },
+          {
+            id: "n1",
+            element: "N",
+            x: 250,
+            y: 215,
+            wasserstoffe: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 300,
+            y: 180
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 282,
+            y: 122
+          },
+          {
+            id: "c3a",
+            element: "C",
+            x: 222,
+            y: 122
+          },
+          {
+            id: "c7a",
+            element: "C",
+            x: 204,
+            y: 180
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 181,
+            y: 77
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 122,
+            y: 91
+          },
+          {
+            id: "c6",
+            element: "C",
+            x: 104,
+            y: 149
+          },
+          {
+            id: "c7",
+            element: "C",
+            x: 145,
+            y: 193
+          },
+          {
+            id: "e1",
+            element: "E",
+            x: 340,
+            y: 75
+          }
         ],
         bindungen: [
-          { id: "f1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "f2", von: "c2", nach: "c3", ordnung: 2 },
-          { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
-          { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
-          { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
-          { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
-          { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
-          { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
-        ],
-        pfeile: [
-          { von: { art: "bindung", id: "f2" }, nach: { art: "atom", id: "e1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Rearomatisierung",
-        aufgabe: "Eine Base nimmt das Proton von C-3 ab. Zeichne beide Pfeile.",
-        erklaerung: "Der Benzolring hat die ganze Zeit sein Sextett behalten — nur der Fünfring war kurz gestört. Mit der Deprotonierung kehrt auch dort die Aromatizität zurück, und das Elektrophil bleibt an C-3 stehen. Genau deshalb bromiert Indol zu 3-Bromindol und nicht zu 2-Bromindol.",
-        hinweise: ["An C-3 sitzen jetzt vier Bindungspartner. Einer davon muss weichen.", "Das Elektronenpaar der C–H-Bindung geht in den Ring zurück, nicht zur Base."],
-        atome: [
-          { id: "n1", element: "N", x: 250, y: 215, ladung: 1, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 300, y: 180 },
-          { id: "c3", element: "C", x: 282, y: 122 },
-          { id: "c3a", element: "C", x: 222, y: 122 },
-          { id: "c7a", element: "C", x: 204, y: 180 },
-          { id: "c4", element: "C", x: 181, y: 77 },
-          { id: "c5", element: "C", x: 122, y: 91 },
-          { id: "c6", element: "C", x: 104, y: 149 },
-          { id: "c7", element: "C", x: 145, y: 193 },
-          { id: "e1", element: "E", x: 340, y: 75 },
-          { id: "h3", element: "H", x: 300, y: 55 },
-          { id: "base", element: "N", x: 415, y: 175, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
-        ],
-        bindungen: [
-          { id: "f1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "f2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
-          { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
-          { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
-          { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
-          { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
-          { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
-          { id: "ce", von: "c3", nach: "e1", ordnung: 1 },
-          { id: "ch", von: "c3", nach: "h3", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "base" }, nach: { art: "atom", id: "h3" } },
-          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "f2" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "3-substituiertes Indol",
-      beschreibung: "Beide Ringe sind aromatisch, das Elektrophil sitzt an C-3. Die Ausnahme zur α-Regel, erklärt durch den Benzolring.",
-      atome: [
-        { id: "n1", element: "N", x: 250, y: 215, wasserstoffe: 1 },
-        { id: "c2", element: "C", x: 300, y: 180 },
-        { id: "c3", element: "C", x: 282, y: 122 },
-        { id: "c3a", element: "C", x: 222, y: 122 },
-        { id: "c7a", element: "C", x: 204, y: 180 },
-        { id: "c4", element: "C", x: 181, y: 77 },
-        { id: "c5", element: "C", x: 122, y: 91 },
-        { id: "c6", element: "C", x: 104, y: 149 },
-        { id: "c7", element: "C", x: 145, y: 193 },
-        { id: "e1", element: "E", x: 340, y: 75 },
-      ],
-      bindungen: [
-        { id: "f1", von: "n1", nach: "c2", ordnung: 1 },
-        { id: "f2", von: "c2", nach: "c3", ordnung: 2 },
-        { id: "f3", von: "c3", nach: "c3a", ordnung: 1 },
-        { id: "f4", von: "c3a", nach: "c7a", ordnung: 1 },
-        { id: "f5", von: "c7a", nach: "n1", ordnung: 1 },
-        { id: "b1", von: "c3a", nach: "c4", ordnung: 2 },
-        { id: "b2", von: "c4", nach: "c5", ordnung: 1 },
-        { id: "b3", von: "c5", nach: "c6", ordnung: 2 },
-        { id: "b4", von: "c6", nach: "c7", ordnung: 1 },
-        { id: "b5", von: "c7", nach: "c7a", ordnung: 2 },
-        { id: "ce", von: "c3", nach: "e1", ordnung: 1 },
-      ],
+          {
+            id: "f1",
+            von: "n1",
+            nach: "c2",
+            ordnung: 1
+          },
+          {
+            id: "f2",
+            von: "c2",
+            nach: "c3",
+            ordnung: 2
+          },
+          {
+            id: "f3",
+            von: "c3",
+            nach: "c3a",
+            ordnung: 1
+          },
+          {
+            id: "f4",
+            von: "c3a",
+            nach: "c7a",
+            ordnung: 1
+          },
+          {
+            id: "f5",
+            von: "c7a",
+            nach: "n1",
+            ordnung: 1
+          },
+          {
+            id: "b1",
+            von: "c3a",
+            nach: "c4",
+            ordnung: 2
+          },
+          {
+            id: "b2",
+            von: "c4",
+            nach: "c5",
+            ordnung: 1
+          },
+          {
+            id: "b3",
+            von: "c5",
+            nach: "c6",
+            ordnung: 2
+          },
+          {
+            id: "b4",
+            von: "c6",
+            nach: "c7",
+            ordnung: 1
+          },
+          {
+            id: "b5",
+            von: "c7",
+            nach: "c7a",
+            ordnung: 2
+          },
+          {
+            id: "ce",
+            von: "c3",
+            nach: "e1",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   abbildungen: [
     {
       art: "strukturen",
@@ -202,9 +572,9 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
         {
           beschriftung: "charge at C-3",
           atome: [
-            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
-            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
-            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "n1", element: "N", x: 240, y: 80, freiePaare: 1, wasserstoffe: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, wasserstoffe: 1, zeigen: true },
+            { id: "c3", element: "C", x: 281, y: 207, ladung: 1, wasserstoffe: 1, zeigen: true },
             { id: "c4", element: "C", x: 199, y: 207 },
             { id: "c5", element: "C", x: 173, y: 128 },
             { id: "br", element: "Br", x: 392, y: 96 },
@@ -221,11 +591,11 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
         {
           beschriftung: "charge at C-5",
           atome: [
-            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
-            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
+            { id: "n1", element: "N", x: 240, y: 80, freiePaare: 1, wasserstoffe: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, wasserstoffe: 1, zeigen: true },
             { id: "c3", element: "C", x: 281, y: 207 },
             { id: "c4", element: "C", x: 199, y: 207 },
-            { id: "c5", element: "C", x: 173, y: 128, zeigen: true, wasserstoffe: 1, ladung: 1 },
+            { id: "c5", element: "C", x: 173, y: 128, ladung: 1, wasserstoffe: 1, zeigen: true },
             { id: "br", element: "Br", x: 392, y: 96 },
           ],
           bindungen: [
@@ -240,8 +610,8 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
         {
           beschriftung: "charge at N — full octet",
           atome: [
-            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, ladung: 1 },
-            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1 },
+            { id: "n1", element: "N", x: 240, y: 80, ladung: 1, wasserstoffe: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, wasserstoffe: 1, zeigen: true },
             { id: "c3", element: "C", x: 281, y: 207 },
             { id: "c4", element: "C", x: 199, y: 207 },
             { id: "c5", element: "C", x: 173, y: 128 },
@@ -268,9 +638,9 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
         {
           beschriftung: "charge at C-2",
           atome: [
-            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, freiePaare: 1 },
-            { id: "c2", element: "C", x: 307, y: 128, zeigen: true, wasserstoffe: 1, ladung: 1 },
-            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1 },
+            { id: "n1", element: "N", x: 240, y: 80, freiePaare: 1, wasserstoffe: 1 },
+            { id: "c2", element: "C", x: 307, y: 128, ladung: 1, wasserstoffe: 1, zeigen: true },
+            { id: "c3", element: "C", x: 281, y: 207, wasserstoffe: 1, zeigen: true },
             { id: "c4", element: "C", x: 199, y: 207 },
             { id: "c5", element: "C", x: 173, y: 128 },
             { id: "br", element: "Br", x: 366, y: 262 },
@@ -287,9 +657,9 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
         {
           beschriftung: "charge at N",
           atome: [
-            { id: "n1", element: "N", x: 240, y: 80, wasserstoffe: 1, ladung: 1 },
+            { id: "n1", element: "N", x: 240, y: 80, ladung: 1, wasserstoffe: 1 },
             { id: "c2", element: "C", x: 307, y: 128 },
-            { id: "c3", element: "C", x: 281, y: 207, zeigen: true, wasserstoffe: 1 },
+            { id: "c3", element: "C", x: 281, y: 207, wasserstoffe: 1, zeigen: true },
             { id: "c4", element: "C", x: 199, y: 207 },
             { id: "c5", element: "C", x: 173, y: 128 },
             { id: "br", element: "Br", x: 366, y: 262 },
@@ -318,7 +688,7 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
             { id: "n1", element: "N", x: 240, y: 75, ladung: 1 },
             { id: "c2", element: "C", x: 305, y: 113 },
             { id: "c3", element: "C", x: 305, y: 188 },
-            { id: "c4", element: "C", x: 240, y: 225, zeigen: true, wasserstoffe: 1 },
+            { id: "c4", element: "C", x: 240, y: 225, wasserstoffe: 1, zeigen: true },
             { id: "c5", element: "C", x: 175, y: 188 },
             { id: "c6", element: "C", x: 175, y: 113 },
             { id: "br", element: "Br", x: 240, y: 285 },
@@ -337,8 +707,8 @@ nothing to do with the stability of the arenium ion — a popular but wrong just
           beschriftung: "C-3 attack — charge stays on carbon",
           atome: [
             { id: "n1", element: "N", x: 240, y: 75, freiePaare: 1 },
-            { id: "c2", element: "C", x: 305, y: 113, zeigen: true, wasserstoffe: 1, ladung: 1 },
-            { id: "c3", element: "C", x: 305, y: 188, zeigen: true, wasserstoffe: 1 },
+            { id: "c2", element: "C", x: 305, y: 113, ladung: 1, wasserstoffe: 1, zeigen: true },
+            { id: "c3", element: "C", x: 305, y: 188, wasserstoffe: 1, zeigen: true },
             { id: "c4", element: "C", x: 240, y: 225 },
             { id: "c5", element: "C", x: 175, y: 188 },
             { id: "c6", element: "C", x: 175, y: 113 },

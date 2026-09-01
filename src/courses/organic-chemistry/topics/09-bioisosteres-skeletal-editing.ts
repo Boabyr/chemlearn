@@ -7,9 +7,6 @@ export const topic = {
   icon: "💊",
   estimatedMinutes: 60,
   theory: `
-
-
-
 ## Bioisosteres
 
 **Definition:** Bioisosteres are atoms, ions or molecules with similar size, shape and electron distribution that exhibit similar biological activity but different chemical properties.
@@ -86,99 +83,382 @@ ring alone → 3-haloquinoline.
 **Skeletal editing in medicinal chemistry:**
 - Scaffold hopping: scaffold exchange without loss of activity
 - Bioisosteric ring replacement: e.g. benzene → pyridine increases water solubility
-
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Ciamician-Dennstedt — turning a pyrrole into a pyridine",
-    description: "Skeletal editing heißt: das Gerüst selbst umbauen. Hier wird aus einem Fünfring ein Sechsring — in zwei Schritten.",
-    stages: [
-      {
-        id: 0, titel: "Das Carben addiert sich",
-        aufgabe: "Dichlorcarben lagert sich an die C2=C3-Bindung an. Zeichne beide Pfeile: die Doppelbindung zum Carbenkohlenstoff, und dessen freies Elektronenpaar zurück zu C-3.",
-        erklaerung: "Ein Carben hat sowohl ein freies Elektronenpaar als auch ein leeres Orbital — deshalb zwei Pfeile in entgegengesetzte Richtungen. Die π-Elektronen des elektronenreichen Pyrrols füllen das leere Orbital, das Elektronenpaar des Carbens bildet die zweite neue Bindung. Es entsteht ein an den Fünfring ankondensierter Cyclopropanring.",
-        hinweise: ["Der Angriff geht von der C2=C3-Doppelbindung aus, nicht vom Stickstoff.", "Ein Carben kann gleichzeitig Elektronen aufnehmen und abgeben — daher zwei Pfeile."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Ciamician-Dennstedt — turning a pyrrole into a pyridine",
+      description: "Skeletal editing heißt: das Gerüst selbst umbauen. Hier wird aus einem Fünfring ein Sechsring — in zwei Schritten.",
+      stages: [
+        {
+          id: 0,
+          titel: "Das Carben addiert sich",
+          aufgabe: "Dichlorcarben lagert sich an die C2=C3-Bindung an. Zeichne beide Pfeile: die Doppelbindung zum Carbenkohlenstoff, und dessen freies Elektronenpaar zurück zu C-3.",
+          erklaerung: "Ein Carben hat sowohl ein freies Elektronenpaar als auch ein leeres Orbital — deshalb zwei Pfeile in entgegengesetzte Richtungen. Die π-Elektronen des elektronenreichen Pyrrols füllen das leere Orbital, das Elektronenpaar des Carbens bildet die zweite neue Bindung. Es entsteht ein an den Fünfring ankondensierter Cyclopropanring.",
+          hinweise: [
+            "Der Angriff geht von der C2=C3-Doppelbindung aus, nicht vom Stickstoff.",
+            "Ein Carben kann gleichzeitig Elektronen aufnehmen und abgeben — daher zwei Pfeile."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 182,
+              y: 121
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "cc",
+              element: "C",
+              x: 310,
+              y: 130,
+              freiePaare: 1,
+              frei: true
+            },
+            {
+              id: "cl1",
+              element: "Cl",
+              x: 370,
+              y: 90,
+              freiePaare: 3
+            },
+            {
+              id: "cl2",
+              element: "Cl",
+              x: 370,
+              y: 180,
+              freiePaare: 3
+            }
+          ],
+          bindungen: [
+            {
+              id: "p1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "p2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 2
+            },
+            {
+              id: "p3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 1
+            },
+            {
+              id: "p4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 2
+            },
+            {
+              id: "p5",
+              von: "c5",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "q1",
+              von: "cc",
+              nach: "cl1",
+              ordnung: 1
+            },
+            {
+              id: "q2",
+              von: "cc",
+              nach: "cl2",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "bindung",
+                id: "p2"
+              },
+              nach: {
+                art: "atom",
+                id: "cc"
+              }
+            },
+            {
+              von: {
+                art: "freiesPaar",
+                id: "cc"
+              },
+              nach: {
+                art: "atom",
+                id: "c3"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Der Ring wird größer",
+          aufgabe: "Chlorid tritt aus, und die C2–C3-Bindung wandert an den entstehenden Kohlenstoff. Zeichne beide Pfeile.",
+          erklaerung: "Sobald das Chlorid weg ist, sitzt am Cyclopropan-Kohlenstoff eine positive Ladung. Die gespannte C2–C3-Bindung wandert dorthin — aus dem Dreiring plus Fünfring wird ein Sechsring. Nach der Deprotonierung steht ein aromatisches 3-Chlorpyridin da. Ein Ringatom mehr, ohne die Substanz von Grund auf neu aufzubauen: das ist der ganze Gedanke des skeletal editing.",
+          hinweise: [
+            "Zuerst muss Platz für die positive Ladung entstehen — ein Chlorid geht mit seinem Bindungselektronenpaar ab.",
+            "Die wandernde Bindung ist die gespannte zwischen C-2 und C-3."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 150,
+              y: 220,
+              wasserstoffe: 1
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 202,
+              y: 182
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 182,
+              y: 121
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 118,
+              y: 121
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 98,
+              y: 182
+            },
+            {
+              id: "cc",
+              element: "C",
+              x: 255,
+              y: 140
+            },
+            {
+              id: "cl1",
+              element: "Cl",
+              x: 320,
+              y: 100,
+              freiePaare: 3
+            },
+            {
+              id: "cl2",
+              element: "Cl",
+              x: 300,
+              y: 195,
+              freiePaare: 3
+            }
+          ],
+          bindungen: [
+            {
+              id: "p1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "p2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "p3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 1
+            },
+            {
+              id: "p4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 2
+            },
+            {
+              id: "p5",
+              von: "c5",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "s1",
+              von: "c2",
+              nach: "cc",
+              ordnung: 1
+            },
+            {
+              id: "s2",
+              von: "c3",
+              nach: "cc",
+              ordnung: 1
+            },
+            {
+              id: "q1",
+              von: "cc",
+              nach: "cl1",
+              ordnung: 1
+            },
+            {
+              id: "q2",
+              von: "cc",
+              nach: "cl2",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "bindung",
+                id: "q1"
+              },
+              nach: {
+                art: "atom",
+                id: "cl1"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "p2"
+              },
+              nach: {
+                art: "atom",
+                id: "cc"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "3-Chlorpyridin",
+        beschreibung: "Aus dem Fünfring ist ein Sechsring geworden, der Stickstoff ist geblieben, und das Chlor sitzt an C-3. Ein Ringatom mehr in zwei Schritten statt einer neuen Synthese.",
         atome: [
-          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "c3", element: "C", x: 182, y: 121 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "cc", element: "C", x: 310, y: 130, freiePaare: 1, frei: true },
-          { id: "cl1", element: "Cl", x: 370, y: 90, freiePaare: 3 },
-          { id: "cl2", element: "Cl", x: 370, y: 180, freiePaare: 3 },
+          {
+            id: "n1",
+            element: "N",
+            x: 100,
+            y: 131,
+            freiePaare: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 150,
+            y: 102
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 200,
+            y: 131
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 200,
+            y: 189
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 150,
+            y: 218
+          },
+          {
+            id: "c6",
+            element: "C",
+            x: 100,
+            y: 189
+          },
+          {
+            id: "cl1",
+            element: "Cl",
+            x: 262,
+            y: 100,
+            freiePaare: 3
+          }
         ],
         bindungen: [
-          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "p2", von: "c2", nach: "c3", ordnung: 2 },
-          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
-          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
-          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
-          { id: "q1", von: "cc", nach: "cl1", ordnung: 1 },
-          { id: "q2", von: "cc", nach: "cl2", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "cc" } },
-          { von: { art: "freiesPaar", id: "cc" }, nach: { art: "atom", id: "c3" } },
-        ],
-      },
-      {
-        id: 1, titel: "Der Ring wird größer",
-        aufgabe: "Chlorid tritt aus, und die C2–C3-Bindung wandert an den entstehenden Kohlenstoff. Zeichne beide Pfeile.",
-        erklaerung: "Sobald das Chlorid weg ist, sitzt am Cyclopropan-Kohlenstoff eine positive Ladung. Die gespannte C2–C3-Bindung wandert dorthin — aus dem Dreiring plus Fünfring wird ein Sechsring. Nach der Deprotonierung steht ein aromatisches 3-Chlorpyridin da. Ein Ringatom mehr, ohne die Substanz von Grund auf neu aufzubauen: das ist der ganze Gedanke des skeletal editing.",
-        hinweise: ["Zuerst muss Platz für die positive Ladung entstehen — ein Chlorid geht mit seinem Bindungselektronenpaar ab.", "Die wandernde Bindung ist die gespannte zwischen C-2 und C-3."],
-        atome: [
-          { id: "n1", element: "N", x: 150, y: 220, wasserstoffe: 1 },
-          { id: "c2", element: "C", x: 202, y: 182 },
-          { id: "c3", element: "C", x: 182, y: 121 },
-          { id: "c4", element: "C", x: 118, y: 121 },
-          { id: "c5", element: "C", x: 98, y: 182 },
-          { id: "cc", element: "C", x: 255, y: 140 },
-          { id: "cl1", element: "Cl", x: 320, y: 100, freiePaare: 3 },
-          { id: "cl2", element: "Cl", x: 300, y: 195, freiePaare: 3 },
-        ],
-        bindungen: [
-          { id: "p1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "p2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "p3", von: "c3", nach: "c4", ordnung: 1 },
-          { id: "p4", von: "c4", nach: "c5", ordnung: 2 },
-          { id: "p5", von: "c5", nach: "n1", ordnung: 1 },
-          { id: "s1", von: "c2", nach: "cc", ordnung: 1 },
-          { id: "s2", von: "c3", nach: "cc", ordnung: 1 },
-          { id: "q1", von: "cc", nach: "cl1", ordnung: 1 },
-          { id: "q2", von: "cc", nach: "cl2", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "bindung", id: "q1" }, nach: { art: "atom", id: "cl1" } },
-          { von: { art: "bindung", id: "p2" }, nach: { art: "atom", id: "cc" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "3-Chlorpyridin",
-      beschreibung: "Aus dem Fünfring ist ein Sechsring geworden, der Stickstoff ist geblieben, und das Chlor sitzt an C-3. Ein Ringatom mehr in zwei Schritten statt einer neuen Synthese.",
-      atome: [
-        { id: "n1", element: "N", x: 100, y: 131, freiePaare: 1 },
-        { id: "c2", element: "C", x: 150, y: 102 },
-        { id: "c3", element: "C", x: 200, y: 131 },
-        { id: "c4", element: "C", x: 200, y: 189 },
-        { id: "c5", element: "C", x: 150, y: 218 },
-        { id: "c6", element: "C", x: 100, y: 189 },
-        { id: "cl1", element: "Cl", x: 262, y: 100, freiePaare: 3 },
-      ],
-      bindungen: [
-        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-        { id: "ccl", von: "c3", nach: "cl1", ordnung: 1 },
-      ],
+          {
+            id: "r1",
+            von: "n1",
+            nach: "c2",
+            ordnung: 2
+          },
+          {
+            id: "r2",
+            von: "c2",
+            nach: "c3",
+            ordnung: 1
+          },
+          {
+            id: "r3",
+            von: "c3",
+            nach: "c4",
+            ordnung: 2
+          },
+          {
+            id: "r4",
+            von: "c4",
+            nach: "c5",
+            ordnung: 1
+          },
+          {
+            id: "r5",
+            von: "c5",
+            nach: "c6",
+            ordnung: 2
+          },
+          {
+            id: "r6",
+            von: "c6",
+            nach: "n1",
+            ordnung: 1
+          },
+          {
+            id: "ccl",
+            von: "c3",
+            nach: "cl1",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "What is a bioisostere and why is tetrazole a classic bioisostere of carboxylic acid?", options: ["An identical compound with the same formula", "A group of similar size and pKa but better stability", "A compound with identical water solubility", "A prodrug that is hydrolysed to COOH in vivo"], correct: 1, explanation: "A bioisostere mimics the property the target recognises — here acidity, shape and hydrogen bonding — while changing the properties the body acts on. Tetrazole has a pKa around 4 to 5 like a carboxylic acid, but resists glucuronidation and is somewhat more lipophilic. It is not a prodrug: nothing converts it back." },
     { id: "q2", question: "What is 'skeletal editing' in modern synthetic chemistry?", options: ["Classical multi-step construction of a scaffold", "Direct modification of an existing ring skeleton", "Manipulation of protecting groups", "Functional group interconversion without ring change"], correct: 1, explanation: "Skeletal editing changes the framework itself — inserting, deleting or swapping a ring atom — rather than rebuilding the target from simple precursors. The Ciamician-Dennstedt rearrangement, which turns a pyrrole into a pyridine by carbene insertion, is the textbook case: one carbon enters the ring and the ring size changes." },

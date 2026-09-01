@@ -107,30 +107,32 @@ Bestimmung. Zweitens lässt sich ein Gemisch aus n Komponenten auswerten, wenn m
 Wellenlängen misst und die ε-Werte aller Komponenten bei allen Wellenlängen kennt — ein
 lineares Gleichungssystem, das die Mehrkomponentenanalyse trägt.
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "lambert-beer",
-      name: "Lambert-Beer-Gesetz",
-      equation: "A = ε · c · d",
-      variables: [
-        { id: "A", label: "Absorption", symbol: "A", unit: "—", description: "Extinktion (dimensionslos)" },
-        { id: "eps", label: "Extinktionskoeffizient", symbol: "ε", unit: "L·mol⁻¹·cm⁻¹", description: "Molarer Extinktionskoeffizient" },
-        { id: "c", label: "Konzentration", symbol: "c", unit: "mol/L", description: "Molarität der Lösung" },
-        { id: "d", label: "Schichtdicke", symbol: "d", unit: "cm", description: "Küvettenlänge" },
-      ],
-      umstellungen: [
-        { solveFor: "A", expr: "eps * c * d" },
-        { solveFor: "c", expr: "A / (eps * d)" },
-        { solveFor: "d", expr: "A / (eps * c)" },
-        { solveFor: "eps", expr: "A / (c * d)" },
-      ],
-      hints: [
-        "A = ε × c × d. Alle drei Faktoren multiplizieren. Typische Werte: ε = 1000–100000 L/(mol·cm), d = 1 cm, c = 10⁻⁵–10⁻³ mol/L.",
-        "Umformungen: c = A/(ε·d), d = A/(ε·c), ε = A/(c·d). Denke an die Einheiten: [A] ist dimensionslos, [ε·c·d] = (L/mol/cm)·(mol/L)·cm = 1 ✓"
-      ],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "lambert-beer",
+        name: "Lambert-Beer-Gesetz",
+        equation: "A = ε · c · d",
+        variables: [
+          { id: "A", label: "Absorption", symbol: "A", unit: "—", description: "Extinktion (dimensionslos)" },
+          { id: "eps", label: "Extinktionskoeffizient", symbol: "ε", unit: "L·mol⁻¹·cm⁻¹", description: "Molarer Extinktionskoeffizient" },
+          { id: "c", label: "Konzentration", symbol: "c", unit: "mol/L", description: "Molarität der Lösung" },
+          { id: "d", label: "Schichtdicke", symbol: "d", unit: "cm", description: "Küvettenlänge" },
+        ],
+        umstellungen: [
+          { solveFor: "A", expr: "eps * c * d" },
+          { solveFor: "c", expr: "A / (eps * d)" },
+          { solveFor: "d", expr: "A / (eps * c)" },
+          { solveFor: "eps", expr: "A / (c * d)" },
+        ],
+        hints: [
+          "A = ε × c × d. Alle drei Faktoren multiplizieren. Typische Werte: ε = 1000–100000 L/(mol·cm), d = 1 cm, c = 10⁻⁵–10⁻³ mol/L.",
+          "Umformungen: c = A/(ε·d), d = A/(ε·c), ε = A/(c·d). Denke an die Einheiten: [A] ist dimensionslos, [ε·c·d] = (L/mol/cm)·(mol/L)·cm = 1 ✓"
+        ],
+      },
     },
-  },
+  ],
   abbildungen: [
     {
       "art": "diagramm",

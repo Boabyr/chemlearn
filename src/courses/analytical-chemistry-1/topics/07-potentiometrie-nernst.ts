@@ -96,29 +96,31 @@ denselben Beitrag zu leisten. Bei einer Natrium-Elektrode mit K(Na,K) = 10⁻² 
 hundertfachem Kaliumüberschuss ist der Messwert bereits um die Hälfte verfälscht — der
 Grund, warum zu jeder ISE die Matrix mit angegeben werden muss.
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "ise-nernst",
-      name: "Nernst-Gleichung für ISE (25°C)",
-      equation: "E = const + (0.05916/z) · log(a_Ion)",
-      variables: [
-        { id: "E", label: "Elektrodenpotential", symbol: "E", unit: "V", description: "Gemessene EMK" },
-        { id: "z", label: "Ionenladung", symbol: "z", unit: "—", description: "Ladungszahl (z.B. 1 für Na⁺, 2 für Ca²⁺, -1 für Cl⁻)" },
-        { id: "logA", label: "log(Aktivität)", symbol: "log(a)", unit: "—", description: "Dekadischer Logarithmus der Ionenaktivität" },
-        { id: "const", label: "Konstante", symbol: "E_const", unit: "V", description: "Gerätekonstante (aus Kalibrierung)" },
-      ],
-      umstellungen: [
-        { solveFor: "E", expr: "const + (0.05916 / z) * logA" },
-        { solveFor: "logA", expr: "(E - const) * z / 0.05916" },
-        { solveFor: "const", expr: "E - (0.05916 / z) * logA" },
-      ],
-      hints: [
-        "Für Kationen (z > 0): E steigt mit steigender Konzentration. Für Anionen (z < 0): E sinkt mit steigender Konzentration. Steigung bei 25°C: 59.16/z mV pro Dekade.",
-        "pH-Elektrode: z = +1 (H⁺). E = const − 0.05916·pH. Pro pH-Einheit: 59.16 mV Änderung. Kalibrierung mit Puffern pH 4 und 7 (oder 7 und 10)."
-      ],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "ise-nernst",
+        name: "Nernst-Gleichung für ISE (25°C)",
+        equation: "E = const + (0.05916/z) · log(a_Ion)",
+        variables: [
+          { id: "E", label: "Elektrodenpotential", symbol: "E", unit: "V", description: "Gemessene EMK" },
+          { id: "z", label: "Ionenladung", symbol: "z", unit: "—", description: "Ladungszahl (z.B. 1 für Na⁺, 2 für Ca²⁺, -1 für Cl⁻)" },
+          { id: "logA", label: "log(Aktivität)", symbol: "log(a)", unit: "—", description: "Dekadischer Logarithmus der Ionenaktivität" },
+          { id: "const", label: "Konstante", symbol: "E_const", unit: "V", description: "Gerätekonstante (aus Kalibrierung)" },
+        ],
+        umstellungen: [
+          { solveFor: "E", expr: "const + (0.05916 / z) * logA" },
+          { solveFor: "logA", expr: "(E - const) * z / 0.05916" },
+          { solveFor: "const", expr: "E - (0.05916 / z) * logA" },
+        ],
+        hints: [
+          "Für Kationen (z > 0): E steigt mit steigender Konzentration. Für Anionen (z < 0): E sinkt mit steigender Konzentration. Steigung bei 25°C: 59.16/z mV pro Dekade.",
+          "pH-Elektrode: z = +1 (H⁺). E = const − 0.05916·pH. Pro pH-Einheit: 59.16 mV Änderung. Kalibrierung mit Puffern pH 4 und 7 (oder 7 und 10)."
+        ],
+      },
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "Warum wird bei der Potentiometrie kein Strom durch die Zelle geleitet?", options: ["Weil durch die Zelle kein Strom fließen kann", "Damit das Gleichgewicht an der Elektrode bleibt", "Um den Innenwiderstand der Lösung zu messen", "Aus Gründen des Arbeitsschutzes"], correct: 1, explanation: "Gemessen wird das Gleichgewichtspotential. Sobald nennenswert Strom fließt, läuft Elektrolyse ab, die Konzentrationen an der Phasengrenze verschieben sich und das Potential wandert. Deshalb ein Voltmeter mit über 10¹² Ω Eingangswiderstand — besonders bei der hochohmigen Glaselektrode." },
     { id: "q2", question: "Was versteht man unter dem Alkalifehler der Glaselektrode?", options: ["Die Glasmembran löst sich in Laugen auf", "Über pH 12 stört Na⁺, der Messwert ist zu niedrig", "Die Kalibrierung verliert schneller ihre Gültigkeit", "Die Glasmembran wird für Ionen undurchlässig"], correct: 1, explanation: "Die Quellschicht tauscht H⁺ gegen Na⁺ aus dem Glas. Bei sehr kleiner H⁺-Konzentration und hohem Natriumangebot spricht die Membran auch auf Na⁺ an und meldet mehr Protonen, als da sind — der angezeigte pH liegt zu niedrig. Abhilfe: Spezialgläser mit Lithium statt Natrium." },

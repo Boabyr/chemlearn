@@ -1,4 +1,10 @@
 import type { FC } from 'react'
+import FlameAas from './FlameAas'
+import GraphiteFurnace from './GraphiteFurnace'
+import IcpOes from './IcpOes'
+import GasChromatograph from './GasChromatograph'
+import Hplc from './Hplc'
+import CapillaryElectrophoresis from './CapillaryElectrophoresis'
 
 import UvVis from './UvVis'
 import Fluorescence from './Fluorescence'
@@ -37,6 +43,12 @@ export const apparatusRegistry: Record<string, FC> = {
   'qcm': Qcm,
   'potentiometric-sensor': PotentiometricSensor,
   'optical-sensor': OpticalSensor,
+  'flame-aas': FlameAas,
+  'graphite-furnace': GraphiteFurnace,
+  'icp-oes': IcpOes,
+  'gc': GasChromatograph,
+  'hplc': Hplc,
+  'capillary-electrophoresis': CapillaryElectrophoresis,
 }
 
 export function getApparatus(id: string): FC | undefined {

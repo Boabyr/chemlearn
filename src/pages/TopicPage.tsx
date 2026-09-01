@@ -12,6 +12,7 @@ import type { Thema } from '../content/schema'
 import MechanismusAufgabe from '../components/Mechanismus/MechanismusAufgabe'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
+import ApparaturZuordnung from '../components/Apparatus/ApparaturZuordnung'
 import ReportButton from '../components/Reports/ReportButton'
 import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
@@ -131,12 +132,14 @@ export default function TopicPage() {
    * Bis hierher zeichneten Apparaturquiz, Formelrechner, Spektren und
    * Mechanismen gar nichts auf — die Übung war für den Lernstand unsichtbar.
    */
-  function interaktivFertig(korrekt: boolean) {
-    if (!courseId || !topicId || !topic?.interactive) return
+  function interaktivFertig(index: number, typ: string, korrekt: boolean) {
+    if (!courseId || !topicId) return
     logAttempt({
       courseId,
       topicId,
-      questionId: `${topicId}:interaktiv:${topic.interactive.type}`,
+      // Die Position gehört in die Kennung: ein Thema darf zweimal denselben
+      // Typ tragen, und zwei Übungen dürfen sich nicht überschreiben.
+      questionId: `${topicId}:interaktiv:${index}:${typ}`,
       source: 'topic-quiz',
       correct: korrekt,
     })
@@ -157,7 +160,7 @@ export default function TopicPage() {
     }
   }
 
-  const interactive = topic.interactive
+  const interaktivteile = topic.interactives ?? []
 
   return (
     <div className="min-h-screen bg-surface text-ink">
@@ -189,31 +192,39 @@ export default function TopicPage() {
               <TheoryRenderer markdown={topic.theory} showToc abbildungen={topic.abbildungen} />
             </Suspense>
 
-            {interactive && (
-              <div className="mt-10 bg-raised border border-line rounded-2xl p-6">
-                <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
-                {interactive.type === 'mechanism' && (
-                  <MechanismusAufgabe title={interactive.title} description={interactive.description}
-                    stages={interactive.stages} ergebnis={interactive.ergebnis}
-                    onComplete={interaktivFertig} />
-                )}
-                {interactive.type === 'formula-calculator' && (
-                  <FormulaCalculator formula={interactive.formula} onComplete={() => interaktivFertig(true)} />
-                )}
-                {interactive.type === 'apparatus-quiz' && (
-                  <ApparatusQuiz question={interactive.question} targetId={interactive.targetId}
-                    options={interactive.options} explanation={interactive.explanation}
-                    hint1={interactive.hint1} hint2={interactive.hint2}
-                    onComplete={interaktivFertig} />
-                )}
-                {interactive.type === 'spectrum-assignment' && (
-                  <SpectrumAssignment title={interactive.title} description={interactive.description}
-                    xLabel={interactive.xLabel} yLabel={interactive.yLabel} peaks={interactive.peaks}
-                    hint1={interactive.hint1} hint2={interactive.hint2}
-                    onComplete={() => interaktivFertig(true)} />
-                )}
-              </div>
-            )}
+            {interaktivteile.map((interactive, i) => {
+              const fertig = (korrekt: boolean) => interaktivFertig(i, interactive.type, korrekt)
+              return (
+                <div key={`${interactive.type}-${i}`} className="mt-10 bg-raised border border-line rounded-2xl p-6">
+                  <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">🎬 Interaktiv</p>
+                  {interactive.type === 'mechanism' && (
+                    <MechanismusAufgabe title={interactive.title} description={interactive.description}
+                      stages={interactive.stages} ergebnis={interactive.ergebnis}
+                      onComplete={fertig} />
+                  )}
+                  {interactive.type === 'formula-calculator' && (
+                    <FormulaCalculator formula={interactive.formula} onComplete={() => fertig(true)} />
+                  )}
+                  {interactive.type === 'apparatus-quiz' && (
+                    <ApparatusQuiz question={interactive.question} targetId={interactive.targetId}
+                      options={interactive.options} explanation={interactive.explanation}
+                      hint1={interactive.hint1} hint2={interactive.hint2}
+                      onComplete={fertig} />
+                  )}
+                  {interactive.type === 'apparatus-matching' && (
+                    <ApparaturZuordnung title={interactive.title} description={interactive.description}
+                      paare={interactive.paare} explanation={interactive.explanation}
+                      onComplete={fertig} />
+                  )}
+                  {interactive.type === 'spectrum-assignment' && (
+                    <SpectrumAssignment title={interactive.title} description={interactive.description}
+                      xLabel={interactive.xLabel} yLabel={interactive.yLabel} peaks={interactive.peaks}
+                      hint1={interactive.hint1} hint2={interactive.hint2}
+                      onComplete={() => fertig(true)} />
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
 

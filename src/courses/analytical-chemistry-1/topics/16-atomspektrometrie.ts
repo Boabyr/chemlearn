@@ -105,27 +105,52 @@ Matrixmodifier zu, die den Analyten thermisch stabilisieren.
 
 
 `,
-  interactive: {
-    type: "formula-calculator",
-    formula: {
-      id: "atomabsorption",
-      name: "Absorption in der AAS",
-      equation: "A = k · N · d",
-      variables: [
-        { id: "A", label: "Absorption", symbol: "A", unit: "—", description: "Gemessene Extinktion" },
-        { id: "k", label: "Atomarer Absorptionskoeffizient", symbol: "k", unit: "cm²", description: "Elementspezifisch, gilt für die gewählte Linie" },
-        { id: "N", label: "Atomzahldichte", symbol: "N", unit: "Atome/cm³", description: "Freie Atome im Strahlengang" },
-        { id: "d", label: "Absorptionsweg", symbol: "d", unit: "cm", description: "Länge der Flamme oder des Graphitrohrs" },
-      ],
-      umstellungen: [
-        { solveFor: "A", expr: "k * N * d" },
-        { solveFor: "N", expr: "A / (k * d)" },
-        { solveFor: "d", expr: "A / (k * N)" },
-        { solveFor: "k", expr: "A / (N * d)" },
-      ],
-      hints: ["Formal dasselbe Gesetz wie Lambert-Beer, nur steht die Atomzahldichte N an der Stelle der Konzentration. Deshalb muss die Probe erst atomisiert werden.", "Das Graphitrohr ist rund hundertmal empfindlicher als die Flamme, weil alle Atome gleichzeitig im Strahlengang stehen statt kontinuierlich durchzuströmen — N wird größer, nicht k."],
+  interactives: [
+    {
+      type: "formula-calculator",
+      formula: {
+        id: "atomabsorption",
+        name: "Absorption in der AAS",
+        equation: "A = k · N · d",
+        variables: [
+          { id: "A", label: "Absorption", symbol: "A", unit: "—", description: "Gemessene Extinktion" },
+          { id: "k", label: "Atomarer Absorptionskoeffizient", symbol: "k", unit: "cm²", description: "Elementspezifisch, gilt für die gewählte Linie" },
+          { id: "N", label: "Atomzahldichte", symbol: "N", unit: "Atome/cm³", description: "Freie Atome im Strahlengang" },
+          { id: "d", label: "Absorptionsweg", symbol: "d", unit: "cm", description: "Länge der Flamme oder des Graphitrohrs" },
+        ],
+        umstellungen: [
+          { solveFor: "A", expr: "k * N * d" },
+          { solveFor: "N", expr: "A / (k * d)" },
+          { solveFor: "d", expr: "A / (k * N)" },
+          { solveFor: "k", expr: "A / (N * d)" },
+        ],
+        hints: ["Formal dasselbe Gesetz wie Lambert-Beer, nur steht die Atomzahldichte N an der Stelle der Konzentration. Deshalb muss die Probe erst atomisiert werden.", "Das Graphitrohr ist rund hundertmal empfindlicher als die Flamme, weil alle Atome gleichzeitig im Strahlengang stehen statt kontinuierlich durchzuströmen — N wird größer, nicht k."],
+      },
     },
-  },
+      {
+      "type": "apparatus-matching",
+      "title": "Drei Wege, Atome zu erzeugen",
+      "description": "Alle drei atomisieren die Probe — bei sehr verschiedenen Temperaturen.",
+      "explanation": "Die Flammen-AAS lässt die Lampe quer durch eine Schlitzflamme von rund 2300 °C strahlen; die Probe strömt kontinuierlich durch. Beim Graphitrohr wird die ganze Probe auf einmal in einem elektrisch geheizten Rohr atomisiert und bleibt im Strahlengang — daher der Faktor hundert an Empfindlichkeit. Das ICP hat gar keine Lampe: das Argonplasma bei 8000 °C regt die Atome selbst zur Emission an, und zwar alle gleichzeitig.",
+      "paare": [
+        {
+          "apparaturId": "flame-aas",
+          "label": "Flammen-AAS",
+          "hinweis": "Lampe strahlt quer durch die Flamme."
+        },
+        {
+          "apparaturId": "graphite-furnace",
+          "label": "Graphitrohr-AAS",
+          "hinweis": "Rohr längs im Strahlengang."
+        },
+        {
+          "apparaturId": "icp-oes",
+          "label": "ICP-OES",
+          "hinweis": "Keine Lampe — das Plasma strahlt selbst."
+        }
+      ]
+    },
+  ],
   quiz: [
     { id: "q1", question: "Warum kann in der AAS keine Kontinuumslampe (z.B. Deuteriumlampe) als Lichtquelle verwendet werden?", options: ["Kontinuumslampen sind zu teuer", "Die Atomlinie ist zu schmal für ein Kontinuum", "Kontinuumslampen strahlen nur im UV", "Die Wellenlänge lässt sich nicht einstellen"], correct: 1, explanation: "Die Absorptionslinie freier Atome ist nur etwa 0,002 nm breit. Ein Monochromator schneidet aus einem Kontinuum ein viel breiteres Band heraus, sodass der absorbierte Anteil im Rauschen untergeht. Die Hohlkathodenlampe emittiert genau die Linie des gesuchten Elements — deshalb ein Lampenwechsel je Element." },
     { id: "q2", question: "Wie hoch ist die Temperatur im ICP-Plasma und warum ist sie für die Analytik vorteilhaft?", options: ["Etwa 500 °C, schonend für thermisch labile Stoffe", "Etwa 2300 °C, wie eine Luft/Acetylen-Flamme", "Etwa 6000 bis 10000 °C, vollständige Atomisierung", "Etwa 300 °C, besonders energiesparend im Betrieb"], correct: 2, explanation: "Das Argonplasma wird durch ein Hochfrequenzfeld von etwa 27 MHz geheizt. Bei diesen Temperaturen zerfällt praktisch jede Verbindung, chemische Interferenzen verschwinden, und die Anregungsenergie reicht für über 70 Elemente gleichzeitig. Eine Luft/Acetylen-Flamme bleibt bei rund 2300 °C." },

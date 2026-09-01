@@ -7,7 +7,6 @@ export const topic = {
   icon: "🔵",
   estimatedMinutes: 90,
   theory: `
-
 ## Importance of Pyridines in Pharmacy
 
 Pyridine scaffolds appear in numerous FDA-approved drugs. The ring is weakly basic
@@ -99,94 +98,354 @@ Pyridine + mCPBA → pyridine N-oxide
 2-Methylpyridine: α-methylene strongly acidic (analogous to ketones), because the
 resulting carbanion is delocalised onto the ring nitrogen
 - Lithiation possible → further reaction with electrophiles
-
-
 `,
-  interactive: {
-    type: "mechanism",
-    title: "Chichibabin amination — nucleophilic attack on pyridine",
-    description: "Pyridin ist elektronenarm und lässt Nucleophile an sich heran. Zeichne, warum der Angriff an C-2 gelingt und wie der Ring wieder aromatisch wird.",
-    stages: [
-      {
-        id: 0, titel: "Angriff des Amids an C-2",
-        aufgabe: "Das Amid-Ion greift C-2 an. Zeichne beide Pfeile: das freie Elektronenpaar des Amids zum Kohlenstoff, und die C2=N1-Bindung zum Stickstoff.",
-        erklaerung: "Der Angriff an C-2 lohnt sich, weil die negative Ladung im entstehenden Addukt auf dem Stickstoff landen kann — dem elektronegativsten Ringatom. Bei einem Angriff an C-3 gäbe es diese Grenzstruktur nicht. Genau umgekehrt zur elektrophilen Substitution, wo C-3 bevorzugt wird.",
-        hinweise: ["Wenn eine neue Bindung an C-2 entsteht, muss dort eine alte weichen — sonst hätte der Kohlenstoff fünf Bindungen.", "Schiebe die Elektronen dorthin, wo die negative Ladung am besten aufgehoben ist."],
+  interactives: [
+    {
+      type: "mechanism",
+      title: "Chichibabin amination — nucleophilic attack on pyridine",
+      description: "Pyridin ist elektronenarm und lässt Nucleophile an sich heran. Zeichne, warum der Angriff an C-2 gelingt und wie der Ring wieder aromatisch wird.",
+      stages: [
+        {
+          id: 0,
+          titel: "Angriff des Amids an C-2",
+          aufgabe: "Das Amid-Ion greift C-2 an. Zeichne beide Pfeile: das freie Elektronenpaar des Amids zum Kohlenstoff, und die C2=N1-Bindung zum Stickstoff.",
+          erklaerung: "Der Angriff an C-2 lohnt sich, weil die negative Ladung im entstehenden Addukt auf dem Stickstoff landen kann — dem elektronegativsten Ringatom. Bei einem Angriff an C-3 gäbe es diese Grenzstruktur nicht. Genau umgekehrt zur elektrophilen Substitution, wo C-3 bevorzugt wird.",
+          hinweise: [
+            "Wenn eine neue Bindung an C-2 entsteht, muss dort eine alte weichen — sonst hätte der Kohlenstoff fünf Bindungen.",
+            "Schiebe die Elektronen dorthin, wo die negative Ladung am besten aufgehoben ist."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 72,
+              y: 132
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 120,
+              y: 105
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 168,
+              y: 132
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 168,
+              y: 188
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 120,
+              y: 215
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 72,
+              y: 188
+            },
+            {
+              id: "nh",
+              element: "N",
+              x: 300,
+              y: 70,
+              ladung: -1,
+              freiePaare: 2,
+              wasserstoffe: 2,
+              frei: true
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 2
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "freiesPaar",
+                id: "nh"
+              },
+              nach: {
+                art: "atom",
+                id: "c2"
+              }
+            },
+            {
+              von: {
+                art: "bindung",
+                id: "r1"
+              },
+              nach: {
+                art: "atom",
+                id: "n1"
+              }
+            }
+          ]
+        },
+        {
+          id: 1,
+          titel: "Rearomatisierung",
+          aufgabe: "Das Addukt gibt ein Hydrid ab und wird wieder aromatisch. Zeichne den Pfeil von der C2–H-Bindung zur C2–N1-Bindung.",
+          erklaerung: "Das Elektronenpaar der C–H-Bindung klappt in den Ring und stellt die Doppelbindung zum Stickstoff wieder her; der Wasserstoff geht als Hydrid weg und entwickelt mit dem Lösungsmittel Wasserstoffgas. Diese Gasentwicklung treibt die Reaktion und ist im Kolben sichtbar.",
+          hinweise: [
+            "Aromatizität ist der Preis, den die Reaktion zurückgewinnen will — die Elektronen müssen in den Ring.",
+            "Ein Pfeil, der auf eine Bindung zeigt, macht aus einer Einfach- eine Doppelbindung."
+          ],
+          atome: [
+            {
+              id: "n1",
+              element: "N",
+              x: 72,
+              y: 132,
+              ladung: -1,
+              freiePaare: 2
+            },
+            {
+              id: "c2",
+              element: "C",
+              x: 120,
+              y: 105
+            },
+            {
+              id: "c3",
+              element: "C",
+              x: 168,
+              y: 132
+            },
+            {
+              id: "c4",
+              element: "C",
+              x: 168,
+              y: 188
+            },
+            {
+              id: "c5",
+              element: "C",
+              x: 120,
+              y: 215
+            },
+            {
+              id: "c6",
+              element: "C",
+              x: 72,
+              y: 188
+            },
+            {
+              id: "nh",
+              element: "N",
+              x: 190,
+              y: 60,
+              wasserstoffe: 2
+            },
+            {
+              id: "h2",
+              element: "H",
+              x: 90,
+              y: 55
+            }
+          ],
+          bindungen: [
+            {
+              id: "r1",
+              von: "n1",
+              nach: "c2",
+              ordnung: 1
+            },
+            {
+              id: "r2",
+              von: "c2",
+              nach: "c3",
+              ordnung: 1
+            },
+            {
+              id: "r3",
+              von: "c3",
+              nach: "c4",
+              ordnung: 2
+            },
+            {
+              id: "r4",
+              von: "c4",
+              nach: "c5",
+              ordnung: 1
+            },
+            {
+              id: "r5",
+              von: "c5",
+              nach: "c6",
+              ordnung: 2
+            },
+            {
+              id: "r6",
+              von: "c6",
+              nach: "n1",
+              ordnung: 1
+            },
+            {
+              id: "cn",
+              von: "c2",
+              nach: "nh",
+              ordnung: 1
+            },
+            {
+              id: "ch",
+              von: "c2",
+              nach: "h2",
+              ordnung: 1
+            }
+          ],
+          pfeile: [
+            {
+              von: {
+                art: "bindung",
+                id: "ch"
+              },
+              nach: {
+                art: "bindung",
+                id: "r1"
+              }
+            }
+          ]
+        }
+      ],
+      ergebnis: {
+        titel: "2-Aminopyridin",
+        beschreibung: "Der Ring ist wieder aromatisch, die Aminogruppe sitzt an C-2. Das abgespaltene Hydrid entweicht als Wasserstoff.",
         atome: [
-          { id: "n1", element: "N", x: 72, y: 132 },
-          { id: "c2", element: "C", x: 120, y: 105 },
-          { id: "c3", element: "C", x: 168, y: 132 },
-          { id: "c4", element: "C", x: 168, y: 188 },
-          { id: "c5", element: "C", x: 120, y: 215 },
-          { id: "c6", element: "C", x: 72, y: 188 },
-          { id: "nh", element: "N", x: 300, y: 70, ladung: -1, freiePaare: 2, wasserstoffe: 2, frei: true },
+          {
+            id: "n1",
+            element: "N",
+            x: 100,
+            y: 132,
+            freiePaare: 1
+          },
+          {
+            id: "c2",
+            element: "C",
+            x: 148,
+            y: 105
+          },
+          {
+            id: "c3",
+            element: "C",
+            x: 196,
+            y: 132
+          },
+          {
+            id: "c4",
+            element: "C",
+            x: 196,
+            y: 188
+          },
+          {
+            id: "c5",
+            element: "C",
+            x: 148,
+            y: 215
+          },
+          {
+            id: "c6",
+            element: "C",
+            x: 100,
+            y: 188
+          },
+          {
+            id: "nh",
+            element: "N",
+            x: 218,
+            y: 60,
+            freiePaare: 1,
+            wasserstoffe: 2
+          }
         ],
         bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "freiesPaar", id: "nh" }, nach: { art: "atom", id: "c2" } },
-          { von: { art: "bindung", id: "r1" }, nach: { art: "atom", id: "n1" } },
-        ],
-      },
-      {
-        id: 1, titel: "Rearomatisierung",
-        aufgabe: "Das Addukt gibt ein Hydrid ab und wird wieder aromatisch. Zeichne den Pfeil von der C2–H-Bindung zur C2–N1-Bindung.",
-        erklaerung: "Das Elektronenpaar der C–H-Bindung klappt in den Ring und stellt die Doppelbindung zum Stickstoff wieder her; der Wasserstoff geht als Hydrid weg und entwickelt mit dem Lösungsmittel Wasserstoffgas. Diese Gasentwicklung treibt die Reaktion und ist im Kolben sichtbar.",
-        hinweise: ["Aromatizität ist der Preis, den die Reaktion zurückgewinnen will — die Elektronen müssen in den Ring.", "Ein Pfeil, der auf eine Bindung zeigt, macht aus einer Einfach- eine Doppelbindung."],
-        atome: [
-          { id: "n1", element: "N", x: 72, y: 132, ladung: -1, freiePaare: 2 },
-          { id: "c2", element: "C", x: 120, y: 105 },
-          { id: "c3", element: "C", x: 168, y: 132 },
-          { id: "c4", element: "C", x: 168, y: 188 },
-          { id: "c5", element: "C", x: 120, y: 215 },
-          { id: "c6", element: "C", x: 72, y: 188 },
-          { id: "nh", element: "N", x: 190, y: 60, wasserstoffe: 2 },
-          { id: "h2", element: "H", x: 90, y: 55 },
-        ],
-        bindungen: [
-          { id: "r1", von: "n1", nach: "c2", ordnung: 1 },
-          { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-          { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-          { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-          { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-          { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-          { id: "cn", von: "c2", nach: "nh", ordnung: 1 },
-          { id: "ch", von: "c2", nach: "h2", ordnung: 1 },
-        ],
-        pfeile: [
-          { von: { art: "bindung", id: "ch" }, nach: { art: "bindung", id: "r1" } },
-        ],
-      },
-    ],
-    ergebnis: {
-      titel: "2-Aminopyridin",
-      beschreibung: "Der Ring ist wieder aromatisch, die Aminogruppe sitzt an C-2. Das abgespaltene Hydrid entweicht als Wasserstoff.",
-      atome: [
-        { id: "n1", element: "N", x: 100, y: 132, freiePaare: 1 },
-        { id: "c2", element: "C", x: 148, y: 105 },
-        { id: "c3", element: "C", x: 196, y: 132 },
-        { id: "c4", element: "C", x: 196, y: 188 },
-        { id: "c5", element: "C", x: 148, y: 215 },
-        { id: "c6", element: "C", x: 100, y: 188 },
-        { id: "nh", element: "N", x: 218, y: 60, freiePaare: 1, wasserstoffe: 2 },
-      ],
-      bindungen: [
-        { id: "r1", von: "n1", nach: "c2", ordnung: 2 },
-        { id: "r2", von: "c2", nach: "c3", ordnung: 1 },
-        { id: "r3", von: "c3", nach: "c4", ordnung: 2 },
-        { id: "r4", von: "c4", nach: "c5", ordnung: 1 },
-        { id: "r5", von: "c5", nach: "c6", ordnung: 2 },
-        { id: "r6", von: "c6", nach: "n1", ordnung: 1 },
-        { id: "cn", von: "c2", nach: "nh", ordnung: 1 },
-      ],
+          {
+            id: "r1",
+            von: "n1",
+            nach: "c2",
+            ordnung: 2
+          },
+          {
+            id: "r2",
+            von: "c2",
+            nach: "c3",
+            ordnung: 1
+          },
+          {
+            id: "r3",
+            von: "c3",
+            nach: "c4",
+            ordnung: 2
+          },
+          {
+            id: "r4",
+            von: "c4",
+            nach: "c5",
+            ordnung: 1
+          },
+          {
+            id: "r5",
+            von: "c5",
+            nach: "c6",
+            ordnung: 2
+          },
+          {
+            id: "r6",
+            von: "c6",
+            nach: "n1",
+            ordnung: 1
+          },
+          {
+            id: "cn",
+            von: "c2",
+            nach: "nh",
+            ordnung: 1
+          }
+        ]
+      }
     },
-  },
+  ],
   quiz: [
     { id: "q1", question: "In the Kondrat'eva pyridine synthesis, which compound acts as the azadiene?", options: ["Triazine", "Oxazole", "Pyrimidine", "Imidazole"], correct: 1, explanation: "In the Kondrat'eva synthesis the oxazole acts as a 1-oxa-1,3-diene (azadiene). It reacts with a dienophile (alkyne) in a [4+2] cycloaddition. The bicyclic intermediate then loses CO₂ (retro-[4+2]) to give the aromatic pyridine." },
     { id: "q2", question: "In the Kröhnke synthesis, pyridine plays two roles. Which?", options: ["It serves as solvent and as base", "It first alkylates the α-bromoketone, then leaves again", "It acts as oxidant and as catalyst", "It supplies the ring nitrogen atom of the pyridine product"], correct: 1, explanation: "Pyridine attacks the α-bromoketone and becomes a pyridinium salt whose α-CH is acidic — that gives the ylide. After Michael addition and ring closure, pyridine departs as the leaving group. The ring nitrogen comes from the ammonium acetate, not from the pyridine. Because only one combination of the three fragments is possible, the reaction is regiochemically clean." },
