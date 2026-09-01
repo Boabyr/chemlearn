@@ -5,14 +5,14 @@
 -- zeigte auf die Karte daneben. Die neue Kennung kommt aus der Vorderseite
 -- (siehe src/content/kartenId.ts) und bleibt beim Umsortieren gleich.
 --
--- Fragen bekommen das Präfix `q:`, damit Karten und Fragen sich nicht
--- überschneiden können.
+-- Drei eigenständige Anweisungen, keine temporäre Tabelle: der SQL-Editor
+-- führt jede Anweisung für sich aus, eine Temp-Tabelle wäre dazwischen weg.
+-- Der Reihe nach ausführen — Schritt 3 räumt auf, was Schritt 1 nicht fand.
 
-begin;
-
-create temporary table karten_umzug (course_id text, alt text, neu text) on commit drop;
-
-insert into karten_umzug (course_id, alt, neu) values
+-- 1. Karten mit bekannter Zuordnung umschreiben.
+update reviews r
+   set item_id = u.neu
+  from (values
     ('analytical-chemistry-1', '01-grundlagen-spektroskopie#0', 'card:01-grundlagen-spektroskopie:0r9xh85'),
     ('analytical-chemistry-1', '01-grundlagen-spektroskopie#1', 'card:01-grundlagen-spektroskopie:1wahz4s'),
     ('analytical-chemistry-1', '01-grundlagen-spektroskopie#2', 'card:01-grundlagen-spektroskopie:1i7e5ou'),
@@ -167,17 +167,13 @@ insert into karten_umzug (course_id, alt, neu) values
     ('organic-chemistry', '09-bioisosteres-skeletal-editing#2', 'card:09-bioisosteres-skeletal-editing:02q2ia4'),
     ('organic-chemistry', '09-bioisosteres-skeletal-editing#3', 'card:09-bioisosteres-skeletal-editing:1plx016'),
     ('organic-chemistry', '09-bioisosteres-skeletal-editing#4', 'card:09-bioisosteres-skeletal-editing:0834fjd'),
-    ('organic-chemistry', '09-bioisosteres-skeletal-editing#5', 'card:09-bioisosteres-skeletal-editing:0b8rkzl');
-
--- 1. Karten mit bekannter Zuordnung umschreiben.
-update reviews r
-   set item_id = u.neu
-  from karten_umzug u
+    ('organic-chemistry', '09-bioisosteres-skeletal-editing#5', 'card:09-bioisosteres-skeletal-editing:0b8rkzl')
+  ) as u(course_id, alt, neu)
  where r.item_type = 'card'
    and r.course_id = u.course_id
    and r.item_id   = u.alt;
 
--- 2. Fragen mit Präfix versehen.
+-- 2. Fragen mit Präfix versehen. Wiederholbar.
 update reviews
    set item_id = 'q:' || item_id
  where item_type = 'question'
@@ -188,5 +184,3 @@ update reviews
 delete from reviews
  where item_type = 'card'
    and item_id not like 'card:%';
-
-commit;
