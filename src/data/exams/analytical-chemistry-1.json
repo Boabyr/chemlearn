@@ -389,8 +389,8 @@
       "source": "2019-05-Lieberzeit",
       "topicId": "07-potentiometrie-nernst",
       "points": 2,
-      "type": "mc-single",
-      "question": "Bei welchen Methoden fließt Strom durch die Zelle? (Mehrfachauswahl möglich)",
+      "type": "mc-multi",
+      "question": "Bei welchen Methoden fließt Strom durch die Messzelle?",
       "options": [
         "Potentiometrie",
         "Stripping-Voltammetrie",
@@ -401,7 +401,7 @@
         1,
         2
       ],
-      "explanation": "Potentiometrie + Glaselektrode: KEIN Strom (Gleichgewichtsmessung, hochohmiger Voltmeter). Stripping-Voltammetrie + Amperometrie: Strom fließt (elektrochemische Reaktion an Elektrode).",
+      "explanation": "Potentiometrie und die Glaselektrode messen ein Gleichgewichtspotential und arbeiten stromlos — flösse Strom, verschöben sich die Konzentrationen an der Phasengrenze und das Potential wanderte. Stripping-Voltammetrie und Amperometrie messen dagegen genau diesen Strom: er ist dort die Messgröße. Daher auch der Drei-Elektroden-Aufbau, damit die Referenz trotz fließenden Stroms stromlos bleibt.",
       "examiner": "lieberzeit"
     },
     {
@@ -410,7 +410,7 @@
       "topicId": "07-potentiometrie-nernst",
       "points": 2,
       "type": "numeric",
-      "question": "25ml HCl (c=0,1mol/L) haben pH=1. Nach Zugabe von 25ml NaOH (c=50mmol/L): Um wieviel mV ändert sich die Glaselektrode? (Angabe als positive Zahl, Vorzeichen ignorieren)",
+      "question": "25 mL HCl (c = 0,1 mol/L) haben pH = 1. Nach Zugabe von 25 mL NaOH (c = 50 mmol/L): Um wie viel mV ändert sich die Anzeige der Glaselektrode bei 25 °C? (Betrag angeben, Vorzeichen ignorieren)",
       "correct": 35.6,
       "tolerance": 1,
       "unit": "mV",
@@ -446,10 +446,9 @@
         "Mittels Polarographie kann Cr⁶⁺ bei +1,5V bestimmt werden (E°Cr⁶⁺/Cr³⁺ = +1,33V)"
       ],
       "correct": [
-        1,
-        3
+        1
       ],
-      "explanation": "(1) Falsch: Hg nur als Kathode (oxidiert leicht als Anode). (2) Richtig: NHE unpraktisch (H₂-Gas, Platin). (3) Falsch: Pt ist polarisierbar, kein konstantes Potential. (4) Richtig: Cr⁶⁺ Reduktion bei E° +1,33V → bei +1,5V (positiver als E°) erfolgt keine Reduktion → erst bei negativeren Werten.",
+      "explanation": "Quecksilber taugt nur als Kathode; als Anode oxidiert es schon bei etwa +0,4 V und löst sich auf — also nicht universell. Ein Platindraht ist polarisierbar und hält kein festes Potential, taugt somit nicht als Referenz. Die Normalwasserstoffelektrode ist zwar der Nullpunkt der Spannungsreihe, im Laborbetrieb mit Wasserstoffgas und platiniertem Blech aber unpraktisch — deshalb Ag/AgCl oder Kalomel. Und Cr⁶⁺ lässt sich bei +1,5 V nicht bestimmen: eine Reduktion braucht ein Potential negativer als E° = +1,33 V, nicht positiver.",
       "examiner": "lieberzeit"
     },
     {
@@ -505,11 +504,11 @@
       "topicId": "03-fluoreszenz-lumineszenz",
       "points": 3,
       "type": "numeric",
-      "question": "Fluoreszenz-Standardaddition: Die Messlösung ergibt 553 mV. Nach Zugabe von 10 mL Standard (35 ppm Chinin) auf 100 mL Gesamtvolumen: 661 mV. Wie viel mg/L Chinin enthält die Messlösung?",
-      "correct": 17.9,
-      "tolerance": 0.3,
+      "question": "Fluoreszenz-Standardaddition (Chinin in Tonic Water): 25 mL Tonic Water werden auf 100 mL verdünnt und ergeben 553 mV. Dann werden 10 mL Standard (35 mg/L Chinin) zugegeben, Gesamtvolumen 110 mL, und es werden 661 mV gemessen. Wie viel mg/L Chinin enthält das unverdünnte Tonic Water?",
+      "correct": 44.5,
+      "tolerance": 1.0,
       "unit": "mg/L",
-      "explanation": "Der zugesetzte Standard trägt in der Messlösung c_S,eff = 35 ppm · 10/100 = 3,5 ppm bei. Standardaddition: c_x = c_S,eff · y₀/(y₁ − y₀) = 3,5 · 553/108 = 17,9 mg/L. Ohne den Faktor V_S/V_gesamt käme man auf 179 mg/L, also das Zehnfache — die Volumenkorrektur ist der Kern der Aufgabe.",
+      "explanation": "Zwei Verdünnungen nacheinander, beide müssen mitgerechnet werden.\nIn der ersten Messlösung ist c₁ = c_Tonic · 25/100. Die Zugabe verdünnt diese Lösung noch einmal: c₂ = (c₁ · 100 + 35 · 10)/110.\nWeil das Signal der Konzentration proportional ist, gilt 661/553 = c₂/c₁. Einsetzen und auflösen: 661 · 27,5 · c_Tonic = 553 · (25 · c_Tonic + 350), also 4352,5 · c_Tonic = 193550 und c_Tonic = 44,5 mg/L.\nWer die Verdünnung durch die Zugabe vergisst und nur c = 3,5 · 553/108 rechnet, kommt auf 17,9 mg/L für die Messlösung — und damit auf einen falschen Gehalt im Tonic Water.",
       "examiner": "lieberzeit"
     },
     {
@@ -639,8 +638,8 @@
       "points": 4,
       "type": "numeric",
       "question": "Eine Halbzelle Cu²⁺/Cu (E° = +0,34 V, n = 2) enthält das Konzentrationsverhältnis [Red]/[Ox] = 100. Welches Potential stellt sich bei 25 °C ein? Angabe in Volt.",
-      "correct": 0.2817,
-      "explanation": "E = E° − (0,05916/n)·log([Red]/[Ox]) = 0,34 − (0,05916/2)·log(100) = 0,34 − 0,02958·2 = 0,2817 V. Ein Überschuss der reduzierten Form drückt das Potential — pro Zehnerpotenz um 59,16/n Millivolt.",
+      "correct": 0.281,
+      "explanation": "E = E° − (0,05916/n) · log([Red]/[Ox]) = 0,34 − (0,05916/2) · log(100) = 0,34 − 0,02958 · 2 = 0,34 − 0,0592 = 0,281 V. Ein Überschuss der reduzierten Form drückt das Potential — pro Zehnerpotenz um 59,16/n Millivolt, hier also um zweimal 29,6 mV.",
       "tolerance": 0.005,
       "unit": "V"
     },

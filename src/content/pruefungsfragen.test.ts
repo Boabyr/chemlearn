@@ -71,6 +71,43 @@ describe('Erklärungen der Prüfungsfragen', () => {
     expect(widerspruch).toEqual([])
   })
 
+  it.each(kursIds)('%s: jede Frage hat eine erreichbare Antwort', (kursId) => {
+    // L006 war als Einfachauswahl angelegt, trug aber zwei richtige Antworten.
+    // Das Bauteil vergleicht dort eine Zahl mit einer Liste — die Frage war
+    // nicht lösbar, egal was man ankreuzte.
+    const kaputt: string[] = []
+
+    for (const frage of examQuestionsFor(kursId)) {
+      const anzahl = frage.options?.length ?? 0
+
+      if (frage.type === 'mc-single') {
+        if (Array.isArray(frage.correct)) kaputt.push(`${frage.id}: Einfachauswahl mit mehreren Antworten`)
+        else if (typeof frage.correct !== 'number' || frage.correct < 0 || frage.correct >= anzahl) {
+          kaputt.push(`${frage.id}: Antwortindex ${frage.correct} liegt außerhalb von 0…${anzahl - 1}`)
+        }
+      }
+
+      if (frage.type === 'mc-multi') {
+        if (!Array.isArray(frage.correct)) kaputt.push(`${frage.id}: Mehrfachauswahl ohne Antwortliste`)
+        else {
+          if (frage.correct.some(i => i < 0 || i >= anzahl)) kaputt.push(`${frage.id}: Antwortindex außerhalb`)
+          if (frage.correct.length === 0) kaputt.push(`${frage.id}: keine Antwort markiert`)
+          if (frage.correct.length === anzahl) kaputt.push(`${frage.id}: alle Optionen als richtig markiert`)
+        }
+      }
+
+      if (frage.type === 'order') {
+        const soll = [...Array(anzahl).keys()].join(',')
+        const ist = Array.isArray(frage.correct) ? [...frage.correct].sort((a, b) => a - b).join(',') : ''
+        if (ist !== soll) kaputt.push(`${frage.id}: Reihenfolge ist keine vollständige Permutation`)
+      }
+
+      if (frage.type !== 'numeric' && anzahl < 2) kaputt.push(`${frage.id}: weniger als zwei Optionen`)
+    }
+
+    expect(kaputt).toEqual([])
+  })
+
   it.each(kursIds)('%s: numerische Fragen haben eine Toleranz und eine Einheit', (kursId) => {
     const unvollstaendig = examQuestionsFor(kursId)
       .filter(f => f.type === 'numeric' && (f.tolerance === undefined || !f.unit))
