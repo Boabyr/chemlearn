@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkChemistry from './remarkChemistry'
 import Abbildung from './Abbildung'
 import { zerlegeAnAbbildungen } from './abbildungsMarken'
-import type { Abbildung as AbbildungDaten } from '../../content/schema'
+import type { Abbildung as AbbildungDaten, Formelsatz } from '../../content/schema'
 import { slugify, abschnitte } from './toc'
 import 'katex/dist/katex.min.css'
 
@@ -25,10 +25,23 @@ interface Props {
   showToc?: boolean
   /** Über {{abbildung:id}} im Text gerufen. */
   abbildungen?: AbbildungDaten[]
+  /** Formelsatz des Kurses. `aus` lässt V2 und N2 in Ruhe. */
+  formelsatz?: Formelsatz
 }
 
-export default function TheoryRenderer({ markdown, showToc = false, abbildungen = [] }: Props) {
-  const toc = useMemo(() => (showToc ? abschnitte(markdown) : []), [markdown, showToc])
+export default function TheoryRenderer({
+  markdown, showToc = false, abbildungen = [], formelsatz = 'chemie',
+}: Props) {
+  const toc = useMemo(
+    () => (showToc ? abschnitte(markdown, formelsatz) : []),
+    [markdown, showToc, formelsatz],
+  )
+  // remarkGfm und remarkMath gelten für jedes Fach; nur der Chemiesatz ist
+  // abschaltbar.
+  const remarkPlugins = useMemo(
+    () => (formelsatz === 'chemie' ? [remarkGfm, remarkMath, remarkChemistry] : [remarkGfm, remarkMath]),
+    [formelsatz],
+  )
   const teile = useMemo(() => zerlegeAnAbbildungen(markdown), [markdown])
   const nachId = useMemo(() => new Map(abbildungen.map(a => [a.id, a])), [abbildungen])
 
@@ -59,7 +72,7 @@ export default function TheoryRenderer({ markdown, showToc = false, abbildungen 
           return (
             <Fragment key={i}>
               <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath, remarkChemistry]}
+                remarkPlugins={remarkPlugins}
                 rehypePlugins={[rehypeKatex]}
                 components={{
                   h1: ({ children }) => (

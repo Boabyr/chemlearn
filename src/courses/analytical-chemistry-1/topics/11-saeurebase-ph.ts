@@ -126,29 +126,62 @@ Beim Verdünnen ändert sich der pH eines Puffers deshalb kaum — das Verhältn
         name: "Henderson-Hasselbalch (Puffer)",
         equation: "pH = pKs + log([A⁻]/[HA])",
         variables: [
-          { id: "pH", label: "pH-Wert", symbol: "pH", unit: "—", description: "Gesuchter pH-Wert" },
-          { id: "pKs", label: "pKs der Säure", symbol: "pKs", unit: "—", description: "z.B. Essigsäure: 4.76" },
-          { id: "ratio", label: "log([A⁻]/[HA])", symbol: "log(c_B/c_S)", unit: "—", description: "log(Konzentration Base / Konzentration Säure)" },
+          {
+            id: "pH",
+            label: "pH-Wert",
+            symbol: "pH",
+            unit: "—",
+            description: "Gesuchter pH-Wert"
+          },
+          {
+            id: "pKs",
+            label: "pKs der Säure",
+            symbol: "pKs",
+            unit: "—",
+            description: "z.B. Essigsäure: 4.76"
+          },
+          {
+            id: "ratio",
+            label: "log([A⁻]/[HA])",
+            symbol: "log(c_B/c_S)",
+            unit: "—",
+            description: "log(Konzentration Base / Konzentration Säure)"
+          }
         ],
         umstellungen: [
-          { solveFor: "pH", expr: "pKs + ratio" },
-          { solveFor: "pKs", expr: "pH - ratio" },
-          { solveFor: "ratio", expr: "pH - pKs" },
+          {
+            solveFor: "pH",
+            expr: "pKs + ratio"
+          },
+          {
+            solveFor: "pKs",
+            expr: "pH - ratio"
+          },
+          {
+            solveFor: "ratio",
+            expr: "pH - pKs"
+          }
         ],
         hints: [
           "Henderson-Hasselbalch: pH = pKs + log([A⁻]/[HA]). Bei gleichen Konzentrationen: log(1)=0 → pH = pKs. Pufferoptimum bei pH = pKs.",
           "Beispiel Acetat-Puffer: pKs(Essigsäure) = 4,76. Gleiche Teile Essigsäure und NaAcetat → pH = 4,76. 10:1 Acetat:Essigsäure → pH = 4,76 + 1 = 5,76."
-        ],
-      },
+        ]
+      }
     },
   ],
   quiz: [
-    { id: "q1", question: "Wie berechnet man den pH einer 0,01 M HCl-Lösung?", options: ["pH = -log(0,01) = 2", "pH = 0,01", "pH = log(0,01) = -2", "pH = 14 - log(0,01) = 12"], correct: 0, explanation: "HCl ist eine starke Säure (vollständige Dissoziation). [H⁺] = c(HCl) = 0,01 mol/L = 10⁻² mol/L. pH = -log(10⁻²) = 2." },
-    { id: "q2", question: "Was beschreibt die Henderson-Hasselbalch-Gleichung?", options: ["Den pH einer starken Säure aus ihrer Konzentration", "pH = pKs + log([A⁻]/[HA]) – pH eines Puffersystems", "Das Löslichkeitsprodukt einer Fällungsreaktion", "Die Nernst-Gleichung für Elektrodenpotentiale"], correct: 1, explanation: "Henderson-Hasselbalch: pH = pKs + log([Konjugierte Base]/[Säure]). Gilt für Pufferlösungen. Bei [A⁻]=[HA]: pH = pKs. Pufferwirkung optimal bei pH = pKs ± 1." },
-    { id: "q3", question: "9,1g NaCl und 12g NaOH werden in 500ml gelöst. Was bestimmt den pH?", options: ["NaCl, weil davon mehr Gramm eingesetzt sind", "NaOH allein, NaCl reagiert neutral", "Beide Stoffe zu etwa gleichen Teilen", "Das Lösungsmittel Wasser bestimmt den pH"], correct: 1, explanation: "NaCl ist das Salz einer starken Säure und einer starken Base — beide Ionen hydrolysieren nicht und der pH bleibt unbeeinflusst. NaOH ist eine starke Base: n = 12/40 = 0,3 mol in 0,5 L ergeben c = 0,6 mol/L, also pOH = 0,22 und pH = 13,78." },
+    { id: "q1", question: "Wie berechnet man den pH einer 0,01 M HCl-Lösung?", options: ["pH = 0,01", "pH = log(0,01) = -2", "pH = -log(0,01) = 2", "pH = 14 - log(0,01) = 12"], correct: 2, explanation: "HCl ist eine starke Säure (vollständige Dissoziation). [H⁺] = c(HCl) = 0,01 mol/L = 10⁻² mol/L. pH = -log(10⁻²) = 2." },
+    { id: "q2", question: "Was beschreibt die Henderson-Hasselbalch-Gleichung?", options: ["Den pH einer starken Säure aus ihrer Konzentration", "Das Löslichkeitsprodukt einer Fällungsreaktion", "Die Nernst-Gleichung für Elektrodenpotentiale", "pH = pKs + log([A⁻]/[HA]) – pH eines Puffersystems"], correct: 3, explanation: "Henderson-Hasselbalch: pH = pKs + log([Konjugierte Base]/[Säure]). Gilt für Pufferlösungen. Bei [A⁻]=[HA]: pH = pKs. Pufferwirkung optimal bei pH = pKs ± 1." },
+    { id: "q3", question: "9,1g NaCl und 12g NaOH werden in 500ml gelöst. Was bestimmt den pH?", options: ["NaOH allein, NaCl reagiert neutral", "NaCl, weil davon mehr Gramm eingesetzt sind", "Beide Stoffe zu etwa gleichen Teilen", "Das Lösungsmittel Wasser bestimmt den pH"], correct: 0, explanation: "NaCl ist das Salz einer starken Säure und einer starken Base — beide Ionen hydrolysieren nicht und der pH bleibt unbeeinflusst. NaOH ist eine starke Base: n = 12/40 = 0,3 mol in 0,5 L ergeben c = 0,6 mol/L, also pOH = 0,22 und pH = 13,78." },
     { id: "q4", question: "Was ist der isoelektrische Punkt einer Aminosäure?", options: ["Der pH mit der besten Löslichkeit", "Der pH, bei dem die Nettoladung null ist", "Der pH der stärksten sauren Wirkung", "Der pKs-Wert der Aminogruppe"], correct: 1, explanation: "Am isoelektrischen Punkt liegt die Aminosäure als Zwitterion vor: Die positive Ladung der Aminogruppe und die negative der Carboxylgruppe heben sich auf. Für eine Aminosäure ohne geladene Seitenkette gilt pI = ½(pKs1 + pKs2). Dort wandert sie im elektrischen Feld nicht und ist am schlechtesten löslich." },
-    { id: "q5", question: "Wie leitet man pKs aus dem Massenwirkungsgesetz her?", options: ["pKs folgt direkt aus der Konzentration", "Aus Ka = [H⁺][A⁻]/[HA] folgt pKs = −log(Ka)", "pKs entspricht dem halben pH-Wert", "pKs ergibt sich als 14 minus pKb"], correct: 1, explanation: "Das Massenwirkungsgesetz für HA ⇌ H⁺ + A⁻ liefert Ka = [H⁺][A⁻]/[HA]. Der negative Zehnerlogarithmus davon ist pKs. Die Beziehung pKs + pKb = 14 gilt zusätzlich für ein konjugiertes Paar, ist aber nicht die Herleitung." },
-    { id: "q6", question: "1ml 1M Essigsäure (pKs=4,6) + 0,5ml 1M NaOH auf 1L: Was entsteht?", options: ["Eine reine Essigsäurelösung ganz ohne Acetat", "Ein Puffer aus Essigsäure und Acetat, pH ≈ 4,6", "Eine reine Natriumacetatlösung", "Eine neutrale Lösung mit pH 7"], correct: 1, explanation: "Ein Millimol Essigsäure trifft auf ein halbes Millimol NaOH: die Hälfte wird zu Acetat, die andere Hälfte bleibt Säure. Bei gleichen Konzentrationen ist der Logarithmus in der Henderson-Hasselbalch-Gleichung null, also pH = pKs = 4,6. Das Verdünnen auf einen Liter ändert daran nichts, nur die Pufferkapazität sinkt." },
+    { id: "q5", question: "Wie leitet man pKs aus dem Massenwirkungsgesetz her?", options: ["pKs folgt direkt aus der Konzentration", "pKs entspricht dem halben pH-Wert", "Aus Ka = [H⁺][A⁻]/[HA] folgt pKs = −log(Ka)", "pKs ergibt sich als 14 minus pKb"], correct: 2, explanation: "Das Massenwirkungsgesetz für HA ⇌ H⁺ + A⁻ liefert Ka = [H⁺][A⁻]/[HA]. Der negative Zehnerlogarithmus davon ist pKs. Die Beziehung pKs + pKb = 14 gilt zusätzlich für ein konjugiertes Paar, ist aber nicht die Herleitung." },
+    { id: "q6", question: "1ml 1M Essigsäure (pKs=4,6) + 0,5ml 1M NaOH auf 1L: Was entsteht?", options: ["Eine reine Essigsäurelösung ganz ohne Acetat", "Eine reine Natriumacetatlösung", "Eine neutrale Lösung mit pH 7", "Ein Puffer aus Essigsäure und Acetat, pH ≈ 4,6"], correct: 3, explanation: "Ein Millimol Essigsäure trifft auf ein halbes Millimol NaOH: die Hälfte wird zu Acetat, die andere Hälfte bleibt Säure. Bei gleichen Konzentrationen ist der Logarithmus in der Henderson-Hasselbalch-Gleichung null, also pH = pKs = 4,6. Das Verdünnen auf einen Liter ändert daran nichts, nur die Pufferkapazität sinkt." },
+    { id: "q7", question: "Welchen pH hat eine 0,01 M NaOH-Lösung bei 25 °C?", options: ["2", "7", "10", "12"], correct: 3, explanation: "pOH = −log(0,01) = 2, damit pH = 14 − 2 = 12. Der häufigste Fehler ist, den Rechenweg der Säure zu übernehmen und bei pH 2 zu landen — bei einer starken Base führt der Weg immer über pOH." },
+    { id: "q8", question: "Welchen pH hat ein Puffer aus gleichen Stoffmengen NH₄⁺ und NH₃ (pKs(NH₄⁺) = 9,25)?", options: ["4,75", "7,00", "9,25", "11,50"], correct: 2, explanation: "Am Halbäquivalenzpunkt sind Säure und korrespondierende Base gleich konzentriert, der Logarithmus wird null und pH = pKs = 9,25. Ein Ammoniakpuffer liegt also im Alkalischen — 4,75 wäre der pKb-Wert und gehört nicht in die Henderson-Hasselbalch-Gleichung." },
+    { id: "q9", question: "Was geschieht mit dem pH eines Puffers beim Verdünnen mit Wasser um den Faktor 10?", options: ["Er steigt um eine Einheit", "Er bleibt in guter Näherung gleich", "Er fällt um eine Einheit", "Er nähert sich sofort dem Wert 7"], correct: 1, explanation: "In Henderson-Hasselbalch steht nur das Verhältnis von Base zu Säure, und beide werden gleichermaßen verdünnt. Der pH bleibt deshalb erhalten, während die Pufferkapazität sinkt — die verdünnte Lösung hält denselben pH, aber sie hält ihn schlechter." },
+    { id: "q10", question: "Wann ist die Pufferkapazität am größten?", options: ["Am Äquivalenzpunkt", "Bei pH 7", "Wenn ausschließlich die freie Säure vorliegt", "Wenn Säure und Base gleiche Anteile haben"], correct: 3, explanation: "Bei gleichen Anteilen kann der Puffer Säure- wie Basezugabe gleich gut abfangen; nutzbar ist etwa der Bereich pKs ± 1. Am Äquivalenzpunkt ist die Säure vollständig umgesetzt, dort springt der pH gerade am stärksten." },
+    { id: "q11", question: "Warum liegt der Äquivalenzpunkt bei der Titration von Essigsäure mit NaOH im Basischen?", options: ["Weil die Lauge im Überschuss vorliegt", "Weil das gebildete Acetat als schwache Base mit Wasser reagiert", "Weil Essigsäure eine starke Säure ist", "Weil der Indikator den Wert verschiebt"], correct: 1, explanation: "Am Äquivalenzpunkt liegt nur noch Acetat vor, und dieses nimmt aus dem Wasser ein Proton auf — es entsteht ein Überschuss an OH⁻, der pH liegt bei etwa 8,7. Deshalb wird mit Phenolphthalein und nicht mit Methylorange titriert; bei einer starken Säure läge der Punkt dagegen bei 7." },
+    { id: "q12", question: "Wie ändert sich der pH von reinem Wasser beim Erwärmen auf 50 °C?", options: ["Er bleibt bei genau 7,00", "Er steigt über 7, das Wasser wird basisch", "Er sinkt unter 7, das Wasser bleibt aber neutral", "Er sinkt unter 7 und das Wasser wird sauer"], correct: 2, explanation: "Das Ionenprodukt Kw wächst mit der Temperatur, deshalb steigen [H⁺] und [OH⁻] gemeinsam und der Neutralpunkt rutscht auf etwa 6,6. Neutral heißt [H⁺] = [OH⁻], nicht pH 7 — das gilt nur bei 25 °C. Aus demselben Grund brauchen pH-Meter eine Temperaturkompensation." },
   ],
   flashcards: [
     { id: "1btyvq4", front: "Henderson-Hasselbalch", back: "pH = pKs + log([A⁻]/[HA]). Puffer: schwache Säure + konjugierte Base. pH = pKs bei gleichen Konzentrationen. Pufferbereich: pKs ± 1. Kapazität maximal bei pH = pKs." },

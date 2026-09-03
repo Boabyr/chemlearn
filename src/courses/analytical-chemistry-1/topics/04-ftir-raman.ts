@@ -165,16 +165,52 @@ beantworten lässt:
         }
       ],
       hint1: "H₂O hat 3 Atome (N=3), nicht-linear: 3×3–6 = 3 Grundschwingungen. Die O-H Streckschwingungen liegen im Bereich 3000–3700 cm⁻¹ (hohe Energie = hohe Wellenzahl).",
-      hint2: "Reihenfolge nach Wellenzahl: Streckschwingungen ν > Deformationsschwingungen δ > Librationsschwingungen. Streckschwingungen ~3000–4000 cm⁻¹, Deformation ~1000–1700 cm⁻¹, Libration <1000 cm⁻¹.",
+      hint2: "Reihenfolge nach Wellenzahl: Streckschwingungen ν > Deformationsschwingungen δ > Librationsschwingungen. Streckschwingungen ~3000–4000 cm⁻¹, Deformation ~1000–1700 cm⁻¹, Libration <1000 cm⁻¹."
+    },
+    {
+      type: "apparatus-quiz",
+      question: "Raman-Spektrometer",
+      targetId: "raman",
+      options: [
+        {
+          id: "raman",
+          label: "Raman-Spektrometer",
+          description: "Laser als Quelle, Streulicht im rechten Winkel, Notch-Filter"
+        },
+        {
+          id: "ftir",
+          label: "FT-IR-Spektrometer",
+          description: "Michelson-Interferometer mit beweglichem Spiegel statt Gitter"
+        },
+        {
+          id: "uv-vis",
+          label: "UV/Vis-Spektrometer",
+          description: "Alles auf einer Achse, gemessen wird die Transmission"
+        },
+        {
+          id: "fluorescence",
+          label: "Fluoreszenzspektrometer",
+          description: "Zwei Monochromatoren, Emission im 90°-Winkel"
+        }
+      ],
+      explanation: "Das Raman-Gerät ist am Laser und am Notch-Filter zu erkennen. Der Laser liefert eine einzige, scharfe Frequenz — Raman misst die Verschiebung dagegen, deshalb wäre eine Breitbandlampe nutzlos. Der Notch-Filter hält die um Größenordnungen stärkere Rayleigh-Streuung zurück, sonst überstrahlt sie die Raman-Linien. Das Fluoreszenzgerät misst zwar auch im rechten Winkel, hat aber einen Anregungsmonochromator statt eines Lasers und misst Emission, nicht Streuung.",
+      hint1: "Welches Gerät braucht eine Quelle mit genau einer Frequenz?",
+      hint2: "Ein Filter direkt hinter der Probe, der eine einzige Linie ausblendet, gehört zu keinem der anderen Aufbauten."
     },
   ],
   quiz: [
     { id: "q1", question: "Warum ist N₂ IR-inaktiv?", options: ["N₂ ist als Molekül zu leicht", "Das Dipolmoment ändert sich nicht", "N₂ absorbiert ausschließlich im UV", "N₂ hat keinen Schwingungsfreiheitsgrad"], correct: 1, explanation: "Eine Schwingung ist nur dann IR-aktiv, wenn sich dabei das Dipolmoment ändert. N₂ ist homonuklear und hat in jeder Auslenkung das Dipolmoment null — die Streckschwingung existiert, sie ist nur unsichtbar für IR. Im Raman ist sie sichtbar, weil sich die Polarisierbarkeit sehr wohl ändert." },
-    { id: "q2", question: "Was ist der Fellgett-Vorteil (Multiplex-Vorteil) des FT-IR?", options: ["Der Stromverbrauch ist geringer", "Alle Frequenzen werden gleichzeitig gemessen", "Der zugängliche Messbereich ist größer", "Eine Kalibrierung entfällt vollständig"], correct: 1, explanation: "Ein dispersives Gerät misst jede Wellenlänge nur einen Bruchteil der Messzeit. Das FT-Gerät erfasst alle über die gesamte Zeit und gewinnt dadurch Signal-Rausch-Verhältnis — oder liefert dieselbe Qualität in kürzerer Zeit. Der zweite Vorteil ist der Durchsatz: ohne engen Spalt kommt mehr Licht an den Detektor (Jacquinot)." },
-    { id: "q3", question: "Die symmetrische Streckschwingung von CO₂ ist...", options: ["IR-aktiv und Raman-aktiv", "IR-aktiv aber Raman-inaktiv", "IR-inaktiv aber Raman-aktiv", "Weder IR- noch Raman-aktiv"], correct: 2, explanation: "CO₂ ist zentrosymmetrisch → Komplementaritätsprinzip: kein Übergang gleichzeitig IR und Raman aktiv. Symmetrische Streckschwingung: kein Dipolmoment-Änderung → IR-inaktiv. Aber: Polarisierbarkeit ändert sich → Raman-aktiv." },
-    { id: "q4", question: "Warum ist Raman für wässrige Lösungen besser geeignet als IR?", options: ["Raman misst grundsätzlich genauer", "Wasser absorbiert im IR stark, im Raman kaum", "IR-Spektroskopie versagt in Lösung ganz", "Raman löst die Banden deutlich besser auf"], correct: 1, explanation: "Wasser hat im mittleren IR sehr breite und starke O–H-Banden, die die Analytbanden überdecken. Für Raman zählt dagegen die Änderung der Polarisierbarkeit, und die ist beim Wasser klein. Deshalb ist Raman die Methode der Wahl für wässrige Proben und für biologische Systeme." },
+    { id: "q2", question: "Was ist der Fellgett-Vorteil (Multiplex-Vorteil) des FT-IR?", options: ["Der Stromverbrauch ist geringer", "Der zugängliche Messbereich ist größer", "Alle Frequenzen werden gleichzeitig gemessen", "Eine Kalibrierung entfällt vollständig"], correct: 2, explanation: "Ein dispersives Gerät misst jede Wellenlänge nur einen Bruchteil der Messzeit. Das FT-Gerät erfasst alle über die gesamte Zeit und gewinnt dadurch Signal-Rausch-Verhältnis — oder liefert dieselbe Qualität in kürzerer Zeit. Der zweite Vorteil ist der Durchsatz: ohne engen Spalt kommt mehr Licht an den Detektor (Jacquinot)." },
+    { id: "q3", question: "Die symmetrische Streckschwingung von CO₂ ist...", options: ["IR-aktiv und Raman-aktiv", "IR-aktiv aber Raman-inaktiv", "Weder IR- noch Raman-aktiv", "IR-inaktiv aber Raman-aktiv"], correct: 3, explanation: "CO₂ ist zentrosymmetrisch → Komplementaritätsprinzip: kein Übergang gleichzeitig IR und Raman aktiv. Symmetrische Streckschwingung: kein Dipolmoment-Änderung → IR-inaktiv. Aber: Polarisierbarkeit ändert sich → Raman-aktiv." },
+    { id: "q4", question: "Warum ist Raman für wässrige Lösungen besser geeignet als IR?", options: ["Wasser absorbiert im IR stark, im Raman kaum", "Raman misst grundsätzlich genauer", "IR-Spektroskopie versagt in Lösung ganz", "Raman löst die Banden deutlich besser auf"], correct: 0, explanation: "Wasser hat im mittleren IR sehr breite und starke O–H-Banden, die die Analytbanden überdecken. Für Raman zählt dagegen die Änderung der Polarisierbarkeit, und die ist beim Wasser klein. Deshalb ist Raman die Methode der Wahl für wässrige Proben und für biologische Systeme." },
     { id: "q5", question: "Wie viele Schwingungsfreiheitsgrade hat ein nicht-lineares Molekül mit 4 Atomen?", options: ["6", "7", "8", "9"], correct: 0, explanation: "Ein nicht-lineares Molekül hat 3N − 6 Schwingungsfreiheitsgrade: 3·4 − 6 = 6. Von den 3N = 12 Freiheitsgraden entfallen drei auf die Translation des ganzen Moleküls und drei auf die Rotation. Wäre das Molekül linear, fiele eine Rotationsachse weg und es blieben 3N − 5 = 7 Schwingungen — daher der Unterschied zwischen den beiden Formeln." },
     { id: "q6", question: "Welcher Konkurrenzprozess schränkt die Raman-Spektroskopie am stärksten ein?", options: ["Rayleigh-Streuung am Probengefäß", "Absorption im mittleren Infrarot", "Fluoreszenz der Probe", "Thermische Eigenemission der Probe"], correct: 2, explanation: "Raman-Streuung ist extrem schwach — etwa ein Photon von einer Million. Fluoreszenz derselben Probe ist um Größenordnungen stärker und überdeckt das Spektrum vollständig. Gegenmittel: Anregung im nahen Infrarot bei 1064 nm, wo die meisten Stoffe nicht mehr fluoreszieren." },
+    { id: "q7", question: "Wie viele Normalschwingungen hat ein lineares Molekül aus 3 Atomen?", options: ["3", "4", "5", "6"], correct: 1, explanation: "Lineare Moleküle haben 3N − 5 Schwingungen, hier 9 − 5 = 4. Der Unterschied zu 3N − 6 liegt daran, dass die Rotation um die Molekülachse keine Bewegung der Atome bedeutet und deshalb wegfällt. CO₂ mit seinen vier Schwingungen ist das Standardbeispiel." },
+    { id: "q8", question: "In welchem Bereich liegt die O–H-Streckschwingung eines Alkohols?", options: ["400–800 cm⁻¹", "1600–1700 cm⁻¹", "2100–2200 cm⁻¹", "3200–3600 cm⁻¹"], correct: 3, explanation: "Bindungen zu leichten Atomen schwingen schnell: X–H-Streckschwingungen liegen alle oberhalb 2800 cm⁻¹, die breite O–H-Bande wasserstoffbrückengebunden bei 3200–3600 cm⁻¹. C=O liegt bei etwa 1700, die Dreifachbindung C≡N bei 2200 cm⁻¹." },
+    { id: "q9", question: "Was bezeichnet man im IR-Spektrum als Fingerprint-Bereich?", options: ["Den Bereich unter 1500 cm⁻¹ mit gekoppelten Gerüstschwingungen", "Den Bereich über 3000 cm⁻¹ mit den X–H-Streckschwingungen", "Den Bereich, in dem ausschließlich das Lösungsmittel absorbiert", "Den Bereich der Oberschwingungen im nahen Infrarot"], correct: 0, explanation: "Unterhalb 1500 cm⁻¹ liegen Gerüstschwingungen, die das Molekül als Ganzes betreffen und sich einzelnen Gruppen kaum zuordnen lassen. Gerade deshalb ist das Muster substanzspezifisch und dient zum Identitätsvergleich mit einer Referenz." },
+    { id: "q10", question: "Was besagt das Alternativverbot?", options: ["Eine Schwingung ist entweder IR- oder Raman-aktiv, aber bei zentrosymmetrischen Molekülen nie beides", "Es darf nur eine Methode je Probe eingesetzt werden", "Raman und IR liefern immer dieselben Banden", "Bei Molekülen ohne Symmetriezentrum ist keine Schwingung Raman-aktiv"], correct: 0, explanation: "Besitzt das Molekül ein Symmetriezentrum, sind Schwingungen entweder gerade oder ungerade bezüglich der Inversion — und damit entweder Raman- oder IR-aktiv. CO₂ zeigt das mustergültig. Ohne Symmetriezentrum kann dieselbe Schwingung in beiden Spektren erscheinen." },
+    { id: "q11", question: "Worauf beruht die ATR-Technik in der IR-Spektroskopie?", options: ["Auf der Messung des reflektierten Anteils an einer Metalloberfläche", "Auf der Totalreflexion in einem Kristall, wobei eine evaneszente Welle wenige Mikrometer in die Probe eindringt", "Auf der Beugung an einem Analysatorkristall", "Auf der Aufnahme eines Interferogramms ohne beweglichen Spiegel"], correct: 1, explanation: "Der Strahl wird im Kristall aus Diamant oder ZnSe total reflektiert; das evaneszente Feld ragt einige Mikrometer heraus und wird von der aufgelegten Probe geschwächt. Weil die Weglänge dadurch von selbst klein bleibt, entfällt die Probenvorbereitung — auch wässrige und dicke Proben sind messbar." },
+    { id: "q12", question: "Was zeichnet die Raman-Streuung gegenüber der Rayleigh-Streuung aus?", options: ["Sie ist deutlich intensiver", "Sie tritt nur bei zentrosymmetrischen Molekülen auf", "Das gestreute Photon hat die Energie der Anregung geändert", "Sie erfordert kein Anregungslicht"], correct: 2, explanation: "Rayleigh-Streuung ist elastisch, das Photon behält seine Energie. Bei Raman gibt es sie teilweise an eine Schwingung ab (Stokes) oder nimmt Energie auf (Anti-Stokes). Nur etwa eines von 10⁶ bis 10⁸ Photonen wird so gestreut — der Grund für Laser und Notch-Filter im Aufbau." },
   ],
   flashcards: [
     { id: "1g42tf7", front: "IR-Auswahlregel", back: "Eine Schwingung ist IR-aktiv, wenn sich das Dipolmoment während der Schwingung ändert. Homonukleare Moleküle (N₂, O₂) → IR-inaktiv. H₂O, CO, HCl → IR-aktiv." },

@@ -27,6 +27,29 @@ describe('TheoryRenderer', () => {
     expect(container.textContent).toContain('H₂SO₄')
   })
 
+  it('lässt Summenformeln stehen, wenn der Kurs keinen Chemie-Formelsatz führt', () => {
+    // In einem Physikskript ist V2 ein zweites Volumen und N2 eine Stichprobe,
+    // nicht Vanadium und nicht Stickstoff.
+    const { container } = render(
+      <TheoryRenderer markdown="Zwischen V2 und N2 gilt der Zusammenhang." formelsatz="aus" />)
+    expect(container.textContent).toContain('V2')
+    expect(container.textContent).toContain('N2')
+    expect(container.textContent).not.toContain('₂')
+  })
+
+  it('setzt LaTeX auch ohne Chemie-Formelsatz', () => {
+    const { container } = render(
+      <TheoryRenderer markdown={'Es gilt $v = \\frac{s}{t}$.'} formelsatz="aus" />)
+    expect(container.querySelector('.katex')).not.toBeNull()
+  })
+
+  it('lässt auch Überschriften unangetastet, wenn der Formelsatz aus ist', () => {
+    const md = '## Der Fall N2\n\nText\n\n## Zweiter Abschnitt\n\nText'
+    const { container } = render(<TheoryRenderer markdown={md} formelsatz="aus" showToc />)
+    expect(container.querySelector('nav')?.textContent).toContain('N2')
+    expect(container.querySelector('h2')?.id).toBe('der-fall-n2')
+  })
+
   it('lässt Formeln in Code-Auszeichnung unangetastet', () => {
     const { container } = render(<TheoryRenderer markdown="Der Schlüssel `H2SO4` bleibt roh." />)
     expect(container.querySelector('code')?.textContent).toBe('H2SO4')

@@ -7,8 +7,6 @@ export const topic = {
   icon: "⚛️",
   estimatedMinutes: 75,
   theory: `
-
-
 ## Grundprinzip
 
 Atomspektrometrie: Messung von Absorption oder Emission einzelner Atome.
@@ -102,8 +100,6 @@ Die Probe wird nicht auf einmal erhitzt, sondern in Stufen:
 Die Kunst liegt in Schritt 2: möglichst heiß, um die Matrix loszuwerden, aber nicht so
 heiß, dass der Analyt mitgeht. Für flüchtige Elemente wie Cd oder Pb setzt man dafür
 Matrixmodifier zu, die den Analyten thermisch stabilisieren.
-
-
 `,
   interactives: [
     {
@@ -113,51 +109,96 @@ Matrixmodifier zu, die den Analyten thermisch stabilisieren.
         name: "Absorption in der AAS",
         equation: "A = k · N · d",
         variables: [
-          { id: "A", label: "Absorption", symbol: "A", unit: "—", description: "Gemessene Extinktion" },
-          { id: "k", label: "Atomarer Absorptionskoeffizient", symbol: "k", unit: "cm²", description: "Elementspezifisch, gilt für die gewählte Linie" },
-          { id: "N", label: "Atomzahldichte", symbol: "N", unit: "Atome/cm³", description: "Freie Atome im Strahlengang" },
-          { id: "d", label: "Absorptionsweg", symbol: "d", unit: "cm", description: "Länge der Flamme oder des Graphitrohrs" },
+          {
+            id: "A",
+            label: "Absorption",
+            symbol: "A",
+            unit: "—",
+            description: "Gemessene Extinktion"
+          },
+          {
+            id: "k",
+            label: "Atomarer Absorptionskoeffizient",
+            symbol: "k",
+            unit: "cm²",
+            description: "Elementspezifisch, gilt für die gewählte Linie"
+          },
+          {
+            id: "N",
+            label: "Atomzahldichte",
+            symbol: "N",
+            unit: "Atome/cm³",
+            description: "Freie Atome im Strahlengang"
+          },
+          {
+            id: "d",
+            label: "Absorptionsweg",
+            symbol: "d",
+            unit: "cm",
+            description: "Länge der Flamme oder des Graphitrohrs"
+          }
         ],
         umstellungen: [
-          { solveFor: "A", expr: "k * N * d" },
-          { solveFor: "N", expr: "A / (k * d)" },
-          { solveFor: "d", expr: "A / (k * N)" },
-          { solveFor: "k", expr: "A / (N * d)" },
+          {
+            solveFor: "A",
+            expr: "k * N * d"
+          },
+          {
+            solveFor: "N",
+            expr: "A / (k * d)"
+          },
+          {
+            solveFor: "d",
+            expr: "A / (k * N)"
+          },
+          {
+            solveFor: "k",
+            expr: "A / (N * d)"
+          }
         ],
-        hints: ["Formal dasselbe Gesetz wie Lambert-Beer, nur steht die Atomzahldichte N an der Stelle der Konzentration. Deshalb muss die Probe erst atomisiert werden.", "Das Graphitrohr ist rund hundertmal empfindlicher als die Flamme, weil alle Atome gleichzeitig im Strahlengang stehen statt kontinuierlich durchzuströmen — N wird größer, nicht k."],
-      },
+        hints: [
+          "Formal dasselbe Gesetz wie Lambert-Beer, nur steht die Atomzahldichte N an der Stelle der Konzentration. Deshalb muss die Probe erst atomisiert werden.",
+          "Das Graphitrohr ist rund hundertmal empfindlicher als die Flamme, weil alle Atome gleichzeitig im Strahlengang stehen statt kontinuierlich durchzuströmen — N wird größer, nicht k."
+        ]
+      }
     },
-      {
-      "type": "apparatus-matching",
-      "title": "Drei Wege, Atome zu erzeugen",
-      "description": "Alle drei atomisieren die Probe — bei sehr verschiedenen Temperaturen.",
-      "explanation": "Die Flammen-AAS lässt die Lampe quer durch eine Schlitzflamme von rund 2300 °C strahlen; die Probe strömt kontinuierlich durch. Beim Graphitrohr wird die ganze Probe auf einmal in einem elektrisch geheizten Rohr atomisiert und bleibt im Strahlengang — daher der Faktor hundert an Empfindlichkeit. Das ICP hat gar keine Lampe: das Argonplasma bei 8000 °C regt die Atome selbst zur Emission an, und zwar alle gleichzeitig.",
-      "paare": [
+    {
+      type: "apparatus-matching",
+      title: "Drei Wege, Atome zu erzeugen",
+      description: "Alle drei atomisieren die Probe — bei sehr verschiedenen Temperaturen.",
+      explanation: "Die Flammen-AAS lässt die Lampe quer durch eine Schlitzflamme von rund 2300 °C strahlen; die Probe strömt kontinuierlich durch. Beim Graphitrohr wird die ganze Probe auf einmal in einem elektrisch geheizten Rohr atomisiert und bleibt im Strahlengang — daher der Faktor hundert an Empfindlichkeit. Das ICP hat gar keine Lampe: das Argonplasma bei 8000 °C regt die Atome selbst zur Emission an, und zwar alle gleichzeitig.",
+      paare: [
         {
-          "apparaturId": "flame-aas",
-          "label": "Flammen-AAS",
-          "hinweis": "Lampe strahlt quer durch die Flamme."
+          apparaturId: "flame-aas",
+          label: "Flammen-AAS",
+          hinweis: "Lampe strahlt quer durch die Flamme."
         },
         {
-          "apparaturId": "graphite-furnace",
-          "label": "Graphitrohr-AAS",
-          "hinweis": "Rohr längs im Strahlengang."
+          apparaturId: "graphite-furnace",
+          label: "Graphitrohr-AAS",
+          hinweis: "Rohr längs im Strahlengang."
         },
         {
-          "apparaturId": "icp-oes",
-          "label": "ICP-OES",
-          "hinweis": "Keine Lampe — das Plasma strahlt selbst."
+          apparaturId: "icp-oes",
+          label: "ICP-OES",
+          hinweis: "Keine Lampe — das Plasma strahlt selbst."
         }
       ]
     },
   ],
   quiz: [
-    { id: "q1", question: "Warum kann in der AAS keine Kontinuumslampe (z.B. Deuteriumlampe) als Lichtquelle verwendet werden?", options: ["Kontinuumslampen sind zu teuer", "Die Atomlinie ist zu schmal für ein Kontinuum", "Kontinuumslampen strahlen nur im UV", "Die Wellenlänge lässt sich nicht einstellen"], correct: 1, explanation: "Die Absorptionslinie freier Atome ist nur etwa 0,002 nm breit. Ein Monochromator schneidet aus einem Kontinuum ein viel breiteres Band heraus, sodass der absorbierte Anteil im Rauschen untergeht. Die Hohlkathodenlampe emittiert genau die Linie des gesuchten Elements — deshalb ein Lampenwechsel je Element." },
-    { id: "q2", question: "Wie hoch ist die Temperatur im ICP-Plasma und warum ist sie für die Analytik vorteilhaft?", options: ["Etwa 500 °C, schonend für thermisch labile Stoffe", "Etwa 2300 °C, wie eine Luft/Acetylen-Flamme", "Etwa 6000 bis 10000 °C, vollständige Atomisierung", "Etwa 300 °C, besonders energiesparend im Betrieb"], correct: 2, explanation: "Das Argonplasma wird durch ein Hochfrequenzfeld von etwa 27 MHz geheizt. Bei diesen Temperaturen zerfällt praktisch jede Verbindung, chemische Interferenzen verschwinden, und die Anregungsenergie reicht für über 70 Elemente gleichzeitig. Eine Luft/Acetylen-Flamme bleibt bei rund 2300 °C." },
-    { id: "q3", question: "Welche Atomisierungsmethode hat die niedrigste Nachweisgrenze?", options: ["Flammen-AAS mit Luft/Acetylen", "ICP-OES mit Argonplasma", "Graphitrohr-AAS (GFAAS)", "Flammenemission (Flammen-OES)"], correct: 2, explanation: "Die Reihenfolge lautet ICP-MS < GFAAS < ICP-OES < Flammen-AAS, wobei kleiner besser heißt. Unter den hier genannten Atomisierungsmethoden liegt das Graphitrohr vorn: Die gesamte Probe wird auf einmal atomisiert und bleibt im Strahlengang, statt kontinuierlich durchzuströmen — das bringt etwa den Faktor hundert gegenüber der Flamme." },
+    { id: "q1", question: "Warum kann in der AAS keine Kontinuumslampe (z.B. Deuteriumlampe) als Lichtquelle verwendet werden?", options: ["Kontinuumslampen sind zu teuer", "Kontinuumslampen strahlen nur im UV", "Die Atomlinie ist zu schmal für ein Kontinuum", "Die Wellenlänge lässt sich nicht einstellen"], correct: 2, explanation: "Die Absorptionslinie freier Atome ist nur etwa 0,002 nm breit. Ein Monochromator schneidet aus einem Kontinuum ein viel breiteres Band heraus, sodass der absorbierte Anteil im Rauschen untergeht. Die Hohlkathodenlampe emittiert genau die Linie des gesuchten Elements — deshalb ein Lampenwechsel je Element." },
+    { id: "q2", question: "Wie hoch ist die Temperatur im ICP-Plasma und warum ist sie für die Analytik vorteilhaft?", options: ["Etwa 500 °C, schonend für thermisch labile Stoffe", "Etwa 2300 °C, wie eine Luft/Acetylen-Flamme", "Etwa 300 °C, besonders energiesparend im Betrieb", "Etwa 6000 bis 10000 °C, vollständige Atomisierung"], correct: 3, explanation: "Das Argonplasma wird durch ein Hochfrequenzfeld von etwa 27 MHz geheizt. Bei diesen Temperaturen zerfällt praktisch jede Verbindung, chemische Interferenzen verschwinden, und die Anregungsenergie reicht für über 70 Elemente gleichzeitig. Eine Luft/Acetylen-Flamme bleibt bei rund 2300 °C." },
+    { id: "q3", question: "Welche Atomisierungsmethode hat die niedrigste Nachweisgrenze?", options: ["Graphitrohr-AAS (GFAAS)", "Flammen-AAS mit Luft/Acetylen", "ICP-OES mit Argonplasma", "Flammenemission (Flammen-OES)"], correct: 0, explanation: "Die Reihenfolge lautet ICP-MS < GFAAS < ICP-OES < Flammen-AAS, wobei kleiner besser heißt. Unter den hier genannten Atomisierungsmethoden liegt das Graphitrohr vorn: Die gesamte Probe wird auf einmal atomisiert und bleibt im Strahlengang, statt kontinuierlich durchzuströmen — das bringt etwa den Faktor hundert gegenüber der Flamme." },
     { id: "q4", question: "Was ist der Hauptvorteil der ICP-OES gegenüber AAS?", options: ["Die deutlich niedrigere Nachweisgrenze je Element", "Die Multielementanalyse in einem Durchgang", "Der einfachere Geräteaufbau", "Die geringeren Betriebskosten"], correct: 1, explanation: "Das Plasma regt alle Elemente gleichzeitig an, und ein Polychromator oder CCD erfasst die Linien parallel — bis zu 70 Elemente je Probe. Bei den Nachweisgrenzen ist das Graphitrohr besser, und Aufbau wie Argonverbrauch sind beim ICP deutlich aufwendiger." },
-    { id: "q5", question: "Warum wird für die Bestimmung von Al in der AAS N₂O/Acetylen-Flamme statt Luft/Acetylen verwendet?", options: ["Lachgas ist im Betrieb billiger", "Die heißere Flamme spaltet das stabile Al₂O₃", "Aluminium absorbiert nur im nahen Infrarot", "Aus Gründen des Arbeitsschutzes"], correct: 1, explanation: "Aluminium bildet in der Flamme sehr stabile Oxide. Luft/Acetylen erreicht rund 2300 °C und schafft die Dissoziation nicht; Distickstoffmonoxid/Acetylen kommt auf etwa 2700 °C und setzt die Atome frei. Dieselbe Überlegung gilt für andere refraktäre Elemente wie Silicium und Titan." },
-    { id: "q6", question: "Eine Probe mit viel Natrium liefert für Kalium ein verändertes Signal. Um welche Störung handelt es sich und was hilft?", options: ["Spektrale Störung — eine andere Analysenlinie wählen und nachmessen", "Ionisationsstörung — einen Ionisationspuffer im Überschuss zugeben", "Chemische Störung — heißere Flamme verwenden", "Untergrundabsorption — Deuteriumlampe zuschalten"], correct: 1, explanation: "Leicht ionisierbare Elemente wie Natrium liefern in der Flamme viele freie Elektronen. Diese drücken das Ionisationsgleichgewicht des Analyten zurück, sodass mehr neutrale Atome vorliegen und das Signal steigt. Weil der Effekt von der Probenzusammensetzung abhängt, gibt man allen Proben und Standards denselben Überschuss eines leicht ionisierbaren Salzes zu — dann ist die Störung überall gleich groß und fällt heraus." },
+    { id: "q5", question: "Warum wird für die Bestimmung von Al in der AAS N₂O/Acetylen-Flamme statt Luft/Acetylen verwendet?", options: ["Lachgas ist im Betrieb billiger", "Aluminium absorbiert nur im nahen Infrarot", "Die heißere Flamme spaltet das stabile Al₂O₃", "Aus Gründen des Arbeitsschutzes"], correct: 2, explanation: "Aluminium bildet in der Flamme sehr stabile Oxide. Luft/Acetylen erreicht rund 2300 °C und schafft die Dissoziation nicht; Distickstoffmonoxid/Acetylen kommt auf etwa 2700 °C und setzt die Atome frei. Dieselbe Überlegung gilt für andere refraktäre Elemente wie Silicium und Titan." },
+    { id: "q6", question: "Eine Probe mit viel Natrium liefert für Kalium ein verändertes Signal. Um welche Störung handelt es sich und was hilft?", options: ["Spektrale Störung — eine andere Analysenlinie wählen und nachmessen", "Chemische Störung — heißere Flamme verwenden", "Untergrundabsorption — Deuteriumlampe zuschalten", "Ionisationsstörung — einen Ionisationspuffer im Überschuss zugeben"], correct: 3, explanation: "Leicht ionisierbare Elemente wie Natrium liefern in der Flamme viele freie Elektronen. Diese drücken das Ionisationsgleichgewicht des Analyten zurück, sodass mehr neutrale Atome vorliegen und das Signal steigt. Weil der Effekt von der Probenzusammensetzung abhängt, gibt man allen Proben und Standards denselben Überschuss eines leicht ionisierbaren Salzes zu — dann ist die Störung überall gleich groß und fällt heraus." },
+    { id: "q7", question: "Warum sind die Linien in der Atomspektrometrie so schmal?", options: ["Weil freie Atome keine Schwingungs- und Rotationsniveaus besitzen", "Weil die Temperatur sehr hoch ist", "Weil der Monochromator sie beschneidet", "Weil nur ein Element gemessen wird"], correct: 0, explanation: "In Molekülen ist jedem Elektronenübergang eine Vielzahl von Schwingungs- und Rotationszuständen überlagert, daraus werden breite Banden. Freie Atome haben nur elektronische Zustände, ihre Linien sind einige Pikometer breit. Genau deshalb braucht die AAS eine Linienquelle: ein Kontinuum ließe sich mit vertretbarem Aufwand nicht so schmal ausblenden." },
+    { id: "q8", question: "Wozu dient die Deuteriumlampe in einem AAS-Gerät?", options: ["Als zweite Anregungsquelle für leichte Elemente", "Zur Korrektur der unspezifischen Untergrundabsorption", "Zur regelmäßigen Kalibrierung der Wellenlängenskala", "Zum Vorheizen des Graphitrohrs"], correct: 1, explanation: "Rauch und Molekülbanden schwächen das Licht über einen breiten Bereich. Die Hohlkathodenlampe misst atomare plus unspezifische Absorption, die Deuteriumlampe im Wechsel praktisch nur die unspezifische — die Differenz ist das gesuchte Atomsignal. Genauer arbeitet die Zeeman-Korrektur mit einem Magnetfeld." },
+    { id: "q9", question: "In welcher Reihenfolge läuft das Temperaturprogramm der Graphitrohr-AAS?", options: ["Atomisieren, Trocknen, Veraschen, Ausheizen", "Veraschen, Trocknen, Atomisieren, Ausheizen", "Trocknen, Veraschen, Atomisieren, Ausheizen", "Trocknen, Atomisieren, Veraschen, Ausheizen"], correct: 2, explanation: "Erst verdampft das Lösungsmittel bei etwa 100 °C, dann wird die Matrix bei einigen hundert Grad verascht, danach folgt der schnelle Atomisierungsschritt bei 2000 bis 3000 °C, in dem gemessen wird. Zum Schluss brennt das Rohr leer. Wer zu heiß verascht, verliert flüchtige Analyten wie Cadmium schon vor der Messung." },
+    { id: "q10", question: "Was ist eine chemische Interferenz in der Flammen-AAS?", options: ["Zwei Elemente absorbieren bei derselben Wellenlänge", "Die Flamme strahlt selbst Licht ab", "Der Analyt bildet schwerflüchtige Verbindungen", "Die eingesaugte Probe verstopft den Zerstäuber"], correct: 2, explanation: "Calcium in Gegenwart von Phosphat ist das Standardbeispiel: es entsteht schwer zersetzliches Calciumphosphat, das Signal fällt zu niedrig aus. Abhilfe schaffen eine heißere Flamme wie Lachgas/Acetylen oder ein Freisetzungsmittel wie Lanthan, das das Phosphat abfängt." },
+    { id: "q11", question: "Warum liegen die Nachweisgrenzen der ICP-MS unter denen der ICP-OES?", options: ["Weil das Plasma heißer ist", "Weil sie deutlich mehr Elemente gleichzeitig misst", "Weil sie keine Kalibrierung braucht", "Weil sie einzelne Ionen zählt statt Licht zu messen"], correct: 3, explanation: "Die Ionenzählung arbeitet praktisch untergrundfrei, während die optische Emission stets gegen das Leuchten des Plasmas anmessen muss. Daraus folgen Nachweisgrenzen im ng/L- bis pg/L-Bereich gegenüber µg/L. Dasselbe Plasma dient in beiden Fällen als Quelle." },
+    { id: "q12", question: "Welche Störung liegt vor, wenn Natrium das Kaliumsignal in der Flammenemission erhöht?", options: ["Eine spektrale Interferenz der Linien", "Eine Ionisationsinterferenz", "Eine chemische Interferenz", "Ein Transportfehler"], correct: 1, explanation: "Leicht ionisierbares Natrium überschwemmt die Flamme mit Elektronen und drängt damit die Ionisation des Kaliums zurück — es bleiben mehr neutrale Kaliumatome, das Signal steigt. Abhilfe ist ein Ionisationspuffer: reichlich Cäsium oder Natrium in Proben und Standards, damit der Effekt überall gleich groß ist." },
   ],
   flashcards: [
     { id: "0mvkilc", front: "AAS – Warum Hohlkathodenlampe?", back: "Atomlinien extrem schmal (~0,002nm). Kontinuumslampe: zu wenig Licht genau auf der Linie → schlechtes S/N. HKL: emittiert nur die Linien des jeweiligen Elements → perfekte spektrale Überlappung." },

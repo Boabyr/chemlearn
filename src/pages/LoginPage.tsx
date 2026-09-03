@@ -33,7 +33,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <span className="text-4xl">⚗️</span>
           <h1 className="text-3xl font-bold text-accent mt-2">ChemLearn</h1>
-          <p className="text-muted mt-1">Heterocyclische Chemie interaktiv lernen</p>
+          <p className="text-muted mt-1">Dein Studienstoff, interaktiv gelernt</p>
         </div>
 
         <div className="bg-raised rounded-2xl p-8 border border-line">

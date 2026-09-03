@@ -39,6 +39,34 @@ describe('auswerten — Variablen und Funktionen', () => {
     nah(auswerten('abs(0 - 3)', {}), 3)
   })
 
+  it('kennt die Winkelfunktionen', () => {
+    nah(auswerten('cos(0)', {}), 1)
+    nah(auswerten('sin(0)', {}), 0)
+    nah(auswerten('tan(0)', {}), 0)
+    nah(auswerten('acos(1)', {}), 0)
+    nah(auswerten('asin(0)', {}), 0)
+    nah(auswerten('atan(0)', {}), 0)
+  })
+
+  it('rechnet die Interferenz zweier Wellen', () => {
+    nah(auswerten('I1 + I2 + 2 * sqrt(I1 * I2) * cos(dphi)', { I1: 1, I2: 1, dphi: 0 }), 4)
+    nah(auswerten('acos((I - I1 - I2) / (2 * sqrt(I1 * I2)))', { I: 4, I1: 1, I2: 1 }), 0)
+  })
+
+  it('kennt pi als Konstante', () => {
+    nah(auswerten('cos(pi)', {}), -1)
+    nah(auswerten('2 * pi * r', { r: 2 }), 4 * Math.PI)
+  })
+
+  it('lässt eine deklarierte Größe die Konstante schlagen', () => {
+    nah(auswerten('pi', { pi: 3 }), 3)
+  })
+
+  it('zählt pi nicht als Größe, die eingegeben werden muss', () => {
+    expect(variablenIn('2 * pi * dn * L / lambda').sort()).toEqual(['L', 'dn', 'lambda'])
+    expect(pruefeAusdruck('2 * pi * dn * L / lambda', ['dn', 'L', 'lambda'])).toBeNull()
+  })
+
   it('rechnet die Nernst-Gleichung', () => {
     nah(auswerten('E0 - (0.05916 / n) * log(ratio)', { E0: 0.34, n: 2, ratio: 100 }), 0.34 - 0.05916)
   })
@@ -50,7 +78,7 @@ describe('auswerten — Fehler', () => {
   })
 
   it('weist unbekannte Funktionen ab', () => {
-    expect(() => auswerten('tan(1)', {})).toThrow(/tan/)
+    expect(() => auswerten('cot(1)', {})).toThrow(/cot/)
   })
 
   it('weist unvollständige Ausdrücke ab', () => {

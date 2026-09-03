@@ -7,8 +7,6 @@ export const topic = {
   icon: "🔢",
   estimatedMinutes: 55,
   theory: `
-
-
 ## Signifikante Stellen
 
 **Regeln:**
@@ -105,8 +103,6 @@ schleppt einen Rundungsfehler durch die ganze Rechnung.
 
 Kein einzelnes Verfahren deckt alles ab — der Grund, warum in der Routineanalytik mehrere
 davon nebeneinander laufen.
-
-
 `,
   interactives: [
     {
@@ -116,26 +112,68 @@ davon nebeneinander laufen.
         name: "Fehlerfortpflanzung bei Produkt und Quotient",
         equation: "Δf/f = √[(Δx/x)² + (Δy/y)²]",
         variables: [
-          { id: "relf", label: "Relativer Fehler des Ergebnisses", symbol: "Δf/f", unit: "—", description: "Als Anteil, nicht in Prozent" },
-          { id: "dx", label: "Absoluter Fehler von x", symbol: "Δx", unit: "wie x", description: "Unsicherheit der ersten Größe" },
-          { id: "x", label: "Messwert x", symbol: "x", unit: "—", description: "Erste Größe" },
-          { id: "dy", label: "Absoluter Fehler von y", symbol: "Δy", unit: "wie y", description: "Unsicherheit der zweiten Größe" },
-          { id: "y", label: "Messwert y", symbol: "y", unit: "—", description: "Zweite Größe" },
+          {
+            id: "relf",
+            label: "Relativer Fehler des Ergebnisses",
+            symbol: "Δf/f",
+            unit: "—",
+            description: "Als Anteil, nicht in Prozent"
+          },
+          {
+            id: "dx",
+            label: "Absoluter Fehler von x",
+            symbol: "Δx",
+            unit: "wie x",
+            description: "Unsicherheit der ersten Größe"
+          },
+          {
+            id: "x",
+            label: "Messwert x",
+            symbol: "x",
+            unit: "—",
+            description: "Erste Größe"
+          },
+          {
+            id: "dy",
+            label: "Absoluter Fehler von y",
+            symbol: "Δy",
+            unit: "wie y",
+            description: "Unsicherheit der zweiten Größe"
+          },
+          {
+            id: "y",
+            label: "Messwert y",
+            symbol: "y",
+            unit: "—",
+            description: "Zweite Größe"
+          }
         ],
         umstellungen: [
-          { solveFor: "relf", expr: "sqrt((dx / x) ^ 2 + (dy / y) ^ 2)" },
+          {
+            solveFor: "relf",
+            expr: "sqrt((dx / x) ^ 2 + (dy / y) ^ 2)"
+          }
         ],
-        hints: ["Bei Produkt und Quotient addieren sich die relativen Fehler quadratisch, bei Summe und Differenz die absoluten. Nicht verwechseln.", "Weil quadriert wird, dominiert der größte Einzelfehler. Eine Größe mit 5 % Unsicherheit macht eine andere mit 0,5 % praktisch bedeutungslos — dort lohnt das Verbessern."],
-      },
+        hints: [
+          "Bei Produkt und Quotient addieren sich die relativen Fehler quadratisch, bei Summe und Differenz die absoluten. Nicht verwechseln.",
+          "Weil quadriert wird, dominiert der größte Einzelfehler. Eine Größe mit 5 % Unsicherheit macht eine andere mit 0,5 % praktisch bedeutungslos — dort lohnt das Verbessern."
+        ]
+      }
     },
   ],
   quiz: [
     { id: "q1", question: "Welche statistischen Tests sind in der Analytischen Chemie besonders wichtig?", options: ["Ausschließlich der t-Test", "Q-Test, t-Test und F-Test", "Ausschließlich der F-Test", "Ausschließlich der Chi-Quadrat-Test"], correct: 1, explanation: "Der Q-Test prüft einen einzelnen verdächtigen Wert auf Ausreißer, der t-Test vergleicht Mittelwerte, der F-Test vergleicht Streuungen. Die Reihenfolge ist wichtig: erst Ausreißer prüfen, dann mit dem F-Test die Varianzen vergleichen, und erst dann den passenden t-Test wählen." },
-    { id: "q2", question: "Was ist eine Wiederfindungsrate und welcher Wert ist ideal?", options: ["Anteil des gefundenen am eingesetzten Analyten, ideal: 95-105%", "Anteil der wiederholten Messungen im Vertrauensbereich, ideal: 100%", "Anteil der verworfenen Ausreißer, ideal: <5%", "Verhältnis Messwert zu Blindwert, ideal: >10"], correct: 0, explanation: "Recovery = (c_gemessen/c_zugesetzt) × 100%. Zugesetzter Standard: Known addition (Spike). Ideal: 95-105%. Abweichungen zeigen systematische Fehler (Matrix, Verluste bei Aufschluss) an." },
-    { id: "q3", question: "Wie viele signifikante Stellen hat 0,00450?", options: ["5", "3", "6", "2"], correct: 1, explanation: "0,00450: führende Nullen (0,00) nicht signifikant. 4, 5, 0 → 3 signifikante Stellen. Die abschließende 0 nach dem Dezimalpunkt ist signifikant (zeigt Präzision der Messung an)." },
-    { id: "q4", question: "Wozu dient ein Blindversuch in der Analytik?", options: ["Um die Empfindlichkeit zu steigern", "Um den Untergrund aus Reagenzien zu erfassen", "Um einen Ausreißer im Datensatz zu finden", "Um die Kalibriergerade zu überprüfen"], correct: 1, explanation: "Der Blindversuch durchläuft die ganze Prozedur mit allen Reagenzien, nur ohne Probe. Was dabei gemessen wird, stammt aus Verunreinigungen von Chemikalien und Geräten und wird von jedem Messwert abgezogen. Verluste des Analyten findet er nicht — dafür ist die Wiederfindung da." },
+    { id: "q2", question: "Was ist eine Wiederfindungsrate und welcher Wert ist ideal?", options: ["Anteil der wiederholten Messungen im Vertrauensbereich, ideal: 100%", "Anteil der verworfenen Ausreißer, ideal: <5%", "Anteil des gefundenen am eingesetzten Analyten, ideal: 95-105%", "Verhältnis Messwert zu Blindwert, ideal: >10"], correct: 2, explanation: "Recovery = (c_gemessen/c_zugesetzt) × 100%. Zugesetzter Standard: Known addition (Spike). Ideal: 95-105%. Abweichungen zeigen systematische Fehler (Matrix, Verluste bei Aufschluss) an." },
+    { id: "q3", question: "Wie viele signifikante Stellen hat 0,00450?", options: ["5", "6", "2", "3"], correct: 3, explanation: "0,00450: führende Nullen (0,00) nicht signifikant. 4, 5, 0 → 3 signifikante Stellen. Die abschließende 0 nach dem Dezimalpunkt ist signifikant (zeigt Präzision der Messung an)." },
+    { id: "q4", question: "Wozu dient ein Blindversuch in der Analytik?", options: ["Um den Untergrund aus Reagenzien zu erfassen", "Um die Empfindlichkeit zu steigern", "Um einen Ausreißer im Datensatz zu finden", "Um die Kalibriergerade zu überprüfen"], correct: 0, explanation: "Der Blindversuch durchläuft die ganze Prozedur mit allen Reagenzien, nur ohne Probe. Was dabei gemessen wird, stammt aus Verunreinigungen von Chemikalien und Geräten und wird von jedem Messwert abgezogen. Verluste des Analyten findet er nicht — dafür ist die Wiederfindung da." },
     { id: "q5", question: "Wie beeinflusst die Messfrequenz die chromatographische Auflösung?", options: ["Die Messfrequenz spielt keine Rolle", "Zu selten abgetastet verzerrt Peakform und Fläche", "Höhere Messfrequenz verschlechtert die Auflösung", "Das gilt nur für die NMR-Spektroskopie"], correct: 1, explanation: "Nach Nyquist muss die Abtastrate mindestens doppelt so hoch sein wie die höchste Signalfrequenz. Praktisch braucht ein chromatographischer Peak mindestens zehn bis zwanzig Messpunkte. Zu wenige verzerren Form und Fläche — die Integration liefert dann systematisch falsche Gehalte, besonders bei schmalen UHPLC-Peaks." },
-    { id: "q6", question: "Warum wird in der Statistik manchmal eine Transformation zur Normalverteilung durchgeführt?", options: ["Um die Datenmenge für die Auswertung zu verringern", "Weil t- und F-Test Normalverteilung voraussetzen", "Um Ausreißer automatisch zu entfernen", "Aus rein historischen Gründen"], correct: 1, explanation: "t-Test und F-Test setzen näherungsweise normalverteilte Daten voraus. Viele analytische Größen — Konzentrationen im Spurenbereich etwa — sind rechtsschief verteilt. Eine Logarithmierung macht daraus oft eine annähernde Normalverteilung, und die Tests werden anwendbar." },
+    { id: "q6", question: "Warum wird in der Statistik manchmal eine Transformation zur Normalverteilung durchgeführt?", options: ["Um die Datenmenge für die Auswertung zu verringern", "Um Ausreißer automatisch zu entfernen", "Weil t- und F-Test Normalverteilung voraussetzen", "Aus rein historischen Gründen"], correct: 2, explanation: "t-Test und F-Test setzen näherungsweise normalverteilte Daten voraus. Viele analytische Größen — Konzentrationen im Spurenbereich etwa — sind rechtsschief verteilt. Eine Logarithmierung macht daraus oft eine annähernde Normalverteilung, und die Tests werden anwendbar." },
+    { id: "q7", question: "Wie viele signifikante Stellen hat die Zahl 1200?", options: ["Genau zwei signifikante Stellen", "Genau vier signifikante Stellen", "Unbestimmt, solange keine Zehnerpotenz es klärt", "Genau drei signifikante Stellen"], correct: 2, explanation: "Endnullen ohne Dezimalpunkt lassen offen, ob sie gemessen oder nur Platzhalter sind. Die Exponentialschreibweise macht es eindeutig: 1,2×10³ hat zwei, 1,200×10³ hat vier signifikante Stellen. Genau darum wird in wissenschaftlichen Arbeiten so geschrieben." },
+    { id: "q8", question: "Wie viele signifikante Stellen darf das Ergebnis einer Multiplikation von 2,5 und 3,14159 haben?", options: ["Sechs", "Drei", "Zwei", "So viele wie der Taschenrechner anzeigt"], correct: 2, explanation: "Bei Multiplikation und Division richtet sich das Ergebnis nach dem Faktor mit den wenigsten signifikanten Stellen, hier zwei: 7,9. Bei Addition und Subtraktion zählt dagegen die Zahl der Dezimalstellen, nicht der signifikanten Stellen — beide Regeln werden gern verwechselt." },
+    { id: "q9", question: "Ein Analysenergebnis liegt bei einer Wiederfindung von 70 %. Was bedeutet das?", options: ["Der Analyt wurde vollständig erfasst", "Rund 30 % gehen im Verfahren verloren", "Die Präzision beträgt 70 %", "Das Ergebnis liegt um 70 Prozent zu hoch"], correct: 1, explanation: "Die Wiederfindung vergleicht den gefundenen mit dem zugesetzten Gehalt; 70 % zeigen einen systematischen Verlust, etwa bei Extraktion oder Aufschluss, oder eine Signalunterdrückung durch die Matrix. Akzeptiert werden je nach Anwendung 80 bis 120 %; darunter wird die Probenvorbereitung überarbeitet oder korrigiert gerechnet." },
+    { id: "q10", question: "Bei welcher Rechenoperation addieren sich die absoluten Fehler quadratisch?", options: ["Bei Multiplikation", "Bei Division", "Beim Logarithmieren", "Bei Addition und Subtraktion"], correct: 3, explanation: "Für z = x ± y gilt s_z² = s_x² + s_y². Bei Multiplikation und Division addieren sich stattdessen die relativen Fehler quadratisch. Besonders unangenehm ist die Differenz zweier fast gleich großer Zahlen: der absolute Fehler bleibt, der Betrag des Ergebnisses schrumpft, der relative Fehler wächst rasch." },
+    { id: "q11", question: "Wann darf ein Messwert als Ausreißer verworfen werden?", options: ["Wenn er unplausibel erscheint", "Wenn er sehr weit vom Mittelwert entfernt liegt", "Wenn ein statistischer Test ihn als Ausreißer ausweist", "Wenn dadurch die Standardabweichung kleiner wird"], correct: 2, explanation: "Ausreißer werden nach einem festgelegten Kriterium verworfen, nicht nach Gefühl — und das Verwerfen wird dokumentiert. Wer streicht, bis das Ergebnis gefällt, betreibt Datenfrisur: die Standardabweichung wird dabei immer kleiner, ohne dass die Messung besser geworden wäre." },
+    { id: "q12", question: "Was beschreibt die Messunsicherheit nach GUM?", options: ["Ausschließlich den zufälligen Anteil der Streuung", "Nur den systematischen Anteil", "Die Differenz zum Referenzwert", "Einen Bereich, der alle bekannten Einflussgrößen zusammenfasst"], correct: 3, explanation: "Zusammengefasst werden alle Beiträge — Wägung, Volumenmessung, Kalibrierung, Wiederholstreuung —, jeweils als Standardunsicherheit ausgedrückt und quadratisch addiert. Multipliziert mit einem Erweiterungsfaktor, meist k = 2, ergibt sich die erweiterte Unsicherheit für etwa 95 % Vertrauen. Die Angabe lautet dann Wert ± U." },
   ],
   flashcards: [
     { id: "19fahm6", front: "Signifikante Stellen – Regeln", back: "Ziffern 1-9: immer signifikant. Nullen zwischen Ziffern: signifikant. Führende Nullen (0,005): NICHT sig. Abschl. Nullen nach Dezimalpunkt (1,500): signifikant. Multiplikation: min. sig. Stellen aller Faktoren." },

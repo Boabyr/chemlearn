@@ -1,4 +1,5 @@
 import { formatChemistry } from './chemFormat'
+import type { Formelsatz } from '../../content/schema'
 
 /** Überschrift → Ankername. Muss in Renderer und Inhaltsübersicht gleich laufen. */
 export function slugify(text: string): string {
@@ -10,7 +11,10 @@ export function slugify(text: string): string {
 }
 
 /** Sammelt die `##`-Abschnitte — außerhalb von Code-Blöcken. */
-export function abschnitte(markdown: string): { titel: string; anker: string }[] {
+export function abschnitte(
+  markdown: string,
+  formelsatz: Formelsatz = 'chemie',
+): { titel: string; anker: string }[] {
   const zeilen = markdown.split('\n')
   const gefunden: { titel: string; anker: string }[] = []
   let imCodeBlock = false
@@ -20,7 +24,8 @@ export function abschnitte(markdown: string): { titel: string; anker: string }[]
     if (imCodeBlock) continue
     const treffer = /^##\s+(.+?)\s*$/.exec(zeile)
     if (treffer) {
-      const titel = formatChemistry(treffer[1].replace(/\*\*/g, ''))
+      const roh = treffer[1].replace(/\*\*/g, '')
+      const titel = formelsatz === 'chemie' ? formatChemistry(roh) : roh
       gefunden.push({ titel, anker: slugify(titel) })
     }
   }

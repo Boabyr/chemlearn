@@ -112,12 +112,17 @@ function ladeQuelltexte(dir) {
   return dateien.map(f => ({ datei: f, text: readFileSync(join(dir, f), 'utf8') }))
 }
 
-/** Text in Themen- und Prüfungsabschnitte trennen. */
+/** Text in Kurskopf-, Themen- und Prüfungsabschnitte trennen. */
 function teileAuf(text, datei) {
   const themen = []
   const pruefungen = []
+  const kurskoepfe = []
 
-  const teile = text.split(/^===\s*(DATEI:\s*[^=]+?|PRÜFUNG|PRUEFUNG)\s*===\s*$/m)
+  // `VERGEBEN` und `FORTSETZUNG FOLGT` sind Nachspann für den nächsten
+  // Prompt-Lauf, kein Inhalt. Sie werden hier erkannt und fallen gelassen —
+  // sonst landen sie im letzten Abschnitt des letzten Themas.
+  const teile = text.split(
+    /^===\s*(DATEI:\s*[^=]+?|PRÜFUNG|PRUEFUNG|KURS|VERGEBEN|FORTSETZUNG FOLGT)\s*===\s*$/m)
   // teile[0] ist Vorspann, danach abwechselnd Kopf und Inhalt
   for (let i = 1; i < teile.length; i += 2) {
     const kopf = teile[i].trim()
@@ -125,11 +130,59 @@ function teileAuf(text, datei) {
     if (/^DATEI:/i.test(kopf)) {
       const name = kopf.replace(/^DATEI:\s*/i, '').replace(/\.md$/i, '').trim()
       themen.push({ name, inhalt, ort: `${datei} → ${name}` })
+    } else if (/^KURS$/i.test(kopf)) {
+      kurskoepfe.push({ inhalt, ort: `${datei} → Kurskopf` })
+    } else if (/^(VERGEBEN|FORTSETZUNG FOLGT)$/i.test(kopf)) {
+      continue
     } else {
       pruefungen.push({ inhalt, ort: `${datei} → Prüfung` })
     }
   }
-  return { themen, pruefungen }
+  return { themen, pruefungen, kurskoepfe }
+}
+
+/**
+ * Kurskopf aus der Quelle.
+ *
+ * Vorher stand der Kopf eines Fachs nur im erzeugten `index.ts` und musste dort
+ * von Hand nachgezogen werden — ein zweiter Import hat ihn aus sich selbst
+ * zurückgelesen und dabei alles verloren, was das Rücklesen nicht kannte.
+ * Jetzt ist die Quelle die Quelle.
+ */
+function baueKursKopf(inhalt, ort) {
+  const kv = keyValues(inhalt)
+  const kopf = {}
+  const text = (quelle, ziel) => {
+    if (kv[quelle] !== undefined && kv[quelle] !== '') kopf[ziel] = kv[quelle]
+  }
+  text('titel', 'title')
+  text('untertitel', 'subtitle')
+  text('icon', 'icon')
+  text('farbe', 'color')
+  text('niveau', 'level')
+  text('beschreibung', 'description')
+  text('sprache', 'sprache')
+
+  if (kv.stunden) {
+    const n = Number(kv.stunden.replace(',', '.'))
+    if (!Number.isFinite(n) || n <= 0) problem(ort, `stunden: "${kv.stunden}" ist keine Zahl`)
+    else kopf.estimatedHours = n
+  }
+  if (kv.formelsatz) {
+    if (!['chemie', 'aus'].includes(kv.formelsatz)) {
+      problem(ort, `formelsatz: "${kv.formelsatz}" — erlaubt sind chemie und aus`)
+    } else kopf.formelsatz = kv.formelsatz
+  }
+  if (kv.entwurf) kopf.entwurf = ['ja', 'true', '1'].includes(kv.entwurf.toLowerCase())
+
+  // Prüferzeilen: `- id: uebung | label: Übungsfragen | icon: 📝`
+  const pruefer = [...inhalt.matchAll(/^\s*-\s*(.+)$/gm)]
+    .map(m => inlineFields(m[1]))
+    .filter(f => f.id)
+    .map(f => ({ id: f.id, label: f.label ?? f.id, icon: f.icon }))
+  if (pruefer.length) kopf.examiners = pruefer
+
+  return kopf
 }
 
 /** Abschnitte einer Themendatei (`# META`, `# THEORIE`, …). */
@@ -1230,11 +1283,33 @@ export { questions, structures }
 `
 }
 
-function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
-  const meta = vorhanden ?? {
+/** Voreinstellung für ein Fach, das es noch nicht gibt. */
+function standardKursMeta(kursId) {
+  return {
     id: kursId, title: kursId, subtitle: '', icon: '📘', color: '#3b82f6',
-    level: 'Uni', description: '', estimatedHours: themenIds.length * 2,
+    level: 'Uni', description: '', sprache: 'de', formelsatz: 'chemie',
+    entwurf: false, examiners: [],
   }
+}
+
+/**
+ * Stundenangabe aus den Themen auf der Platte.
+ *
+ * `inhalte.test.ts` verlangt, dass sie auf eine Stunde genau zur Summe der
+ * Themenzeiten passt. Ein Fach wächst stückweise — eine fortgeschriebene Zahl
+ * wäre nach dem zweiten Lauf falsch, also wird sie jedes Mal neu gerechnet.
+ */
+function stundenAusThemen(kursId, themenIds) {
+  let minuten = 0
+  for (const id of themenIds) {
+    const thema = leseVorhandenesThema(kursId, id)
+    if (thema) minuten += Number(thema.estimatedMinutes) || 0
+  }
+  return Math.round(minuten / 60 * 10) / 10
+}
+
+function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
+  const meta = vorhanden ?? { ...standardKursMeta(kursId), estimatedHours: themenIds.length * 2 }
   const pruefer = (meta.examiners ?? []).length
     ? '  examiners: [\n' + meta.examiners.map(p =>
         `    { id: ${str(p.id)}, label: ${str(p.label)}${p.icon ? `, icon: ${str(p.icon)}` : ''} },`).join('\n') + '\n  ],\n'
@@ -1255,6 +1330,9 @@ ${themenIds.map(t => `    ${str(t)},`).join('\n')}
   ],
   totalTopics: ${themenIds.length},
   estimatedHours: ${meta.estimatedHours},
+  sprache: ${str(meta.sprache ?? 'de')},
+  formelsatz: ${str(meta.formelsatz ?? 'chemie')},
+  entwurf: ${meta.entwurf ? 'true' : 'false'},
 ${pruefer}} satisfies Kurs;
 `
 }
@@ -1272,21 +1350,37 @@ function leseKursMeta(kursId) {
     const m = s.match(new RegExp(`${name}:\\s*(\\d+)`))
     return m ? Number(m[1]) : fallback
   }
+  // `sprache` fehlte hier: ein Vollimport in organic-chemistry hat das
+  // englische Fach still auf Deutsch zurückgestellt. Was der Index trägt, muss
+  // hier stehen — sonst geht es beim nächsten Lauf verloren.
   return {
     id: kursId, title: feld('title', kursId), subtitle: feld('subtitle', ''),
     icon: feld('icon', '📘'), color: feld('color', '#3b82f6'), level: feld('level', 'Uni'),
     description: feld('description', ''), estimatedHours: zahl('estimatedHours', 20),
+    sprache: feld('sprache', 'de'), formelsatz: feld('formelsatz', 'chemie'),
+    entwurf: /\bentwurf:\s*true\b/.test(s),
     examiners: lesePruefer(s),
   }
 }
 
-/** Prüferliste aus einem bestehenden Kursindex übernehmen. */
+/**
+ * Prüferliste aus einem bestehenden Kursindex übernehmen.
+ *
+ * Hier stand `inlineFields`, das an `|` trennt — im erzeugten Index sind die
+ * Felder aber mit Komma getrennt und in Anführungszeichen gesetzt. Aus
+ * `{ id: "uebung", label: "Übungsfragen" }` wurde deshalb ein einziger Prüfer
+ * namens `"uebung", label: "Übungsfragen"`. Ein Vollimport hätte die
+ * Prüferabschnitte jedes Fachs zerlegt.
+ */
 function lesePruefer(quelltext) {
   const block = quelltext.split(/examiners:\s*\[/)[1]
   if (!block) return []
   const bis = block.indexOf(']')
   return [...block.slice(0, bis).matchAll(/\{([^}]*)\}/g)].map(m => {
-    const felder = inlineFields(m[1].trim())
+    const felder = {}
+    for (const f of m[1].matchAll(/([a-zA-Z]+)\s*:\s*"((?:[^"\\]|\\.)*)"/g)) {
+      felder[f[1].toLowerCase()] = JSON.parse(`"${f[2]}"`)
+    }
     return { id: felder.id, label: felder.label ?? felder.id, icon: felder.icon }
   }).filter(p => p.id)
 }
@@ -1355,19 +1449,55 @@ function main() {
   const quellen = ladeQuelltexte(quellDir)
   const roheThemen = []
   const rohePruefungen = []
+  const roheKurskoepfe = []
+  // Je Datei mitschreiben, was herauskam. Eine Datei, die nichts hergibt,
+  // fiel früher niemandem auf — Kapitel 15 der Physik fehlte ohne ein Wort,
+  // weil ihr Kopf `=== DATEI: ... ===` fehlte.
+  const jeDatei = []
   for (const { datei, text } of quellen) {
-    const { themen, pruefungen } = teileAuf(text, datei)
+    const { themen, pruefungen, kurskoepfe } = teileAuf(text, datei)
     roheThemen.push(...themen)
     rohePruefungen.push(...pruefungen)
+    roheKurskoepfe.push(...kurskoepfe)
+    jeDatei.push({ datei, themen: themen.length, pruefungen: pruefungen.length, kurskopf: kurskoepfe.length })
   }
 
+  for (const d of jeDatei) {
+    if (d.themen || d.pruefungen || d.kurskopf) continue
+    warnung(d.datei, 'nichts erkannt — fehlt der Kopf "=== DATEI: <slug>.md ==="?')
+  }
+
+  if (roheKurskoepfe.length > 1) {
+    problem('Kurskopf', `${roheKurskoepfe.length} mal "=== KURS ===" im Ordner — es darf nur einen geben`)
+  }
+  const kursKopf = roheKurskoepfe.length
+    ? baueKursKopf(roheKurskoepfe[0].inhalt, roheKurskoepfe[0].ort)
+    : null
+
   const alleRohThemen = roheThemen.map(baueThema).sort((a, b) => a.id.localeCompare(b.id))
+  // Sollstärke aus CONTENT-PROMPT.md schon hier prüfen: sechs Quizfragen,
+  // sechs Karten, ein Interaktivteil, 400 Wörter Theorie. Sonst merkt man den
+  // Mangel erst, wenn die Tests der App über den geschriebenen Inhalt fallen.
+  for (const t of alleRohThemen.filter(t => !t.ergaenzen)) {
+    const mangel = []
+    if (t.quiz.length === 0) mangel.push('keine Quizfragen')
+    else if (t.quiz.length < 6) mangel.push(`nur ${t.quiz.length} Quizfragen`)
+    if (t.flashcards.length === 0) mangel.push('keine Karteikarten')
+    else if (t.flashcards.length < 6) mangel.push(`nur ${t.flashcards.length} Karteikarten`)
+    if (!t.interactive) mangel.push('kein Interaktivteil')
+    const woerter = t.theory.split(/\s+/).filter(Boolean).length
+    if (woerter < 400) mangel.push(`nur ${woerter} Wörter Theorie`)
+    if (mangel.length) warnung(t.ort, `unter der Sollstärke: ${mangel.join(', ')}`)
+  }
+
   const themen = alleRohThemen.filter(t => !t.ergaenzen)
   const ergaenzungen = alleRohThemen.filter(t => t.ergaenzen)
   const themenIds = alleRohThemen.map(t => t.id)
 
-  // Fragen dürfen sich auch auf schon vorhandene Themen beziehen
-  const meta = leseKursMeta(kursId)
+  // Fragen dürfen sich auch auf schon vorhandene Themen beziehen.
+  // Reihenfolge: Voreinstellung, dann was im Index steht, zuletzt die Quelle —
+  // ein `=== KURS ===`-Block schlägt beides.
+  const meta = { ...standardKursMeta(kursId), ...(leseKursMeta(kursId) ?? {}), ...(kursKopf ?? {}) }
   const bestehendeThemen = existsSync(join(COURSES_DIR, kursId, 'topics'))
     ? readdirSync(join(COURSES_DIR, kursId, 'topics')).filter(f => f.endsWith('.ts')).map(f => f.replace(/\.ts$/, ''))
     : []
@@ -1419,6 +1549,17 @@ function main() {
     ergaenzt.push({ thema: stand, bilanz: summe, id: themaId })
   }
 
+  console.log('Quelldateien:')
+  for (const d of jeDatei) {
+    const teile = []
+    if (d.kurskopf) teile.push(d.kurskopf === 1 ? 'Kurskopf' : `${d.kurskopf} Kursköpfe`)
+    if (d.themen) teile.push(d.themen === 1 ? '1 Thema' : `${d.themen} Themen`)
+    if (d.pruefungen) teile.push(d.pruefungen === 1 ? '1 Prüfungsblock' : `${d.pruefungen} Prüfungsblöcke`)
+    const befund = teile.length ? teile.join(', ') : 'nichts erkannt'
+    console.log(`  ${d.datei.padEnd(34)} ${befund}`)
+  }
+  console.log('')
+
   console.log(`${themen.length} Themen geparst${ergaenzungen.length ? `, ${ergaenzungen.length} Ergänzungen` : ''}`)
   console.log(`${alleFragen.length} Prüfungsfragen geparst`)
 
@@ -1433,6 +1574,19 @@ function main() {
     console.log('')
     console.log(`Abgebrochen, nichts geschrieben. Einzelheiten: ${berichtPfad}`)
     process.exit(1)
+  }
+
+  // Ausdrückliche Entwarnung: wer nur auf Fehler schaut, kann Schweigen nicht
+  // von Erfolg unterscheiden. Steht die Zeile nicht da, war etwas.
+  if (warnungen.length === 0 && marker.length === 0) {
+    console.log('')
+    console.log(`Alles geprüft: ${quellen.length} Quelldateien, ${themen.length + ergaenzungen.length} Themen, ${alleFragen.length} Prüfungsfragen — keine Beanstandungen.`)
+  } else {
+    console.log('')
+    const teile = []
+    if (warnungen.length) teile.push(`${warnungen.length} Warnung${warnungen.length === 1 ? '' : 'en'}`)
+    if (marker.length) teile.push(`${marker.length} Markierung${marker.length === 1 ? '' : 'en'} der Quell-LLM`)
+    console.log(`Geprüft: ${quellen.length} Quelldateien, ${themen.length + ergaenzungen.length} Themen, ${alleFragen.length} Prüfungsfragen — ${teile.join(', ')} oben.`)
   }
 
   const zusammengefuehrt = [...nachKurs.entries()].map(([zielKurs, e]) => ({
@@ -1489,10 +1643,18 @@ function main() {
   }
   if (ergaenzt.length) console.log(`ergänzt: ${ergaenzt.length} Themen`)
 
-  if (themen.length > 0) {
+  if ((themen.length > 0 || kursKopf) && alleThemenIds.length > 0) {
     // Kurs- und Prüfungsregister finden sich selbst (import.meta.glob) —
     // hier ist nichts mehr per Regex nachzupflegen.
-    writeFileSync(join(COURSES_DIR, kursId, 'index.ts'), kursIndexAlsTypeScript(meta, kursId, alleThemenIds))
+    //
+    // Die Stundenzahl kommt aus den Themen auf der Platte, nicht aus dem alten
+    // Index. Nur ein ausdrückliches `stunden:` im Kurskopf schlägt die Rechnung.
+    const gerechnet = stundenAusThemen(kursId, alleThemenIds)
+    const stunden = kursKopf?.estimatedHours ?? (gerechnet > 0 ? gerechnet : meta.estimatedHours ?? 1)
+    writeFileSync(
+      join(COURSES_DIR, kursId, 'index.ts'),
+      kursIndexAlsTypeScript({ ...meta, estimatedHours: stunden }, kursId, alleThemenIds),
+    )
   }
 
   for (const z of zusammengefuehrt) {

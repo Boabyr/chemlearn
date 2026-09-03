@@ -115,7 +115,14 @@ export default function Dashboard() {
                 className="bg-raised border border-line rounded-2xl p-6 text-left w-full hover:border-accent transition-all"
                 style={{ borderTopColor: course.color, borderTopWidth: 3 }}>
                 <div className="text-3xl mb-3">{course.icon}</div>
-                <h2 className="font-semibold text-lg mb-1">{course.title}</h2>
+                <h2 className="font-semibold text-lg mb-1">
+                  {course.title}
+                  {course.entwurf && (
+                    <span className="ml-2 rounded-full border border-line px-2 py-0.5 align-middle font-mono text-[0.65rem] uppercase tracking-widest text-subtle">
+                      Entwurf
+                    </span>
+                  )}
+                </h2>
                 <p className="text-muted text-sm mb-4">{course.description}</p>
                 <div className="flex justify-between text-xs text-subtle mb-2">
                   <span>{done}/{total} abgeschlossen</span>

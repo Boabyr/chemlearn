@@ -7,8 +7,6 @@ export const topic = {
   icon: "📏",
   estimatedMinutes: 60,
   theory: `
-
-
 ## Grundbegriffe (prüfungsrelevant!)
 
 **Kalibrierung/Kalibration:**
@@ -102,8 +100,6 @@ identisch, im Massenspektrum unterscheidbar.
 Der zugesetzte Standard verdünnt die Probe. Wird V_S/V_total weggelassen, kommt ein
 systematisch zu hoher Gehalt heraus. Deshalb arbeitet man entweder mit sehr kleinen
 Zugabevolumina hoch konzentrierter Standards, oder man rechnet die Verdünnung sauber mit.
-
-
 `,
   interactives: [
     {
@@ -113,85 +109,82 @@ Zugabevolumina hoch konzentrierter Standards, oder man rechnet die Verdünnung s
         name: "Standardaddition (einfach)",
         equation: "cx = cS · y0 / (y1 - y0)",
         variables: [
-          { id: "cx", label: "Konzentration Probe", symbol: "cx", unit: "ppb", description: "Gesuchte Konzentration" },
-          { id: "cS", label: "Zugabe-Konzentration", symbol: "cS", unit: "ppb", description: "Konzentration des zugefügten Standards" },
-          { id: "y0", label: "Signal ohne Standard", symbol: "y0", unit: "mV", description: "Messsignal der Originalprobe" },
-          { id: "y1", label: "Signal mit Standard", symbol: "y1", unit: "mV", description: "Messsignal nach Standardzugabe" },
+          {
+            id: "cx",
+            label: "Konzentration Probe",
+            symbol: "cx",
+            unit: "ppb",
+            description: "Gesuchte Konzentration"
+          },
+          {
+            id: "cS",
+            label: "Zugabe-Konzentration",
+            symbol: "cS",
+            unit: "ppb",
+            description: "Konzentration des zugefügten Standards"
+          },
+          {
+            id: "y0",
+            label: "Signal ohne Standard",
+            symbol: "y0",
+            unit: "mV",
+            description: "Messsignal der Originalprobe"
+          },
+          {
+            id: "y1",
+            label: "Signal mit Standard",
+            symbol: "y1",
+            unit: "mV",
+            description: "Messsignal nach Standardzugabe"
+          }
         ],
         umstellungen: [
-          { solveFor: "cx", expr: "cS * y0 / (y1 - y0)" },
-          { solveFor: "cS", expr: "cx * (y1 - y0) / y0" },
+          {
+            solveFor: "cx",
+            expr: "cS * y0 / (y1 - y0)"
+          },
+          {
+            solveFor: "cS",
+            expr: "cx * (y1 - y0) / y0"
+          }
         ],
-        hints: ["Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!", "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."],
-      },
+        hints: [
+          "Standardaddition: cx = cS · y0/(y1-y0). Voraussetzung: lineares Signal. Matrixeffekte werden kompensiert!",
+          "Achtung Volumenverhältnisse: Wenn Standardvolumen VS zu Probenvolumen VP zugefügt: cx = cS·VS/(VP+VS) · y0/(y1-y0)."
+        ]
+      }
     },
   ],
   abbildungen: [
     {
-      "art": "diagramm",
-      "id": "standardaddition",
-      "titel": "Standardaddition: die Antwort steht links von null",
-      "beschreibung": "Gemessen wird nur rechts von der y-Achse. Die Gerade wird nach links verlängert; der Betrag ihres Schnittpunkts mit der x-Achse ist die gesuchte Konzentration.",
-      "xAchse": {
-        "titel": "zugesetzter Standard (ppm)",
-        "min": -7,
-        "max": 3.5
-      },
-      "yAchse": {
-        "titel": "Signal (mV)",
-        "min": 0,
-        "max": 900
-      },
-      "kurven": [
-        {
-          "beschriftung": "Messpunkte und ihre Gerade",
-          "punkte": [
-            {
-              "x": -5.12,
-              "y": 0
-            },
-            {
-              "x": 0,
-              "y": 553
-            },
-            {
-              "x": 1,
-              "y": 661
-            },
-            {
-              "x": 2,
-              "y": 769
-            },
-            {
-              "x": 3,
-              "y": 877
-            }
-          ],
-          "farbe": "accent"
-        }
+      art: "diagramm",
+      id: "standardaddition",
+      titel: "Standardaddition: die Antwort steht links von null",
+      beschreibung: "Gemessen wird nur rechts von der y-Achse. Die Gerade wird nach links verlängert; der Betrag ihres Schnittpunkts mit der x-Achse ist die gesuchte Konzentration.",
+      xAchse: { titel: "zugesetzter Standard (ppm)", min: -7, max: 3.5 },
+      yAchse: { titel: "Signal (mV)", min: 0, max: 900 },
+      kurven: [
+        { beschriftung: "Messpunkte und ihre Gerade", punkte: [{ x: -5.12, y: 0 }, { x: 0, y: 553 }, { x: 1, y: 661 }, { x: 2, y: 769 }, { x: 3, y: 877 }], farbe: "accent" },
       ],
-      "marker": [
-        {
-          "x": 0,
-          "y": 553,
-          "beschriftung": "y₀ ohne Zugabe",
-          "hilfslinien": true
-        },
-        {
-          "x": -5.12,
-          "y": 0,
-          "beschriftung": "−c_x"
-        }
-      ]
-    }
+      marker: [
+        { x: 0, y: 553, beschriftung: "y₀ ohne Zugabe", hilfslinien: true },
+        { x: -5.12, y: 0, beschriftung: "−c_x" },
+      ],
+    },
   ],
   quiz: [
-    { id: "q1", question: "Was ist der Unterschied zwischen Kalibrierung und Eichung?", options: ["Beide Begriffe bedeuten dasselbe", "Eichung ist die amtlich geregelte Kalibrierung", "Eichung ist grundsätzlich genauer", "Kalibrierung gilt nur in der Spektroskopie"], correct: 1, explanation: "Kalibrierung ist der allgemeine Vorgang: den Zusammenhang zwischen Messsignal und Konzentration feststellen. Eichung ist derselbe Vorgang unter gesetzlicher Regelung, etwa bei Waagen und Füllmengen im Handel. Mathematisch führen beide zum selben Ergebnis, rechtlich nicht." },
-    { id: "q2", question: "Wann verwendet man Standardaddition statt externer Kalibrierung?", options: ["Immer, weil sie genauer arbeitet", "Wenn die Probenmatrix das Signal beeinflusst", "Nur bei sehr niedrigen Konzentrationen", "Nur in der Atomspektrometrie"], correct: 1, explanation: "Externe Kalibrierung setzt voraus, dass Standards und Probe dieselbe Matrix haben. Ist die Matrix unbekannt oder von Probe zu Probe verschieden, wird der Standard direkt in die Probe gegeben — dann sehen Analyt und Standard dieselbe Umgebung. Der Preis sind mehrere Messungen je Probe." },
+    { id: "q1", question: "Was ist der Unterschied zwischen Kalibrierung und Eichung?", options: ["Beide Begriffe bedeuten dasselbe", "Eichung ist grundsätzlich genauer", "Kalibrierung gilt nur in der Spektroskopie", "Eichung ist die amtlich geregelte Kalibrierung"], correct: 3, explanation: "Kalibrierung ist der allgemeine Vorgang: den Zusammenhang zwischen Messsignal und Konzentration feststellen. Eichung ist derselbe Vorgang unter gesetzlicher Regelung, etwa bei Waagen und Füllmengen im Handel. Mathematisch führen beide zum selben Ergebnis, rechtlich nicht." },
+    { id: "q2", question: "Wann verwendet man Standardaddition statt externer Kalibrierung?", options: ["Wenn die Probenmatrix das Signal beeinflusst", "Immer, weil sie genauer arbeitet", "Nur bei sehr niedrigen Konzentrationen", "Nur in der Atomspektrometrie"], correct: 0, explanation: "Externe Kalibrierung setzt voraus, dass Standards und Probe dieselbe Matrix haben. Ist die Matrix unbekannt oder von Probe zu Probe verschieden, wird der Standard direkt in die Probe gegeben — dann sehen Analyt und Standard dieselbe Umgebung. Der Preis sind mehrere Messungen je Probe." },
     { id: "q3", question: "Standardaddition: Die Probe ergibt 553 mV, nach Zugabe des Standards 661 mV. Um welchen Faktor ist die Analytkonzentration größer als der effektive Beitrag des zugesetzten Standards?", options: ["Faktor 0,84 — die Probe liegt niedriger", "Faktor 5,1 — Probensignal geteilt durch den Zuwachs", "Faktor 1,20 — das Verhältnis der beiden Signale", "Faktor 108 — die Differenz der Signale"], correct: 1, explanation: "Der Zuwachs von 108 mV stammt allein vom zugesetzten Standard, die 553 mV allein vom Analyten. Weil das Signal der Konzentration proportional ist, gilt c_x/c_S,eff = y₀/(y₁ − y₀) = 553/108 = 5,1. Wichtig ist das Wort effektiv: c_S,eff ist nicht die Konzentration der Standardlösung, sondern ihr Beitrag in der Messlösung — dafür braucht man die Volumina. Ohne sie lässt sich nur dieser Faktor angeben, nicht der Gehalt in mg/L." },
     { id: "q4", question: "Wie stellt man 10 ppb aus einer 1000 ppm Stammlösung her (2 Schritte)?", options: ["Direkte Verdünnung 1:100000", "Schritt 1: 1000ppm → 100ppb (Faktor 1:10000); Schritt 2: 100ppb → 10ppb (Faktor 1:10)", "Schritt 1: 1:100 → 10ppm; Schritt 2: 1:1000 → 10ppb", "Zwei Schritte je 1:316 (√100000)"], correct: 2, explanation: "1000 ppm = 1000 mg/L. Schritt 1: 0,01ml auf 1000ml → 1:100000 direkt, oder: 1ml auf 100ml → 10ppm; dann 1ml auf 1000ml → 10ppb. Wichtig: intermediäre Verdünnung vermeidet zu kleine Volumina!" },
-    { id: "q5", question: "Was kompensiert ein interner Standard?", options: ["Matrixeffekte in der Probenlösung", "Schwankungen bei Aufarbeitung und Injektion", "Temperatureffekte während der Messung", "Fehler in der Kalibriergeraden selbst"], correct: 1, explanation: "Ausgewertet wird das Verhältnis Analytsignal zu Standardsignal. Geht bei der Aufarbeitung etwas verloren oder schwankt das Injektionsvolumen, trifft das beide gleich und kürzt sich heraus. Wichtig: Der interne Standard muss vor der Probenvorbereitung zugegeben werden, sonst kompensiert er nur die Injektion." },
-    { id: "q6", question: "Bei der Standardaddition wird die Volumenkorrektur vergessen. Wie wirkt sich das aus?", options: ["Der berechnete Gehalt fällt systematisch zu niedrig aus", "Der berechnete Gehalt fällt systematisch zu hoch aus", "Es macht keinen Unterschied, solange dasselbe Volumen zugegeben wird", "Die Kalibriergerade wird nichtlinear"], correct: 1, explanation: "Der zugesetzte Standard verdünnt die Probe mit. Richtig lautet die Beziehung c_x = c_S · V_S/V_gesamt · y₀/(y₁−y₀). Lässt man den Faktor V_S/V_gesamt weg, rechnet man mit einer zu großen zugesetzten Konzentration und erhält einen systematisch zu hohen Analytgehalt. Abhilfe: kleine Volumina hoch konzentrierter Standards zugeben, oder sauber mitrechnen." },
+    { id: "q5", question: "Was kompensiert ein interner Standard?", options: ["Matrixeffekte in der Probenlösung", "Temperatureffekte während der Messung", "Fehler in der Kalibriergeraden selbst", "Schwankungen bei Aufarbeitung und Injektion"], correct: 3, explanation: "Ausgewertet wird das Verhältnis Analytsignal zu Standardsignal. Geht bei der Aufarbeitung etwas verloren oder schwankt das Injektionsvolumen, trifft das beide gleich und kürzt sich heraus. Wichtig: Der interne Standard muss vor der Probenvorbereitung zugegeben werden, sonst kompensiert er nur die Injektion." },
+    { id: "q6", question: "Bei der Standardaddition wird die Volumenkorrektur vergessen. Wie wirkt sich das aus?", options: ["Der berechnete Gehalt fällt systematisch zu hoch aus", "Der berechnete Gehalt fällt systematisch zu niedrig aus", "Es macht keinen Unterschied, solange dasselbe Volumen zugegeben wird", "Die Kalibriergerade wird nichtlinear"], correct: 0, explanation: "Der zugesetzte Standard verdünnt die Probe mit. Richtig lautet die Beziehung c_x = c_S · V_S/V_gesamt · y₀/(y₁−y₀). Lässt man den Faktor V_S/V_gesamt weg, rechnet man mit einer zu großen zugesetzten Konzentration und erhält einen systematisch zu hohen Analytgehalt. Abhilfe: kleine Volumina hoch konzentrierter Standards zugeben, oder sauber mitrechnen." },
+    { id: "q7", question: "Wie viele Kalibrierpunkte sollte eine brauchbare Kalibriergerade mindestens haben?", options: ["Einen, wenn er genau gemessen wird", "Zwei, Nullpunkt und ein Standard", "Fünf bis sechs über den Arbeitsbereich verteilt", "Zwanzig, sonst ist sie statistisch wertlos"], correct: 2, explanation: "Fünf bis sechs Punkte über den erwarteten Bereich verteilt erlauben eine belastbare Regression und zeigen, ob der Zusammenhang wirklich linear ist. Zwei Punkte lassen sich immer durch eine Gerade verbinden, ohne dass eine Krümmung auffiele — und ein einzelner Punkt setzt voraus, dass die Gerade durch den Nullpunkt geht." },
+    { id: "q8", question: "Was bedeutet ein Achsenabschnitt der Kalibriergerade deutlich über null?", options: ["Die Methode ist besonders empfindlich", "Es liegt ein Blindwert oder eine systematische Störung vor", "Die Probe war zu hoch konzentriert", "Der Korrelationskoeffizient ist schlecht"], correct: 1, explanation: "Ein Signal bei der Konzentration null muss eine Ursache haben: Verunreinigung der Reagenzien, Untergrundabsorption oder eine falsch gesetzte Basislinie. Solange der Achsenabschnitt in die Auswertung eingeht, bleibt das Ergebnis brauchbar — die Ursache sollte man dennoch kennen, weil ein Blindwert schwanken kann." },
+    { id: "q9", question: "Warum wird eine Kalibriergerade nicht über den gemessenen Bereich hinaus verlängert?", options: ["Weil die Regressionsgleichung dort ungültig wird", "Weil der Korrelationskoeffizient dadurch sinkt", "Weil oberhalb keine Standards mehr erhältlich sind", "Weil dort niemand geprüft hat, ob der Zusammenhang noch linear ist"], correct: 3, explanation: "Die Gerade beschreibt nur, was gemessen wurde. Oberhalb des höchsten Standards biegt der Zusammenhang typischerweise ab, weil der Detektor sättigt oder Lambert-Beer nicht mehr gilt — die Extrapolation liefert dann zu niedrige Werte. Proben außerhalb werden verdünnt, nicht hochgerechnet." },
+    { id: "q10", question: "Welchen Nachteil hat die Standardaddition gegenüber der externen Kalibrierung?", options: ["Sie liefert keine linearen Zusammenhänge", "Sie erfordert je Probe eine eigene Messreihe", "Sie erfasst Matrixeffekte nicht", "Sie benötigt zwingend einen mitgeführten internen Standard"], correct: 1, explanation: "Jede Probe wird mehrfach aufgestockt und gemessen; bei Serien wächst der Aufwand entsprechend. Zudem muss der Zusammenhang im gesamten genutzten Bereich linear sein, weil extrapoliert wird — und Extrapolation ist grundsätzlich unsicherer als Interpolation. Matrixeffekte sind gerade ihre Stärke." },
+    { id: "q11", question: "Welche Eigenschaft muss ein interner Standard erfüllen?", options: ["Er muss in der Probe bereits enthalten sein", "Er muss dieselbe Retentionszeit haben wie der Analyt", "Er muss ähnlich, aber getrennt messbar sein", "Er muss in deutlich höherer Konzentration vorliegen als der Analyt"], correct: 2, explanation: "Ähnlichkeit sorgt dafür, dass er Verluste und Schwankungen mitmacht; die getrennte Messbarkeit sorgt dafür, dass beide Signale unterscheidbar bleiben. In der Probe vorhanden sein darf er gerade nicht, sonst ist die zugesetzte Menge unbekannt. In der Massenspektrometrie sind isotopenmarkierte Analoga der Idealfall." },
+    { id: "q12", question: "Was ist der Arbeitsbereich einer Methode?", options: ["Der Konzentrationsbereich zwischen Bestimmungsgrenze und oberem Ende der Linearität", "Der Bereich, in dem die Absorption unter 2 liegt", "Der Bereich zwischen Blindwert und Nachweisgrenze", "Der Bereich, in dem der Detektor überhaupt anspricht"], correct: 0, explanation: "Unten begrenzt die Bestimmungsgrenze, ab der quantifiziert werden darf; oben endet er dort, wo der Zusammenhang krumm wird. Proben außerhalb werden verdünnt oder angereichert — extrapoliert wird nicht." },
   ],
   flashcards: [
     { id: "1budcvm", front: "Kalibrierung vs. Eichung", back: "Kalibrierung: allgemeiner Begriff, Zusammenhang Signal-Konzentration. Eichung: amtliche/gesetzliche Kalibrierung (Handelsmessgeräte). Beide mathematisch gleich: y = m·c + b." },
