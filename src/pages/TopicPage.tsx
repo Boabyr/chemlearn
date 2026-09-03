@@ -27,7 +27,9 @@ export default function TopicPage() {
   const { loading } = useAuth()
   const navigate = useNavigate()
   const { markTopicSeen, markTopicComplete } = useProgress(courseId)
-  const sprache = kursMit(courseId ?? '')?.sprache ?? 'de'
+  const kurs = kursMit(courseId ?? '')
+  const sprache = kurs?.sprache ?? 'de'
+  const formelsatz = kurs?.formelsatz ?? 'chemie'
   const { logAttempt, flush } = useAttempts(courseId)
   const { gradeItem } = useReviews(courseId)
   const [topic, setTopic] = useState<Thema | null>(null)
@@ -189,7 +191,8 @@ export default function TopicPage() {
             <h1 className="text-2xl font-light mb-2">{topic.title}</h1>
             <p className="text-muted text-sm mb-8">{topic.subtitle}</p>
             <Suspense fallback={<p className="text-muted">Theorie wird gesetzt...</p>}>
-              <TheoryRenderer markdown={topic.theory} showToc abbildungen={topic.abbildungen} />
+              <TheoryRenderer markdown={topic.theory} showToc abbildungen={topic.abbildungen}
+                formelsatz={formelsatz} />
             </Suspense>
 
             {interaktivteile.map((interactive, i) => {

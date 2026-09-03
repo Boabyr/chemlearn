@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'ChemLearn',
         short_name: 'ChemLearn',
-        description: 'Lernbegleiter für Chemie: Theorie, Übung, Prüfungssimulation',
+        description: 'Lernbegleiter fürs Studium: Theorie, Übung, Prüfungssimulation',
         start_url: '/',
         display: 'standalone',
         theme_color: '#0d9488',

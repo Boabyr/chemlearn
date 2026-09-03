@@ -26,4 +26,6 @@ export const course = {
     // Keine echte Altprüfung — Übungsfragen zum Kurs, eigener Abschnitt.
     { id: "uebung", label: "Practice questions", icon: "📝" },
   ],
+  formelsatz: "chemie",
+  entwurf: false,
 } satisfies Kurs;

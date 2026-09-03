@@ -7,7 +7,6 @@ export const topic = {
   icon: "🌈",
   estimatedMinutes: 60,
   theory: `
-
 ## Spektroskopie als Rückgrat der Analytik
 
 Spektroskopie, Chromatographie und Elektroanalytik bilden das "Rückgrat" der modernen Analytischen Chemie. Spektroskopische Methoden beruhen auf der Wechselwirkung von elektromagnetischer Strahlung mit Materie.
@@ -98,7 +97,6 @@ Interferogramm.
 Deshalb ist die IR-Spektroskopie heute praktisch vollständig FT-IR, während im UV/Vis —
 wo Lichtquellen stark und Detektoren empfindlich sind — dispersive Geräte und
 Dioden-Array-Detektoren weiterhin genügen.
-
 `,
   interactives: [
     {
@@ -109,48 +107,70 @@ Dioden-Array-Detektoren weiterhin genügen.
       hint1: "Fluoreszenzspektrometer messen emittiertes Licht, nicht transmittiertes. Der Detektor steht daher im 90°-Winkel zur Anregungsquelle.",
       hint2: "Beim Fluoreszenzspektrometer: Lichtquelle → Probe → Detektor (90°). Kein Referenzstrahl nötig, weil kein Licht durch die Probe 'hindurchgeht'.",
       options: [
-        { id: "fluorescence", label: "Fluoreszenzspektrometer", description: "Detektor im 90°-Winkel, misst Emission" },
-        { id: "uv-vis", label: "UV/Vis-Absorptionsspektrometer", description: "Detektor hinter der Probe, misst Transmission" },
-        { id: "chemoluminescence", label: "Chemolumineszenz-Detektor", description: "Einfachster Aufbau: nur Probe und Detektor" },
-        { id: "ftir", label: "FT-IR Spektrometer", description: "Mit Michelson-Interferometer" },
-      ],
+        {
+          id: "fluorescence",
+          label: "Fluoreszenzspektrometer",
+          description: "Detektor im 90°-Winkel, misst Emission"
+        },
+        {
+          id: "uv-vis",
+          label: "UV/Vis-Absorptionsspektrometer",
+          description: "Detektor hinter der Probe, misst Transmission"
+        },
+        {
+          id: "chemoluminescence",
+          label: "Chemolumineszenz-Detektor",
+          description: "Einfachster Aufbau: nur Probe und Detektor"
+        },
+        {
+          id: "ftir",
+          label: "FT-IR Spektrometer",
+          description: "Mit Michelson-Interferometer"
+        }
+      ]
     },
-      {
-      "type": "apparatus-matching",
-      "title": "Vier Spektrometer, vier Aufbauten",
-      "description": "Ordne jedem Gerät seine Skizze zu. Achte darauf, wo der Detektor steht und ob es überhaupt eine Lichtquelle gibt.",
-      "explanation": "Die drei Merkmale, an denen man die Aufbauten auseinanderhält: Das UV/Vis-Photometer setzt den Detektor hinter die Probe — gemessen wird, was durchkommt. Das Fluoreszenzspektrometer stellt ihn im rechten Winkel dazu, damit der Anregungsstrahl nicht mitgemessen wird. Die Chemolumineszenz braucht gar keine Lichtquelle, das Licht entsteht in der Probe. Das FT-IR ersetzt den Monochromator durch ein Interferometer und misst alle Wellenlängen gleichzeitig.",
-      "paare": [
+    {
+      type: "apparatus-matching",
+      title: "Vier Spektrometer, vier Aufbauten",
+      description: "Ordne jedem Gerät seine Skizze zu. Achte darauf, wo der Detektor steht und ob es überhaupt eine Lichtquelle gibt.",
+      explanation: "Die drei Merkmale, an denen man die Aufbauten auseinanderhält: Das UV/Vis-Photometer setzt den Detektor hinter die Probe — gemessen wird, was durchkommt. Das Fluoreszenzspektrometer stellt ihn im rechten Winkel dazu, damit der Anregungsstrahl nicht mitgemessen wird. Die Chemolumineszenz braucht gar keine Lichtquelle, das Licht entsteht in der Probe. Das FT-IR ersetzt den Monochromator durch ein Interferometer und misst alle Wellenlängen gleichzeitig.",
+      paare: [
         {
-          "apparaturId": "uv-vis",
-          "label": "UV/Vis-Photometer",
-          "hinweis": "Detektor direkt hinter der Probe."
+          apparaturId: "uv-vis",
+          label: "UV/Vis-Photometer",
+          hinweis: "Detektor direkt hinter der Probe."
         },
         {
-          "apparaturId": "fluorescence",
-          "label": "Fluoreszenzspektrometer",
-          "hinweis": "Detektor im 90°-Winkel."
+          apparaturId: "fluorescence",
+          label: "Fluoreszenzspektrometer",
+          hinweis: "Detektor im 90°-Winkel."
         },
         {
-          "apparaturId": "chemoluminescence",
-          "label": "Chemolumineszenz-Detektor",
-          "hinweis": "Keine Lichtquelle im Bild."
+          apparaturId: "chemoluminescence",
+          label: "Chemolumineszenz-Detektor",
+          hinweis: "Keine Lichtquelle im Bild."
         },
         {
-          "apparaturId": "ftir",
-          "label": "FT-IR-Spektrometer",
-          "hinweis": "Interferometer statt Monochromator."
+          apparaturId: "ftir",
+          label: "FT-IR-Spektrometer",
+          hinweis: "Interferometer statt Monochromator."
         }
       ]
     },
   ],
   quiz: [
-    { id: "q1", question: "Welche Gleichung beschreibt den Zusammenhang zwischen Energie eines Photons und seiner Frequenz?", options: ["E = mc²", "E = h · ν", "E = ε · c · d", "E = λ · ν"], correct: 1, explanation: "E = h · ν (Planck'sche Gleichung). h = 6.626×10⁻³⁴ J·s (Planck'sches Wirkungsquantum), ν = Frequenz. Höhere Frequenz = höhere Energie = kürzere Wellenlänge." },
-    { id: "q2", question: "IR-Strahlung regt in Molekülen welche Art von Übergängen an?", options: ["Elektronenübergänge in inneren Schalen", "Kernspinübergänge", "Rotations- und Schwingungsübergänge", "Kernübergänge"], correct: 2, explanation: "IR (400–4000 cm⁻¹) regt Rotations- und Schwingungsübergänge in Molekülen an. UV/Vis regt Valenzelektronen an, Röntgen innere Elektronen, NMR den Kernspin." },
-    { id: "q3", question: "Was erklärt die Wellennatur der elektromagnetischen Strahlung?", options: ["Absorption und Emission einzelner Photonen", "Wellenlänge, Frequenz und Amplitude", "Die Quantisierung der Energieniveaus", "Der photoelektrische Effekt"], correct: 1, explanation: "Die Wellenbeschreibung erfasst alles Periodische: Wellenlänge λ, Frequenz ν, Amplitude und die Ausbreitungsgeschwindigkeit c, verknüpft über c = λ·ν. Absorption, Emission und der photoelektrische Effekt lassen sich damit nicht erklären — dafür braucht es die Teilchenbeschreibung mit E = h·ν. Beide Bilder werden nebeneinander gebraucht." },
+    { id: "q1", question: "Welche Gleichung beschreibt den Zusammenhang zwischen Energie eines Photons und seiner Frequenz?", options: ["E = mc²", "E = ε · c · d", "E = h · ν", "E = λ · ν"], correct: 2, explanation: "E = h · ν (Planck'sche Gleichung). h = 6.626×10⁻³⁴ J·s (Planck'sches Wirkungsquantum), ν = Frequenz. Höhere Frequenz = höhere Energie = kürzere Wellenlänge." },
+    { id: "q2", question: "IR-Strahlung regt in Molekülen welche Art von Übergängen an?", options: ["Elektronenübergänge in inneren Schalen", "Kernspinübergänge", "Kernübergänge", "Rotations- und Schwingungsübergänge"], correct: 3, explanation: "IR (400–4000 cm⁻¹) regt Rotations- und Schwingungsübergänge in Molekülen an. UV/Vis regt Valenzelektronen an, Röntgen innere Elektronen, NMR den Kernspin." },
+    { id: "q3", question: "Was erklärt die Wellennatur der elektromagnetischen Strahlung?", options: ["Wellenlänge, Frequenz und Amplitude", "Absorption und Emission einzelner Photonen", "Die Quantisierung der Energieniveaus", "Der photoelektrische Effekt"], correct: 0, explanation: "Die Wellenbeschreibung erfasst alles Periodische: Wellenlänge λ, Frequenz ν, Amplitude und die Ausbreitungsgeschwindigkeit c, verknüpft über c = λ·ν. Absorption, Emission und der photoelektrische Effekt lassen sich damit nicht erklären — dafür braucht es die Teilchenbeschreibung mit E = h·ν. Beide Bilder werden nebeneinander gebraucht." },
     { id: "q4", question: "Welchen Wellenlängenbereich deckt die sichtbare Spektroskopie (Vis) ab?", options: ["10–180 nm", "180–400 nm", "400–780 nm", "780–2500 nm"], correct: 2, explanation: "Vis: 400–780 nm. UV: 180–400 nm. NIR: 780–2500 nm. Das sichtbare Licht entspricht den Farben des Regenbogens (400 nm violett bis 780 nm rot)." },
-    { id: "q5", question: "Was ist der Hauptunterschied zwischen einem dispersiven Spektrometer und einem FT-Spektrometer?", options: ["Das FT-Gerät kommt ohne eigene Lichtquelle aus", "Ein Interferometer statt eines Monochromators", "Dispersive Geräte lösen grundsätzlich besser auf", "Das FT-Gerät arbeitet nur im IR-Bereich"], correct: 1, explanation: "Das dispersive Gerät schneidet mit einem Monochromator eine Wellenlänge nach der anderen heraus. Das FT-Gerät schickt alle gleichzeitig durch ein Michelson-Interferometer und rechnet das Interferogramm anschließend in ein Spektrum um. Daraus folgen der Multiplex-Vorteil (alle Wellenlängen die ganze Messzeit über) und der Durchsatz-Vorteil (kein enger Spalt nötig)." },
+    { id: "q5", question: "Was ist der Hauptunterschied zwischen einem dispersiven Spektrometer und einem FT-Spektrometer?", options: ["Das FT-Gerät kommt ohne eigene Lichtquelle aus", "Dispersive Geräte lösen grundsätzlich besser auf", "Ein Interferometer statt eines Monochromators", "Das FT-Gerät arbeitet nur im IR-Bereich"], correct: 2, explanation: "Das dispersive Gerät schneidet mit einem Monochromator eine Wellenlänge nach der anderen heraus. Das FT-Gerät schickt alle gleichzeitig durch ein Michelson-Interferometer und rechnet das Interferogramm anschließend in ein Spektrum um. Daraus folgen der Multiplex-Vorteil (alle Wellenlängen die ganze Messzeit über) und der Durchsatz-Vorteil (kein enger Spalt nötig)." },
     { id: "q6", question: "Welche der folgenden Spektroskopiearten hat den niedrigsten Energiebedarf pro Photon?", options: ["Röntgenspektroskopie", "UV-Spektroskopie", "IR-Spektroskopie", "NMR-Spektroskopie"], correct: 3, explanation: "NMR arbeitet im Radiowellenbereich (0,6–10 m Wellenlänge) → niedrigste Frequenz → niedrigste Photonenenergie (E = h·ν). Röntgen hat die höchste Energie." },
+    { id: "q7", question: "Ein Photon hat die Wellenlänge 500 nm. Welche Wellenzahl entspricht dem?", options: ["500 cm⁻¹", "2000 cm⁻¹", "20000 cm⁻¹", "200000 cm⁻¹"], correct: 2, explanation: "ṽ = 1/λ, mit λ in Zentimetern: 500 nm = 5×10⁻⁵ cm, also ṽ = 1/5×10⁻⁵ = 20000 cm⁻¹. Der häufigste Fehler ist, die Umrechnung nm → cm zu vergessen und um Zehnerpotenzen danebenzuliegen." },
+    { id: "q8", question: "Warum sitzt der Monochromator in einem Absorptionsphotometer vor der Küvette und nicht dahinter?", options: ["Weil der Detektor sonst überstrahlt würde", "Weil Lambert-Beer monochromatisches Licht voraussetzt", "Weil das Gitter im Dunkeln arbeiten muss", "Weil die Probe sonst nicht durchleuchtet wird"], correct: 1, explanation: "Bei polychromatischem Licht gilt das Gesetz nicht mehr streng, weil ε wellenlängenabhängig ist und die Kalibriergerade krumm wird. Zusätzlich wird die Probe geschont, weil sie nur die Messwellenlänge abbekommt. Am Detektor käme das Licht ohnehin an — die Reihenfolge betrifft die Gültigkeit der Auswertung, nicht die Messbarkeit." },
+    { id: "q9", question: "Welche Spektroskopieart regt Elektronenübergänge der Valenzelektronen an?", options: ["Mikrowellenspektroskopie", "IR-Spektroskopie", "Röntgenspektroskopie", "UV/Vis-Spektroskopie"], correct: 3, explanation: "UV/Vis-Photonen tragen einige Elektronenvolt und heben Valenzelektronen in höhere Orbitale. Infrarot reicht nur für Schwingungen, Mikrowellen für Rotationen, und Röntgenphotonen greifen die kernnahen Elektronen an. Die Energieleiter Rotation < Schwingung < Valenzelektron < Rumpfelektron ordnet die Methoden vollständig." },
+    { id: "q10", question: "Was gibt die Auflösung eines Spektrometers an?", options: ["Den kleinsten noch trennbaren Wellenlängenabstand zweier Linien", "Die kleinste noch messbare Konzentration", "Die Zahl der Messpunkte je Sekunde", "Die Breite des zugänglichen Spektralbereichs"], correct: 0, explanation: "Auflösung ist ein spektrales Trennvermögen, üblich als λ/Δλ angegeben. Die kleinste messbare Konzentration ist die Nachweisgrenze, eine ganz andere Kenngröße — ein hochauflösendes Gerät kann durchaus unempfindlich sein." },
+    { id: "q11", question: "Ein Gerät misst mit einer spektralen Bandbreite, die breiter ist als die Absorptionsbande der Probe. Welche Folge hat das?", options: ["Die Absorption wird zu hoch gemessen", "Die Absorption fällt zu niedrig aus", "Die Wellenlängenskala verschiebt sich zu kürzeren Wellen", "Die Transmission übersteigt rechnerisch 100 Prozent"], correct: 1, explanation: "Neben der stark absorbierten Wellenlänge gelangt auch schwach absorbiertes Licht zum Detektor; dieser Anteil täuscht Durchlässigkeit vor. Das Ergebnis ist eine zu kleine Absorption, und weil der Effekt mit der Konzentration wächst, biegt sich die Kalibriergerade zur Abszisse — eine der klassischen Abweichungen von Lambert-Beer." },
+    { id: "q12", question: "Welche Größe bleibt beim Übergang eines Lichtstrahls von Luft in Glas unverändert?", options: ["Die Wellenlänge", "Die Ausbreitungsgeschwindigkeit", "Die Frequenz", "Die Richtung"], correct: 2, explanation: "Die Frequenz ist durch die Quelle festgelegt und ändert sich beim Medienwechsel nicht. Geschwindigkeit und Wellenlänge sinken um den Brechungsindex, die Richtung ändert sich durch Brechung. Deshalb ist die Energie E = h·ν im Glas dieselbe wie in Luft." },
   ],
   flashcards: [
     { id: "0r9xh85", front: "Lambert-Beer-Gesetz (Kurzform)", back: "A = ε · c · d. A = Absorption (dimensionslos), ε = molarer Extinktionskoeffizient (L·mol⁻¹·cm⁻¹), c = Konzentration (mol/L), d = Schichtdicke (cm)." },

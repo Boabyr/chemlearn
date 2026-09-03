@@ -41,4 +41,6 @@ export const course = {
     // Eigener Abschnitt, damit die Prüfungsreife-Anzeige echte Prüfer nicht vermischt.
     { id: "uebung",         label: "Übungsfragen",   icon: "📝" },
   ],
+  formelsatz: "chemie",
+  entwurf: false,
 } satisfies Kurs;

@@ -132,56 +132,62 @@ Netzebenenabstand d. Häufigster Rechenfehler in der Prüfung: das Diffraktogram
         {
           id: "rfa",
           label: "Röntgenfluoreszenzspektrometer (RFA)",
-          description: "Röntgenröhre + Probe + Analysatorkristall + Detektor",
+          description: "Röntgenröhre + Probe + Analysatorkristall + Detektor"
         },
         {
           id: "xrd",
           label: "Röntgendiffraktometer (XRD)",
-          description: "Für Kristallstrukturbestimmung, θ-2θ-Geometrie",
+          description: "Für Kristallstrukturbestimmung, θ-2θ-Geometrie"
         },
         {
           id: "esca",
           label: "ESCA / XPS Spektrometer",
-          description: "Misst kinetische Energie der Photoelektronen",
+          description: "Misst kinetische Energie der Photoelektronen"
         },
         {
           id: "ftir",
           label: "FT-IR Spektrometer",
-          description: "Infrarot, Michelson-Interferometer",
-        },
-      ],
+          description: "Infrarot, Michelson-Interferometer"
+        }
+      ]
     },
-      {
-      "type": "apparatus-matching",
-      "title": "Drei Röntgenmethoden",
-      "description": "Alle drei arbeiten mit Röntgenstrahlung, messen aber Verschiedenes.",
-      "explanation": "RFA misst das emittierte Photon und sagt, welches Element vorliegt. ESCA misst das herausgelöste Elektron; dessen Bindungsenergie verschiebt sich mit dem Oxidationszustand, deshalb Ultrahochvakuum. XRD misst gar keine Emission, sondern den Beugungswinkel am Kristallgitter — daraus folgt der Netzebenenabstand über die Bragg-Gleichung.",
-      "paare": [
+    {
+      type: "apparatus-matching",
+      title: "Drei Röntgenmethoden",
+      description: "Alle drei arbeiten mit Röntgenstrahlung, messen aber Verschiedenes.",
+      explanation: "RFA misst das emittierte Photon und sagt, welches Element vorliegt. ESCA misst das herausgelöste Elektron; dessen Bindungsenergie verschiebt sich mit dem Oxidationszustand, deshalb Ultrahochvakuum. XRD misst gar keine Emission, sondern den Beugungswinkel am Kristallgitter — daraus folgt der Netzebenenabstand über die Bragg-Gleichung.",
+      paare: [
         {
-          "apparaturId": "rfa",
-          "label": "Röntgenfluoreszenz (RFA)",
-          "hinweis": "Misst das emittierte Photon."
+          apparaturId: "rfa",
+          label: "Röntgenfluoreszenz (RFA)",
+          hinweis: "Misst das emittierte Photon."
         },
         {
-          "apparaturId": "esca",
-          "label": "ESCA / XPS",
-          "hinweis": "Misst das Photoelektron, im Vakuum."
+          apparaturId: "esca",
+          label: "ESCA / XPS",
+          hinweis: "Misst das Photoelektron, im Vakuum."
         },
         {
-          "apparaturId": "xrd",
-          "label": "Röntgenbeugung (XRD)",
-          "hinweis": "Misst einen Winkel, keine Emission."
+          apparaturId: "xrd",
+          label: "Röntgenbeugung (XRD)",
+          hinweis: "Misst einen Winkel, keine Emission."
         }
       ]
     },
   ],
   quiz: [
-    { id: "q1", question: "Was besagt das Moseley'sche Gesetz?", options: ["Die Absorption wächst mit der Schichtdicke", "Die Emissionswellenlänge hängt an der Ordnungszahl", "Röntgenstrahlung wird an Kristallen gebeugt", "Die Grenzwellenlänge folgt der Anodenspannung"], correct: 1, explanation: "Moseley: 1/√λ = K·(Z − σ). Die Wellenlänge der charakteristischen Linien ist eindeutig mit der Ordnungszahl verknüpft und nicht mit der chemischen Bindung. Genau das macht die Röntgenfluoreszenz zur Elementanalyse. Die Beugung am Kristall beschreibt Bragg, die Grenzwellenlänge das Duane-Hunt-Gesetz." },
-    { id: "q2", question: "Was beschreibt das Bragg'sche Gesetz?", options: ["Wechselwirkung von Röntgenstrahlung mit freien Elektronen der Probe", "nλ = 2d·sin(θ): Bedingung für konstruktive Interferenz am Kristallgitter", "Emission von Augerelektronen aus kernnahen Schalen", "Zusammenhang zwischen Anodenspannung und minimaler Wellenlänge"], correct: 1, explanation: "nλ = 2d·sin(θ). n = Beugungsordnung, d = Netzebenenabstand des Analysatorkristalls, θ = Glanzwinkel. Der Analysatorkristall im RFA-Spektrometer nutzt dies zur wellenlängenselektiven Messung." },
+    { id: "q1", question: "Was besagt das Moseley'sche Gesetz?", options: ["Die Absorption wächst mit der Schichtdicke", "Röntgenstrahlung wird an Kristallen gebeugt", "Die Grenzwellenlänge folgt der Anodenspannung", "Die Emissionswellenlänge hängt an der Ordnungszahl"], correct: 3, explanation: "Moseley: 1/√λ = K·(Z − σ). Die Wellenlänge der charakteristischen Linien ist eindeutig mit der Ordnungszahl verknüpft und nicht mit der chemischen Bindung. Genau das macht die Röntgenfluoreszenz zur Elementanalyse. Die Beugung am Kristall beschreibt Bragg, die Grenzwellenlänge das Duane-Hunt-Gesetz." },
+    { id: "q2", question: "Was beschreibt das Bragg'sche Gesetz?", options: ["nλ = 2d·sin(θ): Bedingung für konstruktive Interferenz am Kristallgitter", "Wechselwirkung von Röntgenstrahlung mit freien Elektronen der Probe", "Emission von Augerelektronen aus kernnahen Schalen", "Zusammenhang zwischen Anodenspannung und minimaler Wellenlänge"], correct: 0, explanation: "nλ = 2d·sin(θ). n = Beugungsordnung, d = Netzebenenabstand des Analysatorkristalls, θ = Glanzwinkel. Der Analysatorkristall im RFA-Spektrometer nutzt dies zur wellenlängenselektiven Messung." },
     { id: "q3", question: "Welcher Vorteil der RFA macht sie besonders für die Kunst- und Archäologie wertvoll?", options: ["Sehr hohe Empfindlichkeit", "Die Methode ist zerstörungsfrei", "Günstige Instrumentierung", "Bestimmung aller Elemente möglich"], correct: 1, explanation: "RFA ist zerstörungsfrei! Man kann Gemälde, archäologische Funde, Münzen, Juwelen direkt messen ohne Material zu entnehmen. Beispiel aus Vorlesung: Raphael's 'Madonna auf der Wiese' – Pigmentbestimmung ohne Beschädigung." },
-    { id: "q4", question: "Was ist ein Matrixeffekt in der quantitativen RFA?", options: ["Ein Fehler durch eine falsch aufgenommene Kalibrierung", "Die Begleitelemente verändern das Analytsignal", "Eine Übersteuerung des Detektors", "Die Temperaturabhängigkeit des Signals"], correct: 1, explanation: "Die Matrix wirkt auf zwei Wegen: Sie absorbiert einen Teil der Anregungs- oder Fluoreszenzstrahlung, und sie kann selbst Strahlung aussenden, die den Analyten zusätzlich anregt (Sekundäranregung). Dieselbe Analytkonzentration liefert deshalb in verschiedenen Matrices verschiedene Signale — Abhilfe über matrixangepasste Standards, Verdünnung oder Korrekturmodelle." },
-    { id: "q5", question: "Warum ist die Bestimmung von Kohlenstoff (C, Z=6) mit RFA schwierig?", options: ["Kohlenstoff besitzt keine charakteristischen Röntgenlinien", "Die Augerelektronenemission verdrängt die Fluoreszenz", "Kohlenstoff absorbiert die Strahlung völlig", "Die Röntgenröhre liefert zu weiche Strahlung"], correct: 1, explanation: "Bei leichten Elementen gibt das angeregte Atom seine Energie überwiegend als Auger-Elektron ab statt als Photon; die Fluoreszenzausbeute sinkt mit der Ordnungszahl. Dazu kommt, dass die weiche Strahlung leichter Elemente schon in Luft und im Detektorfenster steckenbleibt — deshalb misst man sie unter Vakuum oder Helium." },
-    { id: "q6", question: "Welche Detektortypen werden in RFA-Spektrometern eingesetzt?", options: ["Ausschließlich Photodioden hinter einem Filterrad", "Zählrohr, Szintillations- und Halbleiterdetektor", "Ausschließlich CCD-Zeilensensoren", "Thermoelemente und Bolometer"], correct: 1, explanation: "Wellenlängendispersive Geräte arbeiten mit Zählrohr oder Szintillationsdetektor hinter einem Analysatorkristall. Energiedispersive Geräte nutzen Halbleiterdetektoren wie Si(Li) oder Silizium-Driftdetektoren, die die Photonenenergie direkt messen und deshalb ohne Kristall auskommen." },
+    { id: "q4", question: "Was ist ein Matrixeffekt in der quantitativen RFA?", options: ["Ein Fehler durch eine falsch aufgenommene Kalibrierung", "Eine Übersteuerung des Detektors", "Die Begleitelemente verändern das Analytsignal", "Die Temperaturabhängigkeit des Signals"], correct: 2, explanation: "Die Matrix wirkt auf zwei Wegen: Sie absorbiert einen Teil der Anregungs- oder Fluoreszenzstrahlung, und sie kann selbst Strahlung aussenden, die den Analyten zusätzlich anregt (Sekundäranregung). Dieselbe Analytkonzentration liefert deshalb in verschiedenen Matrices verschiedene Signale — Abhilfe über matrixangepasste Standards, Verdünnung oder Korrekturmodelle." },
+    { id: "q5", question: "Warum ist die Bestimmung von Kohlenstoff (C, Z=6) mit RFA schwierig?", options: ["Kohlenstoff besitzt keine charakteristischen Röntgenlinien", "Kohlenstoff absorbiert die Strahlung völlig", "Die Röntgenröhre liefert zu weiche Strahlung", "Die Augerelektronenemission verdrängt die Fluoreszenz"], correct: 3, explanation: "Bei leichten Elementen gibt das angeregte Atom seine Energie überwiegend als Auger-Elektron ab statt als Photon; die Fluoreszenzausbeute sinkt mit der Ordnungszahl. Dazu kommt, dass die weiche Strahlung leichter Elemente schon in Luft und im Detektorfenster steckenbleibt — deshalb misst man sie unter Vakuum oder Helium." },
+    { id: "q6", question: "Welche Detektortypen werden in RFA-Spektrometern eingesetzt?", options: ["Zählrohr, Szintillations- und Halbleiterdetektor", "Ausschließlich Photodioden hinter einem Filterrad", "Ausschließlich CCD-Zeilensensoren", "Thermoelemente und Bolometer"], correct: 0, explanation: "Wellenlängendispersive Geräte arbeiten mit Zählrohr oder Szintillationsdetektor hinter einem Analysatorkristall. Energiedispersive Geräte nutzen Halbleiterdetektoren wie Si(Li) oder Silizium-Driftdetektoren, die die Photonenenergie direkt messen und deshalb ohne Kristall auskommen." },
+    { id: "q7", question: "Wodurch entsteht die charakteristische Röntgenstrahlung eines Elements?", options: ["Durch Abbremsen der Elektronen im Feld der Atomkerne", "Durch Auffüllen einer Lücke in einer inneren Schale", "Durch Anregung der äußeren Valenzelektronen des Atoms", "Durch Kernumwandlung"], correct: 1, explanation: "Wird ein Elektron aus der K- oder L-Schale herausgeschlagen, fällt ein äußeres Elektron nach und die Energiedifferenz wird als Photon frei. Weil diese Differenz für jedes Element festliegt, ist die Linie elementspezifisch. Das Abbremsen liefert dagegen die kontinuierliche Bremsstrahlung." },
+    { id: "q8", question: "Was bezeichnet die Kα-Linie?", options: ["Den Übergang von der L- in die K-Schale", "Den Übergang von der K- in die L-Schale", "Die energiereichste Linie der Bremsstrahlung", "Die Absorptionskante der K-Schale"], correct: 0, explanation: "Benannt wird nach der Schale, in der die Lücke entsteht, und nach dem Abstand des nachrückenden Elektrons: Kα kommt aus der benachbarten L-Schale, Kβ aus der M-Schale und ist deshalb energiereicher, aber schwächer." },
+    { id: "q9", question: "Was versteht man unter der Informationstiefe der RFA?", options: ["Die Tiefe, aus der Fluoreszenzstrahlung noch entkommt", "Die Eindringtiefe der Elektronen in das Anodenmaterial", "Die Dicke des Analysatorkristalls", "Der Abstand zwischen Röntgenröhre und Probenoberfläche"], correct: 0, explanation: "Die austretende Strahlung wird auf ihrem Weg in der Probe selbst absorbiert — je leichter das Element, desto weicher seine Strahlung und desto geringer die Tiefe, aus der sie noch herausfindet. Bei leichten Elementen sind es Mikrometer, bei schweren Millimeter. Deshalb muss die Oberfläche für die Analyse repräsentativ sein." },
+    { id: "q10", question: "Warum ist die RFA in der Kunstuntersuchung so beliebt?", options: ["Weil sie Kristallstrukturen bestimmt", "Weil sie zerstörungsfrei arbeitet und ohne Probenvorbereitung auskommt", "Weil sie organische Bindemittel unterscheidet", "Weil sie sehr niedrige Nachweisgrenzen für Kohlenstoff hat"], correct: 1, explanation: "Das Objekt wird nur bestrahlt, nichts entnommen — mit Handgeräten sogar vor Ort. Was sie nicht kann: leichte Elemente wie Kohlenstoff erfassen und damit organische Bindemittel unterscheiden; dafür braucht es andere Verfahren. Kristallphasen liefert die Röntgenbeugung, nicht die Fluoreszenz." },
+    { id: "q11", question: "Was unterscheidet ESCA/XPS von der RFA in der gemessenen Größe?", options: ["ESCA misst die Wellenlänge der Fluoreszenzstrahlung", "ESCA misst die Beugungswinkel an Netzebenen", "ESCA misst die kinetische Energie herausgelöster Photoelektronen", "ESCA misst die Bremsstrahlung der Röhre"], correct: 2, explanation: "Aus der bekannten Photonenenergie und der gemessenen kinetischen Energie folgt die Bindungsenergie des Elektrons. Weil diese sich mit dem Oxidationszustand leicht verschiebt (chemische Verschiebung), liefert ESCA nicht nur die Elemente, sondern auch deren Bindungszustand — und das für die obersten Nanometer." },
+    { id: "q12", question: "Wozu dient bei der quantitativen RFA die Fundamentalparameter-Methode?", options: ["Zum Ausgleich von Matrixeffekten durch Berechnung der Absorption und Sekundäranregung", "Zur Kalibrierung der Wellenlängenskala", "Zur Untergrundkorrektur der Bremsstrahlung", "Zur Bestimmung der Schichtdicke des Analysatorkristalls"], correct: 0, explanation: "In der Probe schwächen die Elemente einander die Strahlung und regen sich gegenseitig an — die Intensität hängt deshalb nicht nur vom gesuchten Element ab. Die Fundamentalparameter-Methode rechnet diese Wechselwirkungen aus physikalischen Konstanten heraus und macht die Analyse ohne matrixgleiche Standards möglich." },
   ],
   flashcards: [
     { id: "0jltk3e", front: "Moseley'sches Gesetz", back: "1/√λ = K(Z−σ). Emissionswellenlänge eindeutig mit Ordnungszahl Z verknüpft → Basis der qualitativen Elementanalyse per RFA. K = Serienkonstante, σ = Abschirmfaktor." },

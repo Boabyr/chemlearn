@@ -142,7 +142,12 @@ describe('Sollstärke der Themen', () => {
   // Die Vorgabe aus CONTENT-PROMPT.md: sechs Quizfragen, sechs Karten,
   // ein Interaktivteil. Dazu mindestens eine Prüfungsfrage je Thema, sonst
   // kann das Thema in einer Übungsrunde nie vorkommen.
+  //
+  // Ein Fach entsteht stückweise: erst die Themen, dann die Prüfungsfragen.
+  // Ein Kurs mit `entwurf: true` wird deshalb nur berichtet, nicht abgewiesen —
+  // alle anderen Prüfungen dieser Datei gelten für ihn unverändert.
   it.each(allCourses.map(k => [k.id] as const))('%s: kein Thema bleibt unter der Vorgabe', async (kursId) => {
+    const kurs = allCourses.find(k => k.id === kursId)!
     const themen = await loadAllTopics(kursId)
     const fragenJeThema = new Map<string, number>()
     for (const frage of examQuestionsFor(kursId)) {
@@ -158,6 +163,10 @@ describe('Sollstärke der Themen', () => {
       return mangel.length ? [`${thema.id}: ${mangel.join(', ')}`] : []
     })
 
+    if (kurs.entwurf) {
+      if (duenn.length) console.info(`${kursId} (Entwurf) — noch offen:\n  ${duenn.join('\n  ')}`)
+      return
+    }
     expect(duenn).toEqual([])
   })
 })
@@ -201,6 +210,10 @@ describe('Antwortlängen', () => {
   const HOECHSTENS_LAENGSTE = 0.45
   const HOECHSTENS_FAKTOR = 1.35
   const HOECHSTENS_JE_FRAGE = 2.0
+  // Wie bei den Antwortpositionen: unter einem Dutzend Fragen misst man Rauschen.
+  // Ein Kurs im Aufbau hat anfangs zwei, drei Themen — die Schlagseite eines
+  // Bestands lässt sich daran nicht ablesen, die Ausreißerprüfung je Frage schon.
+  const AUSSAGEKRAEFTIG = 12
 
   const laengen = (frage: { options: string[] }) => frage.options.map(o => o.length)
   const ablenkerSchnitt = (l: number[], richtig: number) =>
@@ -208,6 +221,7 @@ describe('Antwortlängen', () => {
 
   it.each(allCourses.map(k => [k.id] as const))('%s: die richtige Antwort ist selten die längste', async (kursId) => {
     const alle = (await loadAllTopics(kursId)).flatMap(t => t.quiz)
+    if (alle.length < AUSSAGEKRAEFTIG) return
     const laengste = alle.filter(f => {
       const l = laengen(f)
       const max = Math.max(...l)
@@ -219,6 +233,7 @@ describe('Antwortlängen', () => {
 
   it.each(allCourses.map(k => [k.id] as const))('%s: richtige und falsche Optionen sind ähnlich lang', async (kursId) => {
     const alle = (await loadAllTopics(kursId)).flatMap(t => t.quiz)
+    if (alle.length < AUSSAGEKRAEFTIG) return
     const richtig = alle.reduce((s, f) => s + laengen(f)[f.correct], 0)
     const ablenker = alle.reduce((s, f) => s + ablenkerSchnitt(laengen(f), f.correct), 0)
     expect(richtig / ablenker).toBeLessThanOrEqual(HOECHSTENS_FAKTOR)
@@ -292,5 +307,85 @@ describe('Prüfungsdaten', () => {
       const ids = examQuestionsFor(kurs.id).map(f => f.id)
       expect(new Set(ids).size, `${kurs.id}: doppelte Fragen-ID`).toBe(ids.length)
     }
+  })
+})
+
+describe('Antwortpositionen', () => {
+  // Gemischt wird nur die Fragenreihenfolge (PracticeMode, ExamSimulator) — die
+  // Optionen rendert ExamQuestion.tsx unverändert. Die Position der richtigen
+  // Antwort ist damit Teil der Daten, und sie war verräterisch: im AC1-Quiz lag
+  // die Lösung in 87 von 108 Fragen an zweiter Stelle (80,6 %), bei den
+  // Prüfungsfragen in 11 von 16. Wer nichts weiß und immer die zweite Antwort
+  // ankreuzt, kam so auf 80 % richtig.
+  //
+  // Zufall wären 25 %. Die Schranken lassen Luft für kleine Bestände, schlagen
+  // aber bei jeder Schlagseite an, die sich auswendig lernen lässt.
+  const HOECHSTENS = 0.4
+  const MINDESTENS = 0.12
+  // Erst ab dieser Zahl ist eine Verteilung überhaupt aussagekräftig.
+  const AUSSAGEKRAEFTIG = 12
+
+  const verteilung = (positionen: number[]) => {
+    const zaehler = [0, 0, 0, 0]
+    for (const p of positionen) zaehler[p]++
+    return zaehler.map(n => n / positionen.length)
+  }
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: die Quizlösung verteilt sich über alle vier Plätze', async (kursId) => {
+    const positionen = (await loadAllTopics(kursId)).flatMap(t => t.quiz.map(f => f.correct))
+    if (positionen.length < AUSSAGEKRAEFTIG) return
+
+    const anteile = verteilung(positionen)
+    const befund = anteile.map((a, i) => `Platz ${i + 1}: ${(a * 100).toFixed(1)} %`).join(', ')
+    expect(Math.max(...anteile), befund).toBeLessThanOrEqual(HOECHSTENS)
+    expect(Math.min(...anteile), befund).toBeGreaterThanOrEqual(MINDESTENS)
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: auch bei den Prüfungsfragen', (kursId) => {
+    const positionen = examQuestionsFor(kursId)
+      .filter(f => f.type === 'mc-single' && f.options?.length === 4)
+      .map(f => Number(f.correct))
+    if (positionen.length < AUSSAGEKRAEFTIG) return
+
+    const anteile = verteilung(positionen)
+    const befund = anteile.map((a, i) => `Platz ${i + 1}: ${(a * 100).toFixed(1)} %`).join(', ')
+    expect(Math.max(...anteile), befund).toBeLessThanOrEqual(HOECHSTENS)
+    expect(Math.min(...anteile), befund).toBeGreaterThanOrEqual(MINDESTENS)
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: kein Thema häuft die Lösung auf einem Platz', async (kursId) => {
+    // Über den Kurs kann die Verteilung stimmen und in einem Thema trotzdem
+    // jede Frage dieselbe Lösung tragen. Innerhalb eines Themas wird geübt.
+    const schlagseite: string[] = []
+    for (const thema of await loadAllTopics(kursId)) {
+      const zaehler = [0, 0, 0, 0]
+      for (const frage of thema.quiz) zaehler[frage.correct]++
+      const haeufigster = Math.max(...zaehler)
+      const erlaubt = Math.max(3, Math.ceil(thema.quiz.length * 0.5))
+      if (haeufigster > erlaubt) {
+        schlagseite.push(`${thema.id}: ${haeufigster} von ${thema.quiz.length} auf Platz ${zaehler.indexOf(haeufigster) + 1}`)
+      }
+    }
+    expect(schlagseite).toEqual([])
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: bei Mehrfachauswahl ist jeder Platz einmal richtig', (kursId) => {
+    const fragen = examQuestionsFor(kursId).filter(f => f.type === 'mc-multi' && f.options?.length === 4)
+    if (fragen.length < 5) return
+
+    const nieRichtig = [0, 1, 2, 3].filter(
+      platz => !fragen.some(f => (f.correct as number[]).includes(platz)),
+    )
+    expect(nieRichtig, 'diese Plätze sind in keiner Frage Teil der Lösung').toEqual([])
+  })
+
+  it.each(allCourses.map(k => [k.id] as const))('%s: keine Reihenfolgefrage ist beim Öffnen schon gelöst', (kursId) => {
+    // ExamQuestion.tsx startet mit der Identität [0,1,2,…]. Wer die als Lösung
+    // hinterlegt, verschenkt die Frage: sie steht fertig da.
+    const geloest = examQuestionsFor(kursId)
+      .filter(f => f.type === 'order')
+      .filter(f => (f.correct as number[]).every((wert, i) => wert === i))
+      .map(f => f.id)
+    expect(geloest).toEqual([])
   })
 })

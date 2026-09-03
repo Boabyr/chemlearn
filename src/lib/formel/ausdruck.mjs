@@ -13,8 +13,24 @@ const FUNKTIONEN = {
   exp: Math.exp,
   sqrt: Math.sqrt,
   abs: Math.abs,
+  // Winkelfunktionen rechnen im Bogenmaß — Physik-Formeln geben Winkel in rad.
+  sin: Math.sin,
+  cos: Math.cos,
+  tan: Math.tan,
+  asin: Math.asin,
+  acos: Math.acos,
+  atan: Math.atan,
   min: Math.min,
   max: Math.max,
+}
+
+/**
+ * Feste Größen, die keine Eingabe brauchen. Bewusst nur `pi`: `e` bleibt
+ * frei, weil Physik-Themen damit die Elementarladung bezeichnen.
+ * Eine deklarierte Größe gleichen Namens hat trotzdem Vorrang.
+ */
+const KONSTANTEN = {
+  pi: Math.PI,
 }
 
 const ZEICHEN = new Set(['+', '-', '*', '/', '^', '(', ')', ','])
@@ -124,8 +140,9 @@ class Parser {
         if (!this.nimm(')')) throw new Error(`Klammer nach "${marke.wert}(" nicht geschlossen`)
         return funktion(...argumente)
       }
-      if (!(marke.wert in this.werte)) throw new Error(`Unbekannte Größe "${marke.wert}"`)
-      return this.werte[marke.wert]
+      if (marke.wert in this.werte) return this.werte[marke.wert]
+      if (marke.wert in KONSTANTEN) return KONSTANTEN[marke.wert]
+      throw new Error(`Unbekannte Größe "${marke.wert}"`)
     }
 
     if (this.nimm('(')) {
@@ -151,7 +168,7 @@ export function variablenIn(ausdruck) {
     if (marke.art !== 'name') return
     const naechste = marken[index + 1]
     const istAufruf = naechste?.art === 'zeichen' && naechste.wert === '('
-    if (!istAufruf) namen.add(marke.wert)
+    if (!istAufruf && !(marke.wert in KONSTANTEN)) namen.add(marke.wert)
   })
 
   return [...namen]

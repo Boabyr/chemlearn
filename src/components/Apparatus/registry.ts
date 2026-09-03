@@ -21,6 +21,9 @@ import GlucoseSensor from './GlucoseSensor'
 import Qcm from './Qcm'
 import PotentiometricSensor from './PotentiometricSensor'
 import OpticalSensor from './OpticalSensor'
+import PhGlassElectrode from './PhGlassElectrode'
+import ReferenceElectrode from './ReferenceElectrode'
+import Raman from './Raman'
 
 /**
  * Bildet die Apparatur-IDs aus den Kursdaten auf Zeichnungen ab.
@@ -43,6 +46,9 @@ export const apparatusRegistry: Record<string, FC> = {
   'qcm': Qcm,
   'potentiometric-sensor': PotentiometricSensor,
   'optical-sensor': OpticalSensor,
+  'ph-glass-electrode': PhGlassElectrode,
+  'reference-electrode': ReferenceElectrode,
+  'raman': Raman,
   'flame-aas': FlameAas,
   'graphite-furnace': GraphiteFurnace,
   'icp-oes': IcpOes,

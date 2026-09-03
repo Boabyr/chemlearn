@@ -524,6 +524,22 @@ export const kursSchema = z.object({
    * Auszeichnung liest ein Screenreader mit deutscher Aussprache vor.
    */
   sprache: z.string().default('de'),
+  /**
+   * Wie Formeln im Fließtext gesetzt werden.
+   *
+   * `chemie` stellt Summenformeln tief (H2SO4 → H₂SO₄). In einem Physik- oder
+   * Mathematiktext ist V2 aber ein zweites Volumen und N2 eine Stichprobe —
+   * dort gehört der Satz aus. LaTeX in `$…$` läuft unabhängig davon.
+   */
+  formelsatz: z.enum(['chemie', 'aus']).default('chemie'),
+  /**
+   * Kurs im Aufbau.
+   *
+   * Solange ein Fach stückweise eingespielt wird, kann kein Thema die
+   * Sollstärke erfüllen. Das Kennzeichen setzt genau diese eine Prüfung aus —
+   * alle übrigen gelten weiter.
+   */
+  entwurf: z.boolean().default(false),
 }).refine(
   kurs => kurs.totalTopics === kurs.topics.length,
   { message: 'totalTopics passt nicht zur Themenliste', path: ['totalTopics'] },
@@ -547,6 +563,7 @@ export type MechanismusBindung = z.infer<typeof bindungSchema>
 export type MechanismusPfeil = z.infer<typeof pfeilSchema>
 export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus | ApparaturZuordnung
 export type Pruefer = z.infer<typeof prueferSchema>
+export type Formelsatz = Kurs['formelsatz']
 
 export type Thema = Omit<z.infer<typeof themaSchema>, 'interactives' | 'abbildungen'>
   & { interactives?: Interaktiv[]; abbildungen?: Abbildung[] }

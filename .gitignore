@@ -29,6 +29,7 @@ dist-ssr
 # nur die Beispieldatei ist versioniert.
 .source/*
 !.source/beispiel/
+!.source/beispiel-physik/
 .source/**/report.md
 
 # Quellmaterial bleibt draußen (Skripte, Altprüfungen), aber die selbst
@@ -37,3 +38,7 @@ dist-ssr
 !.source/*/ergaenzungen.md
 !.source/*/uebungsfragen.md
 !.source/*/mechanismen.md
+# Nachschub von 2026: eigener Ordner, damit ein Import nicht die schon
+# eingepflegten Altquellen erneut aufträgt und Handkorrekturen überschreibt.
+!.source/neu-2026/
+!.source/neu-2026/**

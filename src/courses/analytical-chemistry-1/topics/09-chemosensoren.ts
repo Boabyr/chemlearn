@@ -116,61 +116,67 @@ Potential stören Ascorbinsäure und Harnsäure weniger.
         {
           id: "glucose-sensor",
           label: "Amperometrischer Glucosesensor (1. Generation)",
-          description: "GOD-Enzym + Pt-Elektrode, misst H₂O₂",
+          description: "GOD-Enzym + Pt-Elektrode, misst H₂O₂"
         },
         {
           id: "qcm",
           label: "Quarzoszillator (QCM)",
-          description: "Massenempfindlich, Frequenzänderung",
+          description: "Massenempfindlich, Frequenzänderung"
         },
         {
           id: "potentiometric-sensor",
           label: "Potentiometrischer Sensor (ISE)",
-          description: "Spannungsmessung, Nernst-Gleichung",
+          description: "Spannungsmessung, Nernst-Gleichung"
         },
         {
           id: "optical-sensor",
           label: "Optischer Fasersensor",
-          description: "Fluoreszenz oder Absorption am Faserende",
-        },
-      ],
+          description: "Fluoreszenz oder Absorption am Faserende"
+        }
+      ]
     },
-      {
-      "type": "apparatus-matching",
-      "title": "Vier Sensoren, vier Wandlerprinzipien",
-      "description": "Jeder Sensor erkennt anders — und wandelt anders um.",
-      "explanation": "Der Glucosesensor arbeitet amperometrisch: das Enzym erzeugt H₂O₂, der Strom wird gemessen. Der QCM wiegt: angelagerte Masse senkt die Resonanzfrequenz des Schwingquarzes. Der potentiometrische Sensor misst eine Spannung über eine ionenselektive Membran, stromlos. Der optische Sensor misst eine Änderung von Absorption oder Fluoreszenz an einer Indikatorschicht.",
-      "paare": [
+    {
+      type: "apparatus-matching",
+      title: "Vier Sensoren, vier Wandlerprinzipien",
+      description: "Jeder Sensor erkennt anders — und wandelt anders um.",
+      explanation: "Der Glucosesensor arbeitet amperometrisch: das Enzym erzeugt H₂O₂, der Strom wird gemessen. Der QCM wiegt: angelagerte Masse senkt die Resonanzfrequenz des Schwingquarzes. Der potentiometrische Sensor misst eine Spannung über eine ionenselektive Membran, stromlos. Der optische Sensor misst eine Änderung von Absorption oder Fluoreszenz an einer Indikatorschicht.",
+      paare: [
         {
-          "apparaturId": "glucose-sensor",
-          "label": "Amperometrischer Glucosesensor",
-          "hinweis": "Enzym plus Elektrode, gemessen wird Strom."
+          apparaturId: "glucose-sensor",
+          label: "Amperometrischer Glucosesensor",
+          hinweis: "Enzym plus Elektrode, gemessen wird Strom."
         },
         {
-          "apparaturId": "qcm",
-          "label": "Schwingquarz-Waage (QCM)",
-          "hinweis": "Gemessen wird eine Frequenz."
+          apparaturId: "qcm",
+          label: "Schwingquarz-Waage (QCM)",
+          hinweis: "Gemessen wird eine Frequenz."
         },
         {
-          "apparaturId": "potentiometric-sensor",
-          "label": "Potentiometrischer Sensor",
-          "hinweis": "Membran, gemessen wird eine Spannung."
+          apparaturId: "potentiometric-sensor",
+          label: "Potentiometrischer Sensor",
+          hinweis: "Membran, gemessen wird eine Spannung."
         },
         {
-          "apparaturId": "optical-sensor",
-          "label": "Optischer Sensor",
-          "hinweis": "Indikatorschicht und Licht."
+          apparaturId: "optical-sensor",
+          label: "Optischer Sensor",
+          hinweis: "Indikatorschicht und Licht."
         }
       ]
     },
   ],
   quiz: [
-    { id: "q1", question: "Welches sind die zwei Hauptkomponenten eines Chemosensors?", options: ["Lichtquelle und zugehöriger Detektor", "Rezeptorelement und Transducer", "Kathode und Anode einer Messzelle", "Monochromator und Auswerteeinheit"], correct: 1, explanation: "Der Rezeptor erkennt den Analyten selektiv — daher kommt die Spezifität. Der Transducer wandelt dieses Erkennungsereignis in ein elektrisches, optisches oder akustisches Signal um. Alles Weitere ist Auswerteelektronik und gehört nicht zur Definition." },
-    { id: "q2", question: "Was misst ein Quarzoszillator (QCM) und warum ist er so empfindlich?", options: ["Er misst Ströme im Pikoampere-Bereich an einer Mikroelektrode", "Er misst die Frequenzänderung durch Massenanlagerung", "Er misst die Intensität der Fluoreszenz", "Er misst Änderungen der Impedanz"], correct: 1, explanation: "Lagert sich Masse auf dem Schwingquarz an, sinkt seine Resonanzfrequenz — der Zusammenhang steht in der Sauerbrey-Gleichung. Weil sich Frequenzen extrem genau messen lassen, reicht die Empfindlichkeit bis in den Nanogramm-pro-Quadratzentimeter-Bereich." },
-    { id: "q3", question: "Wie funktioniert ein amperometrischer Glucosesensor der 1. Generation?", options: ["Er misst die Eigenfluoreszenz der Glucose", "Glucoseoxidase liefert H₂O₂, das oxidiert wird", "Er misst den pH-Wert der Probenlösung", "Er bestimmt die optische Drehung der Lösung"], correct: 1, explanation: "Glucoseoxidase setzt Glucose mit Sauerstoff zu Gluconolacton und H₂O₂ um. Das Peroxid wird an einer Platinelektrode oxidiert, und der Strom ist der Glucosekonzentration proportional. Nachteil dieser ersten Generation: Das Ergebnis hängt am Sauerstoffgehalt der Probe." },
+    { id: "q1", question: "Welches sind die zwei Hauptkomponenten eines Chemosensors?", options: ["Lichtquelle und zugehöriger Detektor", "Kathode und Anode einer Messzelle", "Rezeptorelement und Transducer", "Monochromator und Auswerteeinheit"], correct: 2, explanation: "Der Rezeptor erkennt den Analyten selektiv — daher kommt die Spezifität. Der Transducer wandelt dieses Erkennungsereignis in ein elektrisches, optisches oder akustisches Signal um. Alles Weitere ist Auswerteelektronik und gehört nicht zur Definition." },
+    { id: "q2", question: "Was misst ein Quarzoszillator (QCM) und warum ist er so empfindlich?", options: ["Er misst Ströme im Pikoampere-Bereich an einer Mikroelektrode", "Er misst die Intensität der Fluoreszenz", "Er misst Änderungen der Impedanz", "Er misst die Frequenzänderung durch Massenanlagerung"], correct: 3, explanation: "Lagert sich Masse auf dem Schwingquarz an, sinkt seine Resonanzfrequenz — der Zusammenhang steht in der Sauerbrey-Gleichung. Weil sich Frequenzen extrem genau messen lassen, reicht die Empfindlichkeit bis in den Nanogramm-pro-Quadratzentimeter-Bereich." },
+    { id: "q3", question: "Wie funktioniert ein amperometrischer Glucosesensor der 1. Generation?", options: ["Glucoseoxidase liefert H₂O₂, das oxidiert wird", "Er misst die Eigenfluoreszenz der Glucose", "Er misst den pH-Wert der Probenlösung", "Er bestimmt die optische Drehung der Lösung"], correct: 0, explanation: "Glucoseoxidase setzt Glucose mit Sauerstoff zu Gluconolacton und H₂O₂ um. Das Peroxid wird an einer Platinelektrode oxidiert, und der Strom ist der Glucosekonzentration proportional. Nachteil dieser ersten Generation: Das Ergebnis hängt am Sauerstoffgehalt der Probe." },
     { id: "q4", question: "Was ist der Vorteil von Mediatoren in Glucosesensoren der 2. Generation?", options: ["Sie erhöhen die Spezifität für Glucose", "Sie ersetzen Sauerstoff als Elektronenakzeptor", "Sie verlängern die Haltbarkeit des Sensors", "Sie senken die Herstellungskosten"], correct: 1, explanation: "Der Mediator — etwa Ferrocen oder Hexacyanoferrat — nimmt die Elektronen vom Enzym auf und trägt sie zur Elektrode. Damit hängt das Signal nicht mehr am schwankenden Sauerstoffgehalt, und das nötige Arbeitspotential sinkt, sodass Ascorbinsäure und Harnsäure weniger stören." },
-    { id: "q5", question: "Was unterscheidet einen Biosensor von einem normalen Chemosensor?", options: ["Biosensoren arbeiten immer optisch", "Der Rezeptor ist ein biologisches Makromolekül", "Biosensoren messen ausschließlich Glucose", "Biosensoren sind deutlich größer gebaut"], correct: 1, explanation: "Nach IUPAC ist ein Biosensor ein Chemosensor, dessen Rezeptorelement biologischen Ursprungs ist — Enzym, Antikörper, DNA oder Rezeptorprotein. Der Transducer kann elektrochemisch, optisch oder massensensitiv sein; darauf kommt es für die Einordnung nicht an." },
-    { id: "q6", question: "Welche Anwendung hat ein Chemosensor in der Point-of-Care Diagnostik?", options: ["Massenspektrometrische Strukturaufklärung", "Patientennahe Schnellanalyse ohne Zentrallabor", "Bestimmung von Kristallstrukturen", "Chromatographische Trennung von Gemischen"], correct: 1, explanation: "Point-of-Care heißt: Messung direkt beim Patienten, Ergebnis in Minuten statt Stunden. Typische Fälle sind Blutzucker beim Diabetes, Blutgase in der Notaufnahme und Troponin beim Verdacht auf Herzinfarkt — überall dort, wo die Zeit bis zum Ergebnis über die Behandlung entscheidet." },
+    { id: "q5", question: "Was unterscheidet einen Biosensor von einem normalen Chemosensor?", options: ["Biosensoren arbeiten immer optisch", "Biosensoren messen ausschließlich Glucose", "Der Rezeptor ist ein biologisches Makromolekül", "Biosensoren sind deutlich größer gebaut"], correct: 2, explanation: "Nach IUPAC ist ein Biosensor ein Chemosensor, dessen Rezeptorelement biologischen Ursprungs ist — Enzym, Antikörper, DNA oder Rezeptorprotein. Der Transducer kann elektrochemisch, optisch oder massensensitiv sein; darauf kommt es für die Einordnung nicht an." },
+    { id: "q6", question: "Welche Anwendung hat ein Chemosensor in der Point-of-Care Diagnostik?", options: ["Massenspektrometrische Strukturaufklärung", "Bestimmung von Kristallstrukturen", "Chromatographische Trennung von Gemischen", "Patientennahe Schnellanalyse ohne Zentrallabor"], correct: 3, explanation: "Point-of-Care heißt: Messung direkt beim Patienten, Ergebnis in Minuten statt Stunden. Typische Fälle sind Blutzucker beim Diabetes, Blutgase in der Notaufnahme und Troponin beim Verdacht auf Herzinfarkt — überall dort, wo die Zeit bis zum Ergebnis über die Behandlung entscheidet." },
+    { id: "q7", question: "Was bedeutet Selektivität bei einem Chemosensor?", options: ["Die kleinste noch nachweisbare Konzentration", "Das Vermögen, den Analyten neben Begleitstoffen zu erkennen", "Die Zeit bis zum stabilen Signal", "Die Zahl der möglichen Messzyklen"], correct: 1, explanation: "Selektivität betrifft die Unterscheidung, nicht die Menge — quantifiziert über Selektivitätskoeffizienten. Die kleinste nachweisbare Konzentration ist die Empfindlichkeit beziehungsweise Nachweisgrenze, die Zeit bis zum stabilen Wert die Ansprechzeit. Ein Sensor kann sehr empfindlich und dennoch unselektiv sein." },
+    { id: "q8", question: "Welchen Vorteil bringt ein Mediator im Glucosesensor der zweiten Generation?", options: ["Das Enzym wird eingespart", "Es wird kein Potential mehr benötigt", "Die Messung wird unabhängig vom Sauerstoffgehalt der Probe", "Die Ansprechzeit steigt auf mehrere Minuten"], correct: 2, explanation: "In der ersten Generation überträgt Sauerstoff die Elektronen vom Enzym, und schwankender Sauerstoffgehalt verfälscht das Ergebnis. Ein Mediator wie Ferrocen übernimmt diese Rolle und arbeitet zudem bei niedrigerem Potential, sodass Störstoffe wie Ascorbinsäure nicht mitreagieren. Das Enzym bleibt selbstverständlich nötig." },
+    { id: "q9", question: "Worauf beruht ein Chemowiderstand, wie er in Gassensoren verwendet wird?", options: ["Auf der Änderung der Resonanzfrequenz", "Auf der Widerstandsänderung einer Halbleiterschicht", "Auf der Änderung der Fluoreszenz einer aufgebrachten Indikatorschicht", "Auf einer Redoxreaktion an einer Arbeitselektrode"], correct: 1, explanation: "An der Oberfläche eines Metalloxids wie SnO₂ adsorbierter Sauerstoff bindet Ladungsträger; reduzierende Gase setzen sie wieder frei und der Widerstand fällt messbar ab. Solche Sensoren sind billig und robust, arbeiten aber heiß und sind wenig selektiv — deshalb werden sie zu Arrays zusammengeschaltet." },
+    { id: "q10", question: "Was versteht man unter der Drift eines Sensors?", options: ["Die langsame Veränderung des Signals bei gleicher Konzentration", "Die Streuung wiederholter Messungen", "Die Verzögerung zwischen Exposition und Signal", "Die Abweichung zwischen zwei baugleichen Sensoren derselben Serie"], correct: 0, explanation: "Drift ist eine gerichtete Veränderung über die Zeit, meist durch Alterung der Erkennungsschicht oder Verschmutzung. Sie zwingt zur regelmäßigen Nachkalibrierung. Streuung ist Präzision, die Verzögerung ist die Ansprechzeit, und Unterschiede zwischen Exemplaren sind die Fertigungsstreuung." },
+    { id: "q11", question: "Warum werden Sensorarrays mit teilselektiven Sensoren eingesetzt?", options: ["Weil sie in der Herstellung billiger sind als ein einzelner selektiver Sensor", "Weil sie länger halten", "Weil erst das Antwortmuster mehrerer Sensoren einen Stoff kennzeichnet", "Weil sich damit die Nachweisgrenze halbiert"], correct: 2, explanation: "Kein einzelner Sensor spricht nur auf einen Stoff an. Mehrere unterschiedlich querempfindliche Sensoren liefern aber ein Muster, das sich mit Mustererkennung einem Stoff oder Gemisch zuordnen lässt — das Prinzip der elektronischen Nase, das der Geruchswahrnehmung nachempfunden ist." },
+    { id: "q12", question: "Welche Größe misst ein potentiometrischer Sensor, welche ein amperometrischer?", options: ["Beide messen Strom, aber bei verschiedenen Potentialen", "Der potentiometrische misst stromlos eine Spannung, der amperometrische bei festem Potential einen Strom", "Beide messen Spannung, aber bei verschiedenen Strömen", "Der potentiometrische misst Ladung, der amperometrische Widerstand"], correct: 1, explanation: "Der potentiometrische Sensor arbeitet im Gleichgewicht: sein Signal hängt logarithmisch von der Aktivität ab und deckt viele Zehnerpotenzen ab. Der amperometrische stört das Gleichgewicht bewusst und misst den Umsatzstrom, der der Konzentration linear folgt — dafür braucht er Stofftransport und reagiert auf Rühren." },
   ],
   flashcards: [
     { id: "05mwoai", front: "Chemosensor – Aufbau", back: "Rezeptorelement (selektive molekulare Erkennung: Enzym, Antikörper, Ionophor) + Transducer (elektrochemisch, optisch, massensensitiv, thermisch). Miniaturisiert, kontinuierlich, reversibel." },

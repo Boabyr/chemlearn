@@ -8,13 +8,13 @@
       "type": "mc-single",
       "question": "Was ist der Q-Test und wofür wird er eingesetzt?",
       "options": [
-        "Schwangerschaftstest",
         "Ausreißertest – prüft ob ein Datenpunkt statistisch als Ausreißer verworfen werden darf",
+        "Schwangerschaftstest",
         "Vergleichstest von Standardabweichungen verschiedener Messreihen",
         "Statistisches Verfahren zur Beurteilung des Vertrauensbereichs"
       ],
-      "correct": 1,
-      "explanation": "Q-Test = Ausreißertest. Q_exp = |x_Ausreißer - x_Nachbar| / (x_max - x_min). Falls Q_exp > Q_krit → Ausreißer verworfen. Der F-Test vergleicht Varianzen (Antwort 3). Der t-Test beurteilt Vertrauensbereiche (Antwort 4).",
+      "correct": 0,
+      "explanation": "Q-Test = Ausreißertest. Q_exp = |x_Ausreißer - x_Nachbar| / (x_max - x_min). Falls Q_exp > Q_krit → Ausreißer verworfen. Der Vergleich von Standardabweichungen zweier Messreihen ist Sache des F-Tests, der Vertrauensbereich Sache des t-Tests.",
       "examiner": "gerner"
     },
     {
@@ -136,10 +136,10 @@
       "type": "mc-multi",
       "question": "Wodurch kann man die Trennleistung bei der LC steigern?",
       "options": [
-        "Einsatz geringerer Korngrößen der stationären Phase",
-        "Erhöhung des Drucks (alleine)",
         "Verwendung kleinerer Säulendurchmesser",
-        "Mobile Phase mit höherem Polaritätsindex"
+        "Mobile Phase mit höherem Polaritätsindex",
+        "Einsatz geringerer Korngrößen der stationären Phase",
+        "Erhöhung des Drucks (alleine)"
       ],
       "correct": [
         0,
@@ -156,14 +156,14 @@
       "type": "mc-multi",
       "question": "Welche Aussagen zu SDS-PAGE sind RICHTIG?",
       "options": [
-        "Bei der integrierten Isotachophorese ist Chlorid das Leitelektrolyt und Glycin das Folgeelektrolyt",
         "Größere Proteine wandern langsamer als kleine",
         "Basische Proteine wandern in andere Richtung als saure",
-        "Proteine zerfallen in Aminosäuren, die nacheinander eluiert werden"
+        "Proteine zerfallen in Aminosäuren, die nacheinander eluiert werden",
+        "Bei der integrierten Isotachophorese ist Chlorid das Leitelektrolyt und Glycin das Folgeelektrolyt"
       ],
       "correct": [
         0,
-        1
+        3
       ],
       "explanation": "(1) ✓ Chlorid: schnelles Leitelektrolyt. Glycin (Folgeelektrolyt) langsamer. (2) ✓ SDS = negativ geladen → alle Proteine zur Anode. Größere Proteine: langsamer durch Gel. (3) ✗ SDS denaturiert und lädt alle Proteine negativ → gleiche Richtung. (4) ✗ SDS-PAGE trennt intakte Polypeptide, keine Aminosäuren.",
       "examiner": "gerner"
@@ -177,13 +177,257 @@
       "question": "Was ist der F-Test?",
       "options": [
         "Schwangerschaftstest",
-        "Ausreißertest",
         "Vergleichstest von Standardabweichungen verschiedener Messreihen",
+        "Ausreißertest",
         "Statistisches Verfahren zur Beurteilung des Vertrauensbereichs"
       ],
-      "correct": 2,
-      "explanation": "F-Test: Vergleich zweier Varianzen (F = s₁²/s₂²). Prüft ob zwei Messreihen gleiche Präzision haben. Q-Test = Ausreißertest (Antwort 2). t-Test = Vertrauensbereich/Mittelwertvergleich (Antwort 4).",
+      "correct": 1,
+      "explanation": "F-Test: Vergleich zweier Varianzen (F = s₁²/s₂²). Prüft ob zwei Messreihen gleiche Präzision haben. Der Ausreißertest ist der Q-Test, den Vertrauensbereich und den Mittelwertvergleich liefert der t-Test.",
       "examiner": "gerner"
+    },
+    {
+      "id": "G013",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "11-saeurebase-ph",
+      "points": 2,
+      "type": "numeric",
+      "question": "5,8 g NaCl und 7,5 g NaOH werden in 250 mL Wasser gelöst. Welchen pH hat die Lösung? (M(NaOH) = 40 g/mol)",
+      "correct": 13.88,
+      "explanation": "NaCl ist das Salz einer starken Säure mit einer starken Base und trägt nichts zum pH bei. NaOH: n = 7,5/40 = 0,1875 mol in 0,250 L, also c(OH⁻) = 0,75 mol/L. pOH = −log(0,75) = 0,125, damit pH = 14 − 0,125 = 13,88. Die Kochsalzmenge ist Beiwerk — wer sie mitrechnet, sucht einen Beitrag, den es nicht gibt.",
+      "tolerance": 0.05,
+      "unit": "pH"
+    },
+    {
+      "id": "G014",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "11-saeurebase-ph",
+      "points": 3,
+      "type": "numeric",
+      "question": "250 mL 0,2 M Ameisensäure (pKs = 3,75) werden auf 1 L aufgefüllt. Welchen pH hat die Lösung?",
+      "correct": 2.53,
+      "explanation": "Verdünnung zuerst: c = 0,2 mol/L · 0,250 L / 1,0 L = 0,05 mol/L. Ka = 10⁻³·⁷⁵ = 1,778·10⁻⁴. Für eine schwache Säure gilt [H⁺] = √(Ka · c) = √(1,778·10⁻⁴ · 0,05) = √(8,89·10⁻⁶) = 2,98·10⁻³ mol/L. pH = −log(2,98·10⁻³) = 2,53. Wer die Verdünnung vergisst, rechnet mit 0,2 mol/L und kommt auf 2,23.",
+      "tolerance": 0.05,
+      "unit": "pH"
+    },
+    {
+      "id": "G015",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "11-saeurebase-ph",
+      "points": 3,
+      "type": "numeric",
+      "question": "200 mL 0,1 M Essigsäure (pKs = 4,76) werden mit 50 mL 0,1 M NaOH versetzt und auf 1 L aufgefüllt. Welchen pH hat die Pufferlösung?",
+      "correct": 4.28,
+      "explanation": "n(HAc) = 0,020 mol, n(NaOH) = 0,005 mol. Die Lauge verbraucht 0,005 mol Essigsäure zu Acetat: es bleiben 0,015 mol HAc neben 0,005 mol Ac⁻. Henderson-Hasselbalch: pH = pKs + log([A⁻]/[HA]) = 4,76 + log(0,005/0,015) = 4,76 − 0,48 = 4,28. Das Auffüllen auf 1 L ändert nichts, weil im Logarithmus nur das Verhältnis steht. Anders als am Halbäquivalenzpunkt liegt der pH hier unter dem pKs, weil die Säure im Überschuss ist.",
+      "tolerance": 0.05,
+      "unit": "pH"
+    },
+    {
+      "id": "G016",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "14-trennverfahren-gc-hplc",
+      "points": 4,
+      "type": "numeric",
+      "question": "Extraktion von Jod, Verteilungskoeffizient K = 120. 25 mL wässrige Lösung werden zweimal mit je 15 mL organischem Lösungsmittel ausgeschüttelt. Wie viel Prozent des Jods verbleiben in der wässrigen Phase?",
+      "correct": 0.0188,
+      "explanation": "Nach n gleichen Extraktionsschritten bleibt m_n = m₀ · (V_aq/(V_aq + K·V_org))ⁿ. Hier: (25/(25 + 120·15))² = (25/1825)² = (0,013699)² = 1,877·10⁻⁴, also 0,0188 % der Ausgangsmenge. Zweimal mit 15 mL trennt deutlich besser als einmal mit 30 mL — das ist der ganze Grund für die mehrfache Extraktion.",
+      "tolerance": 0.002,
+      "unit": "%"
+    },
+    {
+      "id": "G017",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "13-chromatographie-grundlagen",
+      "points": 6,
+      "type": "numeric",
+      "question": "LC-Trennung, tM = 4,0 min. Substanz A: tR = 7,8 min, wB = 0,80 min. Substanz B: tR = 10,4 min, wB = 0,66 min. Berechnen Sie die Auflösung Rs.",
+      "correct": 3.56,
+      "explanation": "Rs = 2·(tR2 − tR1)/(w1 + w2) = 2·(10,4 − 7,8)/(0,80 + 0,66) = 5,2/1,46 = 3,56. Ab Rs = 1,5 gelten zwei Peaks als basisliniengetrennt, hier ist die Trennung also reichlich. Die Totzeit tM geht in die Auflösung nicht ein — sie wird für k' gebraucht, nicht für Rs.",
+      "tolerance": 0.1,
+      "unit": "—"
+    },
+    {
+      "id": "G018",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "13-chromatographie-grundlagen",
+      "points": 6,
+      "type": "numeric",
+      "question": "LC-Trennung, tM = 4,0 min. Substanz B: tR = 10,4 min, wB = 0,66 min. Berechnen Sie die Trennstufenzahl N für Substanz B.",
+      "correct": 3973,
+      "explanation": "N = 16·(tR/wB)² = 16·(10,4/0,66)² = 16·(15,758)² = 16·248,3 = 3973. Die Basisbreite wB wird durch die Wendetangenten bestimmt; mit der Halbwertsbreite lautet die Formel N = 5,54·(tR/w½)² — die beiden Formeln dürfen nicht gemischt werden.",
+      "tolerance": 60,
+      "unit": "—"
+    },
+    {
+      "id": "G019",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "13-chromatographie-grundlagen",
+      "points": 6,
+      "type": "numeric",
+      "question": "LC-Trennung, tM = 4,0 min. Substanz B eluiert bei tR = 10,4 min. Berechnen Sie den Kapazitätsfaktor (Retentionsfaktor) k' für Substanz B.",
+      "correct": 1.6,
+      "explanation": "k' = (tR − tM)/tM = (10,4 − 4,0)/4,0 = 6,4/4,0 = 1,60. Der Wert sagt: die Substanz hält sich 1,6-mal so lange in der stationären wie in der mobilen Phase. Gut trennbare Peaks liegen im Bereich k' = 1 bis 10.",
+      "tolerance": 0.05,
+      "unit": "—"
+    },
+    {
+      "id": "G020",
+      "source": "Variante-2026",
+      "examiner": "gerner",
+      "topicId": "12-faellungsreaktionen",
+      "points": 3,
+      "type": "numeric",
+      "question": "Eisen wird gravimetrisch als Fe₂O₃ bestimmt. Wie viele Tabletten mit je 25 mg Eisen werden gebraucht, um 0,80 g Fe₂O₃ zu erhalten? (M(Fe) = 55,85 g/mol, M(Fe₂O₃) = 159,7 g/mol)",
+      "correct": 23,
+      "explanation": "n(Fe₂O₃) = 0,80 g / 159,7 g/mol = 5,01·10⁻³ mol. Jede Formeleinheit enthält zwei Eisenatome: n(Fe) = 1,002·10⁻² mol, also m(Fe) = 0,560 g = 560 mg. Bei 25 mg je Tablette sind das 22,4 — aufgerundet 23 Tabletten, denn eine halbe Tablette liefert die fehlende Menge nicht sicher. Wer den Faktor 2 vergisst, landet bei 12.",
+      "tolerance": 1,
+      "unit": "Tabletten"
+    },
+    {
+      "id": "G021",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "18-fehlerrechnung",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Eine Waage zeigt bei jeder Wägung 0,12 g zu viel an. Um welche Art Fehler handelt es sich?",
+      "options": [
+        "Zufälliger Fehler",
+        "Systematischer Fehler",
+        "Grober Fehler",
+        "Statistischer Streufehler"
+      ],
+      "correct": 1,
+      "explanation": "Ein Fehler, der in Betrag und Richtung gleich bleibt, ist systematisch: er verschiebt den Mittelwert, ohne die Streuung zu vergrößern, und lässt sich durch Kalibrierung oder eine Blindwertkorrektur beseitigen. Zufällige Fehler streuen um den wahren Wert und werden durch Mehrfachmessung kleiner — bei einem systematischen Fehler hilft Wiederholen gar nichts."
+    },
+    {
+      "id": "G022",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "18-fehlerrechnung",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Wie pflanzt sich der Fehler bei einer Multiplikation zweier fehlerbehafteter Größen fort?",
+      "options": [
+        "Die absoluten Fehler werden addiert",
+        "Der größere absolute Fehler bestimmt das Ergebnis",
+        "Die relativen Fehler addieren sich quadratisch",
+        "Die relativen Fehler werden multipliziert"
+      ],
+      "correct": 2,
+      "explanation": "Bei Produkt und Quotient gilt (s_z/z)² = (s_x/x)² + (s_y/y)² — es addieren sich die relativen Fehler in der Quadratsumme. Bei Summe und Differenz sind es dagegen die absoluten Fehler, ebenfalls quadratisch. Wer die Regeln vertauscht, verrechnet sich besonders dann grob, wenn die Größen sehr verschieden groß sind."
+    },
+    {
+      "id": "G023",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "18-fehlerrechnung",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Was besagt der Vertrauensbereich eines Mittelwerts?",
+      "options": [
+        "Er nennt den Bereich, in dem alle Einzelmesswerte liegen",
+        "Er ist gleich der Standardabweichung der Einzelmessung",
+        "Er gibt den größten vorgekommenen Messfehler an",
+        "Er nennt den Bereich, in dem der wahre Wert mit gewählter Wahrscheinlichkeit liegt"
+      ],
+      "correct": 3,
+      "explanation": "Der Vertrauensbereich ist x̄ ± t·s/√n. Er wird mit steigender Zahl der Messungen enger, weil √n im Nenner steht, und er hängt über t vom gewählten Vertrauensniveau ab. Die Standardabweichung s beschreibt dagegen die Streuung der Einzelwerte und wird durch mehr Messungen nicht kleiner."
+    },
+    {
+      "id": "G024",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "18-fehlerrechnung",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über Präzision und Richtigkeit treffen zu?",
+      "options": [
+        "Eine Messreihe kann präzise und zugleich unrichtig sein",
+        "Richtigkeit beschreibt die Nähe des Mittelwerts zum wahren Wert",
+        "Präzision wird über die Standardabweichung beschrieben",
+        "Hohe Präzision schließt einen systematischen Fehler aus"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Präzision ist die Wiederholbarkeit, Richtigkeit die Übereinstimmung mit dem wahren Wert. Eine falsch kalibrierte Waage liefert eng beieinanderliegende und trotzdem falsche Werte — genau der Fall, den man ohne Referenzmaterial nicht bemerkt. Erst beides zusammen ergibt Genauigkeit."
+    },
+    {
+      "id": "G025",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "10-statistik-qualitaet",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Wie ist die Nachweisgrenze (LOD) aus einer Kalibriergerade üblicherweise definiert?",
+      "options": [
+        "Als der Blindwert selbst",
+        "Als das Dreifache der Blindwertstreuung, geteilt durch die Steigung",
+        "Als das Zehnfache der Blindwertstreuung, geteilt durch die Steigung",
+        "Als der kleinste Punkt der Kalibriergerade"
+      ],
+      "correct": 1,
+      "explanation": "LOD = 3·s_Blind/m — bei diesem Signal ist der Stoff sicher nachweisbar, aber noch nicht sinnvoll quantifizierbar. Mit dem Faktor 10 erhält man die Bestimmungsgrenze LOQ, die entsprechend rund dreimal höher liegt. Eine steilere Kalibriergerade drückt beide Grenzen, weshalb bei λmax gemessen wird."
+    },
+    {
+      "id": "G026",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "10-statistik-qualitaet",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Wann wird die Standardaddition der externen Kalibrierung vorgezogen?",
+      "options": [
+        "Wenn die Probe eine Matrix hat, die das Signal beeinflusst",
+        "Wenn besonders viele Proben zu messen sind",
+        "Wenn kein Blindwert bestimmt werden kann",
+        "Wenn die Kalibriergerade nicht durch den Nullpunkt geht"
+      ],
+      "correct": 0,
+      "explanation": "Bei der Standardaddition wird in die Probe selbst aufgestockt, die Matrix ist also in jedem Messpunkt dieselbe und ihr Einfluss steckt schon in der Steigung. Bezahlt wird das mit Aufwand: je Probe eine eigene Messreihe, deshalb bleibt es bei vielen Proben und sauberer Matrix bei der externen Kalibrierung."
+    },
+    {
+      "id": "G027",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "12-faellungsreaktionen",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Warum wird ein gravimetrischer Niederschlag vor dem Wägen bis zur Massenkonstanz geglüht?",
+      "options": [
+        "Um die Korngröße zu vergrößern",
+        "Um Reste des Fällungsmittels chemisch zu binden",
+        "Um ihn in eine definierte, wasserfreie Wägeform zu überführen",
+        "Um das Löslichkeitsprodukt zu verkleinern"
+      ],
+      "correct": 2,
+      "explanation": "Gefällt wird oft ein wasserhaltiges, schlecht definiertes Produkt — Eisen etwa als Fe(OH)₃·xH₂O. Erst das Glühen liefert die stöchiometrisch eindeutige Wägeform, hier Fe₂O₃, deren Molmasse in die Rechnung eingeht. Massenkonstanz zeigt an, dass alles Wasser ausgetrieben ist; sonst wiegt man Feuchtigkeit mit."
+    },
+    {
+      "id": "G028",
+      "source": "Uebung-2026",
+      "examiner": "gerner",
+      "topicId": "12-faellungsreaktionen",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Was versteht man beim Fällen unter Mitfällung (Okklusion)?",
+      "options": [
+        "Fremdionen werden beim Wachstum in den Kristall eingeschlossen",
+        "Der Niederschlag löst sich beim Waschen teilweise wieder auf",
+        "Zwei Niederschläge fallen nacheinander aus",
+        "Das Fällungsmittel zersetzt sich beim Glühen"
+      ],
+      "correct": 0,
+      "explanation": "Wächst der Kristall zu schnell, werden Ionen aus der Lösung mit eingebaut — die Wägeform ist dann zu schwer und das Ergebnis zu hoch. Dagegen hilft, aus verdünnter Lösung langsam und heiß zu fällen und den Niederschlag anschließend altern zu lassen, damit sich die Kristalle umlagern."
     },
     {
       "id": "K001",
@@ -194,11 +438,11 @@
       "question": "Was bedeutet 0,4 ppb in wässriger Lösung?",
       "options": [
         "0,4 mg/L",
-        "0,4 µg/L",
         "0,4 ng/L",
+        "0,4 µg/L",
         "0,4 g/L"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "1 ppb (parts per billion) = 1 µg/kg ≈ 1 µg/L in wässriger Lösung (Dichte ≈ 1 g/mL). 0,4 ppb = 0,4 µg/L. Merke: ppm=mg/L, ppb=µg/L, ppt=ng/L.",
       "examiner": "koellensperger"
     },
@@ -211,11 +455,11 @@
       "question": "Was ist die Nachweisgrenze (LOD)?",
       "options": [
         "Kleinste messbare Konzentration: LOD = s_Blind/m",
-        "Kleinste Konzentration mit Signal 3× über dem Untergrundrauschen: LOD = 3·s_Blind/m",
         "Kleinste Konzentration für genaue Quantifizierung: LOD = 10·s_Blind/m",
-        "Konzentration bei der A = 1 gilt"
+        "Konzentration bei der A = 1 gilt",
+        "Kleinste Konzentration mit Signal 3× über dem Untergrundrauschen: LOD = 3·s_Blind/m"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "LOD = 3·s_Blind/m. Der Faktor 3 entspricht dem 3σ-Kriterium (99,7% Sicherheit, Signal über Rauschen). LOQ = 10·s_Blind/m (Bestimmungsgrenze, für genaue Quantifizierung). m = Steigung der Kalibriergerade.",
       "examiner": "koellensperger"
     },
@@ -266,12 +510,12 @@
       "type": "mc-single",
       "question": "14 Messwerte: x̄=0,5916mg/L, s=0,0079mg/L. Welches Ergebnis wird mit korrekten signifikanten Stellen angegeben?",
       "options": [
+        "0,592 ± 0,008 mg/L",
         "0,5916 ± 0,0079 mg/L",
         "0,59 ± 0,01 mg/L",
-        "0,592 ± 0,008 mg/L",
         "0,5916 ± 0,008 mg/L"
       ],
-      "correct": 2,
+      "correct": 0,
       "explanation": "s=0,0079 → 2 signifikante Stellen → runde auf 0,008. Dann x̄ auf gleiche Dezimalstelle: 0,592. Korrekt: 0,592 ± 0,008 mg/L. Regel: Fehler bestimmt Anzahl Dezimalstellen des Mittelwerts.",
       "examiner": "koellensperger"
     },
@@ -304,6 +548,262 @@
       "examiner": "koellensperger"
     },
     {
+      "id": "K009",
+      "source": "Variante-2026",
+      "examiner": "koellensperger",
+      "topicId": "17-elektroden-faellungstitration",
+      "points": 5,
+      "type": "numeric",
+      "question": "Fällungstitration: 100 mL 0,1 M NaCl werden mit 0,1 M AgNO₃ titriert, der Äquivalenzpunkt liegt bei 100 mL. E°(Ag⁺/Ag) = 0,799 V, Ksp(AgCl) = 1,8·10⁻¹⁰. Berechnen Sie das Potential gegen SHE nach Zugabe von 80,0 mL AgNO₃.",
+      "correct": 0.338,
+      "explanation": "Vor dem Äquivalenzpunkt bestimmt das übrige Chlorid die Silberkonzentration. Rest: (100 − 80) mL · 0,1 mol/L = 2,0 mmol in 180 mL Gesamtvolumen, also [Cl⁻] = 0,01111 mol/L. Über das Löslichkeitsprodukt: [Ag⁺] = 1,8·10⁻¹⁰/0,01111 = 1,62·10⁻⁸ mol/L. Nernst: E = 0,799 + 0,05916·log(1,62·10⁻⁸) = 0,799 − 0,461 = +0,338 V.",
+      "tolerance": 0.01,
+      "unit": "V"
+    },
+    {
+      "id": "K010",
+      "source": "Variante-2026",
+      "examiner": "koellensperger",
+      "topicId": "17-elektroden-faellungstitration",
+      "points": 5,
+      "type": "numeric",
+      "question": "Dieselbe Titration (100 mL 0,1 M NaCl mit 0,1 M AgNO₃, ÄP bei 100 mL, E°(Ag⁺/Ag) = 0,799 V). Berechnen Sie das Potential nach Zugabe von 150,0 mL AgNO₃.",
+      "correct": 0.698,
+      "explanation": "Nach dem Äquivalenzpunkt zählt nur noch der Silberüberschuss: (150 − 100) mL · 0,1 mol/L = 5,0 mmol in 250 mL, also [Ag⁺] = 0,020 mol/L. Nernst: E = 0,799 + 0,05916·log(0,020) = 0,799 − 0,101 = +0,698 V. Das Löslichkeitsprodukt wird hier nicht mehr gebraucht; es zählt nur, solange Chlorid im Überschuss ist.",
+      "tolerance": 0.01,
+      "unit": "V"
+    },
+    {
+      "id": "K011",
+      "source": "Variante-2026",
+      "examiner": "koellensperger",
+      "topicId": "15-kalibrierung-standardaddition",
+      "points": 2,
+      "type": "numeric",
+      "question": "Wie viele mL einer 96 gew%igen Schwefelsäure (ρ = 1,84 g/mL, M = 98 g/mol) werden gebraucht, um 0,500 L einer 2,00 M H₂SO₄ herzustellen?",
+      "correct": 55.5,
+      "explanation": "Gesucht ist n = 2,00 mol/L · 0,500 L = 1,00 mol. Die Stammlösung enthält c = 0,96 · 1840 g/L / 98 g/mol = 18,0 mol/L. Daraus V = n/c = 1,00/18,0 = 0,0555 L = 55,5 mL. Der häufigste Fehler ist, den Massenanteil zu vergessen: ohne ihn käme man auf 53 mL.",
+      "tolerance": 0.6,
+      "unit": "mL"
+    },
+    {
+      "id": "K012",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "17-elektroden-faellungstitration",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Worin unterscheidet sich eine Ag/AgCl-Bezugselektrode im Aufbau von einer pH-Glaselektrode?",
+      "options": [
+        "Sie besitzt kein Diaphragma",
+        "Sie hat kein Innenrohr und keine ionenselektive Membran, ihr Potential ist von der Probe unabhängig",
+        "Sie arbeitet mit Wechselspannung statt Gleichspannung",
+        "Sie enthält statt KCl eine gesättigte Pufferlösung"
+      ],
+      "correct": 1,
+      "explanation": "Die Bezugselektrode ist bewusst blind gegenüber der Probe: Ag/AgCl-Draht in gesättigtem KCl, Kontakt über ein Diaphragma — mehr nicht. Ihr Potential ist über die konstante Chloridaktivität festgelegt. Die Glaselektrode trägt zusätzlich ein Innenrohr mit Innenpuffer und die Glasmembran, an der überhaupt erst ein probenabhängiges Potential entsteht."
+    },
+    {
+      "id": "K013",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "17-elektroden-faellungstitration",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welche Elektrode dient bei einer potentiometrischen Fällungstitration von Chlorid mit AgNO₃ als Indikatorelektrode?",
+      "options": [
+        "Eine Glaselektrode",
+        "Ein Silberdraht",
+        "Eine gesättigte Kalomelelektrode",
+        "Eine Platinelektrode"
+      ],
+      "correct": 1,
+      "explanation": "Die Indikatorelektrode muss auf die Aktivität des titrierten Ions ansprechen. Silber in einer Ag⁺-haltigen Lösung tut das nach Nernst mit 59,16 mV je Zehnerpotenz — daher der blanke Silberdraht. Die Glaselektrode spricht auf H⁺ an, die Platinelektrode auf Redoxpaare, und die Kalomelelektrode ist die Bezugs-, nicht die Indikatorelektrode."
+    },
+    {
+      "id": "K014",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "17-elektroden-faellungstitration",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über ionenselektive Elektroden (ISE) treffen zu?",
+      "options": [
+        "Der Selektivitätskoeffizient gibt an, wie stark ein Störion im Vergleich zum Zielion beiträgt",
+        "Die Steigung beträgt bei zweiwertigen Ionen etwa 29,6 mV je Dekade",
+        "An der Membranoberfläche läuft eine Redoxreaktion ab",
+        "Gemessen wird gegen eine Bezugselektrode, praktisch stromlos"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Die ISE misst ein Membranpotential, keine Redoxreaktion — es findet ein Ionenaustausch beziehungsweise eine selektive Verteilung an der Phasengrenze statt. Die Nernst-Steigung geht mit 59,16/z, bei zweiwertigen Ionen also etwa 29,6 mV je Dekade. Der Selektivitätskoeffizient beschreibt genau die Querempfindlichkeit, und gemessen wird stromlos gegen eine Referenz."
+    },
+    {
+      "id": "K015",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "14-trennverfahren-gc-hplc",
+      "points": 3,
+      "type": "order",
+      "question": "Ordnen Sie die Bauteile einer HPLC-Anlage in Fließrichtung der mobilen Phase.",
+      "options": [
+        "Trennsäule",
+        "Injektionsventil",
+        "Detektor",
+        "Hochdruckpumpe"
+      ],
+      "correct": [
+        3,
+        1,
+        0,
+        2
+      ],
+      "explanation": "Die Pumpe fördert das Laufmittel aus dem Vorratsgefäß, das Injektionsventil setzt die Probe in den bereits laufenden Strom, in der Säule findet die Trennung statt, und der Detektor sitzt am Ausgang. Das Ventil hinter der Pumpe zu setzen ist Absicht: nur so wird die Probe aufgegeben, ohne den Druck abzulassen."
+    },
+    {
+      "id": "K016",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "14-trennverfahren-gc-hplc",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welches Bauteil hat ein Gaschromatograph, das einer HPLC-Anlage fehlt?",
+      "options": [
+        "Ein Injektionsventil",
+        "Ein Detektor am Säulenausgang",
+        "Eine Trennsäule",
+        "Ein Säulenofen mit programmierbarer Temperatur"
+      ],
+      "correct": 3,
+      "explanation": "In der GC steuert die Temperatur die Verteilung zwischen Trägergas und stationärer Phase; ein Temperaturprogramm trennt leicht- und schwerflüchtige Stoffe in einem Lauf. Die HPLC regelt stattdessen über die Zusammensetzung der mobilen Phase (Gradient) und braucht dafür eine Hochdruckpumpe, die der GC nicht hat — dort liefert eine Gasflasche den Trägergasstrom."
+    },
+    {
+      "id": "K017",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "14-trennverfahren-gc-hplc",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Wodurch wird in der Kapillarelektrophorese der Stofftransport hauptsächlich bewirkt?",
+      "options": [
+        "Durch eine Hochdruckpumpe",
+        "Durch einen Temperaturgradienten",
+        "Durch elektroosmotischen Fluss und die Wanderung der Ionen im Feld",
+        "Durch Kapillarkräfte in der Trennsäule"
+      ],
+      "correct": 2,
+      "explanation": "An der Innenwand der Quarzkapillare bildet sich eine elektrische Doppelschicht; im angelegten Feld setzt sich diese in Bewegung und zieht die gesamte Flüssigkeitssäule mit — der elektroosmotische Fluss. Ihm überlagert sich die eigene Wanderung der Ionen. Eine Pumpe gibt es nicht, das Strömungsprofil ist deshalb flach statt parabolisch, was die hohe Trennleistung erklärt."
+    },
+    {
+      "id": "K018",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "13-chromatographie-grundlagen",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welche Aussage zur van-Deemter-Kurve ist richtig?",
+      "options": [
+        "Sie zeigt ein Minimum der Bodenhöhe bei einer optimalen Flussgeschwindigkeit",
+        "Sie beschreibt die Abhängigkeit der Retentionszeit von der Temperatur",
+        "Sie steigt mit der Flussgeschwindigkeit stets monoton an",
+        "Sie gilt ausschließlich für die Flüssigchromatographie"
+      ],
+      "correct": 0,
+      "explanation": "H = A + B/u + C·u: der Eddy-Diffusionsterm A ist flussunabhängig, die Längsdiffusion B/u dominiert bei kleiner, der Massentransportterm C·u bei großer Geschwindigkeit. Die Summe hat ein Minimum — die optimale Flussrate. Die Beziehung gilt für GC wie LC, nur mit anderen Gewichten der Terme."
+    },
+    {
+      "id": "K019",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "16-atomspektrometrie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Woran erkennt man eine Flammen-AAS gegenüber einer ICP-OES im Aufbau?",
+      "options": [
+        "An der Hohlkathodenlampe, die quer durch die Flamme strahlt",
+        "Am Zerstäuber vor dem Brenner",
+        "An der Argonzufuhr",
+        "Am Gitterspektrometer hinter der Anregungszone"
+      ],
+      "correct": 0,
+      "explanation": "Die AAS misst Absorption und braucht dafür eine eigene Lichtquelle: die Hohlkathodenlampe strahlt genau die Linien des gesuchten Elements durch die Flamme, in der die Atome absorbieren. Die ICP-OES misst dagegen die Emission des Plasmas selbst und hat gar keine Lampe. Zerstäuber und Spektrometer haben beide, Argon führt auch mancher AAS-Aufbau."
+    },
+    {
+      "id": "K020",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "16-atomspektrometrie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welchen Vorteil bietet der Aufbau der Graphitrohr-AAS gegenüber der Flammen-AAS?",
+      "options": [
+        "Sie kommt ohne Hohlkathodenlampe aus",
+        "Sie misst mehrere Elemente gleichzeitig",
+        "Sie benötigt kein Argon",
+        "Die gesamte Probe wird im Strahlengang gehalten, statt von der Flamme fortgetragen zu werden"
+      ],
+      "correct": 3,
+      "explanation": "Im Graphitrohr, das längs im Strahlengang liegt, bleibt die eingebrachte Mikroliterprobe während der Atomisierung beisammen; die Verweilzeit der Atome ist um Größenordnungen länger als in der Flamme, entsprechend niedriger sind die Nachweisgrenzen. Bezahlt wird das mit längerer Messdauer, mehr Matrixeffekten und einem Temperaturprogramm aus Trocknen, Veraschen und Atomisieren. Einelement-Messung und Hohlkathodenlampe bleiben."
+    },
+    {
+      "id": "K021",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "16-atomspektrometrie",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Bauteile gehören zum Aufbau einer ICP-OES?",
+      "options": [
+        "Eine Induktionsspule, die das Argonplasma erzeugt und hält",
+        "Ein Zerstäuber mit Sprühkammer",
+        "Eine Hohlkathodenlampe je Element",
+        "Ein Echelle-Spektrometer mit Halbleiterdetektor"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Das Plasma entsteht in einer Quarzfackel im Feld der Induktionsspule; die Probe gelangt als Aerosol über Zerstäuber und Sprühkammer hinein. Weil das Plasma selbst strahlt, wird keine Lampe gebraucht — das Echelle-Spektrometer zerlegt die Emission und ein Flächendetektor nimmt viele Linien gleichzeitig auf, was die Multielementfähigkeit ausmacht."
+    },
+    {
+      "id": "K022",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "15-kalibrierung-standardaddition",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Wozu dient ein interner Standard?",
+      "options": [
+        "Er ersetzt die Kalibriergerade",
+        "Er bestimmt den Blindwert",
+        "Er erhöht die Empfindlichkeit des Detektors",
+        "Er gleicht Schwankungen von Injektion und Geräteempfindlichkeit aus, weil das Verhältnis der Signale ausgewertet wird"
+      ],
+      "correct": 3,
+      "explanation": "Der interne Standard wird jeder Probe und jedem Kalibrierpunkt in gleicher Menge zugesetzt. Ausgewertet wird das Verhältnis Analytsignal zu Standardsignal — schwankt das aufgegebene Volumen oder die Empfindlichkeit, trifft das beide gleichermaßen und kürzt sich heraus. Er muss dem Analyten chemisch ähneln, darf aber in der Probe nicht vorkommen."
+    },
+    {
+      "id": "K023",
+      "source": "Uebung-2026",
+      "examiner": "koellensperger",
+      "topicId": "15-kalibrierung-standardaddition",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Wie wird bei der Standardaddition der Gehalt der Probe grafisch ermittelt?",
+      "options": [
+        "Aus dem Schnittpunkt der Geraden mit der y-Achse",
+        "Aus dem Betrag des Schnittpunkts der verlängerten Geraden mit der x-Achse",
+        "Aus der Steigung der Geraden allein",
+        "Aus dem Mittelwert aller Messpunkte"
+      ],
+      "correct": 1,
+      "explanation": "Aufgetragen wird das Signal gegen die zugesetzte Menge. Verlängert man die Gerade nach links bis zur x-Achse, entspricht der Betrag dieses Achsenabschnitts der ursprünglich vorhandenen Menge — denn dort wäre das Signal null. Der y-Achsenabschnitt ist dagegen das Signal der unaufgestockten Probe."
+    },
+    {
       "id": "L001",
       "source": "2013-02-Lieberzeit",
       "topicId": "01-grundlagen-spektroskopie",
@@ -333,14 +833,14 @@
       "type": "mc-multi",
       "question": "Welche Aussagen zur Fluoreszenzspektrometrie sind korrekt?",
       "options": [
-        "In der Fluoreszenzspektrometrie wird das von der Probe emittierte Licht gemessen",
-        "Je flexibler die Struktur eines Moleküls, desto weniger fluoresziert es",
         "In der FS gibt es kaum Matrixeffekte",
-        "Das Fluoreszenzlicht ist gegenüber dem Ausgangslicht zu höheren Frequenzen (kürzeren Wellenlängen) verschoben"
+        "Das Fluoreszenzlicht ist gegenüber dem Ausgangslicht zu höheren Frequenzen (kürzeren Wellenlängen) verschoben",
+        "In der Fluoreszenzspektrometrie wird das von der Probe emittierte Licht gemessen",
+        "Je flexibler die Struktur eines Moleküls, desto weniger fluoresziert es"
       ],
       "correct": [
-        0,
-        1
+        2,
+        3
       ],
       "explanation": "Richtig: (1) Fluoreszenz = Emissionsmessung ✓. (2) Flexible Strukturen → mehr Schwingungsrelaxation → weniger Fluoreszenz ✓. Falsch: (3) Fluoreszenz hat weniger Matrixeffekte als AAS, aber sie existieren. (4) Fluoreszenzlicht hat LÄNGERE Wellenlänge (Stokes-Verschiebung, niedrigere Frequenz).",
       "examiner": "lieberzeit"
@@ -392,14 +892,14 @@
       "type": "mc-multi",
       "question": "Bei welchen Methoden fließt Strom durch die Messzelle?",
       "options": [
-        "Potentiometrie",
         "Stripping-Voltammetrie",
         "Amperometrie",
-        "Glaselektrode"
+        "Glaselektrode",
+        "Potentiometrie"
       ],
       "correct": [
-        1,
-        2
+        0,
+        1
       ],
       "explanation": "Potentiometrie und die Glaselektrode messen ein Gleichgewichtspotential und arbeiten stromlos — flösse Strom, verschöben sich die Konzentrationen an der Phasengrenze und das Potential wanderte. Stripping-Voltammetrie und Amperometrie messen dagegen genau diesen Strom: er ist dort die Messgröße. Daher auch der Drei-Elektroden-Aufbau, damit die Referenz trotz fließenden Stroms stromlos bleibt.",
       "examiner": "lieberzeit"
@@ -440,13 +940,13 @@
       "type": "mc-multi",
       "question": "Welche Aussagen zu Elektroden in der Voltammetrie sind RICHTIG?",
       "options": [
-        "Quecksilber ist ein universell einsetzbares Elektrodenmaterial",
-        "Normalwasserstoffelektroden sind als Referenzelektrode ungeeignet",
         "Ein Platindraht stellt eine sinnvolle Referenzelektrode dar",
-        "Mittels Polarographie kann Cr⁶⁺ bei +1,5V bestimmt werden (E°Cr⁶⁺/Cr³⁺ = +1,33V)"
+        "Mittels Polarographie kann Cr⁶⁺ bei +1,5V bestimmt werden (E°Cr⁶⁺/Cr³⁺ = +1,33V)",
+        "Quecksilber ist ein universell einsetzbares Elektrodenmaterial",
+        "Normalwasserstoffelektroden sind als Referenzelektrode ungeeignet"
       ],
       "correct": [
-        1
+        3
       ],
       "explanation": "Quecksilber taugt nur als Kathode; als Anode oxidiert es schon bei etwa +0,4 V und löst sich auf — also nicht universell. Ein Platindraht ist polarisierbar und hält kein festes Potential, taugt somit nicht als Referenz. Die Normalwasserstoffelektrode ist zwar der Nullpunkt der Spannungsreihe, im Laborbetrieb mit Wasserstoffgas und platiniertem Blech aber unpraktisch — deshalb Ag/AgCl oder Kalomel. Und Cr⁶⁺ lässt sich bei +1,5 V nicht bestimmen: eine Reduktion braucht ein Potential negativer als E° = +1,33 V, nicht positiver.",
       "examiner": "lieberzeit"
@@ -490,13 +990,644 @@
       "question": "Die allgemeine Reaktionsgleichung für einen 1-Elektronen-Reduktionsprozess in der Voltammetrie ist:",
       "options": [
         "Ox + 2e⁻ → Red",
-        "Ox + e⁻ → Red",
         "Red → Ox + e⁻",
+        "Ox + e⁻ → Red",
         "Red + e⁻ → Ox"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Allgemeine Reduktion: Ox + ne⁻ → Red. Für n=1: Ox + e⁻ → Red. An der Kathode: Reduktion (Elektronen aufnehmen). An der Anode: Oxidation (Red → Ox + ne⁻).",
       "examiner": "lieberzeit"
+    },
+    {
+      "id": "L013",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Ein Photometer liefert für die Blindprobe 10,50 V, für die Probe (0,15 mmol/L, d = 0,2 cm) 3,15 V. Berechnen Sie die Transmission in %.",
+      "correct": 30,
+      "explanation": "T = I/I₀ = 3,15 V / 10,50 V = 0,300 = 30,0 %. Der Detektor ist linear in der Lichtintensität, die Spannung ist ihr also proportional — Konzentration und Schichtdicke werden für die Transmission nicht gebraucht.",
+      "tolerance": 0.5,
+      "unit": "%"
+    },
+    {
+      "id": "L014",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Blindprobe 10,50 V, Probe (0,15 mmol/L, d = 0,2 cm) 3,15 V. Berechnen Sie die Absorption A.",
+      "correct": 0.523,
+      "explanation": "A = −log(T) = −log(0,300) = 0,523. Gleichwertig: A = log(I₀/I) = log(10,50/3,15) = log(3,333) = 0,523. Eine Absorption von 0,3 entspricht einer Transmission von 50 %, eine von 1 genau 10 %.",
+      "tolerance": 0.01,
+      "unit": "—"
+    },
+    {
+      "id": "L015",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 4,
+      "type": "numeric",
+      "question": "Blindprobe 10,50 V, Probe (c = 0,15 mmol/L, d = 0,2 cm) 3,15 V. Berechnen Sie den molaren Extinktionskoeffizienten ε in L/(mol·cm).",
+      "correct": 17430,
+      "explanation": "Aus A = 0,523 folgt ε = A/(c·d). Die Konzentration muss in mol/L stehen: 0,15 mmol/L = 1,5·10⁻⁴ mol/L. ε = 0,523/(1,5·10⁻⁴ · 0,2) = 0,523/3,0·10⁻⁵ = 17430 L/(mol·cm). Wer mmol/L einsetzt, verfehlt das Ergebnis um den Faktor 1000.",
+      "tolerance": 250,
+      "unit": "L/(mol·cm)"
+    },
+    {
+      "id": "L016",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "02-lambert-beer",
+      "points": 2,
+      "type": "numeric",
+      "question": "Ein Farbstoff (M = 792,85 g/mol) liegt mit 35 mg/L vor und zeigt bei d = 1 cm die Absorption A = 0,8125. Berechnen Sie ε in L/(mol·cm).",
+      "correct": 18405,
+      "explanation": "Erst die Massenkonzentration in eine Stoffmengenkonzentration umrechnen: c = 0,035 g/L / 792,85 g/mol = 4,414·10⁻⁵ mol/L. Dann ε = A/(c·d) = 0,8125/(4,414·10⁻⁵ · 1) = 18405 L/(mol·cm). Die Umrechnung über die Molmasse ist der eigentliche Rechenschritt — Lambert-Beer selbst ist eine Zeile.",
+      "tolerance": 200,
+      "unit": "L/(mol·cm)"
+    },
+    {
+      "id": "L017",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 3,
+      "type": "numeric",
+      "question": "Standardaddition mit Fluoreszenz: 20 mL Fruchtsaft werden auf 100 mL verdünnt und ergeben 480 mV. Nach Zugabe von 10 mL Standard (50 mg/L), Gesamtvolumen 110 mL, werden 610 mV gemessen. Wie viel mg/L enthält der unverdünnte Saft?",
+      "correct": 62.8,
+      "explanation": "Zwei Verdünnungen nacheinander. In der ersten Messlösung ist c₁ = c_Saft · 20/100. Die Zugabe verdünnt sie ein zweites Mal: c₂ = (c₁·100 + 50·10)/110. Weil das Signal der Konzentration proportional ist, gilt 610/480 = c₂/c₁. Einsetzen: 610·110·c₁ = 480·(100·c₁ + 500), also 19100·c₁ = 240000 und c₁ = 12,6 mg/L. Rückgerechnet auf den Saft: c = 12,6 / 0,20 = 62,8 mg/L. Wer die Verdünnung durch die Zugabe übersieht, kommt auf einen deutlich zu kleinen Gehalt.",
+      "tolerance": 1.5,
+      "unit": "mg/L"
+    },
+    {
+      "id": "L018",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "numeric",
+      "question": "20 mL HCl (c = 0,05 mol/L) werden mit 20 mL NaOH (c = 0,03 mol/L) versetzt. Um wie viele mV ändert sich die Anzeige der Glaselektrode bei 25 °C? (Betrag angeben)",
+      "correct": 41.4,
+      "explanation": "Vorher: c(H⁺) = 0,05 mol/L, pH = 1,30. n(HCl) = 1,00 mmol, n(NaOH) = 0,60 mmol, es bleiben 0,40 mmol H⁺ in 40 mL, also c(H⁺) = 0,010 mol/L und pH = 2,00. ΔpH = 0,699, und die Glaselektrode liefert bei 25 °C 59,16 mV je pH-Einheit: ΔE = 0,699 · 59,16 = 41,4 mV. Die vollen 59,16 mV gäbe es nur bei einer Verzehnfachung der H⁺-Konzentration.",
+      "tolerance": 1,
+      "unit": "mV"
+    },
+    {
+      "id": "L019",
+      "source": "Variante-2026",
+      "examiner": "lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 3,
+      "type": "numeric",
+      "question": "Coulometrische Abscheidung von 350 mg Nickel aus einer Ni²⁺-Lösung (Ni²⁺ + 2e⁻ → Ni) bei I = 0,750 A. Wie lange dauert das in Minuten? (M(Ni) = 58,69 g/mol, F = 96485 C/mol)",
+      "correct": 25.6,
+      "explanation": "n(Ni) = 0,350 g / 58,69 g/mol = 5,963·10⁻³ mol. Je Nickelatom werden zwei Elektronen gebraucht: Q = z·n·F = 2 · 5,963·10⁻³ · 96485 = 1151 C. Aus Q = I·t folgt t = 1151/0,750 = 1534 s = 25,6 min. Wer die Ladungszahl z = 2 vergisst, halbiert die Zeit.",
+      "tolerance": 0.3,
+      "unit": "min"
+    },
+    {
+      "id": "L020",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 3,
+      "type": "mc-single",
+      "question": "An welchem Bauteil einer pH-Einstabmesskette entsteht das pH-abhängige Potential?",
+      "options": [
+        "An der Ag/AgCl-Ableitung im Innenpuffer",
+        "An der Glasmembran an der Spitze",
+        "Am Diaphragma zwischen Bezugsteil und Messlösung",
+        "Am Platindraht der Bezugselektrode"
+      ],
+      "correct": 1,
+      "explanation": "Die Quellschicht der Glasmembran tauscht H⁺ mit der Messlösung; die dabei aufgebaute Potentialdifferenz hängt von der H⁺-Aktivität außen ab, weil sie innen durch den Innenpuffer festgehalten wird. Die Ag/AgCl-Ableitung liefert nur ein konstantes Bezugspotential, das Diaphragma stellt den elektrischen Kontakt her, und ein Platindraht kommt in der Messkette gar nicht vor."
+    },
+    {
+      "id": "L021",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Wozu dient das Diaphragma einer pH-Einstabmesskette?",
+      "options": [
+        "Es hält die Glasmembran feucht",
+        "Es filtert Störionen aus der Messlösung",
+        "Es stellt den elektrolytischen Kontakt zwischen Brückenelektrolyt und Messlösung her",
+        "Es begrenzt den Stromfluss durch die Zelle auf wenige Mikroampere"
+      ],
+      "correct": 2,
+      "explanation": "Der Bezugsteil braucht eine leitende Verbindung zur Messlösung, ohne dass sich beide Lösungen vermischen. Genau das leistet das poröse Diaphragma: ein wenig KCl tritt aus, der Stromkreis schließt sich. Ist es verstopft oder eingetrocknet, driftet die Anzeige oder reagiert träge — die häufigste Störung im Alltag."
+    },
+    {
+      "id": "L022",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum wird als Brückenelektrolyt einer Bezugselektrode gesättigte KCl-Lösung mit Bodenkörper verwendet?",
+      "options": [
+        "Weil gesättigtes KCl die Glasmembran vor Alkalifehler schützt",
+        "Weil nur gesättigte Lösungen elektrisch leitfähig genug sind",
+        "Weil dadurch die Nernst-Steigung von 59,16 mV auf 60 mV steigt",
+        "Weil K⁺ und Cl⁻ nahezu gleiche Beweglichkeit haben und die Sättigung die Cl⁻-Aktivität konstant hält"
+      ],
+      "correct": 3,
+      "explanation": "Zwei Gründe fallen zusammen. Das Potential der Ag/AgCl-Elektrode hängt von der Chloridaktivität ab — der Bodenkörper hält sie über die Sättigung fest, auch wenn etwas Elektrolyt austritt. Und weil Kalium und Chlorid fast gleich schnell wandern, bleibt das Diffusionspotential am Diaphragma klein. Die Nernst-Steigung ist eine Naturkonstante bei gegebener Temperatur und lässt sich durch keinen Elektrolyten verändern."
+    },
+    {
+      "id": "L023",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Eine pH-Elektrode zeigt in stark alkalischer Lösung (pH > 12) zu niedrige Werte. Wie heißt dieser Fehler und woher kommt er?",
+      "options": [
+        "Säurefehler, die Membran wird durch H⁺ überladen",
+        "Asymmetriepotential, die Membran ist ungleichmäßig gequollen",
+        "Alkalifehler, Na⁺ wird neben H⁺ an der Membran ausgetauscht",
+        "Diffusionspotential, der Brückenelektrolyt tritt zu langsam aus"
+      ],
+      "correct": 2,
+      "explanation": "Bei sehr kleiner H⁺-Aktivität tragen auch Alkaliionen zum Membranpotential bei — die Elektrode „sieht\" mehr H⁺ als vorhanden und zeigt einen zu niedrigen pH. Spezialgläser verschieben den Fehler zu höherem pH, beseitigen ihn aber nicht. Der Säurefehler ist das Gegenstück bei pH < 1, das Asymmetriepotential ist die kleine Abweichung auch bei gleichem pH innen und außen, und das Diffusionspotential entsteht am Diaphragma."
+    },
+    {
+      "id": "L024",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Angaben zur Kalibrierung einer pH-Messkette sind richtig?",
+      "options": [
+        "Kalibriert wird mit mindestens zwei Puffern, die den Messbereich einschließen",
+        "Die Steigung einer intakten Elektrode liegt bei 25 °C nahe 59 mV je pH-Einheit",
+        "Eine einzelne Kalibrierung gilt unbegrenzt, solange die Elektrode feucht bleibt",
+        "Der Nullpunkt liegt üblicherweise nahe pH 7, weil dort innen und außen gleiche H⁺-Aktivität herrscht"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Zwei Punkte legen Nullpunkt und Steigung fest — deshalb die Zweipunktkalibrierung mit Puffern, die den Messbereich klammern. Eine gesunde Elektrode erreicht 95 bis 105 % der theoretischen Steigung von 59,16 mV, und der Nullpunkt liegt beim pH des Innenpuffers, meist nahe 7. Unbegrenzt gilt keine Kalibrierung: Membran und Diaphragma altern, deshalb wird arbeitstäglich nachkalibriert."
+    },
+    {
+      "id": "L025",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum braucht die Potentiometrie ein Voltmeter mit einem Eingangswiderstand über 10¹² Ω?",
+      "options": [
+        "Damit die Anzeige schneller einschwingt",
+        "Weil sonst der Alkalifehler zunimmt",
+        "Weil das Diaphragma nur geringe Ströme durchlässt",
+        "Weil die Glaselektrode selbst mehrere hundert Megaohm Innenwiderstand hat und sonst ein Spannungsteiler entsteht"
+      ],
+      "correct": 3,
+      "explanation": "Die dünne Glasmembran ist ein sehr schlechter Leiter. Ihr Innenwiderstand liegt bei 10⁸ Ω und darüber. Zieht das Messgerät nennenswerten Strom, fällt ein großer Teil der Spannung an der Elektrode selbst ab und der angezeigte Wert ist zu klein. Nur ein Eingangswiderstand, der um Größenordnungen darüber liegt, macht die Messung praktisch stromlos."
+    },
+    {
+      "id": "L026",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "07-potentiometrie-nernst",
+      "points": 3,
+      "type": "order",
+      "question": "Ordnen Sie die Bauteile einer pH-Einstabmesskette vom Inneren der Messkette bis zur Messlösung.",
+      "options": [
+        "Diaphragma",
+        "Innenpuffer",
+        "Ag/AgCl-Ableitung",
+        "Glasmembran"
+      ],
+      "correct": [
+        2,
+        1,
+        3,
+        0
+      ],
+      "explanation": "Innen sitzt die Ag/AgCl-Ableitung, sie taucht in den Innenpuffer, dieser steht hinter der Glasmembran, an der das pH-abhängige Potential entsteht. Das Diaphragma liegt am weitesten außen: es ist der letzte Kontaktpunkt, über den der Bezugsteil die Messlösung erreicht. Wer es weiter vorn einordnet, verwechselt Messkette und Bezugssystem."
+    },
+    {
+      "id": "L027",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Welche Aufgabe hat die Gegenelektrode in einer Dreielektrodenanordnung?",
+      "options": [
+        "Sie legt das Bezugspotential fest",
+        "Sie trägt den Strom, damit die Referenzelektrode stromlos bleibt",
+        "An ihr läuft die zu untersuchende Reaktion ab",
+        "Sie misst den Widerstand des Elektrolyten"
+      ],
+      "correct": 1,
+      "explanation": "Fließt Strom durch eine Referenzelektrode, verändert sich ihr Potential und der Bezugspunkt wandert. Die Dreielektrodenanordnung trennt deshalb die Aufgaben: die Referenz gibt stromlos das Potential vor, die Gegenelektrode schließt den Stromkreis, und die zu untersuchende Reaktion läuft an der Arbeitselektrode. Der Potentiostat regelt die Spannung so, dass das Potential der Arbeitselektrode gegen die Referenz stimmt."
+    },
+    {
+      "id": "L028",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Woran erkennt man in einer Skizze eine Zweielektrodenzelle gegenüber einer Dreielektrodenanordnung?",
+      "options": [
+        "An der zusätzlichen Referenzelektrode und dem Potentiostaten",
+        "Am hochohmigen Voltmeter zwischen den Elektroden",
+        "Am Rührer im Elektrolyten",
+        "An der Glasmembran an der Arbeitselektrode"
+      ],
+      "correct": 0,
+      "explanation": "Die Zweielektrodenzelle hat nur Arbeits- und Gegenelektrode; Potentialvorgabe und Stromfluss laufen über denselben Pfad, was bei größeren Strömen zu Fehlern führt. Erst die dritte, stromlose Referenzelektrode am Potentiostaten macht das Potential der Arbeitselektrode kontrollierbar. Ein hochohmiges Voltmeter kennzeichnet die stromlose Potentiometrie, nicht die Voltammetrie."
+    },
+    {
+      "id": "L029",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "09-chemosensoren",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zum Aufbau eines amperometrischen Glucosesensors treffen zu?",
+      "options": [
+        "Die Glucoseoxidase sitzt in einer Membran unmittelbar auf der Arbeitselektrode",
+        "Gemessen wird der Strom bei fest vorgegebenem Potential",
+        "Die äußere Deckmembran begrenzt die Diffusion und hält den Messbereich linear",
+        "Das Enzym wird bei jeder Messung verbraucht und muss nachdosiert werden"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Der Sensor ist ein Schichtaufbau: Enzymschicht direkt auf der Elektrode, darüber eine Deckmembran, die die Glucosezufuhr drosselt — so bleibt die Anzeige auch bei hohen Konzentrationen linear und der Sensor wird nicht enzymlimitiert. Gemessen wird amperometrisch bei konstantem Potential der Strom des entstehenden Wasserstoffperoxids. Ein Enzym ist ein Katalysator und wird dabei nicht verbraucht."
+    },
+    {
+      "id": "L030",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "09-chemosensoren",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Welches Wandlerprinzip liegt einer Quarzmikrowaage (QCM) zugrunde?",
+      "options": [
+        "Die Änderung der Resonanzfrequenz eines schwingenden Quarzes bei Massebelegung",
+        "Die Änderung der elektrischen Leitfähigkeit einer Beschichtung",
+        "Die Änderung des Brechungsindex an einer Goldschicht",
+        "Die Änderung des Elektrodenpotentials bei Ionenanlagerung"
+      ],
+      "correct": 0,
+      "explanation": "Der Schwingquarz reagiert auf angelagerte Masse mit einer messbaren Frequenzabnahme (Sauerbrey-Gleichung), also ein massensensitiver Wandler. Der Brechungsindex an einer Goldschicht gehört zur Oberflächenplasmonenresonanz, die Potentialänderung zur Potentiometrie und die Leitfähigkeitsänderung zum Chemowiderstand."
+    },
+    {
+      "id": "L031",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 3,
+      "type": "order",
+      "question": "Ordnen Sie die Bauteile eines Einstrahl-Photometers in der Reihenfolge, die das Licht durchläuft.",
+      "options": [
+        "Küvette mit Probe",
+        "Lichtquelle",
+        "Detektor",
+        "Monochromator"
+      ],
+      "correct": [
+        1,
+        3,
+        0,
+        2
+      ],
+      "explanation": "Licht entsteht in der Lampe, wird im Monochromator auf eine Wellenlänge eingeengt, durchstrahlt dann erst die Probe und trifft zuletzt auf den Detektor. Die Reihenfolge Monochromator vor Küvette ist kein Zufall: nur monochromatisches Licht erfüllt Lambert-Beer, und die Probe wird nicht unnötig mit dem gesamten Spektrum belastet."
+    },
+    {
+      "id": "L032",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Welche Lichtquelle wird in einem UV/Vis-Spektrometer für den UV-Bereich eingesetzt?",
+      "options": [
+        "Wolfram-Halogenlampe",
+        "Hohlkathodenlampe",
+        "Deuteriumlampe",
+        "Nernst-Stift"
+      ],
+      "correct": 2,
+      "explanation": "Die Deuteriumlampe liefert ein Kontinuum von etwa 190 bis 400 nm, die Wolframlampe deckt den sichtbaren und nahen infraroten Bereich ab — deshalb sitzen in einem UV/Vis-Gerät beide, und das Gerät schaltet um. Die Hohlkathodenlampe gehört zur AAS und strahlt Linien eines Elements, der Nernst-Stift ist eine IR-Quelle."
+    },
+    {
+      "id": "L033",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Wodurch unterscheidet sich ein Zweistrahl- von einem Einstrahlphotometer im Aufbau?",
+      "options": [
+        "Es besitzt zwei Lichtquellen für UV und Vis",
+        "Es besitzt zwei Monochromatoren hintereinander",
+        "Es misst mit zwei Wellenlängen gleichzeitig",
+        "Ein Strahlteiler führt einen Referenzstrahl an der Probe vorbei durch eine Vergleichsküvette"
+      ],
+      "correct": 3,
+      "explanation": "Der Strahlteiler erzeugt aus einem Strahl zwei: einer durchläuft die Probe, der andere die Referenz. Gemessen wird das Verhältnis, so dass Schwankungen der Lampenintensität und Drift des Detektors herausfallen — der eigentliche Vorteil. Zwei Monochromatoren hintereinander kennzeichnen das Fluoreszenzspektrometer, zwei Lampen hat auch ein Einstrahlgerät."
+    },
+    {
+      "id": "L034",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum steht der Detektor eines Fluoreszenzspektrometers im 90°-Winkel zum Anregungsstrahl?",
+      "options": [
+        "Weil die Fluoreszenz bevorzugt seitlich abgestrahlt wird",
+        "Weil so zwei Proben gleichzeitig gemessen werden können",
+        "Damit das durchgehende Anregungslicht nicht auf den Detektor fällt",
+        "Weil der Emissionsmonochromator sonst nicht passt"
+      ],
+      "correct": 2,
+      "explanation": "Fluoreszenz wird in alle Raumrichtungen abgestrahlt. Die 90°-Anordnung nutzt das aus, um den weitaus stärkeren Anregungsstrahl am Detektor vorbeizuführen — sonst überstrahlt er das schwache Emissionssignal. Genau dieser Kunstgriff macht die Fluoreszenz so empfindlich: gemessen wird gegen einen dunklen Hintergrund, nicht als kleine Differenz zweier großer Intensitäten."
+    },
+    {
+      "id": "L035",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Bauteile besitzt ein Fluoreszenzspektrometer, die einem einfachen Absorptionsphotometer fehlen?",
+      "options": [
+        "Ein zweiter Monochromator für die Emissionsseite",
+        "Eine allseitig durchsichtige Küvette",
+        "Eine Hohlkathodenlampe",
+        "Eine Detektoranordnung quer zum Anregungsstrahl"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Das Fluoreszenzgerät braucht zwei Monochromatoren — einen für die Anregungs-, einen für die Emissionswellenlänge —, eine Küvette, die auch seitlich durchsichtig ist (im Photometer genügen zwei polierte Fenster), und den quer stehenden Detektor. Die Hohlkathodenlampe gehört zur Atomabsorption und kommt hier nicht vor."
+    },
+    {
+      "id": "L036",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welches Bauteil ersetzt im FT-IR-Spektrometer den Monochromator?",
+      "options": [
+        "Ein Michelson-Interferometer mit beweglichem Spiegel",
+        "Ein Notch-Filter",
+        "Ein Diodenarray",
+        "Ein Echelle-Gitter"
+      ],
+      "correct": 0,
+      "explanation": "Beim FT-IR läuft ein Spiegel des Interferometers, und der Detektor nimmt ein Interferogramm über die Zeit auf; die Fourier-Transformation macht daraus das Spektrum. Weil alle Frequenzen gleichzeitig gemessen werden, ist das Gerät schnell und lichtstark (Fellgett- und Jacquinot-Vorteil). Der Notch-Filter gehört zum Raman-Gerät, das Echelle-Gitter zur ICP-OES."
+    },
+    {
+      "id": "L037",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welches Bauteil unterscheidet ein Raman-Spektrometer am deutlichsten von einem FT-IR-Gerät?",
+      "options": [
+        "Der Strahlteiler",
+        "Der Nernst-Stift als Quelle",
+        "Der Laser als monochromatische Quelle mit nachgeschaltetem Notch-Filter",
+        "Die KBr-Presse für die Probenvorbereitung"
+      ],
+      "correct": 2,
+      "explanation": "Raman misst die Frequenzverschiebung des gestreuten Lichts gegenüber der Anregung — das setzt eine Quelle mit genau einer Frequenz voraus, also einen Laser. Der Notch- oder Kantenfilter hält anschließend die um viele Größenordnungen stärkere Rayleigh-Streuung zurück. FT-IR arbeitet mit einer breitbandigen Quelle, Strahlteiler und Interferometer; die KBr-Presse ist reine Probenvorbereitung für IR."
+    },
+    {
+      "id": "L038",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum lassen sich wässrige Proben mit Raman gut, mit IR dagegen schlecht messen?",
+      "options": [
+        "Weil Wasser Laserlicht nicht streut",
+        "Weil Wasser stark IR-absorbiert, aber nur schwach Raman-streut",
+        "Weil Wasser den Notch-Filter blockiert",
+        "Weil IR-Küvetten immer aus NaCl bestehen müssen"
+      ],
+      "correct": 1,
+      "explanation": "Die stark polare O–H-Bindung erzeugt intensive IR-Banden, die den interessierenden Bereich zudecken. Für Raman zählt dagegen die Änderung der Polarisierbarkeit, und die ist bei Wasser gering — das Lösungsmittel bleibt im Spektrum unauffällig. Deshalb ist Raman die Methode der Wahl für wässrige und biologische Proben."
+    },
+    {
+      "id": "L039",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über den Aufbau eines FT-IR-Spektrometers treffen zu?",
+      "options": [
+        "Der bewegliche Spiegel erzeugt einen Gangunterschied zwischen den Teilstrahlen",
+        "Der Detektor nimmt ein Interferogramm auf, das rechnerisch in ein Spektrum überführt wird",
+        "Ein He-Ne-Laser dient der genauen Positionsbestimmung des Spiegels",
+        "Vor der Probe sitzt ein Gitter, das die Wellenlänge auswählt"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Strahlteiler, fester und beweglicher Spiegel bilden das Michelson-Interferometer; aus dem Gangunterschied entsteht das Interferogramm, das die Fourier-Transformation in ein Spektrum umrechnet. Der He-Ne-Laser liefert den Maßstab für die Spiegelposition und damit die hohe Wellenzahlgenauigkeit. Ein Gitter gibt es gerade nicht — es zu ersetzen ist der Sinn des Aufbaus."
+    },
+    {
+      "id": "L040",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welches Bauteil erzeugt in einem RFA-Gerät die anregende Strahlung?",
+      "options": [
+        "Ein Synchrotron",
+        "Eine Röntgenröhre mit Anode aus Rhodium oder Wolfram",
+        "Ein Halbleiterdetektor im Sperrbetrieb",
+        "Ein Analysatorkristall"
+      ],
+      "correct": 1,
+      "explanation": "In der Röntgenröhre treffen beschleunigte Elektronen auf die Anode; es entstehen Bremsstrahlung und die charakteristischen Linien des Anodenmaterials. Diese Strahlung schlägt in der Probe kernnahe Elektronen heraus, und beim Auffüllen der Lücken sendet die Probe ihre eigene, elementspezifische Fluoreszenzstrahlung aus. Der Analysatorkristall zerlegt sie erst danach, der Halbleiterdetektor zählt sie."
+    },
+    {
+      "id": "L041",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Wozu dient der Analysatorkristall in einem wellenlängendispersiven RFA-Spektrometer?",
+      "options": [
+        "Er filtert die Bremsstrahlung der Röhre heraus",
+        "Er kühlt den Detektor auf Stickstofftemperatur",
+        "Er zerlegt die Fluoreszenzstrahlung nach der Bragg-Gleichung nach Wellenlängen",
+        "Er hält die Probe im festen Abstand zur Röhre"
+      ],
+      "correct": 2,
+      "explanation": "Der Kristall wirkt als Gitter für Röntgenstrahlung: bei gegebenem Netzebenenabstand d wird unter dem Winkel θ genau die Wellenlänge reflektiert, für die nλ = 2d·sinθ gilt. Dreht man Kristall und Detektor, fährt man das Spektrum ab. Energiedispersive Geräte verzichten darauf und trennen stattdessen elektronisch im Detektor."
+    },
+    {
+      "id": "L042",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum arbeitet ein ESCA/XPS-Gerät im Ultrahochvakuum?",
+      "options": [
+        "Damit die Röntgenröhre nicht überhitzt",
+        "Damit der Analysatorkristall nicht beschlägt",
+        "Damit die Probe nicht elektrisch auflädt",
+        "Damit die austretenden Photoelektronen den Analysator ohne Stöße erreichen"
+      ],
+      "correct": 3,
+      "explanation": "Gemessen wird die kinetische Energie der Photoelektronen. Jeder Stoß mit einem Gasmolekül verfälscht sie, und die mittlere freie Weglänge muss deshalb größer sein als der Weg zum Analysator — das verlangt Drücke um 10⁻⁹ mbar. Zugleich bleibt die Oberfläche sauber, was bei einer Informationstiefe von wenigen Nanometern entscheidend ist."
+    },
+    {
+      "id": "L043",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "05-roentgenspektroskopie",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zum Aufbau der Röntgenbeugung (XRD) treffen zu?",
+      "options": [
+        "Gemessen wird die an Netzebenen gebeugte Strahlung als Funktion des Winkels",
+        "Probe und Detektor bewegen sich im Verhältnis θ zu 2θ",
+        "Die Methode bestimmt Kristallphasen, nicht Elementgehalte",
+        "Die Anregung erfolgt mit einem Laser"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Beim Diffraktometer wandert der Detektor doppelt so schnell wie die Probe gedreht wird, damit Einfalls- und Ausfallswinkel gleich bleiben. Aus den Winkeln der Beugungsreflexe folgen über die Bragg-Gleichung die Netzebenenabstände und damit die kristalline Phase — eine Aussage über die Struktur, nicht über die Elementzusammensetzung. Angeregt wird mit Röntgenstrahlung, nicht mit einem Laser."
+    },
+    {
+      "id": "L044",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welches Bauteil fehlt einem Chemolumineszenz-Detektor im Vergleich zum Fluoreszenzspektrometer?",
+      "options": [
+        "Die Lichtquelle samt Anregungsmonochromator",
+        "Der Detektor",
+        "Die Probenkammer",
+        "Der Emissionsmonochromator"
+      ],
+      "correct": 0,
+      "explanation": "Bei der Chemolumineszenz entsteht das Licht in der Reaktion selbst, angeregt wird chemisch statt optisch. Der Aufbau schrumpft damit auf Mischkammer und Detektor. Genau daraus folgt die hohe Empfindlichkeit: ohne Anregungslicht gibt es keinen Streulichtuntergrund, gegen den das Signal anlaufen müsste."
+    },
+    {
+      "id": "L045",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "03-fluoreszenz-lumineszenz",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Was beschreibt die Stokes-Verschiebung?",
+      "options": [
+        "Den Abstand zwischen Anregungs- und Emissionsmaximum zu längeren Wellenlängen",
+        "Die Abnahme der Fluoreszenz mit steigender Temperatur",
+        "Den Verlust an Intensität durch Selbstabsorption",
+        "Die Verschiebung der Anzeige durch Streulicht"
+      ],
+      "correct": 0,
+      "explanation": "Nach der Anregung fällt das Molekül strahlungslos auf den untersten Schwingungszustand des angeregten Niveaus; erst von dort erfolgt die Emission. Der verlorene Anteil fehlt dem Photon, das Emissionslicht ist deshalb energieärmer und langwelliger. Das trennt Anregung und Emission spektral und macht die 90°-Anordnung überhaupt erst auswertbar."
+    },
+    {
+      "id": "L046",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Eine Schwingung ist IR-aktiv, wenn sich bei ihr...",
+      "options": [
+        "die Polarisierbarkeit ändert",
+        "die Bindungslänge ändert",
+        "das Dipolmoment ändert",
+        "die Masse der Atome ändert"
+      ],
+      "correct": 2,
+      "explanation": "Infrarotlicht koppelt an das schwingende Dipolmoment; ohne dessen Änderung gibt es keine Absorption. Raman verlangt dagegen eine Änderung der Polarisierbarkeit. An zentrosymmetrischen Molekülen schließen sich beide Bedingungen gegenseitig aus — das Alternativverbot, weshalb IR und Raman einander ergänzen."
+    },
+    {
+      "id": "L047",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "04-ftir-raman",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Wie wird eine feste Probe für eine klassische IR-Transmissionsmessung vorbereitet?",
+      "options": [
+        "Sie wird in Wasser gelöst",
+        "Sie wird auf einen Objektträger aus Quarzglas gestrichen",
+        "Sie wird in einer Küvette aus Borosilikatglas vermessen",
+        "Sie wird mit KBr verrieben und zu einer Tablette gepresst"
+      ],
+      "correct": 3,
+      "explanation": "Kaliumbromid ist im mittleren Infrarot durchlässig und lässt sich unter Druck zu einem klaren Pressling verarbeiten. Glas und Quarz absorbieren dort vollständig und scheiden als Fenstermaterial aus, Wasser überdeckt mit seinen O–H-Banden den interessierenden Bereich. Heute nimmt man dafür meist die ATR-Einheit, die ohne Probenvorbereitung auskommt."
+    },
+    {
+      "id": "L048",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "08-voltammetrie-coulometrie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Worauf beruht die Anreicherung bei der Stripping-Voltammetrie?",
+      "options": [
+        "Auf der Verdampfung des Lösungsmittels vor der Messung",
+        "Auf einer elektrolytischen Abscheidung des Analyten auf der Arbeitselektrode vor dem Messschritt",
+        "Auf einer Extraktion in ein organisches Lösungsmittel",
+        "Auf der Fällung des Analyten als schwerlösliches Salz"
+      ],
+      "correct": 1,
+      "explanation": "In der Anreicherungsphase wird bei festem Potential über Minuten abgeschieden, was in der Lösung nur in Spuren vorliegt. Erst danach löst ein Potentialdurchlauf das Abgeschiedene wieder auf, und der dabei fließende Strom wird gemessen. Diese Vorstufe verschiebt die Nachweisgrenze um Größenordnungen — die Methode erreicht damit den ng/L-Bereich."
+    },
+    {
+      "id": "L049",
+      "source": "Uebung-2026",
+      "examiner": "lieberzeit",
+      "topicId": "09-chemosensoren",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Auf welcher Größe beruht die Anzeige eines optischen Chemosensors mit Indikatorschicht?",
+      "options": [
+        "Auf der Änderung der Resonanzfrequenz",
+        "Auf dem fließenden Strom bei festem Potential",
+        "Auf der Änderung von Absorption oder Fluoreszenz der Schicht",
+        "Auf der Änderung des Elektrodenpotentials"
+      ],
+      "correct": 2,
+      "explanation": "Die Indikatorschicht ändert beim Kontakt mit dem Analyten ihre optischen Eigenschaften; eine Lichtleitfaser bringt das Licht hin und das veränderte Signal zurück. Der Vorteil ist die galvanische Trennung — solche Sensoren stören elektrisch nicht und lassen sich über weite Strecken abfragen."
     },
     {
       "id": "M001",
@@ -506,7 +1637,7 @@
       "type": "numeric",
       "question": "Fluoreszenz-Standardaddition (Chinin in Tonic Water): 25 mL Tonic Water werden auf 100 mL verdünnt und ergeben 553 mV. Dann werden 10 mL Standard (35 mg/L Chinin) zugegeben, Gesamtvolumen 110 mL, und es werden 661 mV gemessen. Wie viel mg/L Chinin enthält das unverdünnte Tonic Water?",
       "correct": 44.5,
-      "tolerance": 1.0,
+      "tolerance": 1,
       "unit": "mg/L",
       "explanation": "Zwei Verdünnungen nacheinander, beide müssen mitgerechnet werden.\nIn der ersten Messlösung ist c₁ = c_Tonic · 25/100. Die Zugabe verdünnt diese Lösung noch einmal: c₂ = (c₁ · 100 + 35 · 10)/110.\nWeil das Signal der Konzentration proportional ist, gilt 661/553 = c₂/c₁. Einsetzen und auflösen: 661 · 27,5 · c_Tonic = 553 · (25 · c_Tonic + 350), also 4352,5 · c_Tonic = 193550 und c_Tonic = 44,5 mg/L.\nWer die Verdünnung durch die Zugabe vergisst und nur c = 3,5 · 553/108 rechnet, kommt auf 17,9 mg/L für die Messlösung — und damit auf einen falschen Gehalt im Tonic Water.",
       "examiner": "lieberzeit"
@@ -519,12 +1650,12 @@
       "type": "mc-single",
       "question": "Warum ist N₂ IR-inaktiv aber Raman-aktiv?",
       "options": [
-        "N₂ hat kein permanentes Dipolmoment, kann aber polarisiert werden",
         "N₂ absorbiert nur im UV-Bereich",
         "N₂ hat zu viele Elektronen",
-        "N₂ ist gasförmig"
+        "N₂ ist gasförmig",
+        "N₂ hat kein permanentes Dipolmoment, kann aber polarisiert werden"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "IR-Regel: Dipolmoment muss sich ändern → N₂ (homonuklear, kein Dipol, symmetrische Schwingung) → IR-inaktiv. Raman-Regel: Polarisierbarkeit muss sich ändern → N₂ Streckschwingung ändert die Polarisierbarkeit → Raman-aktiv. Komplementarität!",
       "examiner": "lieberzeit"
     },
@@ -549,12 +1680,12 @@
       "type": "mc-single",
       "question": "Definieren Sie 'Kalibrierung/Kalibration':",
       "options": [
-        "Amtliche Überprüfung eines Messgeräts",
         "Feststellung des Zusammenhangs zwischen Messgröße (Signal) und Konzentration des Analyten mittels Standards",
+        "Amtliche Überprüfung eines Messgeräts",
         "Reinigung des Messgeräts vor der Messung",
         "Berechnung des Mittelwerts mehrerer Messungen"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Kalibrierung: Zusammenhang Signal ↔ Konzentration durch Standards bekannter Konzentration herstellen. Ergebnis: Kalibriergerade y = m×c + b. Eichung = amtliche/gesetzliche Kalibrierung (Handelsmessgeräte).",
       "examiner": "gerner"
     },
@@ -566,12 +1697,12 @@
       "type": "mc-single",
       "question": "Berechnen Sie die Wellenlänge einer Verbindung mit Absorptionsmaximum bei E=2,5eV. (h=6,626×10⁻³⁴J·s, c=3×10⁸m/s, 1eV=1,6022×10⁻¹⁹J)",
       "options": [
-        "496 nm",
         "350 nm",
+        "496 nm",
         "620 nm",
         "248 nm"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "E=h·c/λ → λ=h·c/E. E=2,5×1,6022×10⁻¹⁹=4,006×10⁻¹⁹J. λ=6,626×10⁻³⁴×3×10⁸/4,006×10⁻¹⁹=1,988×10⁻²⁵/4,006×10⁻¹⁹=4,96×10⁻⁷m=496nm. Diese Verbindung absorbiert bei 496nm (grün) → erscheint rot/magenta.",
       "examiner": "lieberzeit"
     },
@@ -585,11 +1716,11 @@
       "question": "Warum liefert die Röntgenfluoreszenzanalyse (RFA) elementspezifische Linien, deren Energie kaum von der chemischen Bindung abhängt?",
       "options": [
         "Weil nur Valenzelektronen beteiligt sind, die in allen Verbindungen gleich gebunden sind",
-        "Weil die Übergänge zwischen kernnahen Schalen stattfinden, deren Energien von der Bindungssituation fast unbeeinflusst bleiben",
         "Weil die Anregung mit monochromatischem Licht erfolgt",
+        "Weil die Übergänge zwischen kernnahen Schalen stattfinden, deren Energien von der Bindungssituation fast unbeeinflusst bleiben",
         "Weil die Probe vorher atomisiert wird"
       ],
-      "correct": 1,
+      "correct": 2,
       "explanation": "Bei der RFA wird ein Elektron aus einer inneren Schale (K oder L) herausgeschlagen, ein äußeres Elektron fällt nach. Diese Schalen liegen tief im Kernpotential und spüren von der chemischen Umgebung praktisch nichts. Deshalb ist die RFA eine Elementanalyse und keine Strukturanalyse — anders als ESCA, wo genau diese kleinen Verschiebungen ausgewertet werden."
     },
     {
@@ -601,15 +1732,15 @@
       "type": "mc-multi",
       "question": "Welche Aussagen über ESCA/XPS treffen zu?",
       "options": [
+        "Die Methode benötigt keine Vakuumbedingungen",
         "Gemessen wird die kinetische Energie herausgelöster Photoelektronen",
         "Die Bindungsenergie verschiebt sich mit dem Oxidationszustand (chemische Verschiebung)",
-        "Die Methode ist oberflächenempfindlich, typisch wenige Nanometer Informationstiefe",
-        "Die Methode benötigt keine Vakuumbedingungen"
+        "Die Methode ist oberflächenempfindlich, typisch wenige Nanometer Informationstiefe"
       ],
       "correct": [
-        0,
         1,
-        2
+        2,
+        3
       ],
       "explanation": "ESCA misst die kinetische Energie der durch Röntgenstrahlung ausgelösten Photoelektronen; daraus folgt die Bindungsenergie. Deren chemische Verschiebung verrät den Oxidationszustand. Weil Elektronen in Materie nur wenige Nanometer weit kommen, ist die Methode oberflächenempfindlich — und genau deshalb ist Ultrahochvakuum zwingend, sonst würden die Elektronen mit Gasmolekülen stoßen."
     },
@@ -623,11 +1754,11 @@
       "question": "Ein Pulverdiffraktogramm zeigt einen Reflex bei 2θ = 30°. Mit Cu-Kα-Strahlung (λ = 154 pm) folgt daraus welcher Netzebenenabstand?",
       "options": [
         "154 pm",
-        "298 pm",
         "77 pm",
-        "596 pm"
+        "596 pm",
+        "298 pm"
       ],
-      "correct": 1,
+      "correct": 3,
       "explanation": "Bragg: nλ = 2d·sin θ. Mit n = 1, θ = 15° ist sin θ = 0,259, also d = 154/(2·0,259) pm = 298 pm. Häufigster Fehler: 2θ statt θ in den Sinus einsetzen — dann kommt etwa die Hälfte heraus."
     },
     {
@@ -652,12 +1783,12 @@
       "type": "mc-single",
       "question": "Warum arbeitet die Potentiometrie stromlos, also mit einem sehr hochohmigen Voltmeter?",
       "options": [
-        "Damit die Elektrode nicht korrodiert",
         "Weil fließender Strom die Zusammensetzung an der Elektrode verändert und das gemessene Gleichgewichtspotential verfälscht",
+        "Damit die Elektrode nicht korrodiert",
         "Weil sonst der Innenwiderstand der Lösung mitgemessen wird",
         "Weil die Nernst-Gleichung nur für Wechselstrom gilt"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "Gemessen wird das Gleichgewichtspotential. Sobald nennenswert Strom fließt, läuft an der Elektrode Elektrolyse ab, die Konzentrationen an der Phasengrenze verschieben sich und das Potential wandert. Deshalb Voltmeter mit Eingangswiderstand über 10¹² Ω, besonders bei der hochohmigen Glaselektrode."
     },
     {
@@ -669,16 +1800,16 @@
       "type": "order",
       "question": "Ordnen Sie nach steigendem Standardpotential E° (negativstes zuerst).",
       "options": [
-        "Zn²⁺/Zn (−0,76 V)",
         "2H⁺/H₂ (0,00 V)",
         "Cu²⁺/Cu (+0,34 V)",
-        "Ag⁺/Ag (+0,80 V)"
+        "Ag⁺/Ag (+0,80 V)",
+        "Zn²⁺/Zn (−0,76 V)"
       ],
       "correct": [
+        3,
         0,
         1,
-        2,
-        3
+        2
       ],
       "explanation": "Die Reihenfolge der Standardpotentiale ist zugleich die Spannungsreihe. Je negativer E°, desto stärker das Reduktionsmittel: Zink gibt Elektronen bereitwillig ab und löst sich in Säure, Silber nicht. Aus zwei Halbzellen ergibt sich die Zellspannung als Differenz, hier Zn/Ag also 1,56 V."
     },
@@ -708,17 +1839,17 @@
       "type": "mc-multi",
       "question": "Welche Aussagen über ICP-OES treffen zu?",
       "options": [
-        "Das Argonplasma erreicht 6000 bis 10000 K",
         "Über 70 Elemente lassen sich in einem Durchgang bestimmen",
         "Die hohe Temperatur verringert chemische Interferenzen",
-        "Die Nachweisgrenzen liegen unter denen der ICP-MS"
+        "Die Nachweisgrenzen liegen unter denen der ICP-MS",
+        "Das Argonplasma erreicht 6000 bis 10000 K"
       ],
       "correct": [
         0,
         1,
-        2
+        3
       ],
-      "explanation": "Die ersten drei Punkte sind die Stärken des ICP: sehr hohe Temperatur, vollständige Atomisierung, Multielementfähigkeit. Bei den Nachweisgrenzen liegt jedoch die ICP-MS vorn (ng/L bis pg/L gegen µg/L), weil sie Ionen zählt statt Licht zu messen."
+      "explanation": "Die Stärken des ICP sind die sehr hohe Temperatur (6000 bis 10000 K), die daraus folgende vollständige Atomisierung mit geringen chemischen Interferenzen, und die Multielementfähigkeit von über 70 Elementen in einem Durchgang. Bei den Nachweisgrenzen liegt jedoch die ICP-MS vorn (ng/L bis pg/L gegen µg/L), weil sie Ionen zählt statt Licht zu messen."
     },
     {
       "id": "U009",
@@ -732,6 +1863,121 @@
       "explanation": "Im linearen Bereich ist A proportional zu c, also c = 5,0 · 0,160/0,250 = 3,2 mg/L. Voraussetzung ist, dass beide Messwerte im linearen Bereich liegen und dieselbe Matrix vorliegt — sonst wäre Standardaddition der richtige Weg.",
       "tolerance": 0.05,
       "unit": "mg/L"
+    },
+    {
+      "id": "U010",
+      "source": "Variante-2026",
+      "examiner": "uebung",
+      "topicId": "06-elektrochemische-grundlagen",
+      "points": 4,
+      "type": "numeric",
+      "question": "Eine Halbzelle Fe³⁺/Fe²⁺ (E° = +0,771 V, n = 1) enthält das Konzentrationsverhältnis [Red]/[Ox] = 50. Welches Potential stellt sich bei 25 °C ein?",
+      "correct": 0.671,
+      "explanation": "E = E° − (0,05916/n)·log([Red]/[Ox]) = 0,771 − 0,05916·log(50) = 0,771 − 0,05916·1,699 = 0,771 − 0,101 = 0,671 V. Ein Überschuss der reduzierten Form drückt das Potential, und zwar um 59,16/n Millivolt je Zehnerpotenz — bei n = 1 also fast doppelt so stark wie beim Kupferpaar mit n = 2.",
+      "tolerance": 0.005,
+      "unit": "V"
+    },
+    {
+      "id": "U011",
+      "source": "Variante-2026",
+      "examiner": "uebung",
+      "topicId": "16-atomspektrometrie",
+      "points": 4,
+      "type": "numeric",
+      "question": "Eine Flammen-AAS liefert für einen 8,0 mg/L-Standard die Absorption 0,320, für die Probe 0,208. Welche Konzentration hat die Probe? Linearer Bereich vorausgesetzt.",
+      "correct": 5.2,
+      "explanation": "Im linearen Bereich ist A proportional zu c: c = 8,0 mg/L · 0,208/0,320 = 5,2 mg/L. Vorausgesetzt ist, dass beide Messwerte im linearen Bereich liegen und die Matrix gleich ist — sonst führt nur die Standardaddition zum richtigen Gehalt.",
+      "tolerance": 0.1,
+      "unit": "mg/L"
+    },
+    {
+      "id": "U012",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "06-elektrochemische-grundlagen",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Warum wird die Leitfähigkeit einer Lösung mit Wechselspannung und nicht mit Gleichspannung gemessen?",
+      "options": [
+        "Weil Wechselspannung tiefer in die Lösung eindringt",
+        "Weil Gleichspannung Elektrolyse und Polarisation an den Elektroden auslöst und den Messwert verfälscht",
+        "Weil nur bei Wechselspannung das Ohmsche Gesetz gilt",
+        "Weil die Platinbleche sonst korrodieren würden"
+      ],
+      "correct": 1,
+      "explanation": "Unter Gleichspannung scheiden sich Stoffe an den Elektroden ab, es bauen sich Konzentrationsgradienten und eine Gegenspannung auf — der gemessene Widerstand wandert. Wechselspannung im Kilohertzbereich kehrt die Richtung um, bevor sich das ausbilden kann. Gemessen wird ohnehin die Lösung als Ganzes, nicht ein einzelnes Ion."
+    },
+    {
+      "id": "U013",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "09-chemosensoren",
+      "points": 2,
+      "type": "mc-single",
+      "question": "Aus welchen zwei Grundbestandteilen besteht jeder Chemosensor?",
+      "options": [
+        "Lichtquelle und Detektor",
+        "Rezeptor (Erkennungsschicht) und Transducer (Wandler)",
+        "Arbeits- und Gegenelektrode",
+        "Membran und Elektrolyt"
+      ],
+      "correct": 1,
+      "explanation": "Die Erkennungsschicht bindet oder setzt den Analyten selektiv um, der Wandler übersetzt dieses Ereignis in ein elektrisches Signal — elektrochemisch, optisch, massensensitiv oder thermisch. Alles andere sind Bauformen dieser beiden Aufgaben: die Enzymschicht des Glucosesensors ist der Rezeptor, die amperometrische Elektrode darunter der Wandler."
+    },
+    {
+      "id": "U014",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "09-chemosensoren",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Was unterscheidet einen Biosensor von einem sonstigen Chemosensor?",
+      "options": [
+        "Er ist immer optisch aufgebaut",
+        "Er arbeitet ohne Wandler",
+        "Er misst ausschließlich in Blut",
+        "Seine Erkennungsschicht ist biologischen Ursprungs, etwa ein Enzym oder ein Antikörper"
+      ],
+      "correct": 3,
+      "explanation": "Der Unterschied liegt allein in der Erkennungsschicht: Enzym, Antikörper, DNA oder ganze Zellen. Der Wandler darunter kann derselbe sein wie bei jedem anderen Chemosensor. Der Glucosesensor mit Glucoseoxidase ist das kommerziell erfolgreichste Beispiel."
+    },
+    {
+      "id": "U015",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "09-chemosensoren",
+      "points": 3,
+      "type": "mc-multi",
+      "question": "Welche Kenngrößen beschreiben die Güte eines Chemosensors?",
+      "options": [
+        "Selektivität gegenüber Störstoffen",
+        "Ansprechzeit bis zum stabilen Signal",
+        "Reversibilität des Signals",
+        "Die Molmasse der Erkennungsschicht"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Ein brauchbarer Sensor erkennt den Analyten neben anderen Stoffen, antwortet schnell genug für die Anwendung und kehrt nach dem Ende der Exposition wieder in den Ausgangszustand zurück — ohne Reversibilität ist er ein Einwegindikator. Die Molmasse der Erkennungsschicht sagt darüber nichts aus."
+    },
+    {
+      "id": "U016",
+      "source": "Uebung-2026",
+      "examiner": "uebung",
+      "topicId": "01-grundlagen-spektroskopie",
+      "points": 3,
+      "type": "mc-single",
+      "question": "Welche Aufgabe hat ein Photomultiplier in einem Spektrometer?",
+      "options": [
+        "Er zerlegt das Licht in seine Wellenlängen",
+        "Er wandelt einzelne Photonen über Sekundärelektronen in einen messbaren Strom",
+        "Er bündelt das Licht auf die Küvette",
+        "Er hält die Lampenintensität konstant"
+      ],
+      "correct": 1,
+      "explanation": "Ein Photon löst an der Photokathode ein Elektron aus, das über eine Kette von Dynoden vervielfacht wird — Verstärkungen um sechs Größenordnungen sind üblich. Deshalb ist der Photomultiplier dort im Einsatz, wo sehr wenig Licht ankommt, etwa in der Fluoreszenz. Diodenarrays nehmen dagegen viele Wellenlängen gleichzeitig auf, sind aber weniger empfindlich."
     }
   ],
   "structures": [

@@ -136,516 +136,81 @@ der GC liegt sie höher als in der HPLC, weil Gase deutlich schneller diffundier
         name: "Chromatographische Auflösung",
         equation: "Rs = 2·(tR2 - tR1) / (w1 + w2)",
         variables: [
-          { id: "Rs", label: "Auflösung", symbol: "Rs", unit: "—", description: "Chromatographische Auflösung" },
-          { id: "dtR", label: "Δ Retentionszeit", symbol: "tR2-tR1", unit: "min", description: "Differenz der Retentionszeiten" },
-          { id: "wsum", label: "Summe Peakbreiten", symbol: "w1+w2", unit: "min", description: "Summe der Basispeakbreiten" },
+          {
+            id: "Rs",
+            label: "Auflösung",
+            symbol: "Rs",
+            unit: "—",
+            description: "Chromatographische Auflösung"
+          },
+          {
+            id: "dtR",
+            label: "Δ Retentionszeit",
+            symbol: "tR2-tR1",
+            unit: "min",
+            description: "Differenz der Retentionszeiten"
+          },
+          {
+            id: "wsum",
+            label: "Summe Peakbreiten",
+            symbol: "w1+w2",
+            unit: "min",
+            description: "Summe der Basispeakbreiten"
+          }
         ],
         umstellungen: [
-          { solveFor: "Rs", expr: "2 * dtR / wsum" },
-          { solveFor: "dtR", expr: "Rs * wsum / 2" },
-          { solveFor: "wsum", expr: "2 * dtR / Rs" },
+          {
+            solveFor: "Rs",
+            expr: "2 * dtR / wsum"
+          },
+          {
+            solveFor: "dtR",
+            expr: "Rs * wsum / 2"
+          },
+          {
+            solveFor: "wsum",
+            expr: "2 * dtR / Rs"
+          }
         ],
         hints: [
           "Rs = 2·ΔtR/(w1+w2). Rs < 1.0: ungenügend. Rs = 1.0: ~98%. Rs = 1.5: Basislinie. Peakbreiten w in gleichen Einheiten wie Retentionszeiten!",
           "Trennstufenzahl: N = 16·(tR/w)². Trennstufenhöhe H = L/N. Rs ∝ √N ∝ √L. Säule verdoppeln → Rs×√2 = 1.41×Rs."
-        ],
-      },
+        ]
+      }
     },
   ],
   abbildungen: [
     {
-      "art": "diagramm",
-      "id": "van-deemter",
-      "titel": "Van-Deemter: warum es eine optimale Flussrate gibt",
-      "beschreibung": "H ist die Summe dreier Beiträge. B/u fällt, C·u steigt, A bleibt gleich — dazwischen liegt das Minimum.",
-      "xAchse": {
-        "titel": "Fließgeschwindigkeit u (mm/s)",
-        "min": 0,
-        "max": 4.2
-      },
-      "yAchse": {
-        "titel": "Trennstufenhöhe H (µm)",
-        "min": 0,
-        "max": 34
-      },
-      "kurven": [
-        {
-          "beschriftung": "H gesamt",
-          "punkte": [
-            {
-              "x": 0.2,
-              "y": 34
-            },
-            {
-              "x": 0.35,
-              "y": 26.368
-            },
-            {
-              "x": 0.5,
-              "y": 21.75
-            },
-            {
-              "x": 0.65,
-              "y": 19.506
-            },
-            {
-              "x": 0.8,
-              "y": 18.3
-            },
-            {
-              "x": 0.95,
-              "y": 17.641
-            },
-            {
-              "x": 1.1,
-              "y": 17.305
-            },
-            {
-              "x": 1.25,
-              "y": 17.175
-            },
-            {
-              "x": 1.4,
-              "y": 17.186
-            },
-            {
-              "x": 1.55,
-              "y": 17.296
-            },
-            {
-              "x": 1.7,
-              "y": 17.479
-            },
-            {
-              "x": 1.85,
-              "y": 17.718
-            },
-            {
-              "x": 2.0,
-              "y": 18.0
-            },
-            {
-              "x": 2.15,
-              "y": 18.316
-            },
-            {
-              "x": 2.3,
-              "y": 18.659
-            },
-            {
-              "x": 2.45,
-              "y": 19.024
-            },
-            {
-              "x": 2.6,
-              "y": 19.408
-            },
-            {
-              "x": 2.75,
-              "y": 19.807
-            },
-            {
-              "x": 2.9,
-              "y": 20.219
-            },
-            {
-              "x": 3.05,
-              "y": 20.642
-            },
-            {
-              "x": 3.2,
-              "y": 21.075
-            },
-            {
-              "x": 3.35,
-              "y": 21.516
-            },
-            {
-              "x": 3.5,
-              "y": 21.964
-            },
-            {
-              "x": 3.65,
-              "y": 22.419
-            },
-            {
-              "x": 3.8,
-              "y": 22.879
-            },
-            {
-              "x": 3.95,
-              "y": 23.344
-            },
-            {
-              "x": 4.1,
-              "y": 23.813
-            }
-          ],
-          "farbe": "accent"
-        },
-        {
-          "beschriftung": "A — Eddy-Diffusion",
-          "punkte": [
-            {
-              "x": 0.2,
-              "y": 8.0
-            },
-            {
-              "x": 0.35,
-              "y": 8.0
-            },
-            {
-              "x": 0.5,
-              "y": 8.0
-            },
-            {
-              "x": 0.65,
-              "y": 8.0
-            },
-            {
-              "x": 0.8,
-              "y": 8.0
-            },
-            {
-              "x": 0.95,
-              "y": 8.0
-            },
-            {
-              "x": 1.1,
-              "y": 8.0
-            },
-            {
-              "x": 1.25,
-              "y": 8.0
-            },
-            {
-              "x": 1.4,
-              "y": 8.0
-            },
-            {
-              "x": 1.55,
-              "y": 8.0
-            },
-            {
-              "x": 1.7,
-              "y": 8.0
-            },
-            {
-              "x": 1.85,
-              "y": 8.0
-            },
-            {
-              "x": 2.0,
-              "y": 8.0
-            },
-            {
-              "x": 2.15,
-              "y": 8.0
-            },
-            {
-              "x": 2.3,
-              "y": 8.0
-            },
-            {
-              "x": 2.45,
-              "y": 8.0
-            },
-            {
-              "x": 2.6,
-              "y": 8.0
-            },
-            {
-              "x": 2.75,
-              "y": 8.0
-            },
-            {
-              "x": 2.9,
-              "y": 8.0
-            },
-            {
-              "x": 3.05,
-              "y": 8.0
-            },
-            {
-              "x": 3.2,
-              "y": 8.0
-            },
-            {
-              "x": 3.35,
-              "y": 8.0
-            },
-            {
-              "x": 3.5,
-              "y": 8.0
-            },
-            {
-              "x": 3.65,
-              "y": 8.0
-            },
-            {
-              "x": 3.8,
-              "y": 8.0
-            },
-            {
-              "x": 3.95,
-              "y": 8.0
-            },
-            {
-              "x": 4.1,
-              "y": 8.0
-            }
-          ],
-          "stil": "gestrichelt",
-          "farbe": "subtle"
-        },
-        {
-          "beschriftung": "B/u — Längsdiffusion",
-          "punkte": [
-            {
-              "x": 0.2,
-              "y": 30.0
-            },
-            {
-              "x": 0.35,
-              "y": 17.143
-            },
-            {
-              "x": 0.5,
-              "y": 12.0
-            },
-            {
-              "x": 0.65,
-              "y": 9.231
-            },
-            {
-              "x": 0.8,
-              "y": 7.5
-            },
-            {
-              "x": 0.95,
-              "y": 6.316
-            },
-            {
-              "x": 1.1,
-              "y": 5.455
-            },
-            {
-              "x": 1.25,
-              "y": 4.8
-            },
-            {
-              "x": 1.4,
-              "y": 4.286
-            },
-            {
-              "x": 1.55,
-              "y": 3.871
-            },
-            {
-              "x": 1.7,
-              "y": 3.529
-            },
-            {
-              "x": 1.85,
-              "y": 3.243
-            },
-            {
-              "x": 2.0,
-              "y": 3.0
-            },
-            {
-              "x": 2.15,
-              "y": 2.791
-            },
-            {
-              "x": 2.3,
-              "y": 2.609
-            },
-            {
-              "x": 2.45,
-              "y": 2.449
-            },
-            {
-              "x": 2.6,
-              "y": 2.308
-            },
-            {
-              "x": 2.75,
-              "y": 2.182
-            },
-            {
-              "x": 2.9,
-              "y": 2.069
-            },
-            {
-              "x": 3.05,
-              "y": 1.967
-            },
-            {
-              "x": 3.2,
-              "y": 1.875
-            },
-            {
-              "x": 3.35,
-              "y": 1.791
-            },
-            {
-              "x": 3.5,
-              "y": 1.714
-            },
-            {
-              "x": 3.65,
-              "y": 1.644
-            },
-            {
-              "x": 3.8,
-              "y": 1.579
-            },
-            {
-              "x": 3.95,
-              "y": 1.519
-            },
-            {
-              "x": 4.1,
-              "y": 1.463
-            }
-          ],
-          "stil": "gestrichelt",
-          "farbe": "warning"
-        },
-        {
-          "beschriftung": "C·u — Stoffaustausch",
-          "punkte": [
-            {
-              "x": 0.2,
-              "y": 0.7
-            },
-            {
-              "x": 0.35,
-              "y": 1.225
-            },
-            {
-              "x": 0.5,
-              "y": 1.75
-            },
-            {
-              "x": 0.65,
-              "y": 2.275
-            },
-            {
-              "x": 0.8,
-              "y": 2.8
-            },
-            {
-              "x": 0.95,
-              "y": 3.325
-            },
-            {
-              "x": 1.1,
-              "y": 3.85
-            },
-            {
-              "x": 1.25,
-              "y": 4.375
-            },
-            {
-              "x": 1.4,
-              "y": 4.9
-            },
-            {
-              "x": 1.55,
-              "y": 5.425
-            },
-            {
-              "x": 1.7,
-              "y": 5.95
-            },
-            {
-              "x": 1.85,
-              "y": 6.475
-            },
-            {
-              "x": 2.0,
-              "y": 7.0
-            },
-            {
-              "x": 2.15,
-              "y": 7.525
-            },
-            {
-              "x": 2.3,
-              "y": 8.05
-            },
-            {
-              "x": 2.45,
-              "y": 8.575
-            },
-            {
-              "x": 2.6,
-              "y": 9.1
-            },
-            {
-              "x": 2.75,
-              "y": 9.625
-            },
-            {
-              "x": 2.9,
-              "y": 10.15
-            },
-            {
-              "x": 3.05,
-              "y": 10.675
-            },
-            {
-              "x": 3.2,
-              "y": 11.2
-            },
-            {
-              "x": 3.35,
-              "y": 11.725
-            },
-            {
-              "x": 3.5,
-              "y": 12.25
-            },
-            {
-              "x": 3.65,
-              "y": 12.775
-            },
-            {
-              "x": 3.8,
-              "y": 13.3
-            },
-            {
-              "x": 3.95,
-              "y": 13.825
-            },
-            {
-              "x": 4.1,
-              "y": 14.35
-            }
-          ],
-          "stil": "gestrichelt",
-          "farbe": "success"
-        }
+      art: "diagramm",
+      id: "van-deemter",
+      titel: "Van-Deemter: warum es eine optimale Flussrate gibt",
+      beschreibung: "H ist die Summe dreier Beiträge. B/u fällt, C·u steigt, A bleibt gleich — dazwischen liegt das Minimum.",
+      xAchse: { titel: "Fließgeschwindigkeit u (mm/s)", min: 0, max: 4.2 },
+      yAchse: { titel: "Trennstufenhöhe H (µm)", min: 0, max: 34 },
+      kurven: [
+        { beschriftung: "H gesamt", punkte: [{ x: 0.2, y: 34 }, { x: 0.35, y: 26.368 }, { x: 0.5, y: 21.75 }, { x: 0.65, y: 19.506 }, { x: 0.8, y: 18.3 }, { x: 0.95, y: 17.641 }, { x: 1.1, y: 17.305 }, { x: 1.25, y: 17.175 }, { x: 1.4, y: 17.186 }, { x: 1.55, y: 17.296 }, { x: 1.7, y: 17.479 }, { x: 1.85, y: 17.718 }, { x: 2, y: 18 }, { x: 2.15, y: 18.316 }, { x: 2.3, y: 18.659 }, { x: 2.45, y: 19.024 }, { x: 2.6, y: 19.408 }, { x: 2.75, y: 19.807 }, { x: 2.9, y: 20.219 }, { x: 3.05, y: 20.642 }, { x: 3.2, y: 21.075 }, { x: 3.35, y: 21.516 }, { x: 3.5, y: 21.964 }, { x: 3.65, y: 22.419 }, { x: 3.8, y: 22.879 }, { x: 3.95, y: 23.344 }, { x: 4.1, y: 23.813 }], farbe: "accent" },
+        { beschriftung: "A — Eddy-Diffusion", punkte: [{ x: 0.2, y: 8 }, { x: 0.35, y: 8 }, { x: 0.5, y: 8 }, { x: 0.65, y: 8 }, { x: 0.8, y: 8 }, { x: 0.95, y: 8 }, { x: 1.1, y: 8 }, { x: 1.25, y: 8 }, { x: 1.4, y: 8 }, { x: 1.55, y: 8 }, { x: 1.7, y: 8 }, { x: 1.85, y: 8 }, { x: 2, y: 8 }, { x: 2.15, y: 8 }, { x: 2.3, y: 8 }, { x: 2.45, y: 8 }, { x: 2.6, y: 8 }, { x: 2.75, y: 8 }, { x: 2.9, y: 8 }, { x: 3.05, y: 8 }, { x: 3.2, y: 8 }, { x: 3.35, y: 8 }, { x: 3.5, y: 8 }, { x: 3.65, y: 8 }, { x: 3.8, y: 8 }, { x: 3.95, y: 8 }, { x: 4.1, y: 8 }], stil: "gestrichelt", farbe: "subtle" },
+        { beschriftung: "B/u — Längsdiffusion", punkte: [{ x: 0.2, y: 30 }, { x: 0.35, y: 17.143 }, { x: 0.5, y: 12 }, { x: 0.65, y: 9.231 }, { x: 0.8, y: 7.5 }, { x: 0.95, y: 6.316 }, { x: 1.1, y: 5.455 }, { x: 1.25, y: 4.8 }, { x: 1.4, y: 4.286 }, { x: 1.55, y: 3.871 }, { x: 1.7, y: 3.529 }, { x: 1.85, y: 3.243 }, { x: 2, y: 3 }, { x: 2.15, y: 2.791 }, { x: 2.3, y: 2.609 }, { x: 2.45, y: 2.449 }, { x: 2.6, y: 2.308 }, { x: 2.75, y: 2.182 }, { x: 2.9, y: 2.069 }, { x: 3.05, y: 1.967 }, { x: 3.2, y: 1.875 }, { x: 3.35, y: 1.791 }, { x: 3.5, y: 1.714 }, { x: 3.65, y: 1.644 }, { x: 3.8, y: 1.579 }, { x: 3.95, y: 1.519 }, { x: 4.1, y: 1.463 }], stil: "gestrichelt", farbe: "warning" },
+        { beschriftung: "C·u — Stoffaustausch", punkte: [{ x: 0.2, y: 0.7 }, { x: 0.35, y: 1.225 }, { x: 0.5, y: 1.75 }, { x: 0.65, y: 2.275 }, { x: 0.8, y: 2.8 }, { x: 0.95, y: 3.325 }, { x: 1.1, y: 3.85 }, { x: 1.25, y: 4.375 }, { x: 1.4, y: 4.9 }, { x: 1.55, y: 5.425 }, { x: 1.7, y: 5.95 }, { x: 1.85, y: 6.475 }, { x: 2, y: 7 }, { x: 2.15, y: 7.525 }, { x: 2.3, y: 8.05 }, { x: 2.45, y: 8.575 }, { x: 2.6, y: 9.1 }, { x: 2.75, y: 9.625 }, { x: 2.9, y: 10.15 }, { x: 3.05, y: 10.675 }, { x: 3.2, y: 11.2 }, { x: 3.35, y: 11.725 }, { x: 3.5, y: 12.25 }, { x: 3.65, y: 12.775 }, { x: 3.8, y: 13.3 }, { x: 3.95, y: 13.825 }, { x: 4.1, y: 14.35 }], stil: "gestrichelt", farbe: "success" },
       ],
-      "marker": [
-        {
-          "x": 1.31,
-          "y": 17.17,
-          "beschriftung": "u optimal",
-          "hilfslinien": true
-        }
-      ]
-    }
+      marker: [
+        { x: 1.31, y: 17.17, beschriftung: "u optimal", hilfslinien: true },
+      ],
+    },
   ],
   quiz: [
     { id: "q1", question: "Ein Rf-Wert von 0,9 bei der DC bedeutet:", options: ["Die Substanz bleibt am Startpunkt liegen", "Sie läuft fast mit der Front, kaum Retention", "Die Trennung verläuft optimal", "Die Substanz löst sich in der mobilen Phase nicht"], correct: 1, explanation: "Rf ist die Laufstrecke der Substanz geteilt durch die der Front. Rf = 0,9 heißt: fast keine Wechselwirkung mit der stationären Phase. Der brauchbare Bereich liegt bei 0,3 bis 0,7. Abhilfe: polarere stationäre oder weniger polare mobile Phase." },
-    { id: "q2", question: "Was sagt der Retentionsfaktor k' über die Elutionsreihenfolge aus?", options: ["Große k'-Werte eluieren zuerst", "Kleine k'-Werte eluieren zuerst", "k' sagt nichts über die Reihenfolge", "k' hängt nur von der Molmasse ab"], correct: 1, explanation: "k' = (tR − tM)/tM misst, wie lange eine Substanz im Verhältnis zur Totzeit auf der Säule festgehalten wird. Kleines k' heißt geringe Affinität zur stationären Phase und damit frühe Elution. Bei k' = 0 läuft die Substanz mit der Totzeit durch, ist also gar nicht getrennt." },
-    { id: "q3", question: "Was beschreibt der Term A in der van-Deemter-Gleichung H = A + B/u + Cu?", options: ["Die Diffusion entlang der Säulenachse", "Die Eddy-Diffusion durch verschiedene Wege", "Die Kinetik des Stoffaustauschs", "Die Temperaturabhängigkeit der Trennung"], correct: 1, explanation: "Der A-Term erfasst, dass es durch eine gepackte Säule viele verschieden lange Wege gibt. Er hängt an der Korngröße und der Gleichmäßigkeit der Packung, nicht an der Flussgeschwindigkeit — deshalb steht kein u dabei. Bei Kapillarsäulen ohne Packung fällt er ganz weg." },
-    { id: "q4", question: "Retentionszeiten A=14,3min, B=17,1min, Peakbreiten 1,05 und 1,27min. Wie groß ist die Auflösung?", options: ["Rs = 1,2", "Rs = 2,4", "Rs = 4,2", "Rs = 0,8"], correct: 1, explanation: "Rs = 2·(tR2 − tR1)/(w1 + w2) = 2·(17,1 − 14,3)/(1,05 + 1,27) = 5,6/2,32 = 2,41. Alles über 1,5 ist Basislinientrennung — hier ist die Trennung also deutlich besser als nötig, und man könnte Zeit sparen, indem man die Selektivität senkt oder eine kürzere Säule nimmt." },
+    { id: "q2", question: "Was sagt der Retentionsfaktor k' über die Elutionsreihenfolge aus?", options: ["Große k'-Werte eluieren zuerst", "k' sagt nichts über die Reihenfolge", "Kleine k'-Werte eluieren zuerst", "k' hängt nur von der Molmasse ab"], correct: 2, explanation: "k' = (tR − tM)/tM misst, wie lange eine Substanz im Verhältnis zur Totzeit auf der Säule festgehalten wird. Kleines k' heißt geringe Affinität zur stationären Phase und damit frühe Elution. Bei k' = 0 läuft die Substanz mit der Totzeit durch, ist also gar nicht getrennt." },
+    { id: "q3", question: "Was beschreibt der Term A in der van-Deemter-Gleichung H = A + B/u + Cu?", options: ["Die Diffusion entlang der Säulenachse", "Die Kinetik des Stoffaustauschs", "Die Temperaturabhängigkeit der Trennung", "Die Eddy-Diffusion durch verschiedene Wege"], correct: 3, explanation: "Der A-Term erfasst, dass es durch eine gepackte Säule viele verschieden lange Wege gibt. Er hängt an der Korngröße und der Gleichmäßigkeit der Packung, nicht an der Flussgeschwindigkeit — deshalb steht kein u dabei. Bei Kapillarsäulen ohne Packung fällt er ganz weg." },
+    { id: "q4", question: "Retentionszeiten A=14,3min, B=17,1min, Peakbreiten 1,05 und 1,27min. Wie groß ist die Auflösung?", options: ["Rs = 2,4", "Rs = 1,2", "Rs = 4,2", "Rs = 0,8"], correct: 0, explanation: "Rs = 2·(tR2 − tR1)/(w1 + w2) = 2·(17,1 − 14,3)/(1,05 + 1,27) = 5,6/2,32 = 2,41. Alles über 1,5 ist Basislinientrennung — hier ist die Trennung also deutlich besser als nötig, und man könnte Zeit sparen, indem man die Selektivität senkt oder eine kürzere Säule nimmt." },
     { id: "q5", question: "Wie beeinflusst die Partikelgröße der stationären Phase die Trennleistung?", options: ["Kleinere Partikel verschlechtern die Trennung", "Kleinere Partikel erhöhen N, aber auch den Druck", "Die Partikelgröße spielt keine Rolle", "Größere Partikel erhöhen die Trennstufenzahl"], correct: 1, explanation: "Kleinere Partikel verkürzen die Diffusionswege, senken die Trennstufenhöhe H und erhöhen damit N. Der Preis steht im Gesetz von Darcy: Der Druckabfall wächst mit dem Quadrat der Korngröße im Nenner. Genau deshalb braucht UHPLC mit Sub-2-µm-Material Geräte für 1000 bar." },
     { id: "q6", question: "Eine Säule (L=25cm) liefert Rs=1,2. Wie lang muss sie sein für Rs=1,5?", options: ["31,25 cm", "39,06 cm", "45,00 cm", "50,00 cm"], correct: 1, explanation: "Rs ∝ √L. L_neu = L_alt × (Rs_neu/Rs_alt)² = 25 × (1,5/1,2)² = 25 × 1,5625 = 39,06 cm. Quadratische Abhängigkeit! Auflösung verdoppeln: Säule 4× länger." },
+    { id: "q7", question: "Zwei Peaks haben Rs = 1,5. Was bedeutet das?", options: ["Sie überlappen zur Hälfte", "Sie sind praktisch vollständig basisliniengetrennt", "Sie erscheinen als ein einziger Peak", "Sie liegen genau übereinander"], correct: 1, explanation: "Bei Rs = 1,5 überlappen zwei gaußförmige Peaks gleicher Größe zu etwa 0,3 % — das gilt als Basislinientrennung und ist der übliche Zielwert. Bei Rs = 1,0 sind es schon rund 2 %, und ungleich große Peaks brauchen mehr Abstand, weil der kleinere im Ausläufer des größeren verschwindet." },
+    { id: "q8", question: "Was beschreibt der Term B/u in der van-Deemter-Gleichung?", options: ["Die Eddy-Diffusion in der Packung", "Den Widerstand gegen den Massentransport", "Die Längsdiffusion des Analyten in der mobilen Phase", "Den Druckabfall über die Säule"], correct: 2, explanation: "Die Längsdiffusion verbreitert den Peak umso stärker, je länger er in der Säule verweilt — deshalb steht u im Nenner. In der GC mit ihrem gasförmigen Laufmittel ist dieser Term groß, in der LC klein. Die Eddy-Diffusion ist A, der Massentransport C·u." },
+    { id: "q9", question: "Was bewirkt eine Verdopplung der Säulenlänge bei sonst gleichen Bedingungen?", options: ["Die Auflösung verdoppelt sich", "Die Auflösung steigt um den Faktor √2", "Die Auflösung bleibt gleich", "Die Auflösung halbiert sich"], correct: 1, explanation: "N wächst proportional zur Länge, Rs aber nur mit √N, also mit √2 ≈ 1,41. Bezahlt wird das mit doppelter Analysenzeit und doppeltem Druck — deshalb ist die kleinere Korngröße der bessere Hebel, denn sie erhöht N ohne die Säule zu verlängern." },
+    { id: "q10", question: "Was besagt der Trennfaktor α = 1,0 für zwei Substanzen?", options: ["Sie sind vollständig getrennt", "Sie sind auf dieser Phase nicht trennbar", "Der eine Peak ist genau doppelt so hoch wie der andere", "Die Säule ist überladen"], correct: 1, explanation: "α = k'₂/k'₁ ist das Verhältnis der Retentionsfaktoren. Bei α = 1 verhalten sich beide Stoffe auf dieser Phase gleich, und keine Verlängerung und keine feinere Packung hilft — es muss die stationäre oder mobile Phase gewechselt werden. Schon α = 1,05 genügt dagegen für eine Trennung mit ausreichender Bodenzahl." },
+    { id: "q11", question: "Warum zeigt ein Peak Tailing?", options: ["Weil der Detektor die Peakflanke zu langsam abtastet", "Weil die mobile Phase zu schnell fließt", "Weil die Säule zu kurz ist", "Weil ein Teil des Analyten stärker adsorbiert wird"], correct: 3, explanation: "Zusätzliche, energiereichere Bindungsplätze halten einen Teil der Moleküle länger fest, der Peak zieht hinten nach. Bei basischen Analyten auf Kieselgel sind freie Silanolgruppen die klassische Ursache; endcapping und ein passender pH schaffen Abhilfe. Überladung erzeugt dagegen eher Fronting." },
+    { id: "q12", question: "Wovon hängt der Rf-Wert in der Dünnschichtchromatographie ab?", options: ["Vom Verhältnis der Laufstrecken von Substanz und Front", "Von der auf die Platte aufgetragenen Menge der Substanz", "Von der Laufzeit", "Von der Plattenlänge"], correct: 0, explanation: "Rf = Laufstrecke Substanz / Laufstrecke Front, ein Wert zwischen 0 und 1. Weil beide Strecken gleichermaßen skalieren, ist er von Laufzeit und Plattenlänge unabhängig — er bleibt aber nur bei gleicher Phase, gleichem Fließmittel und gleicher Kammersättigung vergleichbar." },
   ],
   flashcards: [
     { id: "0klzclp", front: "Kapazitätsfaktor k'", back: "k' = (tR - tM) / tM. Dimensionslos. k'=0: nicht retardiert. k'=1: gleich viel Zeit in mob. und stat. Phase. Eluierungsreihenfolge: kleinstes k' zuerst. Ideal: k' = 2-10." },
