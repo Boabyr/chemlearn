@@ -33,9 +33,11 @@ export function ziehePruefung(
 ): Ziehung {
   const gezogen: ExamQuestion[] = []
   const luecken: string[] = []
+  // Gebietsübergreifend: Überschneiden sich die Kapitel zweier Gebiete, darf
+  // dieselbe Frage trotzdem nur einmal in der ganzen Prüfung landen.
+  const verbraucht = new Set<string>()
 
   for (const gebiet of ordnung.gebiete) {
-    const verbraucht = new Set<string>()
     const ausGebiet: ExamQuestion[] = []
 
     while (ausGebiet.length < gebiet.fragen) {

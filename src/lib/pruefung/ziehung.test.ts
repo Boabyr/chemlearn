@@ -38,9 +38,42 @@ describe('ziehePruefung', () => {
   })
 
   it('nimmt aus einem Kapitel nur eine Frage, solange es andere gibt', () => {
-    const { fragen } = ziehePruefung(ORDNUNG, BESTAND, ersterEintrag)
-    const themenDesGebietsA = fragen.filter(f => f.gruppe === 'a').map(f => f.topicId)
-    expect(new Set(themenDesGebietsA).size).toBe(2)
+    // Absichtlich ungleich verteilt: drei Fragen aus t1, nur eine aus t2.
+    // Bei gleich großen Töpfen (wie im ORDNUNG/BESTAND-Fixture oben) trifft
+    // die feste Zufallsquelle zufällig auch ohne Bevorzugung ein zweites
+    // Thema — hier nicht: ohne Bevorzugung liefert der zweite Zug wieder t1,
+    // weil davon nach dem ersten Zug noch zwei übrig sind.
+    const ordnung: Ordnung = {
+      titel: 'Prüfung', fragen: 2, punkteJeFrage: 1.6, regel: 'streng', zeitMinuten: 120,
+      noten: [],
+      gebiete: [{ id: 'a', titel: 'A', topics: ['t1', 't2'], fragen: 2 }],
+    }
+    const bestand = [
+      frage('x1', 't1', 'a'), frage('x2', 't1', 'a'), frage('x3', 't1', 'a'),
+      frage('y1', 't2', 'a'),
+    ]
+    const { fragen } = ziehePruefung(ordnung, bestand, ersterEintrag)
+    const themen = fragen.map(f => f.topicId)
+    expect(new Set(themen).size).toBe(2)
+  })
+
+  it('zieht dieselbe Frage nicht zweimal, wenn sich die Kapitel zweier Gebiete überschneiden', () => {
+    const ordnung: Ordnung = {
+      titel: 'Prüfung', fragen: 4, punkteJeFrage: 1.6, regel: 'streng', zeitMinuten: 120,
+      noten: [],
+      gebiete: [
+        { id: 'a', titel: 'A', topics: ['t1'], fragen: 2 },
+        { id: 'b', titel: 'B', topics: ['t1'], fragen: 2 },
+      ],
+    }
+    const bestand = [
+      frage('a1', 't1', 'x'), frage('a2', 't1', 'x'),
+      frage('a3', 't1', 'x'), frage('a4', 't1', 'x'),
+    ]
+    const { fragen, luecken } = ziehePruefung(ordnung, bestand, ersterEintrag)
+    expect(fragen).toHaveLength(4)
+    expect(new Set(fragen.map(f => f.id)).size).toBe(4)
+    expect(luecken).toEqual([])
   })
 
   it('zieht ein zweites Mal aus demselben Kapitel, wenn das Gebiet nur eines hat', () => {
