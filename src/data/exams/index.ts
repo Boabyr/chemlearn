@@ -36,11 +36,11 @@ export function courseIdsWithExams(): string[] {
   return [...jeKurs.entries()].filter(([, daten]) => daten.questions.length > 0).map(([id]) => id)
 }
 
-/** Prüferkennungen dieses Fachs — aus dem Kurskopf, sonst aus den Fragen. */
-export function examinersFor(courseId: string): string[] {
-  const ausKurs = kursMit(courseId)?.examiners ?? []
+/** Gruppenkennungen dieses Fachs — aus dem Kurskopf, sonst aus den Fragen. */
+export function gruppenFuer(courseId: string): string[] {
+  const ausKurs = kursMit(courseId)?.gruppen ?? []
   if (ausKurs.length > 0) return ausKurs.map(p => p.id)
-  return [...new Set(examQuestionsFor(courseId).map(q => q.examiner))].sort()
+  return [...new Set(examQuestionsFor(courseId).map(q => q.gruppe))].sort()
 }
 
 function grossAmAnfang(text: string): string {
@@ -48,17 +48,17 @@ function grossAmAnfang(text: string): string {
 }
 
 /** Anzeigename. Ohne Kursangabe bleibt nur die Kennung. */
-export function examinerLabel(pruefer: string, courseId?: string): string {
+export function gruppenLabel(gruppe: string, courseId?: string): string {
   if (courseId) {
-    const treffer = kursMit(courseId)?.examiners.find(p => p.id === pruefer)
+    const treffer = kursMit(courseId)?.gruppen.find(p => p.id === gruppe)
     if (treffer) return treffer.label
   }
-  return grossAmAnfang(pruefer)
+  return grossAmAnfang(gruppe)
 }
 
 /** Anzeigename mit Symbol, wie ihn die Prüfungsseiten zeigen. */
-export function examinerAnzeige(pruefer: string, courseId: string): string {
-  const treffer = kursMit(courseId)?.examiners.find(p => p.id === pruefer)
-  if (!treffer) return grossAmAnfang(pruefer)
+export function gruppenAnzeige(gruppe: string, courseId: string): string {
+  const treffer = kursMit(courseId)?.gruppen.find(p => p.id === gruppe)
+  if (!treffer) return grossAmAnfang(gruppe)
   return treffer.icon ? `${treffer.icon} ${treffer.label}` : treffer.label
 }

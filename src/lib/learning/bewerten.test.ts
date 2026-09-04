@@ -3,7 +3,7 @@ import { bewerte, leseZahl } from './bewerten'
 import type { ExamQuestion } from '../../data/exams'
 
 const frage = (teil: Partial<ExamQuestion>): ExamQuestion => ({
-  id: 'T1', source: 'test', examiner: 'lieberzeit', topicId: '01', points: 4,
+  id: 'T1', source: 'test', gruppe: 'lieberzeit', topicId: '01', points: 4,
   type: 'numeric', question: '?', correct: 0, explanation: '', ...teil,
 })
 

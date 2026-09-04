@@ -45,5 +45,5 @@ export const course = {
   sprache: "de",
   formelsatz: "chemie",
   entwurf: true,
-  examiners: [],
+  gruppen: [],
 } satisfies Kurs;

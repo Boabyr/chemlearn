@@ -175,12 +175,12 @@ function baueKursKopf(inhalt, ort) {
   }
   if (kv.entwurf) kopf.entwurf = ['ja', 'true', '1'].includes(kv.entwurf.toLowerCase())
 
-  // Prüferzeilen: `- id: uebung | label: Übungsfragen | icon: 📝`
+  // Gruppenzeilen: `- id: uebung | label: Übungsfragen | icon: 📝`
   const pruefer = [...inhalt.matchAll(/^\s*-\s*(.+)$/gm)]
     .map(m => inlineFields(m[1]))
     .filter(f => f.id)
     .map(f => ({ id: f.id, label: f.label ?? f.id, icon: f.icon }))
-  if (pruefer.length) kopf.examiners = pruefer
+  if (pruefer.length) kopf.gruppen = pruefer
 
   return kopf
 }
@@ -982,7 +982,7 @@ function baueFragen(roh, themenIds) {
 
     fragen.push({
       id: kv.id || `${(kopf.pruefer ?? 'X')[0].toUpperCase()}${String(i + 1).padStart(3, '0')}`,
-      source: kopf.quelle ?? '', examiner: kopf.pruefer ?? '',
+      source: kopf.quelle ?? '', gruppe: kopf.pruefer ?? '',
       topicId: thema, points: Number(kv.punkte ?? 1), type: typ,
       question: kv.frage ?? '', options: optionen.length ? optionen : undefined,
       correct, explanation: erklaerung.trim(),
@@ -1212,7 +1212,7 @@ function leseAufbau(block, ort) {
     if (teile.length !== 4) { problem(ort, `Abschnitt braucht 4 Felder: "${zeile}"`); continue }
     const [pruefer, punkte, bestehen, ids] = teile
     sections.push({
-      examiner: pruefer,
+      gruppe: pruefer,
       points: Number(punkte),
       passingPoints: Number(bestehen),
       questionIds: ids.split(',').map(t => t.trim()).filter(Boolean),
@@ -1288,7 +1288,7 @@ function standardKursMeta(kursId) {
   return {
     id: kursId, title: kursId, subtitle: '', icon: '📘', color: '#3b82f6',
     level: 'Uni', description: '', sprache: 'de', formelsatz: 'chemie',
-    entwurf: false, examiners: [],
+    entwurf: false, gruppen: [],
   }
 }
 
@@ -1310,10 +1310,10 @@ function stundenAusThemen(kursId, themenIds) {
 
 function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
   const meta = vorhanden ?? { ...standardKursMeta(kursId), estimatedHours: themenIds.length * 2 }
-  const pruefer = (meta.examiners ?? []).length
-    ? '  examiners: [\n' + meta.examiners.map(p =>
+  const pruefer = (meta.gruppen ?? []).length
+    ? '  gruppen: [\n' + meta.gruppen.map(p =>
         `    { id: ${str(p.id)}, label: ${str(p.label)}${p.icon ? `, icon: ${str(p.icon)}` : ''} },`).join('\n') + '\n  ],\n'
-    : '  examiners: [],\n'
+    : '  gruppen: [],\n'
 
   return `import type { Kurs } from '../../content/schema'
 
@@ -1359,21 +1359,21 @@ function leseKursMeta(kursId) {
     description: feld('description', ''), estimatedHours: zahl('estimatedHours', 20),
     sprache: feld('sprache', 'de'), formelsatz: feld('formelsatz', 'chemie'),
     entwurf: /\bentwurf:\s*true\b/.test(s),
-    examiners: lesePruefer(s),
+    gruppen: leseGruppen(s),
   }
 }
 
 /**
- * Prüferliste aus einem bestehenden Kursindex übernehmen.
+ * Gruppenliste aus einem bestehenden Kursindex übernehmen.
  *
  * Hier stand `inlineFields`, das an `|` trennt — im erzeugten Index sind die
  * Felder aber mit Komma getrennt und in Anführungszeichen gesetzt. Aus
- * `{ id: "uebung", label: "Übungsfragen" }` wurde deshalb ein einziger Prüfer
+ * `{ id: "uebung", label: "Übungsfragen" }` wurde deshalb eine einzige Gruppe
  * namens `"uebung", label: "Übungsfragen"`. Ein Vollimport hätte die
- * Prüferabschnitte jedes Fachs zerlegt.
+ * Gruppenabschnitte jedes Fachs zerlegt.
  */
-function lesePruefer(quelltext) {
-  const block = quelltext.split(/examiners:\s*\[/)[1]
+function leseGruppen(quelltext) {
+  const block = quelltext.split(/gruppen:\s*\[/)[1]
   if (!block) return []
   const bis = block.indexOf(']')
   return [...block.slice(0, bis).matchAll(/\{([^}]*)\}/g)].map(m => {

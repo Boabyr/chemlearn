@@ -1,9 +1,9 @@
 /**
- * Farben je Prüfer als vollständige Klassennamen.
+ * Farben je Gruppe als vollständige Klassennamen.
  *
  * Zusammengesetzte Klassen (`text-${farbe}-400`) sieht der Tailwind-Scanner
  * nicht — sie wurden nie erzeugt, und im Produktionsbuild fehlte jede
- * Prüferfarbe. In `ExamSimulator` war das schon gelöst, in `ExamQuestion` nicht.
+ * Gruppenfarbe. In `ExamSimulator` war das schon gelöst, in `ExamQuestion` nicht.
  */
 export interface PruefStil {
   chip: string
@@ -33,4 +33,4 @@ const RUECKFALL: PruefStil = {
   text: 'text-muted', bar: 'bg-subtle', auswahl: 'border-accent bg-accent/20 text-accent',
 }
 
-export const stilFuer = (pruefer: string): PruefStil => STIL[pruefer] ?? RUECKFALL
+export const stilFuer = (gruppe: string): PruefStil => STIL[gruppe] ?? RUECKFALL

@@ -6,11 +6,11 @@ import type { AttemptLike } from './mastery'
 const now = new Date('2026-03-01T10:00:00Z')
 
 const fragen: SessionQuestion[] = [
-  { id: 'A1', topicId: '01', examiner: 'lieberzeit' },
-  { id: 'A2', topicId: '01', examiner: 'lieberzeit' },
-  { id: 'B1', topicId: '02', examiner: 'gerner' },
-  { id: 'B2', topicId: '02', examiner: 'gerner' },
-  { id: 'C1', topicId: '03', examiner: 'gerner' },
+  { id: 'A1', topicId: '01', gruppe: 'lieberzeit' },
+  { id: 'A2', topicId: '01', gruppe: 'lieberzeit' },
+  { id: 'B1', topicId: '02', gruppe: 'gerner' },
+  { id: 'B2', topicId: '02', gruppe: 'gerner' },
+  { id: 'C1', topicId: '03', gruppe: 'gerner' },
 ]
 
 function faellig(itemId: string, tageUeberfaellig: number) {
@@ -80,17 +80,17 @@ describe('buildSession', () => {
     expect(s).toHaveLength(fragen.length)
   })
 
-  it('beschränkt sich auf den gewählten Prüfer', () => {
+  it('beschränkt sich auf die gewählte Gruppe', () => {
     const s = buildSession({
-      questions: fragen, attempts: [], due: [], minutes: 30, now, examiner: 'gerner',
+      questions: fragen, attempts: [], due: [], minutes: 30, now, gruppe: 'gerner',
     })
-    expect(s.every(q => q.examiner === 'gerner')).toBe(true)
+    expect(s.every(q => q.gruppe === 'gerner')).toBe(true)
     expect(s.length).toBeGreaterThan(0)
   })
 })
 
 describe('Zeitbudget je Fragetyp', () => {
-  const frage = (id: string, type: string) => ({ id, topicId: 't1', examiner: 'e', type })
+  const frage = (id: string, type: string) => ({ id, topicId: 't1', gruppe: 'e', type })
 
   it('veranschlagt eine Rechenfrage höher als eine Ankreuzfrage', () => {
     expect(sekundenFuer({ type: 'numeric' })).toBeGreaterThan(sekundenFuer({ type: 'mc-single' }))

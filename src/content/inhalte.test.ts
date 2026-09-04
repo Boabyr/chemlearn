@@ -280,11 +280,11 @@ describe('Prüfungsdaten', () => {
     expect(unbekannt).toEqual([])
   })
 
-  it.each(allCourses.map(k => [k.id] as const))('%s: Fragen nennen bekannte Prüfer', async (kursId) => {
+  it.each(allCourses.map(k => [k.id] as const))('%s: Fragen nennen bekannte Gruppen', async (kursId) => {
     const kurs = allCourses.find(k => k.id === kursId)!
-    if (kurs.examiners.length === 0) return
-    const bekannt = kurs.examiners.map(p => p.id)
-    const unbekannt = [...new Set(examQuestionsFor(kursId).map(f => f.examiner))]
+    if (kurs.gruppen.length === 0) return
+    const bekannt = kurs.gruppen.map(p => p.id)
+    const unbekannt = [...new Set(examQuestionsFor(kursId).map(f => f.gruppe))]
       .filter(p => !bekannt.includes(p))
     expect(unbekannt).toEqual([])
   })
@@ -295,7 +295,7 @@ describe('Prüfungsdaten', () => {
     for (const struktur of examStructuresFor(kursId)) {
       for (const abschnitt of struktur.sections) {
         for (const fragenId of abschnitt.questionIds) {
-          if (!ids.has(fragenId)) fehlend.push(`${struktur.id}/${abschnitt.examiner}: ${fragenId}`)
+          if (!ids.has(fragenId)) fehlend.push(`${struktur.id}/${abschnitt.gruppe}: ${fragenId}`)
         }
       }
     }

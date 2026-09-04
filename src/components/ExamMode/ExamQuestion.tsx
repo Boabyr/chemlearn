@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { examinerLabel, type ExamQuestion } from '../../data/exams'
+import { gruppenLabel, type ExamQuestion } from '../../data/exams'
 import { stilFuer } from './pruefStil'
 import { spracheVon } from '../../lib/courseRegistry'
 import { bewerte, leseZahl } from '../../lib/learning/bewerten'
@@ -72,8 +72,8 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
     onAnswer(bewertung.korrekt, bewertung.punkte)
   }
 
-  const stil = stilFuer(question.examiner)
-  const profLabel = examinerLabel(question.examiner)
+  const stil = stilFuer(question.gruppe)
+  const profLabel = gruppenLabel(question.gruppe)
 
   return (
     <div lang={spracheVon(courseId)} className="bg-raised border border-line rounded-2xl overflow-hidden">

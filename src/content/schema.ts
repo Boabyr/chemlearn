@@ -498,8 +498,8 @@ export const themaSchema = z.object({
   }
 })
 
-export const prueferSchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/, 'Prüfer-Kennung klein und ohne Umlaute'),
+export const gruppeSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/, 'Gruppen-Kennung klein und ohne Umlaute'),
   label: nichtLeer,
   icon: z.string().optional(),
 })
@@ -515,8 +515,8 @@ export const kursSchema = z.object({
   topics: z.array(nichtLeer).min(1),
   totalTopics: z.number().int().positive(),
   estimatedHours: z.number().positive(),
-  /** Prüferabschnitte dieses Fachs. Leer heißt: ein gemeinsamer Abschnitt. */
-  examiners: z.array(prueferSchema).default([]),
+  /** Gruppenabschnitte dieses Fachs. Leer heißt: ein gemeinsamer Abschnitt. */
+  gruppen: z.array(gruppeSchema).default([]),
   /**
    * Sprache der Inhalte als BCP-47-Kürzel.
    *
@@ -562,7 +562,7 @@ export type MechanismusAtom = z.infer<typeof atomSchema>
 export type MechanismusBindung = z.infer<typeof bindungSchema>
 export type MechanismusPfeil = z.infer<typeof pfeilSchema>
 export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus | ApparaturZuordnung
-export type Pruefer = z.infer<typeof prueferSchema>
+export type Gruppe = z.infer<typeof gruppeSchema>
 export type Formelsatz = Kurs['formelsatz']
 
 export type Thema = Omit<z.infer<typeof themaSchema>, 'interactives' | 'abbildungen'>

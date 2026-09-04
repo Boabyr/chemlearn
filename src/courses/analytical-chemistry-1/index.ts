@@ -33,7 +33,7 @@ export const course = {
   // Prüfungsabschnitte dieses Fachs. Ein Fach ohne eigene Prüfer lässt die
   // Liste leer und bekommt einen gemeinsamen Abschnitt.
   sprache: "de",
-  examiners: [
+  gruppen: [
     { id: "lieberzeit",     label: "Lieberzeit",     icon: "🔭" },
     { id: "koellensperger", label: "Köllensperger",  icon: "📊" },
     { id: "gerner",         label: "Gerner",         icon: "🧪" },
