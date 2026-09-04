@@ -11,7 +11,7 @@
  * schlimmer als gar keine.
  */
 
-import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync, realpathSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -1435,6 +1435,25 @@ function ordnungAlsTypeScript(o) {
     + '  },\n'
 }
 
+/**
+ * Zweite, maschinenlesbare Fassung der Ordnung — als einzeilige JSON-Zeile
+ * hinter einer Kommentarmarke.
+ *
+ * `leseOrdnungAusIndex()` liest nicht aus dem TypeScript-Objekt oben zurück:
+ * Titel, Gebietsnamen und Notennamen sind freier Text aus der Quelle und
+ * können zufällig wie Syntax aussehen — ein Titel mit dem Teilstring
+ * `"gebiete:"`, ein Gebietsname mit `{` oder `}`. Ein Rückleser, der auf
+ * solche Zeichenketten im generierten Code sucht, liest dann leise falsch
+ * oder stürzt ab. Die JSON-Zeile ist dagegen ein einziges, in sich
+ * geschlossenes, escapetes Feld: `JSON.stringify()` kann nie eine
+ * echte Zeile umbrechen oder die Markierung selbst erzeugen, also gibt es
+ * nichts, worin sich Nutzertext mit der Suche nach der Marke verwechseln
+ * ließe.
+ */
+function ordnungAlsKommentar(o) {
+  return o ? `// ORDNUNG-JSON: ${JSON.stringify(o)}\n` : ''
+}
+
 export function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
   const meta = vorhanden ?? { ...standardKursMeta(kursId), estimatedHours: themenIds.length * 2 }
   const pruefer = (meta.gruppen ?? []).length
@@ -1461,7 +1480,7 @@ ${themenIds.map(t => `    ${str(t)},`).join('\n')}
   formelsatz: ${str(meta.formelsatz ?? 'chemie')},
   entwurf: ${meta.entwurf ? 'true' : 'false'},
 ${pruefer}${ordnungAlsTypeScript(meta.ordnung)}} satisfies Kurs;
-`
+${ordnungAlsKommentar(meta.ordnung)}`
 }
 
 /** Bestehende Kurs-Metadaten auslesen, damit sie beim Import erhalten bleiben. */
@@ -1519,69 +1538,16 @@ function leseGruppen(quelltext) {
  * Ohne dieses Gegenstück zu `ordnungAlsTypeScript()` löscht der nächste
  * Import ohne `=== ORDNUNG ===`-Block die Ordnung wieder — derselbe Fehler,
  * der beim Rücklesen der Gruppen (`leseGruppen()`) schon einmal auftrat.
+ *
+ * Gelesen wird nicht aus dem hübsch formatierten TypeScript-Objekt, sondern
+ * aus der einzeiligen JSON-Marke, die `ordnungAlsKommentar()` daneben
+ * schreibt — siehe dort für die Begründung: Freitext aus der Quelle (Titel,
+ * Gebiets- und Notennamen) kann sonst wie Syntax aussehen und den Leser in
+ * die Irre führen oder abstürzen lassen.
  */
 export function leseOrdnungAusIndex(quelltext) {
-  const teile = quelltext.split(/\n  ordnung:\s*\{/)
-  if (teile.length < 2) return undefined
-  const rest = teile[1]
-
-  // Bis zur schließenden Klammer auf derselben Einrücktiefe lesen: jede
-  // öffnende Klammer erhöht die Tiefe, jede schließende senkt sie — erst bei
-  // Tiefe 0 ist der Block zu Ende. `gebiete` und `noten` tragen selbst keine
-  // verschachtelten `{}`, aber nur so bleibt der Leser unabhängig davon.
-  let tiefe = 1
-  let i = 0
-  while (i < rest.length && tiefe > 0) {
-    if (rest[i] === '{') tiefe++
-    else if (rest[i] === '}') tiefe--
-    i++
-  }
-  const block = rest.slice(0, i - 1)
-
-  // `gebiete` steht als letztes Feld im Block (siehe `ordnungAlsTypeScript`) —
-  // alles davor sind die einfachen Felder samt `noten`.
-  const gebieteAb = block.indexOf('gebiete:')
-  const kopf = gebieteAb === -1 ? block : block.slice(0, gebieteAb)
-
-  const text = (name, fallback) => {
-    const m = kopf.match(new RegExp(`${name}:\\s*"((?:[^"\\\\]|\\\\.)*)"`))
-    return m ? JSON.parse(`"${m[1]}"`) : fallback
-  }
-  const zahl = (name, fallback) => {
-    const m = kopf.match(new RegExp(`${name}:\\s*(-?[\\d.]+)`))
-    return m ? Number(m[1]) : fallback
-  }
-
-  const notenBlock = kopf.split(/noten:\s*\[/)[1] ?? ''
-  const notenBis = notenBlock.indexOf(']')
-  const noten = [...notenBlock.slice(0, notenBis).matchAll(/\{([^}]*)\}/g)].map(m => {
-    const ab = m[1].match(/ab:\s*(\d+)/)
-    const note = m[1].match(/note:\s*"((?:[^"\\]|\\.)*)"/)
-    return { ab: Number(ab[1]), note: JSON.parse(`"${note[1]}"`) }
-  })
-
-  const gebieteBlock = block.split(/gebiete:\s*\[/)[1] ?? ''
-  const gebieteBis = gebieteBlock.lastIndexOf(']')
-  const gebiete = [...gebieteBlock.slice(0, gebieteBis).matchAll(/\{([^}]*)\}/g)].map(m => {
-    const id = m[1].match(/id:\s*"((?:[^"\\]|\\.)*)"/)
-    const titel = m[1].match(/titel:\s*"((?:[^"\\]|\\.)*)"/)
-    const fragen = m[1].match(/fragen:\s*(\d+)/)
-    const topicsBlock = m[1].match(/topics:\s*\[([^\]]*)\]/)
-    const topics = topicsBlock
-      ? [...topicsBlock[1].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map(t => JSON.parse(`"${t[1]}"`))
-      : []
-    return { id: JSON.parse(`"${id[1]}"`), titel: JSON.parse(`"${titel[1]}"`), fragen: Number(fragen[1]), topics }
-  })
-
-  return {
-    titel: text('titel', 'Prüfung'),
-    fragen: zahl('fragen', 0),
-    punkteJeFrage: zahl('punkteJeFrage', 1),
-    regel: text('regel', 'teilpunkte'),
-    zeitMinuten: zahl('zeitMinuten', 0),
-    noten,
-    gebiete,
-  }
+  const m = quelltext.match(/^\/\/ ORDNUNG-JSON: (.+)$/m)
+  return m ? JSON.parse(m[1]) : undefined
 }
 
 // ── Bericht ───────────────────────────────────────────────────────────────
@@ -1898,9 +1864,25 @@ function main() {
   console.log('Jetzt prüfen: npm run build && npm run test')
 }
 
-// Nur laufen, wenn die Datei als Kommandozeilenwerkzeug gestartet wurde —
-// `leseOrdnung()` & Co. werden von `src/content/importer.test.ts` sonst auch
-// direkt importiert, und ein Import darf keinen echten Lauf auslösen.
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+/**
+ * Läuft die Datei gerade als Kommandozeilenwerkzeug, nicht als Import?
+ *
+ * `leseOrdnung()` & Co. werden von `src/content/importer.test.ts` auch direkt
+ * importiert — ein Import darf keinen echten Lauf auslösen. Ein einfacher
+ * Vergleich mit `process.argv[1]` reicht nicht: `fileURLToPath(import.meta.url)`
+ * liefert den Realpath, `process.argv[1]` bei einem Aufruf über einen Symlink
+ * aber den Symlink-Pfad selbst — der Vergleich wäre dann immer falsch, und
+ * `main()` liefe wortlos nie. `realpathSync()` löst auch `process.argv[1]` auf.
+ */
+function istDirekterAufruf() {
+  if (!process.argv[1]) return false
+  try {
+    return fileURLToPath(import.meta.url) === realpathSync(process.argv[1])
+  } catch {
+    return false
+  }
+}
+
+if (istDirekterAufruf()) {
   main()
 }

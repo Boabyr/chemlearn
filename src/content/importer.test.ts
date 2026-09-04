@@ -169,13 +169,18 @@ describe('Ordnungsblock', () => {
   // Die Vorrangregel gilt wie beim KURS-Block: eine Quelle ohne ORDNUNG darf
   // eine schon eingespielte Ordnung nicht wegwerfen. Genau das ging bei den
   // Prüfern einmal schief (`gruppen`), als der Rückleser fehlte.
+  //
+  // 'nicht genügend' trägt absichtlich Leerzeichen und Umlaut in einem Wort —
+  // ein Rückleser, der auf Textmuster im generierten Code sucht statt auf
+  // eine in sich geschlossene Marke, kann daran genauso scheitern wie an den
+  // Fällen im nächsten Test.
   const BEISPIEL_ORDNUNG = {
     titel: 'Schriftliche Prüfung',
     fragen: 4,
     punkteJeFrage: 1.6,
     regel: 'streng',
     zeitMinuten: 120,
-    noten: [{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'genügend' }],
+    noten: [{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'nicht genügend' }],
     gebiete: [
       { id: 'erstes-gebiet', titel: 'Erstes Gebiet', fragen: 2, topics: ['01-eins', '02-zwei'] },
       { id: 'zweites-gebiet', titel: 'Zweites Gebiet', fragen: 2, topics: ['03-drei', '04-vier'] },
@@ -186,5 +191,29 @@ describe('Ordnungsblock', () => {
     const index = kursIndexAlsTypeScript(
       { ...standardKursMeta('kurs'), ordnung: BEISPIEL_ORDNUNG }, 'kurs', ['01-eins'])
     expect(leseOrdnungAusIndex(index)).toEqual(BEISPIEL_ORDNUNG)
+  })
+
+  it('übersteht Freitext, der wie Syntax des generierten Codes aussieht', () => {
+    // Ein Rückleser, der im generierten Code nach Textmustern sucht
+    // ("gebiete:", "}", …), kann von genau solchem Freitext in die Irre
+    // geführt werden — ein Titel mit dem Teilstring "gebiete:", ein
+    // Gebietsname mit geschweifter Klammer, dazu eine leere Notenliste
+    // (die Suche nach dem ersten "]" nach "noten: [" trifft dann sofort
+    // die Klammer von "gebiete") und mehrere Gebiete.
+    const tueckischeOrdnung = {
+      titel: 'Alle gebiete: eine Übersicht',
+      fragen: 5,
+      punkteJeFrage: 1,
+      regel: 'teilpunkte',
+      zeitMinuten: 45,
+      noten: [],
+      gebiete: [
+        { id: 'a', titel: 'Gebiet {A}', fragen: 2, topics: ['01-eins'] },
+        { id: 'b', titel: 'Übung } und { Klausur', fragen: 3, topics: ['02-zwei', '03-drei'] },
+      ],
+    }
+    const index = kursIndexAlsTypeScript(
+      { ...standardKursMeta('kurs'), ordnung: tueckischeOrdnung }, 'kurs', ['01-eins', '02-zwei', '03-drei'])
+    expect(leseOrdnungAusIndex(index)).toEqual(tueckischeOrdnung)
   })
 })
