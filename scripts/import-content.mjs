@@ -13,9 +13,11 @@
 
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'node:fs'
 import { join, basename } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import { kartenId } from './lib/kartenId.mjs'
 import { pruefeAusdruck } from '../src/lib/formel/ausdruck.mjs'
+import { verteileFragen } from '../src/lib/pruefung/verteilung.mjs'
 const ROOT = process.cwd()
 const COURSES_DIR = join(ROOT, 'src/courses')
 const EXAMS_DIR = join(ROOT, 'src/data/exams')
@@ -117,12 +119,14 @@ function teileAuf(text, datei) {
   const themen = []
   const pruefungen = []
   const kurskoepfe = []
+  const ordnungen = []
+  const poolBloecke = []
 
   // `VERGEBEN` und `FORTSETZUNG FOLGT` sind Nachspann für den nächsten
   // Prompt-Lauf, kein Inhalt. Sie werden hier erkannt und fallen gelassen —
   // sonst landen sie im letzten Abschnitt des letzten Themas.
   const teile = text.split(
-    /^===\s*(DATEI:\s*[^=]+?|PRÜFUNG|PRUEFUNG|KURS|VERGEBEN|FORTSETZUNG FOLGT)\s*===\s*$/m)
+    /^===\s*(DATEI:\s*[^=]+?|PRÜFUNG|PRUEFUNG|KURS|ORDNUNG|FRAGENPOOL|VERGEBEN|FORTSETZUNG FOLGT)\s*===\s*$/m)
   // teile[0] ist Vorspann, danach abwechselnd Kopf und Inhalt
   for (let i = 1; i < teile.length; i += 2) {
     const kopf = teile[i].trim()
@@ -132,13 +136,17 @@ function teileAuf(text, datei) {
       themen.push({ name, inhalt, ort: `${datei} → ${name}` })
     } else if (/^KURS$/i.test(kopf)) {
       kurskoepfe.push({ inhalt, ort: `${datei} → Kurskopf` })
+    } else if (/^ORDNUNG$/i.test(kopf)) {
+      ordnungen.push({ inhalt, ort: `${datei} → Ordnung` })
+    } else if (/^FRAGENPOOL$/i.test(kopf)) {
+      poolBloecke.push({ inhalt, ort: `${datei} → Fragenpool` })
     } else if (/^(VERGEBEN|FORTSETZUNG FOLGT)$/i.test(kopf)) {
       continue
     } else {
       pruefungen.push({ inhalt, ort: `${datei} → Prüfung` })
     }
   }
-  return { themen, pruefungen, kurskoepfe }
+  return { themen, pruefungen, kurskoepfe, ordnungen, poolBloecke }
 }
 
 /**
@@ -183,6 +191,107 @@ function baueKursKopf(inhalt, ort) {
   if (pruefer.length) kopf.gruppen = pruefer
 
   return kopf
+}
+
+/** Kennung aus einem Anzeigenamen: "Optische Instrumente" → "optische-instrumente". */
+function kennung(text) {
+  return String(text).toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+}
+
+/**
+ * Prüfungsordnung aus der Quelle.
+ *
+ * `gebiet:` und `noten:` trennen gleichartige Einträge mit dem senkrechten
+ * Strich, nicht `schlüssel: wert`-Paare — `inlineFields()` würde sie zerlegen.
+ */
+export function leseOrdnung(inhalt, ort) {
+  const kv = keyValues(inhalt)
+  const zahl = (feld, pflicht) => {
+    const roh = kv[feld]
+    if (roh === undefined) {
+      if (pflicht) problem(ort, `ORDNUNG ohne ${feld}`)
+      return undefined
+    }
+    const n = Number(String(roh).replace(',', '.'))
+    if (!Number.isFinite(n) || n <= 0) { problem(ort, `${feld}: "${roh}" ist keine Zahl`); return undefined }
+    return n
+  }
+
+  const noten = (kv.noten ?? '').split('|').map(s => s.trim()).filter(Boolean)
+    .map(eintrag => {
+      const m = eintrag.match(/^(\d+)\s+(.+)$/)
+      if (!m) { problem(ort, `noten: "${eintrag}" — erwartet "Punkte Notenname"`); return null }
+      return { ab: Number(m[1]), note: m[2].trim() }
+    })
+    .filter(Boolean)
+
+  for (let i = 1; i < noten.length; i++) {
+    if (noten[i].ab >= noten[i - 1].ab) problem(ort, 'noten: Grenzen müssen streng fallen')
+  }
+
+  const roheGebiete = [...String(inhalt).matchAll(/^gebiet:\s*(.+)$/gm)].map(m => {
+    const stuecke = m[1].split('|').map(s => s.trim())
+    const titel = stuecke[0]
+    const topics = (stuecke[1] ?? '').split(',').map(s => s.trim()).filter(Boolean)
+    const vorgabe = stuecke.slice(2).map(s => s.match(/^fragen:\s*(\d+)$/)).find(Boolean)
+    if (topics.length === 0) problem(ort, `gebiet "${titel}" ohne Kapitel`)
+    return { id: kennung(titel), titel, topics, fragen: vorgabe ? Number(vorgabe[1]) : undefined }
+  })
+  if (roheGebiete.length === 0) problem(ort, 'ORDNUNG ohne gebiet-Zeile')
+
+  const gesamt = zahl('fragen', true) ?? 0
+  const verteilung = verteileFragen(
+    gesamt,
+    roheGebiete.map(g => ({ id: g.id, kapitel: g.topics.length, fragen: g.fragen })),
+  )
+
+  const regel = kv.regel ?? 'teilpunkte'
+  if (!['streng', 'teilpunkte'].includes(regel)) {
+    problem(ort, `regel: "${regel}" — erlaubt sind streng und teilpunkte`)
+  }
+
+  const punkteJeFrage = zahl('punkte_je_frage', true) ?? 1
+  return {
+    titel: kv.titel || 'Prüfung',
+    fragen: gesamt,
+    punkteJeFrage,
+    regel,
+    zeitMinuten: zahl('zeit_minuten', false) ?? Math.max(15, Math.round(gesamt * punkteJeFrage)),
+    noten,
+    gebiete: roheGebiete.map(g => ({
+      id: g.id, titel: g.titel, topics: g.topics, fragen: verteilung.get(g.id) ?? 0,
+    })),
+  }
+}
+
+/**
+ * Prüft eine gelesene Ordnung gegen die Themenliste des Kurses.
+ *
+ * Das kann `leseOrdnung()` selbst noch nicht: ihr fehlt die Themenliste. Die
+ * Prüfung fängt auch den Fall, dass ausdrückliche `fragen:`-Vorgaben in den
+ * Gebieten zusammen schon mehr ergeben als die Ordnung insgesamt nennt —
+ * `verteileFragen()` verteilt dann nichts mehr, und die Summe stimmt nicht.
+ */
+function pruefeOrdnungGegenThemen(ordnung, themenIds, ort) {
+  const zugeordnet = ordnung.gebiete.flatMap(g => g.topics)
+
+  for (const id of zugeordnet) {
+    if (!themenIds.includes(id)) problem(ort, `gebiet nennt unbekanntes Thema "${id}"`)
+  }
+  for (const id of themenIds) {
+    const treffer = ordnung.gebiete.filter(g => g.topics.includes(id))
+    if (treffer.length === 0) problem(ort, `Thema "${id}" steht in keinem Gebiet`)
+    if (treffer.length > 1) {
+      problem(ort, `Thema "${id}" steht in mehreren Gebieten: ${treffer.map(g => g.titel).join(', ')}`)
+    }
+  }
+
+  const fest = ordnung.gebiete.reduce((summe, g) => summe + g.fragen, 0)
+  if (fest !== ordnung.fragen) {
+    problem(ort, `Gebietsfragen ergeben ${fest}, die Ordnung nennt ${ordnung.fragen}`)
+  }
 }
 
 /** Abschnitte einer Themendatei (`# META`, `# THEORIE`, …). */
@@ -1284,7 +1393,7 @@ export { questions, structures }
 }
 
 /** Voreinstellung für ein Fach, das es noch nicht gibt. */
-function standardKursMeta(kursId) {
+export function standardKursMeta(kursId) {
   return {
     id: kursId, title: kursId, subtitle: '', icon: '📘', color: '#3b82f6',
     level: 'Uni', description: '', sprache: 'de', formelsatz: 'chemie',
@@ -1308,7 +1417,25 @@ function stundenAusThemen(kursId, themenIds) {
   return Math.round(minuten / 60 * 10) / 10
 }
 
-function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
+/** Ordnung als TypeScript ausgeben — von Hand, wie die übrigen Felder. */
+function ordnungAlsTypeScript(o) {
+  if (!o) return ''
+  const gebiete = o.gebiete.map(g =>
+    `      { id: ${str(g.id)}, titel: ${str(g.titel)}, fragen: ${g.fragen},\n`
+    + `        topics: [${g.topics.map(str).join(', ')}] },`).join('\n')
+  const noten = o.noten.map(n => `{ ab: ${n.ab}, note: ${str(n.note)} }`).join(', ')
+  return '  ordnung: {\n'
+    + `    titel: ${str(o.titel)},\n`
+    + `    fragen: ${o.fragen},\n`
+    + `    punkteJeFrage: ${o.punkteJeFrage},\n`
+    + `    regel: ${str(o.regel)},\n`
+    + `    zeitMinuten: ${o.zeitMinuten},\n`
+    + `    noten: [${noten}],\n`
+    + `    gebiete: [\n${gebiete}\n    ],\n`
+    + '  },\n'
+}
+
+export function kursIndexAlsTypeScript(vorhanden, kursId, themenIds) {
   const meta = vorhanden ?? { ...standardKursMeta(kursId), estimatedHours: themenIds.length * 2 }
   const pruefer = (meta.gruppen ?? []).length
     ? '  gruppen: [\n' + meta.gruppen.map(p =>
@@ -1333,7 +1460,7 @@ ${themenIds.map(t => `    ${str(t)},`).join('\n')}
   sprache: ${str(meta.sprache ?? 'de')},
   formelsatz: ${str(meta.formelsatz ?? 'chemie')},
   entwurf: ${meta.entwurf ? 'true' : 'false'},
-${pruefer}} satisfies Kurs;
+${pruefer}${ordnungAlsTypeScript(meta.ordnung)}} satisfies Kurs;
 `
 }
 
@@ -1360,6 +1487,7 @@ function leseKursMeta(kursId) {
     sprache: feld('sprache', 'de'), formelsatz: feld('formelsatz', 'chemie'),
     entwurf: /\bentwurf:\s*true\b/.test(s),
     gruppen: leseGruppen(s),
+    ordnung: leseOrdnungAusIndex(s),
   }
 }
 
@@ -1383,6 +1511,77 @@ function leseGruppen(quelltext) {
     }
     return { id: felder.id, label: felder.label ?? felder.id, icon: felder.icon }
   }).filter(p => p.id)
+}
+
+/**
+ * Ordnung aus einem vorhandenen Index zurücklesen.
+ *
+ * Ohne dieses Gegenstück zu `ordnungAlsTypeScript()` löscht der nächste
+ * Import ohne `=== ORDNUNG ===`-Block die Ordnung wieder — derselbe Fehler,
+ * der beim Rücklesen der Gruppen (`leseGruppen()`) schon einmal auftrat.
+ */
+export function leseOrdnungAusIndex(quelltext) {
+  const teile = quelltext.split(/\n  ordnung:\s*\{/)
+  if (teile.length < 2) return undefined
+  const rest = teile[1]
+
+  // Bis zur schließenden Klammer auf derselben Einrücktiefe lesen: jede
+  // öffnende Klammer erhöht die Tiefe, jede schließende senkt sie — erst bei
+  // Tiefe 0 ist der Block zu Ende. `gebiete` und `noten` tragen selbst keine
+  // verschachtelten `{}`, aber nur so bleibt der Leser unabhängig davon.
+  let tiefe = 1
+  let i = 0
+  while (i < rest.length && tiefe > 0) {
+    if (rest[i] === '{') tiefe++
+    else if (rest[i] === '}') tiefe--
+    i++
+  }
+  const block = rest.slice(0, i - 1)
+
+  // `gebiete` steht als letztes Feld im Block (siehe `ordnungAlsTypeScript`) —
+  // alles davor sind die einfachen Felder samt `noten`.
+  const gebieteAb = block.indexOf('gebiete:')
+  const kopf = gebieteAb === -1 ? block : block.slice(0, gebieteAb)
+
+  const text = (name, fallback) => {
+    const m = kopf.match(new RegExp(`${name}:\\s*"((?:[^"\\\\]|\\\\.)*)"`))
+    return m ? JSON.parse(`"${m[1]}"`) : fallback
+  }
+  const zahl = (name, fallback) => {
+    const m = kopf.match(new RegExp(`${name}:\\s*(-?[\\d.]+)`))
+    return m ? Number(m[1]) : fallback
+  }
+
+  const notenBlock = kopf.split(/noten:\s*\[/)[1] ?? ''
+  const notenBis = notenBlock.indexOf(']')
+  const noten = [...notenBlock.slice(0, notenBis).matchAll(/\{([^}]*)\}/g)].map(m => {
+    const ab = m[1].match(/ab:\s*(\d+)/)
+    const note = m[1].match(/note:\s*"((?:[^"\\]|\\.)*)"/)
+    return { ab: Number(ab[1]), note: JSON.parse(`"${note[1]}"`) }
+  })
+
+  const gebieteBlock = block.split(/gebiete:\s*\[/)[1] ?? ''
+  const gebieteBis = gebieteBlock.lastIndexOf(']')
+  const gebiete = [...gebieteBlock.slice(0, gebieteBis).matchAll(/\{([^}]*)\}/g)].map(m => {
+    const id = m[1].match(/id:\s*"((?:[^"\\]|\\.)*)"/)
+    const titel = m[1].match(/titel:\s*"((?:[^"\\]|\\.)*)"/)
+    const fragen = m[1].match(/fragen:\s*(\d+)/)
+    const topicsBlock = m[1].match(/topics:\s*\[([^\]]*)\]/)
+    const topics = topicsBlock
+      ? [...topicsBlock[1].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map(t => JSON.parse(`"${t[1]}"`))
+      : []
+    return { id: JSON.parse(`"${id[1]}"`), titel: JSON.parse(`"${titel[1]}"`), fragen: Number(fragen[1]), topics }
+  })
+
+  return {
+    titel: text('titel', 'Prüfung'),
+    fragen: zahl('fragen', 0),
+    punkteJeFrage: zahl('punkteJeFrage', 1),
+    regel: text('regel', 'teilpunkte'),
+    zeitMinuten: zahl('zeitMinuten', 0),
+    noten,
+    gebiete,
+  }
 }
 
 // ── Bericht ───────────────────────────────────────────────────────────────
@@ -1450,15 +1649,19 @@ function main() {
   const roheThemen = []
   const rohePruefungen = []
   const roheKurskoepfe = []
+  const roheOrdnungen = []
+  const rohePoolBloecke = []
   // Je Datei mitschreiben, was herauskam. Eine Datei, die nichts hergibt,
   // fiel früher niemandem auf — Kapitel 15 der Physik fehlte ohne ein Wort,
   // weil ihr Kopf `=== DATEI: ... ===` fehlte.
   const jeDatei = []
   for (const { datei, text } of quellen) {
-    const { themen, pruefungen, kurskoepfe } = teileAuf(text, datei)
+    const { themen, pruefungen, kurskoepfe, ordnungen, poolBloecke } = teileAuf(text, datei)
     roheThemen.push(...themen)
     rohePruefungen.push(...pruefungen)
     roheKurskoepfe.push(...kurskoepfe)
+    roheOrdnungen.push(...ordnungen)
+    rohePoolBloecke.push(...poolBloecke)
     jeDatei.push({ datei, themen: themen.length, pruefungen: pruefungen.length, kurskopf: kurskoepfe.length })
   }
 
@@ -1470,9 +1673,22 @@ function main() {
   if (roheKurskoepfe.length > 1) {
     problem('Kurskopf', `${roheKurskoepfe.length} mal "=== KURS ===" im Ordner — es darf nur einen geben`)
   }
-  const kursKopf = roheKurskoepfe.length
+  let kursKopf = roheKurskoepfe.length
     ? baueKursKopf(roheKurskoepfe[0].inhalt, roheKurskoepfe[0].ort)
     : null
+
+  if (roheOrdnungen.length > 1) {
+    problem('Ordnung', `${roheOrdnungen.length} mal "=== ORDNUNG ===" im Ordner — es darf nur einen geben`)
+  }
+  const ordnungOrt = roheOrdnungen[0]?.ort ?? 'Ordnung'
+  const ordnungGelesen = roheOrdnungen.length ? leseOrdnung(roheOrdnungen[0].inhalt, roheOrdnungen[0].ort) : undefined
+  // Dieselbe Vorrangregel wie beim KURS-Block: eine Quelle ohne ORDNUNG darf
+  // eine schon eingespielte Ordnung nicht überschreiben — der Schlüssel wird
+  // deshalb nur gesetzt, wenn diese Quelle tatsächlich einen Block mitbringt.
+  if (ordnungGelesen) {
+    if (kursKopf) kursKopf.ordnung = ordnungGelesen
+    else kursKopf = { ordnung: ordnungGelesen }
+  }
 
   const alleRohThemen = roheThemen.map(baueThema).sort((a, b) => a.id.localeCompare(b.id))
   // Sollstärke aus CONTENT-PROMPT.md schon hier prüfen: sechs Quizfragen,
@@ -1502,6 +1718,10 @@ function main() {
     ? readdirSync(join(COURSES_DIR, kursId, 'topics')).filter(f => f.endsWith('.ts')).map(f => f.replace(/\.ts$/, ''))
     : []
   const alleThemenIds = [...new Set([...bestehendeThemen, ...themenIds])].sort()
+
+  // Erst jetzt steht die Themenliste des Kurses fest — vorher konnte
+  // `leseOrdnung()` die Gebiete nicht gegen sie prüfen.
+  if (meta.ordnung) pruefeOrdnungGegenThemen(meta.ordnung, alleThemenIds, ordnungOrt)
 
   // Ein Prüfungsblock darf über `kurs:` ein anderes Fach ansprechen — dann
   // gehören seine Fragen auch dorthin und nicht in den Quellordner-Kurs.
@@ -1678,4 +1898,9 @@ function main() {
   console.log('Jetzt prüfen: npm run build && npm run test')
 }
 
-main()
+// Nur laufen, wenn die Datei als Kommandozeilenwerkzeug gestartet wurde —
+// `leseOrdnung()` & Co. werden von `src/content/importer.test.ts` sonst auch
+// direkt importiert, und ein Import darf keinen echten Lauf auslösen.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  main()
+}

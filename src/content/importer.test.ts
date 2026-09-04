@@ -3,6 +3,9 @@ import { execFileSync } from 'node:child_process'
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import {
+  leseOrdnung, leseOrdnungAusIndex, kursIndexAlsTypeScript, standardKursMeta,
+} from '../../scripts/import-content.mjs'
 
 /**
  * Der Importer gegen echtes Nicht-Chemie-Material.
@@ -133,5 +136,55 @@ describe('Importer', () => {
     expect(index()).toContain('entwurf: true')
     expect(index()).toContain('{ id: "uebung", label: "Übungsfragen", icon: "📝" }')
     expect(index()).toContain('{ id: "probe", label: "Probeklausur", icon: "📄" }')
+  })
+})
+
+describe('Ordnungsblock', () => {
+  it('rechnet die Fragen je Gebiet aus und schreibt sie in den Kurskopf', () => {
+    const quelle = [
+      '=== ORDNUNG ===',
+      'titel: Schriftliche Prüfung',
+      'fragen: 4',
+      'punkte_je_frage: 1.6',
+      'regel: streng',
+      'zeit_minuten: 120',
+      'noten: 29 sehr gut | 17 genügend',
+      'gebiet: Erstes Gebiet | 01-eins, 02-zwei',
+      'gebiet: Zweites Gebiet | 03-drei, 04-vier',
+      '',
+    ].join('\n')
+
+    const ordnung = leseOrdnung(quelle, 'Prüfung')
+    expect(ordnung.fragen).toBe(4)
+    expect(ordnung.punkteJeFrage).toBe(1.6)
+    expect(ordnung.regel).toBe('streng')
+    expect(ordnung.zeitMinuten).toBe(120)
+    expect(ordnung.noten).toEqual([{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'genügend' }])
+    expect(ordnung.gebiete.map((g: { id: string; fragen: number }) => [g.id, g.fragen])).toEqual([
+      ['erstes-gebiet', 2], ['zweites-gebiet', 2],
+    ])
+    expect(ordnung.gebiete[0].topics).toEqual(['01-eins', '02-zwei'])
+  })
+
+  // Die Vorrangregel gilt wie beim KURS-Block: eine Quelle ohne ORDNUNG darf
+  // eine schon eingespielte Ordnung nicht wegwerfen. Genau das ging bei den
+  // Prüfern einmal schief (`gruppen`), als der Rückleser fehlte.
+  const BEISPIEL_ORDNUNG = {
+    titel: 'Schriftliche Prüfung',
+    fragen: 4,
+    punkteJeFrage: 1.6,
+    regel: 'streng',
+    zeitMinuten: 120,
+    noten: [{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'genügend' }],
+    gebiete: [
+      { id: 'erstes-gebiet', titel: 'Erstes Gebiet', fragen: 2, topics: ['01-eins', '02-zwei'] },
+      { id: 'zweites-gebiet', titel: 'Zweites Gebiet', fragen: 2, topics: ['03-drei', '04-vier'] },
+    ],
+  }
+
+  it('behält die Ordnung, wenn ein Lauf ohne Ordnungsblock kommt', () => {
+    const index = kursIndexAlsTypeScript(
+      { ...standardKursMeta('kurs'), ordnung: BEISPIEL_ORDNUNG }, 'kurs', ['01-eins'])
+    expect(leseOrdnungAusIndex(index)).toEqual(BEISPIEL_ORDNUNG)
   })
 })
