@@ -1,0 +1,155 @@
+{
+  "questions": [
+    {
+      "id": "pool-02-elektrostatik-1",
+      "source": "Skript Kap. 2",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "02-elektrostatik",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Der Abstand zwischen zwei Punktladungen wird verdoppelt, alle anderen Größen bleiben gleich. Wie verändert sich die Coulombkraft zwischen ihnen?",
+      "options": [
+        "Sie halbiert sich",
+        "Sie bleibt unverändert",
+        "Sie sinkt auf ein Viertel",
+        "Sie vervierfacht sich"
+      ],
+      "correct": 2,
+      "explanation": "Die Coulombkraft ist F = (1/4πε₀)·|q₁q₂|/r², also umgekehrt proportional zu r². Eine Verdopplung von r ergibt den Faktor 1/2² = 1/4 — die Kraft sinkt auf ein Viertel. „Halbiert sich\" verwechselt eine lineare mit einer quadratischen Abhängigkeit. „Unverändert\" ignoriert die Abstandsabhängigkeit ganz. „Vervierfacht sich\" wäre die Folge einer Halbierung des Abstands, nicht einer Verdopplung."
+    },
+    {
+      "id": "pool-05-kirchhoff-und-schaltungen-1",
+      "source": "Skript Kap. 5",
+      "gruppe": "gleichstromkreise",
+      "topicId": "05-kirchhoff-und-schaltungen",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zu Reihen- und Parallelschaltung von Widerständen sind richtig?",
+      "options": [
+        "In der Reihenschaltung ist der Gesamtwiderstand größer als jeder Einzelwiderstand",
+        "In der Parallelschaltung ist der Gesamtwiderstand größer als der kleinste Einzelwiderstand",
+        "In der Parallelschaltung liegt an allen Widerständen dieselbe Spannung an",
+        "In der Reihenschaltung ist der Strom in den Widerständen unterschiedlich groß"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "In der Reihenschaltung addieren sich die Einzelwiderstände zu R_ges = R₁ + R₂ + …, das ist immer größer als jeder einzelne Summand — die erste Aussage stimmt. In der Parallelschaltung liegt an allen Zweigen dieselbe Spannung an, das ist die dritte Aussage und ebenfalls richtig. Falsch ist die zweite Aussage: Der Ersatzwiderstand einer Parallelschaltung ist stets kleiner als der kleinste Einzelwiderstand, nicht größer. Falsch ist auch die vierte: In der Reihenschaltung fließt durch alle Widerstände derselbe Strom, das ist gerade ihr Kennzeichen."
+    },
+    {
+      "id": "pool-09-statische-magnetfelder-1",
+      "source": "Skript Kap. 9",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "09-statische-magnetfelder",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Zwei parallele, stromdurchflossene Leiter tragen Ströme in gleicher Richtung. Wie wirken sie aufeinander?",
+      "options": [
+        "Sie stoßen sich ab",
+        "Sie ziehen sich an",
+        "Sie üben keine Kraft aufeinander aus",
+        "Die Richtung der Kraft hängt von der Leiterlänge ab, nicht vom Strom"
+      ],
+      "correct": 1,
+      "explanation": "Fließen die Ströme in gleicher Richtung, ziehen sich die Leiter an — das ist die Grundlage der Ampere-Definition. Abstoßung träte nur bei entgegengesetzten Stromrichtungen auf. Kräftefreiheit widerspricht dem Ørsted-Effekt: Jeder stromdurchflossene Leiter erzeugt ein Magnetfeld, das auf den Strom im Nachbarleiter wirkt. Die Leiterlänge beeinflusst nur die Stärke der Kraft, nicht ihre Richtung — die Richtung folgt allein aus den Stromrichtungen."
+    },
+    {
+      "id": "pool-12-elektromagnetische-wellen-1",
+      "source": "Skript Kap. 12",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "12-elektromagnetische-wellen",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zum Fernfeld eines Hertzschen Dipols treffen zu?",
+      "options": [
+        "E-Feld und B-Feld stehen senkrecht zueinander",
+        "Die Welle breitet sich mit Lichtgeschwindigkeit aus",
+        "Die Feldstärke fällt wie bei einem statischen Coulombfeld mit 1/r² ab",
+        "E-Feld und B-Feld stehen beide senkrecht zur Ausbreitungsrichtung"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Im Fernfeld des Hertzschen Dipols stehen E- und B-Feld senkrecht zueinander und beide senkrecht zur Ausbreitungsrichtung, und die Welle läuft mit c = 1/√(μ₀ε₀) — drei richtige Aussagen. Falsch ist die dritte: Das Fernfeld fällt mit 1/r ab, nicht mit 1/r² wie ein statisches Coulombfeld. Die 1/r²-Abhängigkeit gehört zum elektrostatischen Feld einer ruhenden Ladung, nicht zur abgestrahlten Welle."
+    },
+    {
+      "id": "pool-15-geometrische-optik-1",
+      "source": "Skript Kap. 15",
+      "gruppe": "geometrische-optik",
+      "topicId": "15-geometrische-optik",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Nach dem Fermatschen Prinzip nimmt ein Lichtstrahl zwischen zwei Punkten den Weg mit …",
+      "options": [
+        "minimaler Laufzeit in jedem denkbaren Fall, auch wenn mehrere Wege möglich sind",
+        "dem geometrisch kürzesten Abstand, unabhängig vom Medium",
+        "maximaler optischer Weglänge",
+        "extremaler optischer Weglänge"
+      ],
+      "correct": 3,
+      "explanation": "Das Fermatsche Prinzip fordert δ∫n(x)dl = 0, also einen extremalen — nicht notwendig minimalen — Wert der optischen Weglänge; nur in homogener Materie entspricht das der minimalen Laufzeit. „Minimale Laufzeit in jedem Fall\" gilt deshalb nicht allgemein. Der geometrisch kürzeste Abstand ignoriert die Brechzahl n und damit das Brechungsgesetz. Ein Extremalprinzip verlangt kein Maximum der Weglänge, „maximale optische Weglänge\" ist keine korrekte Formulierung des Prinzips."
+    },
+    {
+      "id": "pool-17-young-doppelspalt-1",
+      "source": "Skript Kap. 17",
+      "gruppe": "interferenz",
+      "topicId": "17-young-doppelspalt",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Beim Youngschen Doppelspaltversuch wird der Spaltabstand d vergrößert, alle anderen Größen bleiben gleich. Welche Aussagen sind richtig?",
+      "options": [
+        "Der Streifenabstand auf dem Schirm wird kleiner",
+        "Die Wellenlänge des verwendeten Lichts ändert sich dadurch",
+        "Die Interferenzstreifen verschwinden vollständig",
+        "Der Gangunterschied bei festem Beobachtungswinkel θ wird größer, weil Δs ≈ d sinθ"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Der Streifenabstand auf dem Schirm ist x = zλ/d — ein größeres d macht x kleiner, die erste Aussage stimmt. Der Gangunterschied Δs ≈ d sinθ wächst bei festem Winkel θ linear mit d, die vierte Aussage stimmt ebenfalls. Die Wellenlänge ist eine Eigenschaft der Lichtquelle und hängt nicht vom Spaltabstand ab. Die Streifen verschwinden nicht durch eine reine Vergrößerung von d, sondern nur bei zu großer Quellausdehnung oder fehlender Kohärenz — hier ändert sich nur die Streifengeometrie."
+    },
+    {
+      "id": "pool-25-beugungsgitter-1",
+      "source": "Skript Kap. 25",
+      "gruppe": "beugung",
+      "topicId": "25-beugungsgitter",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Beugungsgitter wird durch eines mit doppelt so vielen Spalten N ersetzt, der Spaltabstand d bleibt gleich. Was passiert mit den Hauptmaxima?",
+      "options": [
+        "Sie werden schärfer, also schmaler",
+        "Sie werden breiter",
+        "Ihre Winkellage verschiebt sich",
+        "Es entstehen keine Nebenmaxima mehr"
+      ],
+      "correct": 0,
+      "explanation": "Die Breite der Hauptmaxima ist umgekehrt proportional zur Spaltzahl N — mehr Spalte bedeuten schärfere, also schmalere Hauptmaxima. Die Winkellage folgt allein aus der Gittergleichung d sinθ_m = mλ und hängt nicht von N ab, sie verschiebt sich also nicht. Zwischen zwei Hauptmaxima liegen weiterhin N−2 Nebenmaxima; sie werden mit wachsendem N schwächer, verschwinden aber nicht."
+    },
+    {
+      "id": "pool-28-fernrohre-kepler-galilei-1",
+      "source": "Skript Kap. 28",
+      "gruppe": "optische-instrumente",
+      "topicId": "28-fernrohre-kepler-galilei",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zum Kepler-Fernrohr (Objektiv und Okular sind beide Sammellinsen) treffen zu?",
+      "options": [
+        "Das Okular ist eine Zerstreuungslinse",
+        "Das entstehende Bild ist umgekehrt",
+        "Die Baulänge beträgt f_obj + f_ok",
+        "Eine größere Objektivbrennweite ergibt bei gleicher Okularbrennweite eine größere Vergrößerung"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Beim Kepler-Fernrohr sind Objektiv und Okular Sammellinsen, das entstehende Bild ist reell, verkleinert und umgekehrt — die zweite Aussage stimmt. Die Baulänge ergibt sich aus den zusammenfallenden Brennebenen zu f_obj + f_ok, die dritte Aussage stimmt ebenfalls. Die Winkelvergrößerung ist V_F = f_obj/f_ok, bei gleichbleibendem f_ok erhöht eine größere Objektivbrennweite also die Vergrößerung — die vierte Aussage stimmt auch. Falsch ist die erste: Eine Zerstreuungslinse als Okular kennzeichnet das Galilei-Fernrohr, nicht das Kepler-Fernrohr."
+    }
+  ],
+  "structures": []
+}
