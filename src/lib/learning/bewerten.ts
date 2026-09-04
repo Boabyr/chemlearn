@@ -31,7 +31,13 @@ export function leseZahl(eingabe: string): number | null {
   return Number.isFinite(zahl) ? zahl : null
 }
 
-export function bewerte(frage: ExamQuestion, antwort: Antwort): Bewertung {
+export type Punkteregel = 'teilpunkte' | 'streng'
+
+export function bewerte(
+  frage: ExamQuestion,
+  antwort: Antwort,
+  regel: Punkteregel = 'teilpunkte',
+): Bewertung {
   const treffer = (korrekt: boolean): Bewertung =>
     ({ gueltig: true, korrekt, punkte: korrekt ? frage.points : 0 })
 
@@ -47,12 +53,17 @@ export function bewerte(frage: ExamQuestion, antwort: Antwort): Bewertung {
       if (auswahl.length === 0) return UNGUELTIG
       const richtig = frage.correct as number[]
 
-      // Teilpunkte: getroffene minus falsch angekreuzte, nie unter null.
-      // Alles-oder-nichts bestrafte einen von drei Fehlern wie drei von drei.
       const getroffen = auswahl.filter(a => richtig.includes(a)).length
       const daneben = auswahl.length - getroffen
-      const anteil = Math.max(0, (getroffen - daneben) / richtig.length)
       const vollstaendig = getroffen === richtig.length && daneben === 0
+
+      // `teilpunkte` zieht Fehlgriffe von Treffern ab — Alles-oder-nichts
+      // bestrafte einen von drei Fehlern wie drei von drei.
+      // `streng` folgt der Prüfungsordnung von Experimentalphysik 2: ein
+      // falsches Kreuz kostet die ganze Frage, ein fehlendes nur seinen Anteil.
+      const anteil = regel === 'streng'
+        ? (daneben > 0 ? 0 : getroffen / richtig.length)
+        : Math.max(0, (getroffen - daneben) / richtig.length)
 
       return {
         gueltig: true,
