@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
   leseOrdnung, leseOrdnungAusIndex, kursIndexAlsTypeScript, standardKursMeta,
+  lesePoolfragen, nimmFehler,
 } from '../../scripts/import-content.mjs'
 
 /**
@@ -215,5 +216,57 @@ describe('Ordnungsblock', () => {
     const index = kursIndexAlsTypeScript(
       { ...standardKursMeta('kurs'), ordnung: tueckischeOrdnung }, 'kurs', ['01-eins', '02-zwei', '03-drei'])
     expect(leseOrdnungAusIndex(index)).toEqual(tueckischeOrdnung)
+  })
+})
+
+describe('Fragenpool', () => {
+  it('trägt Gebiet und Punkte aus der Ordnung ein', () => {
+    const ordnung = {
+      punkteJeFrage: 1.6,
+      gebiete: [{ id: 'optik', titel: 'Optik', topics: ['15-geometrische-optik'], fragen: 1 }],
+    }
+    const quelle = [
+      '--- FRAGE ---',
+      'typ: mc-multi',
+      'thema: 15-geometrische-optik',
+      'quelle: Skript Kap. 15',
+      'frage: Welche Aussagen zur Brechung treffen zu?',
+      '- Der Einfallswinkel bleibt gleich',
+      '- Snellius verknüpft die Winkel',
+      '- Der Brechungsindex hängt von der Wellenlänge ab',
+      '- Licht wird im Medium schneller',
+      'richtig: 2,3',
+      'erklaerung: Snellius gilt, Dispersion gibt es, schneller wird Licht nicht.',
+      '',
+    ].join('\n')
+
+    const fragen = lesePoolfragen(quelle, ordnung, 'experimentale-physik-2', 'Pool')
+    expect(fragen).toHaveLength(1)
+    expect(fragen[0].gruppe).toBe('optik')
+    expect(fragen[0].points).toBe(1.6)
+    expect(fragen[0].type).toBe('mc-multi')
+    expect(fragen[0].correct).toEqual([1, 2])
+    expect(fragen[0].source).toBe('Skript Kap. 15')
+    expect(nimmFehler()).toEqual([])
+  })
+
+  // Der Auftrag formuliert diese Prüfung ursprünglich mit `toThrow` — aber
+  // der Importer wirft für Inhaltsfehler grundsätzlich nicht: er sammelt sie
+  // über `problem()` und bricht am Ende in `main()` gebündelt ab, statt bei
+  // der ersten Beanstandung eine Exception zu werfen (siehe `baueFragen()`,
+  // `leseOrdnung()` & Co. — keine einzige davon wirft). `lesePoolfragen()`
+  // reiht sich dort ein: eine Poolfrage mit eigenem `punkte`-Feld wird nicht
+  // geworfen, sondern fällt aus dem Ergebnis und hinterlässt einen Fehler in
+  // der Sammlung, die `nimmFehler()` zu Testzwecken ausliest.
+  it('weist eine Poolfrage mit eigenem Punktefeld ab', () => {
+    nimmFehler() // Sammlung vor der Prüfung leeren
+    const fragen = lesePoolfragen(
+      '--- FRAGE ---\ntyp: mc-single\npunkte: 3\nthema: 15-geometrische-optik\n'
+      + 'frage: F\n- a\n- b\n- c\n- d\nrichtig: 1\nerklaerung: E\n',
+      { punkteJeFrage: 1.6, gebiete: [{ id: 'optik', titel: 'Optik', topics: ['15-geometrische-optik'], fragen: 1 }] },
+      'experimentale-physik-2', 'Pool',
+    )
+    expect(fragen).toHaveLength(0)
+    expect(nimmFehler().some(f => /punkte/.test(f))).toBe(true)
   })
 })

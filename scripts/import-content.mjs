@@ -32,6 +32,16 @@ const marker = []
 function problem(ort, text) { fehler.push(`${ort}: ${text}`) }
 function warnung(ort, text) { warnungen.push(`${ort}: ${text}`) }
 
+/**
+ * Nur für Tests, die `lesePoolfragen()` & Co. direkt aufrufen, ohne über
+ * `main()` zu laufen: die seit dem letzten Aufruf gesammelten Fehler lesen
+ * und dabei leeren. Der Importer selbst sammelt Fehler über `problem()` und
+ * bricht am Ende in `main()` gebündelt ab, statt bei der ersten Beanstandung
+ * zu werfen — ein Test einer einzelnen Leserfunktion braucht denselben Weg,
+ * sonst prüft er ein Fehlerverhalten, das es beim echten Lauf gar nicht gibt.
+ */
+export function nimmFehler() { return fehler.splice(0) }
+
 /** Als TypeScript-Zeichenkette ausgeben. */
 function str(s) {
   return JSON.stringify(String(s ?? ''))
@@ -1018,6 +1028,47 @@ function themenDesKurses(kursId) {
   return readdirSync(dir).filter(f => f.endsWith('.ts')).map(f => f.replace(/\.ts$/, ''))
 }
 
+/**
+ * Ein einzelner `--- FRAGE ---`-Block: Kennwerte, Optionen und Erklärung
+ * heraustrennen. Sowohl Prüfungsfragen (`baueFragen()`) als auch Poolfragen
+ * (`lesePoolfragen()`) zerlegen ihre Blöcke damit — ein zweiter Leser daneben
+ * würde beide Formate irgendwann auseinanderlaufen lassen.
+ */
+function leseFrageBlock(block) {
+  const zeilen = block.split('\n')
+  const optionen = []
+  const kv = {}
+  let erklaerung = ''
+  let inErklaerung = false
+
+  for (const z of zeilen) {
+    const t = z.trim()
+    if (t.startsWith('- ')) { optionen.push(t.slice(2).trim()); inErklaerung = false; continue }
+    const m = t.match(/^([a-zA-Zä-üÄ-Ü_][a-zA-Z0-9ä-üÄ-Ü_]*):\s*(.*)$/)
+    if (m) {
+      const k = m[1].toLowerCase()
+      if (k === 'erklaerung' || k === 'erklärung') { erklaerung = m[2]; inErklaerung = true }
+      else { kv[k] = m[2]; inErklaerung = false }
+    } else if (inErklaerung && t) erklaerung += ' ' + t
+  }
+  return { kv, optionen, erklaerung: erklaerung.trim() }
+}
+
+/** `richtig:` in einen (Mehrfach-)Index auflösen — mc-single/mc-multi/order teilen sich das. */
+function leseRichtigIndex(kv, optionen, typ, nr, ort) {
+  const idx = String(kv.richtig ?? '').split(',').map(s => parseInt(s.trim(), 10) - 1)
+  if (idx.some(n => !Number.isInteger(n) || n < 0 || n >= optionen.length)) {
+    problem(ort, `${nr}: richtig "${kv.richtig}" liegt außerhalb von 1–${optionen.length}`)
+  }
+  let correct
+  if (typ === 'mc-single') {
+    if (idx.length !== 1) problem(ort, `${nr}: mc-single braucht genau eine richtige Antwort`)
+    correct = idx[0]
+  } else correct = idx
+  if (optionen.length < 2) problem(ort, `${nr}: braucht Antwortoptionen`)
+  return correct
+}
+
 function baueFragen(roh, themenIds) {
   const { inhalt, ort } = roh
   sammleMarker(ort, inhalt)
@@ -1042,22 +1093,7 @@ function baueFragen(roh, themenIds) {
   const fragen = []
   teile.slice(1).forEach((b, i) => {
     const nr = `${kopf.quelle ?? '?'} Frage ${i + 1}`
-    const zeilen = b.split('\n')
-    const optionen = []
-    const kv = {}
-    let erklaerung = ''
-    let inErklaerung = false
-
-    for (const z of zeilen) {
-      const t = z.trim()
-      if (t.startsWith('- ')) { optionen.push(t.slice(2).trim()); inErklaerung = false; continue }
-      const m = t.match(/^([a-zA-Zä-üÄ-Ü_][a-zA-Z0-9ä-üÄ-Ü_]*):\s*(.*)$/)
-      if (m) {
-        const k = m[1].toLowerCase()
-        if (k === 'erklaerung' || k === 'erklärung') { erklaerung = m[2]; inErklaerung = true }
-        else { kv[k] = m[2]; inErklaerung = false }
-      } else if (inErklaerung && t) erklaerung += ' ' + t
-    }
+    const { kv, optionen, erklaerung } = leseFrageBlock(b)
 
     const typ = kv.typ
     if (!['mc-single', 'mc-multi', 'numeric', 'order'].includes(typ)) {
@@ -1078,15 +1114,7 @@ function baueFragen(roh, themenIds) {
       correct = Number(String(kv.richtig).replace(',', '.'))
       if (!Number.isFinite(correct)) problem(ort, `${nr}: richtig "${kv.richtig}" ist keine Zahl`)
     } else {
-      const idx = String(kv.richtig ?? '').split(',').map(s => parseInt(s.trim(), 10) - 1)
-      if (idx.some(n => !Number.isInteger(n) || n < 0 || n >= optionen.length)) {
-        problem(ort, `${nr}: richtig "${kv.richtig}" liegt außerhalb von 1–${optionen.length}`)
-      }
-      if (typ === 'mc-single') {
-        if (idx.length !== 1) problem(ort, `${nr}: mc-single braucht genau eine richtige Antwort`)
-        correct = idx[0]
-      } else correct = idx
-      if (optionen.length < 2) problem(ort, `${nr}: braucht Antwortoptionen`)
+      correct = leseRichtigIndex(kv, optionen, typ, nr, ort)
     }
 
     fragen.push({
@@ -1094,12 +1122,75 @@ function baueFragen(roh, themenIds) {
       source: kopf.quelle ?? '', gruppe: kopf.pruefer ?? '',
       topicId: thema, points: Number(kv.punkte ?? 1), type: typ,
       question: kv.frage ?? '', options: optionen.length ? optionen : undefined,
-      correct, explanation: erklaerung.trim(),
+      correct, explanation: erklaerung,
       tolerance: kv.toleranz !== undefined ? Number(String(kv.toleranz).replace(',', '.')) : undefined,
       unit: kv.einheit,
     })
   })
   return { kurs: kopf.kurs, fragen, aufbau: leseAufbau(aufbauBlock.trim(), ort) }
+}
+
+/**
+ * Fragenpool: `--- FRAGE ---`-Blöcke ohne eigenen Prüfungskopf. Anders als bei
+ * einer Altprüfung kommen Punkte und Gebiet nicht aus der Quelle, sondern aus
+ * der Ordnung — der Pool ist selbst geschrieben, nicht abgeschrieben, und
+ * kennt deshalb weder Prüfer noch eigene Punktezahl je Frage.
+ *
+ * `id` wird als `pool-<thema>-<laufnummer>` gebildet: Thema und Position der
+ * Frage innerhalb ihres Themas ändern sich zwischen zwei Importläufen
+ * derselben Quelle nicht, solange die Quelle selbst gleich bleibt — die
+ * Kennung ist also über Importläufe hinweg stabil, und `mischePruefungsdaten()`
+ * ersetzt die Frage statt sie zu verdoppeln.
+ */
+export function lesePoolfragen(inhalt, ordnung, kursId, ort) {
+  const teile = inhalt.split(/^---\s*FRAGE\s*---\s*$/m)
+  const fragen = []
+  const laufnummern = new Map()
+
+  teile.slice(1).forEach((b, i) => {
+    const nr = `${kursId} Poolfrage ${i + 1}`
+    const { kv, optionen, erklaerung } = leseFrageBlock(b)
+
+    const typ = kv.typ
+    if (!['mc-single', 'mc-multi'].includes(typ)) {
+      problem(ort, `${nr}: typ "${typ}" — im Fragenpool sind nur mc-single und mc-multi erlaubt`)
+      return
+    }
+    if (kv.punkte !== undefined) {
+      problem(ort, `${nr}: eigenes Feld "punkte" — im Fragenpool kommen die Punkte aus der Ordnung`)
+      return
+    }
+    if (!kv.frage) problem(ort, `${nr}: ohne Fragetext`)
+
+    const thema = kv.thema ?? ''
+    const gebiet = ordnung.gebiete.find(g => g.topics.includes(thema))
+    if (!gebiet) {
+      problem(ort, `${nr}: thema "${thema}" steht in keinem Gebiet der Ordnung`)
+      return
+    }
+
+    const correct = leseRichtigIndex(kv, optionen, typ, nr, ort)
+    if (typ === 'mc-multi') {
+      const anzahl = Array.isArray(correct) ? correct.length : 0
+      // Alle Optionen richtig wäre ohne Wissen zu erraten.
+      if (anzahl < 2 || anzahl > optionen.length - 1) {
+        problem(ort, `${nr}: mc-multi braucht mindestens zwei und höchstens ${optionen.length - 1} richtige Antworten, hat ${anzahl}`)
+      }
+    }
+
+    const laufnummer = (laufnummern.get(thema) ?? 0) + 1
+    laufnummern.set(thema, laufnummer)
+
+    fragen.push({
+      id: `pool-${thema}-${laufnummer}`,
+      source: kv.quelle ?? '', gruppe: gebiet.id,
+      topicId: thema, points: ordnung.punkteJeFrage, type: typ,
+      question: kv.frage ?? '', options: optionen.length ? optionen : undefined,
+      correct, explanation: erklaerung,
+    })
+  })
+
+  return fragen
 }
 
 // ── Ausgabe erzeugen ──────────────────────────────────────────────────────
@@ -1628,11 +1719,14 @@ function main() {
     roheKurskoepfe.push(...kurskoepfe)
     roheOrdnungen.push(...ordnungen)
     rohePoolBloecke.push(...poolBloecke)
-    jeDatei.push({ datei, themen: themen.length, pruefungen: pruefungen.length, kurskopf: kurskoepfe.length })
+    jeDatei.push({
+      datei, themen: themen.length, pruefungen: pruefungen.length,
+      kurskopf: kurskoepfe.length, poolBloecke: poolBloecke.length,
+    })
   }
 
   for (const d of jeDatei) {
-    if (d.themen || d.pruefungen || d.kurskopf) continue
+    if (d.themen || d.pruefungen || d.kurskopf || d.poolBloecke) continue
     warnung(d.datei, 'nichts erkannt — fehlt der Kopf "=== DATEI: <slug>.md ==="?')
   }
 
@@ -1702,6 +1796,16 @@ function main() {
     ziel.fragen.push(...fragen)
     if (aufbau) ziel.aufbauten.push(aufbau)
   }
+  // Der Fragenpool hat keinen eigenen Kopf mit `kurs:` — er gehört immer zum
+  // Quellordner, aus dem er kommt, und braucht dessen Ordnung für Punkte und
+  // Gebietszuordnung.
+  for (const roh of rohePoolBloecke) {
+    if (!meta.ordnung) {
+      problem(roh.ort, 'Fragenpool ohne "=== ORDNUNG ===" — Punkte und Gebiete sind unbekannt')
+      continue
+    }
+    eintrag(kursId).fragen.push(...lesePoolfragen(roh.inhalt, meta.ordnung, kursId, roh.ort))
+  }
   const alleFragen = [...nachKurs.values()].flatMap(e => e.fragen)
   const alleAufbauten = [...nachKurs.values()].flatMap(e => e.aufbauten)
 
@@ -1741,6 +1845,7 @@ function main() {
     if (d.kurskopf) teile.push(d.kurskopf === 1 ? 'Kurskopf' : `${d.kurskopf} Kursköpfe`)
     if (d.themen) teile.push(d.themen === 1 ? '1 Thema' : `${d.themen} Themen`)
     if (d.pruefungen) teile.push(d.pruefungen === 1 ? '1 Prüfungsblock' : `${d.pruefungen} Prüfungsblöcke`)
+    if (d.poolBloecke) teile.push(d.poolBloecke === 1 ? '1 Fragenpool' : `${d.poolBloecke} Fragenpools`)
     const befund = teile.length ? teile.join(', ') : 'nichts erkannt'
     console.log(`  ${d.datei.padEnd(34)} ${befund}`)
   }
