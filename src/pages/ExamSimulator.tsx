@@ -5,14 +5,15 @@ import { useAttempts } from '../hooks/useAttempts'
 import { useReviews } from '../hooks/useReviews'
 import { frageItemId } from '../lib/learning/lernItem'
 import { GRADES } from '../lib/learning/sm2'
-import { examQuestionsFor, examStructuresFor, examinerAnzeige, examinersFor, courseIdsWithExams } from '../data/exams'
+import Formeltext from '../components/Theory/Formeltext'
+import { examQuestionsFor, examStructuresFor, gruppenAnzeige, gruppenFuer, courseIdsWithExams } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import { stilFuer } from '../components/ExamMode/pruefStil'
-import { kursMit } from '../lib/courseRegistry'
+import { formelsatzVon, kursMit } from '../lib/courseRegistry'
 
 type Mode = 'select' | 'exam' | 'result'
 
-/** Fragen je Prüferabschnitt in der Zufalls-Prüfung. */
+/** Fragen je Gruppenabschnitt in der Zufalls-Prüfung. */
 const FRAGEN_JE_ABSCHNITT = 5
 
 /**
@@ -39,7 +40,7 @@ export default function ExamSimulator() {
   const courseId = params.get('course') ?? courseIdsWithExams()[0] ?? ''
 
   const examQuestions = useMemo(() => examQuestionsFor(courseId), [courseId])
-  const professoren = useMemo(() => examinersFor(courseId), [courseId])
+  const professoren = useMemo(() => gruppenFuer(courseId), [courseId])
   const kursTitel = kursMit(courseId)?.title ?? 'diesem Kurs'
   const examStructures = useMemo(() => examStructuresFor(courseId), [courseId])
   const { logAttempt, flush } = useAttempts(courseId)
@@ -124,12 +125,12 @@ export default function ExamSimulator() {
     if (falscheFragen.length === 0) return
     const jeAbschnitt = new Map<string, typeof falscheFragen>()
     for (const frage of falscheFragen) {
-      if (!jeAbschnitt.has(frage.examiner)) jeAbschnitt.set(frage.examiner, [])
-      jeAbschnitt.get(frage.examiner)!.push(frage)
+      if (!jeAbschnitt.has(frage.gruppe)) jeAbschnitt.set(frage.gruppe, [])
+      jeAbschnitt.get(frage.gruppe)!.push(frage)
     }
-    const sections = [...jeAbschnitt.entries()].map(([examiner, fragen]) => {
+    const sections = [...jeAbschnitt.entries()].map(([gruppe, fragen]) => {
       const punkte = fragen.reduce((summe, q) => summe + q.points, 0)
-      return { examiner, points: punkte, passingPoints: Math.ceil(punkte / 2), questionIds: fragen.map(q => q.id) }
+      return { gruppe, points: punkte, passingPoints: Math.ceil(punkte / 2), questionIds: fragen.map(q => q.id) }
     })
     const gesamt = sections.reduce((summe, a) => summe + a.points, 0)
     startExam({
@@ -160,7 +161,7 @@ export default function ExamSimulator() {
 
   // Ergebnisberechnung
   const sectionScores = selectedExam.sections.map(sec => ({
-    examiner: sec.examiner,
+    gruppe: sec.gruppe,
     earned: sec.questionIds.reduce((s, id) => s + (scores[id] ?? 0), 0),
     max: sec.points,
     passing: sec.passingPoints,
@@ -182,7 +183,7 @@ export default function ExamSimulator() {
         </div>
         {mode === 'exam' && (
           <div className="text-xs text-muted">
-            {examinerAnzeige(currentSection.examiner, courseId)} · Frage {qIdx+1}/{currentSection.questionIds.length}
+            {gruppenAnzeige(currentSection.gruppe, courseId)} · Frage {qIdx+1}/{currentSection.questionIds.length}
           </div>
         )}
       </nav>
@@ -229,8 +230,8 @@ export default function ExamSimulator() {
                   </div>
                   <div className="flex gap-2">
                     {exam.sections.map(sec => (
-                      <span key={sec.examiner} className={`text-xs px-3 py-1 rounded-full ${stilFuer(sec.examiner).chip}`}>
-                        {examinerAnzeige(sec.examiner, courseId)} ({sec.points}P)
+                      <span key={sec.gruppe} className={`text-xs px-3 py-1 rounded-full ${stilFuer(sec.gruppe).chip}`}>
+                        {gruppenAnzeige(sec.gruppe, courseId)} ({sec.points}P)
                       </span>
                     ))}
                   </div>
@@ -245,10 +246,10 @@ export default function ExamSimulator() {
                   // eine Grenze, die der gezogene Satz gar nicht erreichen konnte.
                   const gemischt = [...examQuestions].sort(() => Math.random() - 0.5)
                   const abschnitte = professoren.map(prof => {
-                    const fragen = gemischt.filter(q => q.examiner === prof).slice(0, FRAGEN_JE_ABSCHNITT)
+                    const fragen = gemischt.filter(q => q.gruppe === prof).slice(0, FRAGEN_JE_ABSCHNITT)
                     const punkte = fragen.reduce((summe, q) => summe + q.points, 0)
                     return {
-                      examiner: prof,
+                      gruppe: prof,
                       points: punkte,
                       passingPoints: Math.ceil(punkte / 2),
                       questionIds: fragen.map(q => q.id),
@@ -276,10 +277,10 @@ export default function ExamSimulator() {
         {mode === 'exam' && currentQ && (
           <div>
             {/* Abschnitts-Header */}
-            <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.examiner).panel}`}>
+            <div className={`mb-6 px-5 py-4 rounded-xl border ${stilFuer(currentSection.gruppe).panel}`}>
               <div className="flex items-center justify-between gap-3">
-                <p className={`text-sm font-semibold ${stilFuer(currentSection.examiner).text}`}>
-                  {examinerAnzeige(currentSection.examiner, courseId)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
+                <p className={`text-sm font-semibold ${stilFuer(currentSection.gruppe).text}`}>
+                  {gruppenAnzeige(currentSection.gruppe, courseId)} – Teil {sectionIdx+1} von {selectedExam.sections.length}
                 </p>
                 <p role="timer" aria-label="Verbleibende Zeit"
                   className={`font-mono text-sm tabular-nums ${restSekunden <= 300 ? 'text-danger' : 'text-muted'}`}>
@@ -287,7 +288,7 @@ export default function ExamSimulator() {
                 </p>
               </div>
               <div className="mt-2 h-1.5 bg-sunken rounded-full">
-                <div className={`h-full ${stilFuer(currentSection.examiner).bar} rounded-full transition-all`}
+                <div className={`h-full ${stilFuer(currentSection.gruppe).bar} rounded-full transition-all`}
                   style={{ width: `${(qIdx/currentSection.questionIds.length)*100}%` }} />
               </div>
             </div>
@@ -303,7 +304,7 @@ export default function ExamSimulator() {
               disabled={!answered[currentQId]}
               className="mt-4 w-full py-3 bg-sunken border border-line hover:border-subtle disabled:opacity-40 disabled:cursor-not-allowed text-muted font-semibold rounded-xl text-sm transition-colors">
               {qIdx < currentSection.questionIds.length - 1 ? 'Nächste Frage →' :
-               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${examinerAnzeige(selectedExam.sections[sectionIdx+1].examiner, courseId)} →` :
+               sectionIdx < selectedExam.sections.length - 1 ? `Weiter zu ${gruppenAnzeige(selectedExam.sections[sectionIdx+1].gruppe, courseId)} →` :
                'Prüfung abschließen →'}
             </button>
           </div>
@@ -333,12 +334,12 @@ export default function ExamSimulator() {
 
             <div className="space-y-3 mb-6">
               {sectionScores.map(sec => (
-                <div key={sec.examiner} className={`flex items-center justify-between px-5 py-4 rounded-xl border ${
+                <div key={sec.gruppe} className={`flex items-center justify-between px-5 py-4 rounded-xl border ${
                   sec.passed ? 'border-success bg-success/10' : 'border-danger bg-danger/10'
                 }`}>
                   <div>
-                    <span className={`font-semibold ${stilFuer(sec.examiner).text}`}>
-                      {examinerAnzeige(sec.examiner, courseId)}
+                    <span className={`font-semibold ${stilFuer(sec.gruppe).text}`}>
+                      {gruppenAnzeige(sec.gruppe, courseId)}
                     </span>
                     <span className="text-subtle text-xs ml-2">(min. {sec.passing}P)</span>
                   </div>
@@ -365,7 +366,7 @@ export default function ExamSimulator() {
                   return (
                     <li key={frage.id} className="flex items-start gap-3 border-b border-line pb-2 text-sm last:border-0">
                       <span className={voll ? 'text-success' : 'text-danger'}>{voll ? '✓' : '✗'}</span>
-                      <span className="flex-1 text-muted">{frage.question}</span>
+                      <span className="flex-1 text-muted"><Formeltext text={frage.question} formelsatz={formelsatzVon(courseId)} /></span>
                       <span className="font-mono text-xs text-subtle">{erreicht}/{frage.points}P</span>
                     </li>
                   )

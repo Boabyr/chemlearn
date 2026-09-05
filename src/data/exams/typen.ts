@@ -2,10 +2,16 @@ export type QuestionType = 'mc-single' | 'mc-multi' | 'numeric' | 'order'
 
 export interface ExamQuestion {
   id: string
-  /** Woher die Frage stammt, z. B. "2020-02-Lieberzeit". */
+  /** Woher die Frage stammt, z. B. "2020-02-Lieberzeit" oder "Skript Kap. 15". */
   source: string
-  /** Kennung des Prüfers aus `course.examiners`. */
-  examiner: string
+  /**
+   * Gruppenschlüssel des Abschnitts, in dem die Frage steht.
+   *
+   * Bei Altprüfungen ist das der Prüfer, bei Prüfungen nach Ordnung das
+   * Stoffgebiet. Das Feld hieß `examiner`; in einem Fach ohne Altprüfung
+   * stand darin dann ein Stoffgebiet, und der Name log.
+   */
+  gruppe: string
   topicId: string
   points: number
   type: QuestionType
@@ -19,7 +25,7 @@ export interface ExamQuestion {
 }
 
 export interface ExamSection {
-  examiner: string
+  gruppe: string
   points: number
   passingPoints: number
   questionIds: string[]

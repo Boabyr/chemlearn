@@ -3,7 +3,7 @@ import { bewerte, leseZahl } from './bewerten'
 import type { ExamQuestion } from '../../data/exams'
 
 const frage = (teil: Partial<ExamQuestion>): ExamQuestion => ({
-  id: 'T1', source: 'test', examiner: 'lieberzeit', topicId: '01', points: 4,
+  id: 'T1', source: 'test', gruppe: 'lieberzeit', topicId: '01', points: 4,
   type: 'numeric', question: '?', correct: 0, explanation: '', ...teil,
 })
 
@@ -87,5 +87,32 @@ describe('bewerte — Auswahl und Reihenfolge', () => {
     expect(bewerte(f, { reihenfolge: [2, 0, 1] }).korrekt).toBe(true)
     expect(bewerte(f, { reihenfolge: [0, 1, 2] }).korrekt).toBe(false)
     expect(bewerte(f, { reihenfolge: [2, 0] }).gueltig).toBe(false)
+  })
+})
+
+describe('Punkteregel streng', () => {
+  const frage = {
+    id: 'f1', source: 'Skript', gruppe: 'optik', topicId: 't1', points: 1.6,
+    type: 'mc-multi' as const, question: 'F',
+    options: ['a', 'b', 'c', 'd'], correct: [0, 1, 2], explanation: '',
+  }
+
+  it('gibt volle Punkte für alle richtigen ohne falsches Kreuz', () => {
+    expect(bewerte(frage, { auswahl: [0, 1, 2] }, 'streng').punkte).toBe(1.6)
+  })
+
+  it('gibt anteilige Punkte, wenn ein richtiges Kreuz fehlt', () => {
+    expect(bewerte(frage, { auswahl: [0, 1] }, 'streng').punkte).toBeCloseTo(1.07, 2)
+  })
+
+  it('gibt null Punkte, sobald ein falsches Kreuz dabeisteht', () => {
+    expect(bewerte(frage, { auswahl: [0, 1, 3] }, 'streng').punkte).toBe(0)
+    expect(bewerte(frage, { auswahl: [0, 1, 2, 3] }, 'streng').punkte).toBe(0)
+  })
+
+  it('lässt teilpunkte unverändert', () => {
+    // Zwei Treffer, ein Fehlgriff: (2 − 1) / 3 der Punkte, wie bisher.
+    expect(bewerte(frage, { auswahl: [0, 1, 3] }, 'teilpunkte').punkte).toBeCloseTo(0.53, 2)
+    expect(bewerte(frage, { auswahl: [0, 1, 3] }).punkte).toBeCloseTo(0.53, 2)
   })
 })

@@ -3,6 +3,10 @@ import { execFileSync } from 'node:child_process'
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import {
+  leseOrdnung, leseOrdnungAusIndex, kursIndexAlsTypeScript, standardKursMeta,
+  lesePoolfragen, nimmFehler,
+} from '../../scripts/import-content.mjs'
 
 /**
  * Der Importer gegen echtes Nicht-Chemie-Material.
@@ -133,5 +137,136 @@ describe('Importer', () => {
     expect(index()).toContain('entwurf: true')
     expect(index()).toContain('{ id: "uebung", label: "Übungsfragen", icon: "📝" }')
     expect(index()).toContain('{ id: "probe", label: "Probeklausur", icon: "📄" }')
+  })
+})
+
+describe('Ordnungsblock', () => {
+  it('rechnet die Fragen je Gebiet aus und schreibt sie in den Kurskopf', () => {
+    const quelle = [
+      '=== ORDNUNG ===',
+      'titel: Schriftliche Prüfung',
+      'fragen: 4',
+      'punkte_je_frage: 1.6',
+      'regel: streng',
+      'zeit_minuten: 120',
+      'noten: 29 sehr gut | 17 genügend',
+      'gebiet: Erstes Gebiet | 01-eins, 02-zwei',
+      'gebiet: Zweites Gebiet | 03-drei, 04-vier',
+      '',
+    ].join('\n')
+
+    const ordnung = leseOrdnung(quelle, 'Prüfung')
+    expect(ordnung.fragen).toBe(4)
+    expect(ordnung.punkteJeFrage).toBe(1.6)
+    expect(ordnung.regel).toBe('streng')
+    expect(ordnung.zeitMinuten).toBe(120)
+    expect(ordnung.noten).toEqual([{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'genügend' }])
+    expect(ordnung.gebiete.map((g: { id: string; fragen: number }) => [g.id, g.fragen])).toEqual([
+      ['erstes-gebiet', 2], ['zweites-gebiet', 2],
+    ])
+    expect(ordnung.gebiete[0].topics).toEqual(['01-eins', '02-zwei'])
+  })
+
+  // Die Vorrangregel gilt wie beim KURS-Block: eine Quelle ohne ORDNUNG darf
+  // eine schon eingespielte Ordnung nicht wegwerfen. Genau das ging bei den
+  // Prüfern einmal schief (`gruppen`), als der Rückleser fehlte.
+  //
+  // 'nicht genügend' trägt absichtlich Leerzeichen und Umlaut in einem Wort —
+  // ein Rückleser, der auf Textmuster im generierten Code sucht statt auf
+  // eine in sich geschlossene Marke, kann daran genauso scheitern wie an den
+  // Fällen im nächsten Test.
+  const BEISPIEL_ORDNUNG = {
+    titel: 'Schriftliche Prüfung',
+    fragen: 4,
+    punkteJeFrage: 1.6,
+    regel: 'streng',
+    zeitMinuten: 120,
+    noten: [{ ab: 29, note: 'sehr gut' }, { ab: 17, note: 'nicht genügend' }],
+    gebiete: [
+      { id: 'erstes-gebiet', titel: 'Erstes Gebiet', fragen: 2, topics: ['01-eins', '02-zwei'] },
+      { id: 'zweites-gebiet', titel: 'Zweites Gebiet', fragen: 2, topics: ['03-drei', '04-vier'] },
+    ],
+  }
+
+  it('behält die Ordnung, wenn ein Lauf ohne Ordnungsblock kommt', () => {
+    const index = kursIndexAlsTypeScript(
+      { ...standardKursMeta('kurs'), ordnung: BEISPIEL_ORDNUNG }, 'kurs', ['01-eins'])
+    expect(leseOrdnungAusIndex(index)).toEqual(BEISPIEL_ORDNUNG)
+  })
+
+  it('übersteht Freitext, der wie Syntax des generierten Codes aussieht', () => {
+    // Ein Rückleser, der im generierten Code nach Textmustern sucht
+    // ("gebiete:", "}", …), kann von genau solchem Freitext in die Irre
+    // geführt werden — ein Titel mit dem Teilstring "gebiete:", ein
+    // Gebietsname mit geschweifter Klammer, dazu eine leere Notenliste
+    // (die Suche nach dem ersten "]" nach "noten: [" trifft dann sofort
+    // die Klammer von "gebiete") und mehrere Gebiete.
+    const tueckischeOrdnung = {
+      titel: 'Alle gebiete: eine Übersicht',
+      fragen: 5,
+      punkteJeFrage: 1,
+      regel: 'teilpunkte',
+      zeitMinuten: 45,
+      noten: [],
+      gebiete: [
+        { id: 'a', titel: 'Gebiet {A}', fragen: 2, topics: ['01-eins'] },
+        { id: 'b', titel: 'Übung } und { Klausur', fragen: 3, topics: ['02-zwei', '03-drei'] },
+      ],
+    }
+    const index = kursIndexAlsTypeScript(
+      { ...standardKursMeta('kurs'), ordnung: tueckischeOrdnung }, 'kurs', ['01-eins', '02-zwei', '03-drei'])
+    expect(leseOrdnungAusIndex(index)).toEqual(tueckischeOrdnung)
+  })
+})
+
+describe('Fragenpool', () => {
+  it('trägt Gebiet und Punkte aus der Ordnung ein', () => {
+    const ordnung = {
+      punkteJeFrage: 1.6,
+      gebiete: [{ id: 'optik', titel: 'Optik', topics: ['15-geometrische-optik'], fragen: 1 }],
+    }
+    const quelle = [
+      '--- FRAGE ---',
+      'typ: mc-multi',
+      'thema: 15-geometrische-optik',
+      'quelle: Skript Kap. 15',
+      'frage: Welche Aussagen zur Brechung treffen zu?',
+      '- Der Einfallswinkel bleibt gleich',
+      '- Snellius verknüpft die Winkel',
+      '- Der Brechungsindex hängt von der Wellenlänge ab',
+      '- Licht wird im Medium schneller',
+      'richtig: 2,3',
+      'erklaerung: Snellius gilt, Dispersion gibt es, schneller wird Licht nicht.',
+      '',
+    ].join('\n')
+
+    const fragen = lesePoolfragen(quelle, ordnung, 'experimentale-physik-2', 'Pool')
+    expect(fragen).toHaveLength(1)
+    expect(fragen[0].gruppe).toBe('optik')
+    expect(fragen[0].points).toBe(1.6)
+    expect(fragen[0].type).toBe('mc-multi')
+    expect(fragen[0].correct).toEqual([1, 2])
+    expect(fragen[0].source).toBe('Skript Kap. 15')
+    expect(nimmFehler()).toEqual([])
+  })
+
+  // Der Auftrag formuliert diese Prüfung ursprünglich mit `toThrow` — aber
+  // der Importer wirft für Inhaltsfehler grundsätzlich nicht: er sammelt sie
+  // über `problem()` und bricht am Ende in `main()` gebündelt ab, statt bei
+  // der ersten Beanstandung eine Exception zu werfen (siehe `baueFragen()`,
+  // `leseOrdnung()` & Co. — keine einzige davon wirft). `lesePoolfragen()`
+  // reiht sich dort ein: eine Poolfrage mit eigenem `punkte`-Feld wird nicht
+  // geworfen, sondern fällt aus dem Ergebnis und hinterlässt einen Fehler in
+  // der Sammlung, die `nimmFehler()` zu Testzwecken ausliest.
+  it('weist eine Poolfrage mit eigenem Punktefeld ab', () => {
+    nimmFehler() // Sammlung vor der Prüfung leeren
+    const fragen = lesePoolfragen(
+      '--- FRAGE ---\ntyp: mc-single\npunkte: 3\nthema: 15-geometrische-optik\n'
+      + 'frage: F\n- a\n- b\n- c\n- d\nrichtig: 1\nerklaerung: E\n',
+      { punkteJeFrage: 1.6, gebiete: [{ id: 'optik', titel: 'Optik', topics: ['15-geometrische-optik'], fragen: 1 }] },
+      'experimentale-physik-2', 'Pool',
+    )
+    expect(fragen).toHaveLength(0)
+    expect(nimmFehler().some(f => /punkte/.test(f))).toBe(true)
   })
 })

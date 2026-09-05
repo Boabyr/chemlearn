@@ -84,15 +84,15 @@ export function weakestTopics(
 
 export interface QuestionRef {
   id: string
-  examiner: string
+  gruppe: string
   topicId: string
 }
 
 export interface Readiness {
-  examiner: string
+  gruppe: string
   /** Trefferquote × Abdeckung — unbeantwortete Fragen zählen als Lücke. */
   score: number
-  /** Anteil der Fragen dieses Prüfers, die schon einmal beantwortet wurden. */
+  /** Anteil der Fragen dieser Gruppe, die schon einmal beantwortet wurden. */
   coverage: number
   level: Level
   answered: number
@@ -100,10 +100,10 @@ export interface Readiness {
 }
 
 /**
- * Prüfungsreife je Prüfer. Eine hohe Trefferquote auf drei von dreißig Fragen
+ * Prüfungsreife je Gruppe. Eine hohe Trefferquote auf drei von dreißig Fragen
  * ist keine Reife — deshalb geht die Abdeckung in die Punktzahl ein.
  */
-export function readinessByExaminer(
+export function readinessByGruppe(
   attempts: AttemptLike[],
   questions: QuestionRef[],
   now: Date = new Date(),
@@ -115,10 +115,10 @@ export function readinessByExaminer(
     else byQuestion.set(a.questionId, [a])
   }
 
-  const examiners = [...new Set(questions.map(q => q.examiner))].sort()
+  const gruppen = [...new Set(questions.map(q => q.gruppe))].sort()
 
-  return examiners.map(examiner => {
-    const own = questions.filter(q => q.examiner === examiner)
+  return gruppen.map(gruppe => {
+    const own = questions.filter(q => q.gruppe === gruppe)
     const relevant = attempts.filter(a => own.some(q => q.id === a.questionId))
     const answered = own.filter(q => byQuestion.has(q.id)).length
     const coverage = own.length > 0 ? answered / own.length : 0
@@ -127,7 +127,7 @@ export function readinessByExaminer(
     const score = hitRate * coverage
 
     return {
-      examiner,
+      gruppe,
       score,
       coverage,
       level: levelFor(score, relevant.length),

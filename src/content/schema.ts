@@ -498,10 +498,46 @@ export const themaSchema = z.object({
   }
 })
 
-export const prueferSchema = z.object({
-  id: z.string().regex(/^[a-z0-9-]+$/, 'Prüfer-Kennung klein und ohne Umlaute'),
+export const gruppeSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/, 'Gruppen-Kennung klein und ohne Umlaute'),
   label: nichtLeer,
   icon: z.string().optional(),
+})
+
+const stoffgebietSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  titel: nichtLeer,
+  topics: z.array(nichtLeer).min(1),
+  fragen: z.number().int().nonnegative(),
+})
+
+const notenstufeSchema = z.object({
+  ab: z.number().int().nonnegative(),
+  note: nichtLeer,
+})
+
+/**
+ * Prüfungsordnung eines Fachs.
+ *
+ * Jedes Fach hat eine eigene: Fragenzahl, Punkte, Bewertungsregel, Dauer und
+ * Notengrenzen stehen anders in der jeweiligen Studienordnung. Sie gehören
+ * deshalb zum Kurs und nicht in den Programmablauf.
+ */
+export const ordnungSchema = z.object({
+  titel: nichtLeer,
+  fragen: z.number().int().positive(),
+  punkteJeFrage: z.number().positive(),
+  /**
+   * Wie Mehrfachauswahl gerechnet wird.
+   *
+   * `teilpunkte` zieht falsche Kreuze von richtigen ab. `streng` gibt für die
+   * ganze Frage null Punkte, sobald ein falsches Kreuz dabeisteht — so steht
+   * es in der Ordnung von Experimentalphysik 2.
+   */
+  regel: z.enum(['streng', 'teilpunkte']).default('teilpunkte'),
+  zeitMinuten: z.number().int().positive(),
+  noten: z.array(notenstufeSchema).default([]),
+  gebiete: z.array(stoffgebietSchema).min(1),
 })
 
 export const kursSchema = z.object({
@@ -515,8 +551,8 @@ export const kursSchema = z.object({
   topics: z.array(nichtLeer).min(1),
   totalTopics: z.number().int().positive(),
   estimatedHours: z.number().positive(),
-  /** Prüferabschnitte dieses Fachs. Leer heißt: ein gemeinsamer Abschnitt. */
-  examiners: z.array(prueferSchema).default([]),
+  /** Gruppenabschnitte dieses Fachs. Leer heißt: ein gemeinsamer Abschnitt. */
+  gruppen: z.array(gruppeSchema).default([]),
   /**
    * Sprache der Inhalte als BCP-47-Kürzel.
    *
@@ -540,6 +576,8 @@ export const kursSchema = z.object({
    * alle übrigen gelten weiter.
    */
   entwurf: z.boolean().default(false),
+  /** Prüfungsordnung des Fachs. Fehlt sie, gibt es nur Altprüfungen. */
+  ordnung: ordnungSchema.optional(),
 }).refine(
   kurs => kurs.totalTopics === kurs.topics.length,
   { message: 'totalTopics passt nicht zur Themenliste', path: ['totalTopics'] },
@@ -562,9 +600,12 @@ export type MechanismusAtom = z.infer<typeof atomSchema>
 export type MechanismusBindung = z.infer<typeof bindungSchema>
 export type MechanismusPfeil = z.infer<typeof pfeilSchema>
 export type Interaktiv = ApparaturQuiz | SpektrumZuordnung | FormelRechner | Mechanismus | ApparaturZuordnung
-export type Pruefer = z.infer<typeof prueferSchema>
+export type Gruppe = z.infer<typeof gruppeSchema>
 export type Formelsatz = Kurs['formelsatz']
 
 export type Thema = Omit<z.infer<typeof themaSchema>, 'interactives' | 'abbildungen'>
   & { interactives?: Interaktiv[]; abbildungen?: Abbildung[] }
 export type Kurs = z.infer<typeof kursSchema>
+export type Ordnung = z.infer<typeof ordnungSchema>
+export type Stoffgebiet = z.infer<typeof stoffgebietSchema>
+export type Notenstufe = z.infer<typeof notenstufeSchema>

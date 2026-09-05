@@ -31,7 +31,7 @@ export function sekundenFuer(frage: { type?: string }): number {
 export interface SessionQuestion {
   id: string
   topicId: string
-  examiner: string
+  gruppe: string
   type?: string
 }
 
@@ -46,8 +46,8 @@ export interface SessionOptions<Q extends SessionQuestion> {
   due: DueItem[]
   minutes: number
   now?: Date
-  /** Auf einen Prüfer einschränken. */
-  examiner?: string
+  /** Auf eine Gruppe einschränken. */
+  gruppe?: string
 }
 
 export function buildSession<Q extends SessionQuestion>({
@@ -56,9 +56,9 @@ export function buildSession<Q extends SessionQuestion>({
   due,
   minutes,
   now = new Date(),
-  examiner,
+  gruppe,
 }: SessionOptions<Q>): Q[] {
-  const pool = examiner ? questions.filter(q => q.examiner === examiner) : questions
+  const pool = gruppe ? questions.filter(q => q.gruppe === gruppe) : questions
   const budget = Math.max(1, minutes) * 60
 
   const byId = new Map(pool.map(q => [q.id, q]))

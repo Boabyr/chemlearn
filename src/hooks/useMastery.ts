@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 import { useAttempts } from './useAttempts'
 import { allCourses } from '../lib/courseRegistry'
 import { examQuestionsFor } from '../data/exams'
-import { weakestTopics, readinessByExaminer } from '../lib/learning/mastery'
+import { weakestTopics, readinessByGruppe } from '../lib/learning/mastery'
 
 /**
  * Leitet aus der Antwort-Historie ab, wo der Lernende steht:
- * schwächste Themen und Prüfungsreife je Prüfer.
+ * schwächste Themen und Prüfungsreife je Gruppe.
  */
 export function useMastery(courseId: string) {
   const { attempts, loading, refetch } = useAttempts(courseId)
@@ -19,7 +19,7 @@ export function useMastery(courseId: string) {
   const questions = useMemo(
     () => examQuestionsFor(courseId).map(q => ({
       id: q.id,
-      examiner: q.examiner,
+      gruppe: q.gruppe,
       topicId: q.topicId,
     })),
     [courseId],
@@ -31,7 +31,7 @@ export function useMastery(courseId: string) {
   )
 
   const readiness = useMemo(
-    () => readinessByExaminer(attempts, questions),
+    () => readinessByGruppe(attempts, questions),
     [attempts, questions],
   )
 

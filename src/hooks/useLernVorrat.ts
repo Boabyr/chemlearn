@@ -21,7 +21,7 @@ async function vorratLaden(): Promise<LernAufgabe[]> {
         const alsPruefungsfrage: ExamQuestion = {
           id: `${thema.id}:${frage.id}`,
           source: thema.title,
-          examiner: 'thema',
+          gruppe: 'thema',
           topicId: thema.id,
           points: 1,
           type: 'mc-single',

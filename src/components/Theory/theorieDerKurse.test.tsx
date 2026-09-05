@@ -33,6 +33,24 @@ describe('Theorie aller Kurse', () => {
     }
   })
 
+  it('setzt die Formeln der Physik-Themen, statt \\[…\\] zu zeigen', async () => {
+    const themen = await loadAllTopics('experimentale-physik-2')
+    const mitFormel = themen.filter(t => /\\\[|\$/.test(t.theory))
+    expect(mitFormel.length).toBeGreaterThan(0)
+
+    for (const thema of mitFormel) {
+      const { container, unmount } = render(<TheoryRenderer markdown={thema.theory} />)
+      expect(container.querySelector('.katex'), `${thema.id}: keine gesetzte Formel`).not.toBeNull()
+      // Die MathML-Annotation trägt die Quelle; roh sichtbar wären die Klammern.
+      const sichtbar = [...container.querySelectorAll('.katex-mathml')].reduce(
+        (text, knoten) => text.replace(knoten.textContent ?? '', ''),
+        container.textContent ?? '',
+      )
+      expect(sichtbar, `${thema.id}: rohe Formelklammern sichtbar`).not.toMatch(/\\[[(]/)
+      unmount()
+    }
+  }, 60000)
+
   it('lässt kein Thema beim Rendern abstürzen', async () => {
     for (const kurs of ['analytical-chemistry-1', 'organic-chemistry']) {
       const themen = await loadAllTopics(kurs)

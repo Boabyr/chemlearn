@@ -3,14 +3,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAttempts } from '../hooks/useAttempts'
 import { useReviews, questionItemId } from '../hooks/useReviews'
-import { examQuestionsFor, examinersFor, examinerAnzeige, courseIdsWithExams } from '../data/exams'
+import { examQuestionsFor, gruppenFuer, gruppenAnzeige, courseIdsWithExams } from '../data/exams'
 import type { ExamQuestion } from '../data/exams'
 import { buildSession } from '../lib/learning/sessionBuilder'
 import { GRADES } from '../lib/learning/sm2'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 
 
-/** 'adaptive' zieht nach Fälligkeit und Schwäche, sonst wird nach Prüfer gefiltert. */
+/** 'adaptive' zieht nach Fälligkeit und Schwäche, sonst wird nach Gruppe gefiltert. */
 type Filter = 'adaptive' | 'all' | string
 
 
@@ -35,7 +35,7 @@ export default function PracticeMode() {
   const [frageSeit, setFrageSeit] = useState(() => Date.now())
 
   const alleFragen = useMemo(() => examQuestionsFor(courseId), [courseId])
-  const examiners = useMemo(() => examinersFor(courseId), [courseId])
+  const gruppen = useMemo(() => gruppenFuer(courseId), [courseId])
 
   const build = useCallback((f: Filter) => {
     let next: ExamQuestion[]
@@ -47,7 +47,7 @@ export default function PracticeMode() {
         minutes: SESSION_MINUTES,
       })
     } else {
-      const gefiltert = f === 'all' ? alleFragen : alleFragen.filter(q => q.examiner === f)
+      const gefiltert = f === 'all' ? alleFragen : alleFragen.filter(q => q.gruppe === f)
       next = [...gefiltert].sort(() => Math.random() - 0.5)
     }
     setQueue(next)
@@ -113,7 +113,7 @@ export default function PracticeMode() {
     </div>
   )
 
-  const filters: Filter[] = ['adaptive', 'all', ...examiners]
+  const filters: Filter[] = ['adaptive', 'all', ...gruppen]
 
   return (
     <div className="min-h-screen bg-surface text-ink">
@@ -138,7 +138,7 @@ export default function PracticeMode() {
               {f === 'adaptive'
                 ? `✨ Für mich${dueCount > 0 ? ` (${dueCount} fällig)` : ''}`
                 : f === 'all' ? 'Alle'
-                : examinerAnzeige(f, courseId)}
+                : gruppenAnzeige(f, courseId)}
             </button>
           ))}
         </div>

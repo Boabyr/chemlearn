@@ -4,7 +4,7 @@ import { join } from 'node:path'
 
 /**
  * Tailwind sieht nur vollständige Klassennamen im Quelltext. `text-${farbe}-400`
- * wird nie erzeugt — die Prüferfarben fehlten dadurch im Produktionsbuild
+ * wird nie erzeugt — die Gruppenfarben fehlten dadurch im Produktionsbuild
  * komplett, während im Entwicklungsserver alles gut aussah.
  */
 function dateien(verzeichnis: string): string[] {

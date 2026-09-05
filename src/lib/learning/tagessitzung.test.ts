@@ -7,7 +7,7 @@ const jetzt = new Date('2026-03-10T08:00:00Z')
 const tage = (n: number) => new Date(jetzt.getTime() + n * 86_400_000).toISOString()
 
 const frage = (id: string, topicId: string): ExamQuestion => ({
-  id, source: 't', examiner: 'uebung', topicId, points: 1,
+  id, source: 't', gruppe: 'uebung', topicId, points: 1,
   type: 'mc-single', question: id, correct: 0, explanation: '',
 })
 

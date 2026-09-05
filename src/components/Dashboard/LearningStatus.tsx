@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { useMastery } from '../../hooks/useMastery'
 import { useReviews } from '../../hooks/useReviews'
-import { examinerAnzeige } from '../../data/exams'
+import { gruppenAnzeige } from '../../data/exams'
 import type { Level } from '../../lib/learning/mastery'
 
 /**
  * Lernstand eines Kurses: was heute fällig ist, wo es hakt, wie weit die
- * Prüfungsreife je Prüfer ist.
+ * Prüfungsreife je Gruppe ist.
  */
 
 // Statusfarben tragen nie allein die Aussage — daneben steht immer das Wort.
@@ -75,7 +75,7 @@ export default function LearningStatus({ courseId, courseTitle }: {
           </p>
         </button>
 
-        {/* Prüfungsreife je Prüfer */}
+        {/* Prüfungsreife je Gruppe */}
         {readiness.length > 0 && (
           <div>
             <p className="text-xs text-subtle uppercase tracking-widest mb-3">Prüfungsreife</p>
@@ -83,10 +83,10 @@ export default function LearningStatus({ courseId, courseTitle }: {
               {readiness.map(r => {
                 const stil = LEVEL[r.level]
                 return (
-                  <div key={r.examiner}>
+                  <div key={r.gruppe}>
                     <div className="flex items-baseline justify-between gap-2 mb-1.5">
                       <span className="text-sm text-muted">
-                        {examinerAnzeige(r.examiner, courseId)}
+                        {gruppenAnzeige(r.gruppe, courseId)}
                       </span>
                       <span className={`text-xs ${stil.text}`}>
                         {stil.word} · {r.answered}/{r.total} Fragen
