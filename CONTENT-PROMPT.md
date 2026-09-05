@@ -13,6 +13,12 @@ baue ich (Claude) daraus.
 Drei Modi: **A** Vorlesungsskript → Themen, **B** Altprüfung → Prüfungsfragen,
 **C** vorhandenes Thema aufstocken.
 
+Gibt es zu einem Fach **keine Altprüfung**, entstehen die Prüfungsfragen aus dem
+Vorlesungsstoff selbst — als Fragenpool, aus dem die Prüfungssimulation nach der
+Prüfungsordnung zieht. Dafür gilt ein eigener, selbsttragender Prompt:
+[`PRUEFUNGSFRAGEN-PROMPT.md`](PRUEFUNGSFRAGEN-PROMPT.md). Er wird nicht an diesen
+Kern gehängt, sondern allein kopiert.
+
 **Ein Skript hat 800 Seiten, eine Antwort hat nicht 800 Seiten.** Arbeite in
 Läufen von höchstens drei Themen und gib jede Antwort als eigene `.md`-Datei in
 denselben Quellordner. Wie das ohne Dubletten geht, steht im Abschnitt
