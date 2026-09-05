@@ -21,7 +21,7 @@ Heterocycles are ubiquitous:
 - **Thiamine (Vitamin B1)** – key coenzyme (pyrimidine + thiazole)
 - **Caffeine** – purine alkaloid
 - **Apixaban** – pyrazole-containing drug (anticoagulant)
-- **Atorvastatin** – cholesterol-lowering agent (pyrrole scaffold), ~$12 bn/year revenue (2011)
+- **Atorvastatin** – cholesterol-lowering agent (pyrrole scaffold), ~\\$12 bn/year revenue (2011)
 - **Methylene blue** – dye and therapeutic agent
 - **HATU** – modern coupling reagent in peptide synthesis
 

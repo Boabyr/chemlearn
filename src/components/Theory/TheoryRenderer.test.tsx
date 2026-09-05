@@ -85,3 +85,19 @@ describe('Inhaltsübersicht', () => {
     expect(screen.queryByRole('navigation', { name: /inhalt/i })).toBeNull()
   })
 })
+
+describe('LaTeX-Klammern aus den Vorlesungsunterlagen', () => {
+  it('setzt \\[…\\] als abgesetzte Formel', () => {
+    const { container } = render(
+      <TheoryRenderer markdown={'Es gilt:\n\n\\[\nF = \\frac{q_1 q_2}{r^2}\n\\]\n'} />)
+    expect(container.querySelector('.katex-display')).not.toBeNull()
+    // KaTeX hinterlegt die Quelle als MathML-Annotation; die Klammern müssen weg sein.
+    expect(container.textContent).not.toContain('\\[')
+  })
+
+  it('setzt \\(…\\) im Fließtext als Formel', () => {
+    const { container } = render(<TheoryRenderer markdown={'Die Länge \\(L\\) des Arms.'} />)
+    expect(container.querySelector('.katex')).not.toBeNull()
+    expect(container.textContent).not.toContain('\\(')
+  })
+})

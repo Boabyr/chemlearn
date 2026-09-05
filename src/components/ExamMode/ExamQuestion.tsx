@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { gruppenLabel, type ExamQuestion } from '../../data/exams'
 import { stilFuer } from './pruefStil'
-import { spracheVon } from '../../lib/courseRegistry'
+import { formelsatzVon, spracheVon } from '../../lib/courseRegistry'
 import { bewerte, leseZahl } from '../../lib/learning/bewerten'
+import Formeltext from '../Theory/Formeltext'
 
 interface Props {
   question: ExamQuestion
@@ -72,6 +73,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
     onAnswer(bewertung.korrekt, bewertung.punkte)
   }
 
+  const satz = formelsatzVon(courseId)
   const stil = stilFuer(question.gruppe)
   const profLabel = gruppenLabel(question.gruppe)
 
@@ -93,7 +95,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
       </div>
 
       <div className="px-5 py-5">
-        <p className="text-ink leading-relaxed mb-5">{question.question}</p>
+        <p className="text-ink leading-relaxed mb-5"><Formeltext text={question.question} formelsatz={satz} /></p>
 
         {/* MC Options */}
         {(question.type === 'mc-single' || question.type === 'mc-multi') && question.options && (
@@ -116,7 +118,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
                   <span className="opacity-50 mr-2 font-mono">
                     {question.type === 'mc-multi' ? (selected.includes(i) ? '☑' : '☐') : `${i + 1}.`}
                   </span>
-                  {opt}
+                  <Formeltext text={opt} formelsatz={satz} />
                   {submitted && isRight && <span className="float-right">✓</span>}
                 </button>
               )
@@ -166,7 +168,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
                   'border-line bg-sunken/60 text-muted'
                 }`}>
                   <span className="font-mono text-subtle w-5">{pos+1}.</span>
-                  <span className="flex-1">{question.options![optIdx]}</span>
+                  <span className="flex-1"><Formeltext text={question.options![optIdx]} formelsatz={satz} /></span>
                   {!submitted && (
                     <div className="flex gap-1">
                       <button onClick={() => moveOrder(pos, -1)} className="text-muted hover:text-ink px-1">↑</button>
@@ -207,7 +209,7 @@ export default function ExamQuestionCard({ question, onAnswer, showSource, cours
               : 'bg-danger/10 border border-danger text-danger'
           }`}>
             <span className="font-semibold">{correct ? '✓ Richtig! ' : '✗ Nicht ganz. '}</span>
-            {question.explanation}
+            <Formeltext text={question.explanation} formelsatz={satz} />
           </div>
         )}
       </div>

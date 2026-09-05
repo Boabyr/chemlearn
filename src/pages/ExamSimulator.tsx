@@ -5,10 +5,11 @@ import { useAttempts } from '../hooks/useAttempts'
 import { useReviews } from '../hooks/useReviews'
 import { frageItemId } from '../lib/learning/lernItem'
 import { GRADES } from '../lib/learning/sm2'
+import Formeltext from '../components/Theory/Formeltext'
 import { examQuestionsFor, examStructuresFor, gruppenAnzeige, gruppenFuer, courseIdsWithExams } from '../data/exams'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import { stilFuer } from '../components/ExamMode/pruefStil'
-import { kursMit } from '../lib/courseRegistry'
+import { formelsatzVon, kursMit } from '../lib/courseRegistry'
 
 type Mode = 'select' | 'exam' | 'result'
 
@@ -365,7 +366,7 @@ export default function ExamSimulator() {
                   return (
                     <li key={frage.id} className="flex items-start gap-3 border-b border-line pb-2 text-sm last:border-0">
                       <span className={voll ? 'text-success' : 'text-danger'}>{voll ? '✓' : '✗'}</span>
-                      <span className="flex-1 text-muted">{frage.question}</span>
+                      <span className="flex-1 text-muted"><Formeltext text={frage.question} formelsatz={formelsatzVon(courseId)} /></span>
                       <span className="font-mono text-xs text-subtle">{erreicht}/{frage.points}P</span>
                     </li>
                   )

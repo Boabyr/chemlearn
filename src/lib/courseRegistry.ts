@@ -1,4 +1,4 @@
-import type { Kurs, Thema } from '../content/schema'
+import type { Formelsatz, Kurs, Thema } from '../content/schema'
 
 /**
  * Kurse und Themen finden sich selbst.
@@ -49,6 +49,11 @@ export function kursMit(courseId: string): Kurs | undefined {
  */
 export function spracheVon(courseId: string | undefined): string {
   return (courseId && kursMit(courseId)?.sprache) || 'de'
+}
+
+/** Formelsatz eines Kurses — steuert, ob Summenformeln tiefgestellt werden. */
+export function formelsatzVon(courseId: string | undefined): Formelsatz {
+  return (courseId && kursMit(courseId)?.formelsatz) || 'chemie'
 }
 
 /** Themen-Kennungen, die als Datei vorliegen — unabhängig von der Kursliste. */

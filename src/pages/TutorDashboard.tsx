@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Formeltext from '../components/Theory/Formeltext'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useRole } from '../hooks/useRole'
@@ -199,16 +200,16 @@ export default function TutorDashboard() {
 
                   {s.suggestion_type === 'quiz' && s.content && (
                     <div className="mb-4">
-                      <p className="text-sm font-medium text-ink mb-2">{s.content.question}</p>
+                      <p className="text-sm font-medium text-ink mb-2"><Formeltext text={s.content.question ?? ''} /></p>
                       {s.content.options?.map((opt: string, i: number) => (
                         <div key={i} className={`text-xs px-3 py-1.5 rounded-lg mb-1 ${
                           i === s.content.correct ? 'bg-success/20 text-success' : 'text-muted'
                         }`}>
-                          {String.fromCharCode(65+i)}. {opt}
+                          {String.fromCharCode(65+i)}. <Formeltext text={opt} />
                         </div>
                       ))}
                       {s.content.explanation && (
-                        <p className="text-xs text-muted mt-2 italic">{s.content.explanation}</p>
+                        <p className="text-xs text-muted mt-2 italic"><Formeltext text={s.content.explanation ?? ''} /></p>
                       )}
                     </div>
                   )}
@@ -217,11 +218,11 @@ export default function TutorDashboard() {
                     <div className="mb-4 grid grid-cols-2 gap-3">
                       <div className="bg-sunken rounded-xl p-3">
                         <p className="text-xs text-muted mb-1">Vorderseite</p>
-                        <p className="text-sm text-ink">{s.content.front}</p>
+                        <p className="text-sm text-ink"><Formeltext text={s.content.front ?? ''} /></p>
                       </div>
                       <div className="bg-accent/10 rounded-xl p-3">
                         <p className="text-xs text-muted mb-1">Rückseite</p>
-                        <p className="text-sm text-ink">{s.content.back}</p>
+                        <p className="text-sm text-ink"><Formeltext text={s.content.back ?? ''} /></p>
                       </div>
                     </div>
                   )}

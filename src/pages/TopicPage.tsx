@@ -13,6 +13,7 @@ import MechanismusAufgabe from '../components/Mechanismus/MechanismusAufgabe'
 import FormulaCalculator from '../components/FormulaCalculator/FormulaCalculator'
 import ApparatusQuiz from '../components/ApparatusQuiz/ApparatusQuiz'
 import ApparaturZuordnung from '../components/Apparatus/ApparaturZuordnung'
+import Formeltext from '../components/Theory/Formeltext'
 import ReportButton from '../components/Reports/ReportButton'
 import SuggestButton from '../components/Reports/SuggestButton'
 import SpectrumAssignment from '../components/SpectrumAssignment/SpectrumAssignment'
@@ -257,7 +258,7 @@ export default function TopicPage() {
                     style={{ width: `${(quizIdx / topic.quiz.length) * 100}%` }} />
                 </div>
                 <div className="bg-raised border border-line rounded-2xl p-6 mb-4">
-                  <h2 className="text-lg font-light leading-relaxed mb-6">{q.question}</h2>
+                  <h2 className="text-lg font-light leading-relaxed mb-6"><Formeltext text={q.question} formelsatz={formelsatz} /></h2>
                   <div className="space-y-3">
                     {q.options.map((opt, i) => {
                       let cls = 'border-line bg-sunken/50 text-muted hover:border-accent'
@@ -269,7 +270,7 @@ export default function TopicPage() {
                       return (
                         <button key={i} onClick={() => !answered && setSelected(i)}
                           className={`w-full text-left px-4 py-3 rounded-xl border transition-all text-sm ${cls}`}>
-                          <span className="opacity-50 mr-2">{String.fromCharCode(65+i)}.</span>{opt}
+                          <span className="opacity-50 mr-2">{String.fromCharCode(65+i)}.</span><Formeltext text={opt} formelsatz={formelsatz} />
                         </button>
                       )
                     })}
@@ -280,7 +281,7 @@ export default function TopicPage() {
                 </div>
                 {answered && (
                   <div className="bg-accent/10 border border-accent rounded-xl px-5 py-4 mb-4 text-sm text-muted leading-relaxed">
-                    <span className="text-accent font-semibold">Erklärung: </span>{q.explanation}
+                    <span className="text-accent font-semibold">Erklärung: </span><Formeltext text={q.explanation} formelsatz={formelsatz} />
                   </div>
                 )}
                 <div className="flex gap-3">
@@ -312,12 +313,12 @@ export default function TopicPage() {
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                   className="absolute inset-0 bg-raised border border-accent rounded-2xl flex flex-col items-center justify-center p-8">
                   <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">Begriff</p>
-                  <p className="text-xl font-light text-center">{topic.flashcards[cardIdx].front}</p>
+                  <p className="text-xl font-light text-center"><Formeltext text={topic.flashcards[cardIdx].front} formelsatz={formelsatz} /></p>
                 </div>
                 <div style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                   className="absolute inset-0 bg-accent/20 border border-accent rounded-2xl flex flex-col items-center justify-center p-8">
                   <p className="text-xs text-accent font-mono uppercase tracking-widest mb-4">Erklärung</p>
-                  <p className="text-sm text-muted text-center leading-relaxed">{topic.flashcards[cardIdx].back}</p>
+                  <p className="text-sm text-muted text-center leading-relaxed"><Formeltext text={topic.flashcards[cardIdx].back} formelsatz={formelsatz} /></p>
                 </div>
               </div>
             </button>

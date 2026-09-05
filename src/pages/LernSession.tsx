@@ -8,8 +8,9 @@ import { ohnePraefix, type LernAufgabe } from '../lib/learning/lernItem'
 import { GRADES, type Grade } from '../lib/learning/sm2'
 import ExamQuestionCard from '../components/ExamMode/ExamQuestion'
 import ThemeToggle from '../components/Shell/ThemeToggle'
+import Formeltext from '../components/Theory/Formeltext'
 import { ampelText } from '../lib/scoreColor'
-import { spracheVon } from '../lib/courseRegistry'
+import { formelsatzVon, spracheVon } from '../lib/courseRegistry'
 
 const KNOEPFE: { grade: Grade; label: string; taste: string }[] = [
   { grade: GRADES.NOCHMAL, label: 'Nochmal', taste: '1' },
@@ -230,7 +231,8 @@ export default function LernSession() {
                 {umgedreht ? 'Rückseite' : 'Vorderseite — Leertaste dreht um'}
               </p>
               <p className="text-lg leading-relaxed">
-                {umgedreht ? aufgabe.karte.back : aufgabe.karte.front}
+                <Formeltext text={umgedreht ? aufgabe.karte.back : aufgabe.karte.front}
+                  formelsatz={formelsatzVon(aufgabe.courseId)} />
               </p>
             </button>
 

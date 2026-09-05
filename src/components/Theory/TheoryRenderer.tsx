@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import remarkChemistry from './remarkChemistry'
+import { normalisiereMathe } from './mathe'
 import Abbildung from './Abbildung'
 import { zerlegeAnAbbildungen } from './abbildungsMarken'
 import type { Abbildung as AbbildungDaten, Formelsatz } from '../../content/schema'
@@ -32,9 +33,11 @@ interface Props {
 export default function TheoryRenderer({
   markdown, showToc = false, abbildungen = [], formelsatz = 'chemie',
 }: Props) {
+  // Die Inhalte setzen Formeln als \[…\] bzw. \(…\); remark-math liest nur $.
+  const text = useMemo(() => normalisiereMathe(markdown), [markdown])
   const toc = useMemo(
-    () => (showToc ? abschnitte(markdown, formelsatz) : []),
-    [markdown, showToc, formelsatz],
+    () => (showToc ? abschnitte(text, formelsatz) : []),
+    [text, showToc, formelsatz],
   )
   // remarkGfm und remarkMath gelten für jedes Fach; nur der Chemiesatz ist
   // abschaltbar.
@@ -42,7 +45,7 @@ export default function TheoryRenderer({
     () => (formelsatz === 'chemie' ? [remarkGfm, remarkMath, remarkChemistry] : [remarkGfm, remarkMath]),
     [formelsatz],
   )
-  const teile = useMemo(() => zerlegeAnAbbildungen(markdown), [markdown])
+  const teile = useMemo(() => zerlegeAnAbbildungen(text), [text])
   const nachId = useMemo(() => new Map(abbildungen.map(a => [a.id, a])), [abbildungen])
 
   return (
