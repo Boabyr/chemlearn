@@ -1,6 +1,61 @@
 {
   "questions": [
     {
+      "id": "pool-01-galilei-transformation-1",
+      "source": "Skript Kap. 1",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "01-galilei-transformation",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Welche Größe ist unter der Galilei-Transformation **nicht** invariant?",
+      "options": [
+        "Der Abstand zweier gleichzeitiger Ereignisse",
+        "Die Geschwindigkeit eines bewegten Körpers",
+        "Die Beschleunigung eines Körpers",
+        "Die Zeitdifferenz zweier Ereignisse"
+      ],
+      "correct": 1,
+      "explanation": "Die Geschwindigkeitsaddition $v_x = v'_x + v_{x,\\mathrm{rel}}$ ändert den Geschwindigkeitswert beim Wechsel des Bezugssystems. Der Ortsabstand bleibt gleich, weil nur eine gemeinsame Verschiebung $v_x t$ addiert wird, und die Zeitdifferenz bleibt wegen $t = t'$ gleich. Die Beschleunigung ist invariant, weil die zusätzliche Geschwindigkeit konstant ist und beim zweiten Ableiten wegfällt — genau deshalb gelten die Newtonschen Axiome in allen Inertialsystemen."
+    },
+    {
+      "id": "pool-01-galilei-transformation-2",
+      "source": "Skript Kap. 1",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "01-galilei-transformation",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über die Galilei-Transformation treffen zu?",
+      "options": [
+        "Die Zeit läuft in beiden Systemen gleich, es gilt $t = t'$",
+        "Die Koordinaten $y$ und $z$ bleiben bei Bewegung längs $x$ unverändert",
+        "Geschwindigkeiten längs der Relativbewegung addieren sich einfach",
+        "Die Lichtgeschwindigkeit ergibt sich in beiden Systemen zu $c$"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Absolute Zeit, unveränderte Querkoordinaten und die Addition der Geschwindigkeiten sind genau die drei Annahmen der Transformation. Die vierte Aussage ist falsch und ist der Grund, warum die Transformation scheitert: Setzt man die Lichtkugel $x'^2 + y'^2 + z'^2 = c^2 t'^2$ in die Koordinaten von $S$ um, entstehen Mischterme, und die Ausbreitung wäre in $S$ nicht mehr kugelförmig mit $c$."
+    },
+    {
+      "id": "pool-01-galilei-transformation-3",
+      "source": "Skript Kap. 1",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "01-galilei-transformation",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Güterzug fährt mit $30\\ \\mathrm{m/s}$. Ein Fahrgast geht mit $1{,}5\\ \\mathrm{m/s}$ entgegen der Fahrtrichtung durch den Waggon. Welche Geschwindigkeit misst ein Beobachter am Bahnsteig?",
+      "options": [
+        "$28{,}5\\ \\mathrm{m/s}$",
+        "$31{,}5\\ \\mathrm{m/s}$",
+        "$30{,}0\\ \\mathrm{m/s}$",
+        "$1{,}5\\ \\mathrm{m/s}$"
+      ],
+      "correct": 0,
+      "explanation": "Die Geschwindigkeit im Bahnsteigsystem ist $v_x = v'_x + v_\\mathrm{Zug} = -1{,}5 + 30 = 28{,}5\\ \\mathrm{m/s}$. Das Vorzeichen von $v'_x$ ist negativ, weil der Fahrgast entgegen der Fahrtrichtung geht. Mit $31{,}5\\ \\mathrm{m/s}$ hätte man das Vorzeichen vergessen; $30{,}0$ ignoriert den Fahrgast; $1{,}5$ ist der Wert im mitfahrenden System."
+    },
+    {
       "id": "pool-02-elektrostatik-1",
       "source": "Skript Kap. 2",
       "gruppe": "bezugssysteme-und-elektrostatik",
@@ -15,7 +70,44 @@
         "Sie vervierfacht sich"
       ],
       "correct": 2,
-      "explanation": "Die Coulombkraft ist F = (1/4πε₀)·|q₁q₂|/r², also umgekehrt proportional zu r². Eine Verdopplung von r ergibt den Faktor 1/2² = 1/4 — die Kraft sinkt auf ein Viertel. „Halbiert sich\" verwechselt eine lineare mit einer quadratischen Abhängigkeit. „Unverändert\" ignoriert die Abstandsabhängigkeit ganz. „Vervierfacht sich\" wäre die Folge einer Halbierung des Abstands, nicht einer Verdopplung."
+      "explanation": "Die Coulombkraft ist $F = \\frac{1}{4\\pi\\varepsilon_0}\\frac{|q_1 q_2|}{r^2}$, also umgekehrt proportional zu $r^2$. Eine Verdopplung von $r$ ergibt den Faktor $1/2^2 = 1/4$. „Halbiert sich\" verwechselt eine lineare mit einer quadratischen Abhängigkeit; „vervierfacht sich\" wäre die Folge einer Halbierung des Abstands."
+    },
+    {
+      "id": "pool-02-elektrostatik-2",
+      "source": "Skript Kap. 2",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "02-elektrostatik",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Ein geladener Leiter befindet sich im elektrostatischen Gleichgewicht. Welche Aussagen treffen zu?",
+      "options": [
+        "Das elektrische Feld im Inneren des Leiters verschwindet",
+        "Die Feldlinien verlaufen tangential zur Leiteroberfläche",
+        "Überschüssige Ladung verteilt sich gleichmäßig über das Volumen",
+        "Das Potential ist im ganzen Leiter gleich groß"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Im Gleichgewicht verschwindet das Feld im Inneren, denn sonst würden sich die frei beweglichen Elektronen weiter verschieben; aus $\\vec{E} = 0$ folgt sofort ein konstantes Potential im ganzen Leiter. Falsch ist die zweite Aussage: Feldlinien stehen **senkrecht** auf der Leiteroberfläche, eine Tangentialkomponente würde Ladung längs der Oberfläche treiben. Falsch ist auch die dritte: Überschussladung sitzt ausschließlich auf der Oberfläche, nicht im Volumen."
+    },
+    {
+      "id": "pool-02-elektrostatik-3",
+      "source": "Skript Kap. 2",
+      "gruppe": "bezugssysteme-und-elektrostatik",
+      "topicId": "02-elektrostatik",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Plattenkondensator hat im Vakuum die Kapazität $C_0 = 2{,}0\\ \\mathrm{nF}$. Zwischen die Platten wird ein Dielektrikum mit $\\varepsilon_r = 5$ geschoben, die Geometrie bleibt unverändert. Wie groß ist die Kapazität?",
+      "options": [
+        "$0{,}4\\ \\mathrm{nF}$",
+        "$2{,}5\\ \\mathrm{nF}$",
+        "$7{,}0\\ \\mathrm{nF}$",
+        "$10\\ \\mathrm{nF}$"
+      ],
+      "correct": 3,
+      "explanation": "Ein Dielektrikum erhöht die Kapazität auf $C = \\varepsilon_r C_0 = 5 \\cdot 2{,}0\\ \\mathrm{nF} = 10\\ \\mathrm{nF}$. Das Material polarisiert im Feld und schwächt es, sodass bei gleicher Spannung mehr Ladung Platz hat. $0{,}4\\ \\mathrm{nF}$ teilt statt zu multiplizieren, $7{,}0\\ \\mathrm{nF}$ addiert $\\varepsilon_r$ und $C_0$."
     },
     {
       "id": "pool-05-kirchhoff-und-schaltungen-1",
