@@ -110,6 +110,115 @@
       "explanation": "Ein Dielektrikum erhöht die Kapazität auf $C = \\varepsilon_r C_0 = 5 \\cdot 2{,}0\\ \\mathrm{nF} = 10\\ \\mathrm{nF}$. Das Material polarisiert im Feld und schwächt es, sodass bei gleicher Spannung mehr Ladung Platz hat. $0{,}4\\ \\mathrm{nF}$ teilt statt zu multiplizieren, $7{,}0\\ \\mathrm{nF}$ addiert $\\varepsilon_r$ und $C_0$."
     },
     {
+      "id": "pool-03-elektrischer-strom-1",
+      "source": "Skript Kap. 3",
+      "gruppe": "gleichstromkreise",
+      "topicId": "03-elektrischer-strom",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Die Driftgeschwindigkeit der Elektronen in einem Kupferdraht liegt bei Hundertstel Millimetern pro Sekunde. Warum leuchtet eine Lampe trotzdem sofort nach dem Einschalten?",
+      "options": [
+        "Die Elektronen werden beim Einschalten kurzzeitig auf Lichtgeschwindigkeit beschleunigt",
+        "Das elektrische Feld breitet sich im Leiter nahezu mit Lichtgeschwindigkeit aus",
+        "Die Ladung wird im Schalter gespeichert und beim Schließen freigesetzt",
+        "Die thermische Bewegung der Elektronen transportiert die Ladung"
+      ],
+      "correct": 1,
+      "explanation": "Der Leiter ist überall mit Ladungsträgern gefüllt; das Feld setzt sie praktisch gleichzeitig in Bewegung, wie das Wasser in einem gefüllten Gartenschlauch. Die einzelnen Elektronen wandern dabei langsam. Die thermische Bewegung ist mit rund $10^6\\ \\mathrm{m/s}$ zwar schnell, aber ungeordnet und transportiert netto keine Ladung."
+    },
+    {
+      "id": "pool-03-elektrischer-strom-2",
+      "source": "Skript Kap. 3",
+      "gruppe": "gleichstromkreise",
+      "topicId": "03-elektrischer-strom",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über Ladungsträger und Stromrichtung treffen zu?",
+      "options": [
+        "In Elektrolyten wandern positive und negative Ionen gleichzeitig in entgegengesetzte Richtungen",
+        "In Metallen tragen die frei beweglichen Leitungselektronen den Strom",
+        "Die technische Stromrichtung folgt der Bewegungsrichtung der Elektronen",
+        "Die thermische Geschwindigkeit übertrifft die Driftgeschwindigkeit um viele Größenordnungen"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Elektrolyte, Metalle und der Größenvergleich sind richtig wiedergegeben. Falsch ist die dritte Aussage: Die technische Stromrichtung zeigt von Plus nach Minus und damit **entgegen** der Elektronenbewegung. Für die Stromstärke ist das gleichgültig — negative Ladung nach links ergibt denselben technischen Strom wie positive Ladung nach rechts."
+    },
+    {
+      "id": "pool-03-elektrischer-strom-3",
+      "source": "Skript Kap. 3",
+      "gruppe": "gleichstromkreise",
+      "topicId": "03-elektrischer-strom",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Was folgt aus der Kontinuitätsgleichung für einen unverzweigten Leiter im stationären Fall?",
+      "options": [
+        "Der Strom ist an jeder Stelle des Leiters gleich groß",
+        "Die Stromdichte ist über den Querschnitt konstant",
+        "Die Ladung im Leiter nimmt gleichmäßig ab",
+        "Die Driftgeschwindigkeit ist überall dieselbe"
+      ],
+      "correct": 0,
+      "explanation": "Stationär heißt, dass sich die eingeschlossene Ladung nirgends ändert; damit verschwindet die rechte Seite von $\\oint_A \\vec{j}\\cdot\\mathrm{d}\\vec{A} = -\\mathrm{d}Q/\\mathrm{d}t$, und es fließt überall gleich viel Strom. Genau das steckt später in der Knotenregel. Die Stromdichte und die Driftgeschwindigkeit dürfen sich dabei durchaus ändern — an einer Engstelle steigen beide, weil $I = jA$ gilt."
+    },
+    {
+      "id": "pool-04-ohmsches-gesetz-1",
+      "source": "Skript Kap. 4",
+      "gruppe": "gleichstromkreise",
+      "topicId": "04-ohmsches-gesetz",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Kupferdraht wird bei gleichbleibendem Volumen auf die doppelte Länge gezogen. Wie ändert sich sein Widerstand?",
+      "options": [
+        "Er halbiert sich",
+        "Er bleibt unverändert",
+        "Er verdoppelt sich",
+        "Er vervierfacht sich"
+      ],
+      "correct": 3,
+      "explanation": "Bei konstantem Volumen halbiert sich der Querschnitt, wenn sich die Länge verdoppelt. In $R = \\rho_\\mathrm{el} L/A$ wirken beide Änderungen gleichsinnig: $2L$ im Zähler und $A/2$ im Nenner ergeben zusammen den Faktor 4. Wer nur die Länge betrachtet, kommt auf eine Verdopplung — das ist der häufigste Fehler."
+    },
+    {
+      "id": "pool-04-ohmsches-gesetz-2",
+      "source": "Skript Kap. 4",
+      "gruppe": "gleichstromkreise",
+      "topicId": "04-ohmsches-gesetz",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Metalldraht mit positivem Temperaturkoeffizienten wird erwärmt. Die angelegte Spannung bleibt gleich. Was geschieht mit dem Strom?",
+      "options": [
+        "Er steigt, weil die Elektronen schneller werden",
+        "Er sinkt, weil der spezifische Widerstand zunimmt",
+        "Er bleibt gleich, weil $U$ und $R$ fest sind",
+        "Er sinkt, weil die Elementarladung temperaturabhängig ist"
+      ],
+      "correct": 1,
+      "explanation": "Ein positiver Temperaturkoeffizient bedeutet steigendes $\\rho_\\mathrm{el}$ und damit steigendes $R$. Nach $I = U/R$ sinkt der Strom bei fester Spannung. Die höhere thermische Geschwindigkeit hilft nicht, sie stört: Die Elektronen stoßen häufiger mit dem schwingenden Gitter. Die Elementarladung ist eine Naturkonstante."
+    },
+    {
+      "id": "pool-04-ohmsches-gesetz-3",
+      "source": "Skript Kap. 4",
+      "gruppe": "gleichstromkreise",
+      "topicId": "04-ohmsches-gesetz",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über Leitfähigkeit und Widerstand treffen zu?",
+      "options": [
+        "Der spezifische Widerstand ist der Kehrwert der Leitfähigkeit",
+        "Quarz leitet wegen seiner winzigen Leitfähigkeit praktisch nicht",
+        "Der Widerstand eines Leiters wächst mit seinem Querschnitt",
+        "Ein positiver Temperaturkoeffizient senkt den Widerstand beim Erwärmen"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "$\\rho_\\mathrm{el} = 1/\\sigma$ ist die Definition, und Quarz liegt mit $10^{-18}\\ \\mathrm{S/m}$ rund 24 Zehnerpotenzen unter Silber. Falsch ist die dritte Aussage: In $R = \\rho_\\mathrm{el} L/A$ steht $A$ im Nenner, ein dickerer Leiter hat weniger Widerstand. Falsch ist auch die vierte: Positiv heißt steigender Widerstand mit steigender Temperatur."
+    },
+    {
       "id": "pool-05-kirchhoff-und-schaltungen-1",
       "source": "Skript Kap. 5",
       "gruppe": "gleichstromkreise",
@@ -127,7 +236,202 @@
         0,
         2
       ],
-      "explanation": "In der Reihenschaltung addieren sich die Einzelwiderstände zu R_ges = R₁ + R₂ + …, das ist immer größer als jeder einzelne Summand — die erste Aussage stimmt. In der Parallelschaltung liegt an allen Zweigen dieselbe Spannung an, das ist die dritte Aussage und ebenfalls richtig. Falsch ist die zweite Aussage: Der Ersatzwiderstand einer Parallelschaltung ist stets kleiner als der kleinste Einzelwiderstand, nicht größer. Falsch ist auch die vierte: In der Reihenschaltung fließt durch alle Widerstände derselbe Strom, das ist gerade ihr Kennzeichen."
+      "explanation": "In der Reihenschaltung addieren sich die Einzelwiderstände, die Summe ist größer als jeder Summand. In der Parallelschaltung liegt an allen Zweigen dieselbe Spannung an. Falsch ist die zweite Aussage: Der Ersatzwiderstand einer Parallelschaltung ist stets kleiner als der kleinste Einzelwiderstand. Falsch ist auch die vierte: In der Reihenschaltung fließt überall derselbe Strom."
+    },
+    {
+      "id": "pool-05-kirchhoff-und-schaltungen-2",
+      "source": "Skript Kap. 5",
+      "gruppe": "gleichstromkreise",
+      "topicId": "05-kirchhoff-und-schaltungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Drei Widerstände mit $6\\ \\Omega$, $3\\ \\Omega$ und $2\\ \\Omega$ sind parallel geschaltet. Wie groß ist der Gesamtwiderstand?",
+      "options": [
+        "$1{,}0\\ \\Omega$",
+        "$3{,}7\\ \\Omega$",
+        "$11{,}0\\ \\Omega$",
+        "$0{,}5\\ \\Omega$"
+      ],
+      "correct": 0,
+      "explanation": "Die Leitwerte addieren sich: $1/R = 1/6 + 1/3 + 1/2 = 1/6 + 2/6 + 3/6 = 1$, also $R = 1{,}0\\ \\Omega$. $11{,}0\\ \\Omega$ wäre die Reihenschaltung, $3{,}7\\ \\Omega$ das arithmetische Mittel. Der Gesamtwiderstand muss unter dem kleinsten Einzelwert von $2\\ \\Omega$ liegen — das schließt zwei der Ablenker sofort aus."
+    },
+    {
+      "id": "pool-05-kirchhoff-und-schaltungen-3",
+      "source": "Skript Kap. 5",
+      "gruppe": "gleichstromkreise",
+      "topicId": "05-kirchhoff-und-schaltungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "An einer Reihenschaltung aus $3\\ \\Omega$ und $7\\ \\Omega$ liegen $20\\ \\mathrm{V}$ an. Welche Spannung fällt am $7\\text{-}\\Omega$-Widerstand ab?",
+      "options": [
+        "$20\\ \\mathrm{V}$",
+        "$6\\ \\mathrm{V}$",
+        "$14\\ \\mathrm{V}$",
+        "$7\\ \\mathrm{V}$"
+      ],
+      "correct": 2,
+      "explanation": "In der Reihenschaltung fließt überall derselbe Strom $I = 20\\ \\mathrm{V}/10\\ \\Omega = 2\\ \\mathrm{A}$, damit ist $U = 7\\ \\Omega \\cdot 2\\ \\mathrm{A} = 14\\ \\mathrm{V}$. Die Spannung teilt sich im Verhältnis der Widerstände auf; $6\\ \\mathrm{V}$ fallen am kleineren ab. $20\\ \\mathrm{V}$ läge nur an, wenn der zweite Widerstand fehlte."
+    },
+    {
+      "id": "pool-06-spannungsquellen-innenwiderstand-1",
+      "source": "Skript Kap. 6",
+      "gruppe": "gleichstromkreise",
+      "topicId": "06-spannungsquellen-innenwiderstand",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine reale Spannungsquelle gibt genau dann die größte Leistung an die Last ab, wenn $R = R_\\mathrm{in}$ gilt. Wie groß ist dabei der Wirkungsgrad?",
+      "options": [
+        "$100\\ \\%$",
+        "$50\\ \\%$",
+        "$75\\ \\%$",
+        "Er hängt von der Quellenspannung ab"
+      ],
+      "correct": 1,
+      "explanation": "Bei $R = R_\\mathrm{in}$ liegt an beiden Widerständen dieselbe Spannung und es fließt derselbe Strom, also wird in der Quelle genau so viel Leistung in Wärme umgesetzt wie in der Last: $\\eta = 50\\ \\%$. Leistungsanpassung und guter Wirkungsgrad sind zwei verschiedene Ziele — Energienetze arbeiten deshalb bewusst mit $R \\gg R_\\mathrm{in}$."
+    },
+    {
+      "id": "pool-06-spannungsquellen-innenwiderstand-2",
+      "source": "Skript Kap. 6",
+      "gruppe": "gleichstromkreise",
+      "topicId": "06-spannungsquellen-innenwiderstand",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Quelle mit $U_Q = 12\\ \\mathrm{V}$ und $R_\\mathrm{in} = 0{,}5\\ \\Omega$ speist einen Lastwiderstand von $5{,}5\\ \\Omega$. Wie groß ist die Klemmenspannung?",
+      "options": [
+        "$12{,}0\\ \\mathrm{V}$",
+        "$6{,}0\\ \\mathrm{V}$",
+        "$1{,}0\\ \\mathrm{V}$",
+        "$11{,}0\\ \\mathrm{V}$"
+      ],
+      "correct": 3,
+      "explanation": "Der Strom ist $I = U_Q/(R_\\mathrm{in} + R) = 12/6 = 2\\ \\mathrm{A}$, damit $U_K = U_Q - R_\\mathrm{in} I = 12 - 0{,}5 \\cdot 2 = 11{,}0\\ \\mathrm{V}$. $1{,}0\\ \\mathrm{V}$ ist der Abfall am Innenwiderstand allein, $12{,}0\\ \\mathrm{V}$ gölte nur im Leerlauf."
+    },
+    {
+      "id": "pool-06-spannungsquellen-innenwiderstand-3",
+      "source": "Skript Kap. 6",
+      "gruppe": "gleichstromkreise",
+      "topicId": "06-spannungsquellen-innenwiderstand",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über reale Spannungsquellen treffen zu?",
+      "options": [
+        "Die Klemmenspannung sinkt, wenn der entnommene Strom steigt",
+        "Der Kurzschlussstrom beträgt $U_Q/R_\\mathrm{in}$",
+        "Im Leerlauf ist die Klemmenspannung gleich der Quellenspannung",
+        "Ein großer Innenwiderstand erlaubt besonders hohe Kurzschlussströme"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Am Innenwiderstand fällt $R_\\mathrm{in} I$ ab, deshalb sinkt die Klemmenspannung mit dem Strom und erreicht im stromlosen Leerlauf den vollen Wert $U_Q$. Bei $R = 0$ bleibt nur $R_\\mathrm{in}$ übrig, also $I_\\mathrm{max} = U_Q/R_\\mathrm{in}$. Falsch ist die vierte Aussage: $R_\\mathrm{in}$ steht dabei im Nenner, ein großer Innenwiderstand begrenzt den Kurzschlussstrom gerade."
+    },
+    {
+      "id": "pool-07-elektrische-messungen-1",
+      "source": "Skript Kap. 7",
+      "gruppe": "gleichstromkreise",
+      "topicId": "07-elektrische-messungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "An einem sehr kleinen Widerstand sollen Strom und Spannung gleichzeitig gemessen werden. Welche Anordnung wählt man?",
+      "options": [
+        "Die spannungsrichtige Schaltung",
+        "Die stromrichtige Schaltung",
+        "Eine der beiden, der Fehler ist gleich groß",
+        "Keine von beiden, nur der Zangenstrommesser hilft"
+      ],
+      "correct": 0,
+      "explanation": "Bei kleinem Messobjekt ist der Spannungsabfall am Amperemeter im Vergleich zur gesuchten Spannung groß, die stromrichtige Schaltung verfälscht dann stark. Spannungsrichtig misst das Voltmeter direkt am Widerstand; sein Strom ist wegen der rund $10\\ \\mathrm{M\\Omega}$ Eingangswiderstand vernachlässigbar. Faustregel: kleine Widerstände spannungsrichtig, große stromrichtig."
+    },
+    {
+      "id": "pool-07-elektrische-messungen-2",
+      "source": "Skript Kap. 7",
+      "gruppe": "gleichstromkreise",
+      "topicId": "07-elektrische-messungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Multimeter ist mit $0{,}5\\ \\%$ Genauigkeit **vom Messbereich** angegeben. Gemessen werden $5\\ \\mathrm{mA}$ im $400\\text{-}\\mathrm{mA}$-Bereich. Wie groß ist die Unsicherheit bezogen auf den Messwert?",
+      "options": [
+        "Etwa $0{,}5\\ \\%$",
+        "Etwa $2\\ \\%$",
+        "Etwa $8\\ \\%$",
+        "Etwa $40\\ \\%$"
+      ],
+      "correct": 3,
+      "explanation": "Die Angabe bezieht sich auf den Bereich: $0{,}005 \\cdot 400\\ \\mathrm{mA} = 2\\ \\mathrm{mA}$. Auf den Messwert von $5\\ \\mathrm{mA}$ bezogen sind das $2/5 = 40\\ \\%$. Wer die $0{,}5\\ \\%$ direkt auf den Messwert bezieht, unterschätzt die Unsicherheit um fast zwei Zehnerpotenzen. Deshalb wählt man stets den kleinsten Bereich, in dem der Wert noch darstellbar ist."
+    },
+    {
+      "id": "pool-07-elektrische-messungen-3",
+      "source": "Skript Kap. 7",
+      "gruppe": "gleichstromkreise",
+      "topicId": "07-elektrische-messungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum liefert die Vierleitermessung an sehr kleinen Widerständen ein besseres Ergebnis als die Zweileitermessung?",
+      "options": [
+        "Sie verdoppelt den Messstrom und damit das Nutzsignal",
+        "Im Spannungspfad fließt praktisch kein Strom",
+        "Sie mittelt über zwei unabhängig geführte Messungen",
+        "Sie erhöht die Bittiefe des Analog-Digital-Umsetzers"
+      ],
+      "correct": 1,
+      "explanation": "Bei kleinen Widerständen sind Zuleitungs- und Übergangswiderstände vergleichbar groß mit dem Messobjekt. Die Vierleitermessung trennt deshalb die Pfade: Der bekannte Strom läuft über zwei Leitungen, die Spannung wird über zwei praktisch stromlose Leitungen direkt am Objekt abgegriffen. Ohne Strom kein Spannungsabfall — die Zuleitungen fallen aus der Rechnung."
+    },
+    {
+      "id": "pool-08-hgue-und-leistung-1",
+      "source": "Skript Kap. 8",
+      "gruppe": "gleichstromkreise",
+      "topicId": "08-hgue-und-leistung",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Leitung überträgt eine konstante Leistung. Die Übertragungsspannung wird verdreifacht. Wie ändern sich die ohmschen Leitungsverluste?",
+      "options": [
+        "Sie sinken auf ein Drittel",
+        "Sie bleiben unverändert",
+        "Sie sinken auf ein Neuntel",
+        "Sie verdreifachen sich"
+      ],
+      "correct": 2,
+      "explanation": "Aus $I = P/U$ folgt, dass der Strom auf ein Drittel sinkt. Die Verluste $P_V = I^2 R_L$ hängen quadratisch vom Strom ab, also sinken sie auf $(1/3)^2 = 1/9$. Wer nur die lineare Stromabnahme sieht, kommt auf ein Drittel — genau dieser vergessene Exponent ist der Grund, warum Fernleitungen mit Hunderten Kilovolt arbeiten."
+    },
+    {
+      "id": "pool-08-hgue-und-leistung-2",
+      "source": "Skript Kap. 8",
+      "gruppe": "gleichstromkreise",
+      "topicId": "08-hgue-und-leistung",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine HGÜ-Leitung überträgt $900\\ \\mathrm{MW}$ bei einer Spannung von $450\\ \\mathrm{kV}$. Wie groß ist der Strom?",
+      "options": [
+        "$2000\\ \\mathrm{A}$",
+        "$500\\ \\mathrm{A}$",
+        "$2\\ \\mathrm{A}$",
+        "$405\\ \\mathrm{kA}$"
+      ],
+      "correct": 0,
+      "explanation": "Aus $I = P/U = 900 \\cdot 10^6\\ \\mathrm{W} / (450 \\cdot 10^3\\ \\mathrm{V}) = 2000\\ \\mathrm{A}$. Die häufigsten Fehler sind eine verrutschte Zehnerpotenz und die Verwechslung von Division und Multiplikation: $405\\ \\mathrm{kA}$ entsteht aus $P \\cdot U$."
+    },
+    {
+      "id": "pool-08-hgue-und-leistung-3",
+      "source": "Skript Kap. 8",
+      "gruppe": "gleichstromkreise",
+      "topicId": "08-hgue-und-leistung",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Aus welchen Gründen wird für sehr lange Strecken die Hochspannungs-Gleichstrom-Übertragung eingesetzt?",
+      "options": [
+        "Bei Gleichstrom entsteht keine Blindleistung",
+        "Sie erlaubt die Kopplung von Netzen mit unterschiedlicher Frequenz",
+        "Die Leitungsverluste wachsen bei ihr nur linear mit dem Strom",
+        "Über sehr lange Strecken sind ihre Verluste geringer als bei Wechselstrom"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Fehlende Blindleistung, die Kopplung unterschiedlicher Netzfrequenzen und die geringeren Verluste ab etwa $750\\ \\mathrm{km}$ sind die drei genannten Gründe. Falsch ist die dritte Aussage: $P_V = I^2 R_L$ gilt für Gleich- wie für Wechselstrom, die Abhängigkeit bleibt quadratisch. Begrenzt wird die Spannung durch Koronaentladungen."
     },
     {
       "id": "pool-09-statische-magnetfelder-1",
