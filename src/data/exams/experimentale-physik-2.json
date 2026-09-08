@@ -605,7 +605,7 @@
       "options": [
         "E-Feld und B-Feld stehen senkrecht zueinander",
         "Die Welle breitet sich mit Lichtgeschwindigkeit aus",
-        "Die Feldstärke fällt wie bei einem statischen Coulombfeld mit 1/r² ab",
+        "Die Feldstärke fällt wie ein statisches Coulombfeld mit $1/r^2$ ab",
         "E-Feld und B-Feld stehen beide senkrecht zur Ausbreitungsrichtung"
       ],
       "correct": [
@@ -613,7 +613,147 @@
         1,
         3
       ],
-      "explanation": "Im Fernfeld des Hertzschen Dipols stehen E- und B-Feld senkrecht zueinander und beide senkrecht zur Ausbreitungsrichtung, und die Welle läuft mit c = 1/√(μ₀ε₀) — drei richtige Aussagen. Falsch ist die dritte: Das Fernfeld fällt mit 1/r ab, nicht mit 1/r² wie ein statisches Coulombfeld. Die 1/r²-Abhängigkeit gehört zum elektrostatischen Feld einer ruhenden Ladung, nicht zur abgestrahlten Welle."
+      "explanation": "Im Fernfeld stehen E- und B-Feld senkrecht zueinander und beide senkrecht zur Ausbreitungsrichtung, und die Welle läuft mit $c = 1/\\sqrt{\\mu_0\\varepsilon_0}$. Falsch ist die dritte Aussage: Das Fernfeld fällt mit $1/r$ ab, nicht mit $1/r^2$. Die $1/r^2$-Abhängigkeit gehört zum statischen Feld einer ruhenden Ladung, nicht zur abgestrahlten Welle."
+    },
+    {
+      "id": "pool-12-elektromagnetische-wellen-2",
+      "source": "Skript Kap. 12",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "12-elektromagnetische-wellen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Welcher Term in $\\operatorname{rot}\\vec{B} = \\mu_0\\vec{j} + \\mu_0\\varepsilon_0\\,\\partial\\vec{E}/\\partial t$ macht die Ausbreitung einer Welle im leeren Raum überhaupt möglich?",
+      "options": [
+        "Der Term mit $\\partial\\vec{E}/\\partial t$",
+        "Die Leitungsstromdichte $\\mu_0\\vec{j}$ im ersten Summanden",
+        "Die Rotation des Magnetfeldes auf der linken Seite",
+        "Die magnetische Feldkonstante $\\mu_0$ als Vorfaktor"
+      ],
+      "correct": 0,
+      "explanation": "Im leeren Raum ist $\\vec{j} = 0$, der Leitungsstromterm fällt also weg. Übrig bleibt der Verschiebungsstrom: Ein sich änderndes E-Feld erzeugt ein B-Feld, dieses wiederum nach $\\operatorname{rot}\\vec{E} = -\\partial\\vec{B}/\\partial t$ ein E-Feld. Genau diese wechselseitige Erzeugung trägt die Welle ohne jedes Medium."
+    },
+    {
+      "id": "pool-12-elektromagnetische-wellen-3",
+      "source": "Skript Kap. 12",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "12-elektromagnetische-wellen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Wodurch unterscheidet sich das Nahfeld eines Hertzschen Dipols vom Fernfeld?",
+      "options": [
+        "Das Nahfeld ist rein magnetisch, das Fernfeld rein elektrisch",
+        "Das Nahfeld schwingt mit der doppelten Frequenz",
+        "Das Nahfeld ist stark gekrümmt und fällt rasch ab",
+        "Das Nahfeld breitet sich schneller als mit $c$ aus"
+      ],
+      "correct": 2,
+      "explanation": "In Antennennähe sind die Feldlinien noch stark gekrümmt und an den Leiter gebunden, ihre Stärke nimmt mit dem Abstand schnell ab. Erst weiter draußen lösen sich geschlossene Feldlinien ab und laufen als nahezu ebene Wellen mit $1/r$ weiter. Beide Bereiche enthalten E- und B-Feld und schwingen mit derselben Frequenz."
+    },
+    {
+      "id": "pool-13-elektromagnetische-wellen-im-vakuum-1",
+      "source": "Skript Kap. 13",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "13-elektromagnetische-wellen-im-vakuum",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine ebene Welle im Vakuum hat die Wellenlänge $\\lambda = 600\\ \\mathrm{nm}$. Wie groß ist ihre Wellenzahl $k$?",
+      "options": [
+        "Etwa $1{,}05\\cdot10^{7}\\ \\mathrm{m^{-1}}$",
+        "Etwa $1{,}67\\cdot10^{6}\\ \\mathrm{m^{-1}}$",
+        "Etwa $6{,}00\\cdot10^{-7}\\ \\mathrm{m^{-1}}$",
+        "Etwa $3{,}77\\cdot10^{9}\\ \\mathrm{m^{-1}}$"
+      ],
+      "correct": 0,
+      "explanation": "Mit $k = 2\\pi/\\lambda = 2\\pi/(600\\cdot10^{-9}\\ \\mathrm{m}) \\approx 1{,}05\\cdot10^{7}\\ \\mathrm{m^{-1}}$. Wer den Faktor $2\\pi$ vergisst, landet bei $1{,}67\\cdot10^{6}\\ \\mathrm{m^{-1}}$; $6{,}00\\cdot10^{-7}$ ist die Wellenlänge selbst in Metern."
+    },
+    {
+      "id": "pool-13-elektromagnetische-wellen-im-vakuum-2",
+      "source": "Skript Kap. 13",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "13-elektromagnetische-wellen-im-vakuum",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Die Frequenz einer ebenen Welle im Vakuum wird verdoppelt. Was ändert sich dabei?",
+      "options": [
+        "Die Phasengeschwindigkeit verdoppelt sich",
+        "Die Wellenlänge verdoppelt sich",
+        "Die Welle wird zur Longitudinalwelle",
+        "Die Wellenlänge halbiert sich"
+      ],
+      "correct": 3,
+      "explanation": "Im Vakuum gilt $v_\\mathrm{ph} = \\omega/k = c$ unabhängig von der Frequenz — das Vakuum ist dispersionsfrei. Aus $c = \\lambda f$ folgt bei doppelter Frequenz die halbe Wellenlänge. Die Transversalität folgt aus $\\operatorname{div}\\vec{E} = 0$ und ändert sich mit der Frequenz nicht."
+    },
+    {
+      "id": "pool-13-elektromagnetische-wellen-im-vakuum-3",
+      "source": "Skript Kap. 13",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "13-elektromagnetische-wellen-im-vakuum",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über ebene elektromagnetische Wellen im Vakuum treffen zu?",
+      "options": [
+        "$\\vec{E}$ und $\\vec{B}$ stehen senkrecht aufeinander",
+        "$\\vec{E}$ und $\\vec{B}$ stehen senkrecht auf dem Wellenvektor $\\vec{k}$",
+        "Die Phasengeschwindigkeit hängt von der Frequenz ab",
+        "Die allgemeine Lösung hat die Form $g(z-ct) + h(z+ct)$"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Transversalität in beiden Feldern folgt aus $\\operatorname{div}\\vec{E} = 0$ und $\\operatorname{div}\\vec{B} = 0$, und die Wellengleichung wird von jeder Überlagerung zweier gegenläufig laufender Profile gelöst. Falsch ist die dritte Aussage: Im Vakuum ist $v_\\mathrm{ph} = c$ für jede Frequenz. Dispersion tritt erst in Materie auf."
+    },
+    {
+      "id": "pool-14-elektromagnetische-wellen-in-materie-1",
+      "source": "Skript Kap. 14",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "14-elektromagnetische-wellen-in-materie",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Licht mit der Vakuumwellenlänge $\\lambda_0 = 500\\ \\mathrm{nm}$ läuft in Glas mit $n = 1{,}5$. Wie groß ist dort seine Wellenlänge?",
+      "options": [
+        "$750\\ \\mathrm{nm}$",
+        "$333\\ \\mathrm{nm}$",
+        "$500\\ \\mathrm{nm}$",
+        "$200\\ \\mathrm{nm}$"
+      ],
+      "correct": 1,
+      "explanation": "Im Medium gilt $\\lambda_m = \\lambda_0/n = 500\\ \\mathrm{nm}/1{,}5 = 333\\ \\mathrm{nm}$. Die Frequenz bleibt beim Übergang unverändert, weil sie von der Quelle vorgegeben ist; kürzer wird die Wellenlänge, weil die Phasengeschwindigkeit auf $c/n$ sinkt. $750\\ \\mathrm{nm}$ entstünde durch Multiplikation statt Division."
+    },
+    {
+      "id": "pool-14-elektromagnetische-wellen-in-materie-2",
+      "source": "Skript Kap. 14",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "14-elektromagnetische-wellen-in-materie",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Wie erklärt das mikroskopische Modell, dass Licht in Materie langsamer läuft als im Vakuum?",
+      "options": [
+        "Die Photonen stoßen mit den Atomkernen zusammen und verlieren Energie",
+        "Die Welle nimmt einen längeren Weg zwischen den Atomen",
+        "Das Medium verringert die Feldkonstanten $\\mu_0$ und $\\varepsilon_0$",
+        "Angeregte Elektronen strahlen Sekundärwellen ab, die sich mit der Primärwelle überlagern"
+      ],
+      "correct": 3,
+      "explanation": "Die einfallende Welle zwingt die gebundenen Elektronen zu erzwungenen Schwingungen; jedes schwingende Elektron wirkt als kleiner Hertzscher Dipol. Die Überlagerung von Primär- und Sekundärwellen ergibt eine Welle mit verschobener Phase — makroskopisch erscheint das als verringerte Phasengeschwindigkeit $c/n$. Energieverlust durch Stöße wäre Absorption, nicht Brechung."
+    },
+    {
+      "id": "pool-14-elektromagnetische-wellen-in-materie-3",
+      "source": "Skript Kap. 14",
+      "gruppe": "elektromagnetische-wellen",
+      "topicId": "14-elektromagnetische-wellen-in-materie",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Wie groß ist die Phasengeschwindigkeit einer Lichtwelle in einem Medium mit dem Brechungsindex $n = 2$?",
+      "options": [
+        "Etwa $1{,}5\\cdot10^{8}\\ \\mathrm{m/s}$",
+        "Etwa $6{,}0\\cdot10^{8}\\ \\mathrm{m/s}$",
+        "Etwa $3{,}0\\cdot10^{8}\\ \\mathrm{m/s}$",
+        "Etwa $7{,}5\\cdot10^{7}\\ \\mathrm{m/s}$"
+      ],
+      "correct": 0,
+      "explanation": "Es gilt $v_\\mathrm{ph} = c/n = 3{,}0\\cdot10^{8}/2 = 1{,}5\\cdot10^{8}\\ \\mathrm{m/s}$. $6{,}0\\cdot10^{8}$ multipliziert statt zu dividieren und läge über der Lichtgeschwindigkeit; $7{,}5\\cdot10^{7}$ teilt versehentlich durch $n^2$."
     },
     {
       "id": "pool-15-geometrische-optik-1",
