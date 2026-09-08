@@ -296,15 +296,15 @@
       "topicId": "06-spannungsquellen-innenwiderstand",
       "points": 1.6,
       "type": "mc-single",
-      "question": "Eine Quelle mit $U_Q = 12\\ \\mathrm{V}$ und $R_\\mathrm{in} = 0{,}5\\ \\Omega$ speist einen Lastwiderstand von $5{,}5\\ \\Omega$. Wie groß ist die Klemmenspannung?",
+      "question": "Eine Batterie zeigt im Leerlauf $9{,}0\\ \\mathrm{V}$. An einer Last von $10\\ \\Omega$ misst man nur noch $8{,}0\\ \\mathrm{V}$. Wie groß ist ihr Innenwiderstand?",
       "options": [
-        "$12{,}0\\ \\mathrm{V}$",
-        "$6{,}0\\ \\mathrm{V}$",
-        "$1{,}0\\ \\mathrm{V}$",
-        "$11{,}0\\ \\mathrm{V}$"
+        "$0{,}80\\ \\Omega$",
+        "$1{,}00\\ \\Omega$",
+        "$11{,}25\\ \\Omega$",
+        "$1{,}25\\ \\Omega$"
       ],
       "correct": 3,
-      "explanation": "Der Strom ist $I = U_Q/(R_\\mathrm{in} + R) = 12/6 = 2\\ \\mathrm{A}$, damit $U_K = U_Q - R_\\mathrm{in} I = 12 - 0{,}5 \\cdot 2 = 11{,}0\\ \\mathrm{V}$. $1{,}0\\ \\mathrm{V}$ ist der Abfall am Innenwiderstand allein, $12{,}0\\ \\mathrm{V}$ gölte nur im Leerlauf."
+      "explanation": "Im Leerlauf ist $U_K = U_Q = 9{,}0\\ \\mathrm{V}$. Unter Last fließt $I = 8{,}0\\ \\mathrm{V}/10\\ \\Omega = 0{,}80\\ \\mathrm{A}$, und der fehlende Volt fällt am Innenwiderstand ab: $R_\\mathrm{in} = (9{,}0 - 8{,}0)/0{,}80 = 1{,}25\\ \\Omega$. Wer den Spannungsabfall durch die Quellenspannung statt durch den Strom teilt, landet bei falschen Zahlen — gerade dieser Einbruch unter Last verrät eine müde Autobatterie."
     },
     {
       "id": "pool-06-spannungsquellen-innenwiderstand-3",
@@ -402,15 +402,15 @@
       "topicId": "08-hgue-und-leistung",
       "points": 1.6,
       "type": "mc-single",
-      "question": "Eine HGÜ-Leitung überträgt $900\\ \\mathrm{MW}$ bei einer Spannung von $450\\ \\mathrm{kV}$. Wie groß ist der Strom?",
+      "question": "Eine HGÜ-Trasse verliert laut Skript etwa $6{,}4\\ \\%$ je $1000\\ \\mathrm{km}$. Wie viel von eingespeisten $1000\\ \\mathrm{MW}$ kommt nach $2000\\ \\mathrm{km}$ noch an, wenn man die Anteile einfach addiert?",
       "options": [
-        "$2000\\ \\mathrm{A}$",
-        "$500\\ \\mathrm{A}$",
-        "$2\\ \\mathrm{A}$",
-        "$405\\ \\mathrm{kA}$"
+        "Etwa $872\\ \\mathrm{MW}$",
+        "Etwa $936\\ \\mathrm{MW}$",
+        "Etwa $128\\ \\mathrm{MW}$",
+        "Etwa $640\\ \\mathrm{MW}$"
       ],
       "correct": 0,
-      "explanation": "Aus $I = P/U = 900 \\cdot 10^6\\ \\mathrm{W} / (450 \\cdot 10^3\\ \\mathrm{V}) = 2000\\ \\mathrm{A}$. Die häufigsten Fehler sind eine verrutschte Zehnerpotenz und die Verwechslung von Division und Multiplikation: $405\\ \\mathrm{kA}$ entsteht aus $P \\cdot U$."
+      "explanation": "Auf $2000\\ \\mathrm{km}$ summieren sich die Verluste zu $2 \\cdot 6{,}4\\ \\% = 12{,}8\\ \\%$, also $128\\ \\mathrm{MW}$; ankommen davon $1000 - 128 = 872\\ \\mathrm{MW}$. $936\\ \\mathrm{MW}$ rechnet nur eine Teilstrecke, $128\\ \\mathrm{MW}$ nennt den Verlust statt der ankommenden Leistung."
     },
     {
       "id": "pool-08-hgue-und-leistung-3",
@@ -1163,15 +1163,15 @@
       "topicId": "22-beugung-einzelspalt",
       "points": 1.6,
       "type": "mc-single",
-      "question": "Ein Spalt der Breite $b = 0{,}10\\ \\mathrm{mm}$ wird mit $\\lambda = 600\\ \\mathrm{nm}$ beleuchtet. Unter welchem Winkel liegt das erste Minimum?",
+      "question": "An einem Spalt liegt das **zweite** Minimum unter $\\theta = 1{,}2^\\circ$, beleuchtet wird mit $\\lambda = 500\\ \\mathrm{nm}$. Wie breit ist der Spalt?",
       "options": [
-        "Etwa $0{,}34^\\circ$",
-        "Etwa $0{,}17^\\circ$",
-        "Etwa $3{,}4^\\circ$",
-        "Etwa $0{,}006^\\circ$"
+        "Etwa $48\\ \\mathrm{\\mu m}$",
+        "Etwa $24\\ \\mathrm{\\mu m}$",
+        "Etwa $96\\ \\mathrm{\\mu m}$",
+        "Etwa $12\\ \\mathrm{\\mu m}$"
       ],
       "correct": 0,
-      "explanation": "Aus $\\sin\\theta_m = m\\lambda/b$ folgt für $m = 1$: $\\sin\\theta_1 = 600\\cdot10^{-9}/10^{-4} = 6{,}0\\cdot10^{-3}$, also $\\theta_1 \\approx 0{,}34^\\circ$. Der häufigste Fehler ist eine verrutschte Zehnerpotenz beim Umrechnen von Millimetern in Meter; $0{,}17^\\circ$ entstünde durch eine zusätzliche Halbierung."
+      "explanation": "Aus $\\sin\\theta_m = m\\lambda/b$ folgt $b = m\\lambda/\\sin\\theta$ mit $m = 2$: $b = 2 \\cdot 500\\cdot10^{-9}/\\sin(1{,}2^\\circ) = 10^{-6}/0{,}0209 \\approx 48\\ \\mathrm{\\mu m}$. Wer die Ordnung $m = 1$ einsetzt, halbiert das Ergebnis auf $24\\ \\mathrm{\\mu m}$ — die Ordnung des Minimums ist hier die entscheidende Angabe."
     },
     {
       "id": "pool-22-beugung-einzelspalt-3",
@@ -1415,25 +1415,224 @@
       "explanation": "Die Zonen sind gerade so konstruiert, dass die Abstände zum Beobachtungspunkt um $\\lambda/2$ wachsen; die zugehörige Phasendifferenz von $\\pi$ lässt benachbarte Zonen destruktiv interferieren, sodass $E(P) \\approx \\tfrac{1}{2}E_1$ übrig bleibt. Falsch ist die dritte Aussage — wären alle Beiträge phasengleich, gäbe es weder Auslöschung noch Beugung."
     },
     {
+      "id": "pool-27-winkelvergroesserung-und-lupe-1",
+      "source": "Skript Kap. 27",
+      "gruppe": "optische-instrumente",
+      "topicId": "27-winkelvergroesserung-und-lupe",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Lupe hat die Brennweite $f = 50\\ \\mathrm{mm}$, das Objekt liegt in der Brennebene. Wie groß ist ihre Winkelvergrößerung?",
+      "options": [
+        "$5{,}0$",
+        "$0{,}2$",
+        "$50$",
+        "$2{,}5$"
+      ],
+      "correct": 0,
+      "explanation": "Mit dem Objekt in der Brennebene ist $\\alpha \\approx G/f$ und ohne Instrument $\\alpha_0 \\approx G/s_0$; daraus folgt $V_L = s_0/f = 250\\ \\mathrm{mm}/50\\ \\mathrm{mm} = 5{,}0$. Wer Zähler und Nenner vertauscht, erhält $0{,}2$ — eine Lupe, die verkleinert, wäre keine."
+    },
+    {
+      "id": "pool-27-winkelvergroesserung-und-lupe-2",
+      "source": "Skript Kap. 27",
+      "gruppe": "optische-instrumente",
+      "topicId": "27-winkelvergroesserung-und-lupe",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum muss für eine Winkelvergrößerung überhaupt eine Standardsehweite $s_0$ festgelegt werden?",
+      "options": [
+        "Weil das Auge unterhalb von $250\\ \\mathrm{mm}$ nichts mehr erkennt",
+        "Weil die Brennweite jeder Lupe auf $250\\ \\mathrm{mm}$ genormt ist",
+        "Weil $V$ ein Verhältnis zweier Sehwinkel ist und der Vergleichsfall feststehen muss",
+        "Weil das Bild sonst nicht reell wäre"
+      ],
+      "correct": 2,
+      "explanation": "Die Winkelvergrößerung ist als $V = \\alpha/\\alpha_0$ definiert. Ohne einen festgelegten Betrachtungsabstand wäre $\\alpha_0 \\approx G/s_0$ beliebig, und dieselbe Lupe hätte je nach Vergleichsabstand eine andere Vergrößerung. $s_0 = 250\\ \\mathrm{mm}$ ist eine Konvention, keine Grenze des Auges."
+    },
+    {
+      "id": "pool-27-winkelvergroesserung-und-lupe-3",
+      "source": "Skript Kap. 27",
+      "gruppe": "optische-instrumente",
+      "topicId": "27-winkelvergroesserung-und-lupe",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über die Lupe treffen zu?",
+      "options": [
+        "Ohne Instrument beträgt der Sehwinkel $\\alpha_0 \\approx G/s_0$",
+        "Liegt das Objekt in der Brennebene, verlässt ein Parallelbündel die Lupe",
+        "Die Lupe entwirft ein reelles Bild, das sich auf einem Schirm auffangen lässt",
+        "Eine kürzere Brennweite ergibt eine größere Winkelvergrößerung"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Der Vergleichssehwinkel bei Standardsehweite, das Parallelbündel bei Objekt in der Brennebene und $V_L = s_0/f$ stehen so im Skript. Falsch ist die dritte Aussage: Die Lupe erzeugt ein virtuelles Bild, das nur das Auge sehen kann — auffangen ließe sich nur ein reelles Bild, wie es das Objektiv eines Mikroskops liefert."
+    },
+    {
       "id": "pool-28-fernrohre-kepler-galilei-1",
       "source": "Skript Kap. 28",
       "gruppe": "optische-instrumente",
       "topicId": "28-fernrohre-kepler-galilei",
       "points": 1.6,
       "type": "mc-multi",
-      "question": "Welche Aussagen zum Kepler-Fernrohr (Objektiv und Okular sind beide Sammellinsen) treffen zu?",
+      "question": "Welche Aussagen zum Kepler-Fernrohr treffen zu?",
       "options": [
         "Das Okular ist eine Zerstreuungslinse",
         "Das entstehende Bild ist umgekehrt",
-        "Die Baulänge beträgt f_obj + f_ok",
-        "Eine größere Objektivbrennweite ergibt bei gleicher Okularbrennweite eine größere Vergrößerung"
+        "Die Baulänge beträgt $f_\\mathrm{obj} + f_\\mathrm{ok}$",
+        "Eine größere Objektivbrennweite ergibt bei festem $f_\\mathrm{ok}$ mehr Vergrößerung"
       ],
       "correct": [
         1,
         2,
         3
       ],
-      "explanation": "Beim Kepler-Fernrohr sind Objektiv und Okular Sammellinsen, das entstehende Bild ist reell, verkleinert und umgekehrt — die zweite Aussage stimmt. Die Baulänge ergibt sich aus den zusammenfallenden Brennebenen zu f_obj + f_ok, die dritte Aussage stimmt ebenfalls. Die Winkelvergrößerung ist V_F = f_obj/f_ok, bei gleichbleibendem f_ok erhöht eine größere Objektivbrennweite also die Vergrößerung — die vierte Aussage stimmt auch. Falsch ist die erste: Eine Zerstreuungslinse als Okular kennzeichnet das Galilei-Fernrohr, nicht das Kepler-Fernrohr."
+      "explanation": "Beim Kepler-Fernrohr sind Objektiv und Okular Sammellinsen; das Objektiv erzeugt ein reelles, umgekehrtes Zwischenbild in seiner Brennebene, die mit der Okularbrennebene zusammenfällt — daraus folgt die Baulänge $f_\\mathrm{obj} + f_\\mathrm{ok}$. Die Winkelvergrößerung ist $V_F = f_\\mathrm{obj}/f_\\mathrm{ok}$. Falsch ist die erste Aussage: Ein Zerstreuungsokular kennzeichnet das Galilei-Fernrohr."
+    },
+    {
+      "id": "pool-28-fernrohre-kepler-galilei-2",
+      "source": "Skript Kap. 28",
+      "gruppe": "optische-instrumente",
+      "topicId": "28-fernrohre-kepler-galilei",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Kepler-Fernrohr hat $f_\\mathrm{obj} = 900\\ \\mathrm{mm}$ und $f_\\mathrm{ok} = 20\\ \\mathrm{mm}$. Welche Vergrößerung und welche Baulänge ergeben sich?",
+      "options": [
+        "$V = 45$ und $880\\ \\mathrm{mm}$",
+        "$V = 45$ und $920\\ \\mathrm{mm}$",
+        "$V = 18000$ und $920\\ \\mathrm{mm}$",
+        "$V = 0{,}022$ und $880\\ \\mathrm{mm}$"
+      ],
+      "correct": 1,
+      "explanation": "Die Winkelvergrößerung ist $V_F = f_\\mathrm{obj}/f_\\mathrm{ok} = 900/20 = 45$. Weil die beiden Brennebenen zusammenfallen, ist die Baulänge die **Summe** der Brennweiten: $900 + 20 = 920\\ \\mathrm{mm}$. Die Differenz $880\\ \\mathrm{mm}$ gälte für das Galilei-Fernrohr, dessen Zerstreuungsokular eine negative Brennweite hat."
+    },
+    {
+      "id": "pool-28-fernrohre-kepler-galilei-3",
+      "source": "Skript Kap. 28",
+      "gruppe": "optische-instrumente",
+      "topicId": "28-fernrohre-kepler-galilei",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Worin unterscheidet sich das Galilei- vom Kepler-Fernrohr?",
+      "options": [
+        "Es kommt ohne Objektivlinse vollständig aus",
+        "Sein Objektiv ist eine Zerstreuungslinse",
+        "Es besitzt überhaupt keine Winkelvergrößerung",
+        "Sein Okular ist eine Zerstreuungslinse"
+      ],
+      "correct": 3,
+      "explanation": "Beide Bauarten haben ein Sammellinsen-Objektiv. Beim Galilei-Fernrohr sitzt jedoch eine Zerstreuungslinse als Okular vor dem Zwischenbild; dadurch bleibt das Bild aufrecht und die Baulänge fällt kürzer aus — der Grund, warum Opernglas und Feldstecher-Vorläufer so gebaut sind."
+    },
+    {
+      "id": "pool-29-mikroskop-1",
+      "source": "Skript Kap. 29",
+      "gruppe": "optische-instrumente",
+      "topicId": "29-mikroskop",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum liegt das Objekt beim Mikroskop knapp **außerhalb** der Objektivbrennweite?",
+      "options": [
+        "Damit die Bildweite sehr groß und das Zwischenbild stark vergrößert wird",
+        "Damit ein virtuelles Bild direkt im Objektiv entsteht",
+        "Damit das Okular als Zerstreuungslinse wirken kann",
+        "Damit die Tubuslänge möglichst klein bleibt"
+      ],
+      "correct": 0,
+      "explanation": "Aus $1/g_\\mathrm{obj} + 1/b_\\mathrm{obj} = 1/f_\\mathrm{obj}$ folgt für $g_\\mathrm{obj}$ knapp über $f_\\mathrm{obj}$ eine Bildweite $b_\\mathrm{obj} \\gg f_\\mathrm{obj}$. Die Objektivvergrößerung $V_\\mathrm{obj} = b_\\mathrm{obj}/f_\\mathrm{obj}$ wird damit groß. Läge das Objekt innerhalb der Brennweite, entstünde kein reelles Zwischenbild — das Objektiv wäre selbst nur eine Lupe."
+    },
+    {
+      "id": "pool-29-mikroskop-2",
+      "source": "Skript Kap. 29",
+      "gruppe": "optische-instrumente",
+      "topicId": "29-mikroskop",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Mikroskop hat die Tubuslänge $t = 160\\ \\mathrm{mm}$ und ein Objektiv mit $f_\\mathrm{obj} = 4{,}0\\ \\mathrm{mm}$. Wie groß ist die Objektivvergrößerung?",
+      "options": [
+        "$40$",
+        "$640$",
+        "$41$",
+        "$0{,}025$"
+      ],
+      "correct": 2,
+      "explanation": "Aus $t = b_\\mathrm{obj} - f_\\mathrm{obj}$ folgt $b_\\mathrm{obj} = 164\\ \\mathrm{mm}$ und damit $V_\\mathrm{obj} = b_\\mathrm{obj}/f_\\mathrm{obj} = 164/4{,}0 = 41$. Wer die Tubuslänge direkt durch die Brennweite teilt, erhält $40$ und unterschlägt dabei die Brennweite im Zähler — bei kurzen Objektivbrennweiten ist der Unterschied klein, aber die Herleitung ist eine andere."
+    },
+    {
+      "id": "pool-29-mikroskop-3",
+      "source": "Skript Kap. 29",
+      "gruppe": "optische-instrumente",
+      "topicId": "29-mikroskop",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über den Aufbau des Mikroskops treffen zu?",
+      "options": [
+        "Das Objektiv erzeugt ein reelles, umgekehrtes Zwischenbild",
+        "Das Okular wirkt als Lupe auf dieses Zwischenbild",
+        "Die Tubuslänge hat keinen Einfluss auf die Gesamtvergrößerung",
+        "Die Gesamtvergrößerung ist das Produkt beider Stufen"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Das Mikroskop ist ein Zwei-Stufen-Vergrößerer: Das Objektiv liefert ein reelles, umgekehrtes Zwischenbild, das Okular betrachtet es wie eine Lupe, und die Vergrößerungen multiplizieren sich. Falsch ist die dritte Aussage: Über $t = b_\\mathrm{obj} - f_\\mathrm{obj}$ geht die Tubuslänge unmittelbar in $V_\\mathrm{obj}$ ein."
+    },
+    {
+      "id": "pool-30-aufloesungsvermoegen-optischer-instrumente-1",
+      "source": "Skript Kap. 30",
+      "gruppe": "optische-instrumente",
+      "topicId": "30-aufloesungsvermoegen-optischer-instrumente",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Teleskop hat die Öffnung $D = 100\\ \\mathrm{mm}$ und beobachtet bei $\\lambda = 550\\ \\mathrm{nm}$. Wie groß ist sein Rayleigh-Grenzwinkel?",
+      "options": [
+        "Etwa $5{,}5\\cdot10^{-6}\\ \\mathrm{rad}$",
+        "Etwa $6{,}7\\cdot10^{-6}\\ \\mathrm{rad}$",
+        "Etwa $1{,}3\\cdot10^{-5}\\ \\mathrm{rad}$",
+        "Etwa $6{,}7\\cdot10^{-9}\\ \\mathrm{rad}$"
+      ],
+      "correct": 1,
+      "explanation": "Nach dem Rayleigh-Kriterium ist $\\alpha_\\mathrm{auf} = 1{,}22\\,\\lambda/D = 1{,}22 \\cdot 550\\cdot10^{-9}/0{,}100 = 6{,}7\\cdot10^{-6}\\ \\mathrm{rad}$. Wer den Faktor $1{,}22$ weglässt, erhält $5{,}5\\cdot10^{-6}$; wer die Öffnung in Millimetern statt Metern einsetzt, verrutscht um drei Zehnerpotenzen."
+    },
+    {
+      "id": "pool-30-aufloesungsvermoegen-optischer-instrumente-2",
+      "source": "Skript Kap. 30",
+      "gruppe": "optische-instrumente",
+      "topicId": "30-aufloesungsvermoegen-optischer-instrumente",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Teleskop wird mit dem doppelten Objektivdurchmesser neu gebaut, die Wellenlänge bleibt gleich. Wie ändert sich sein Auflösungsvermögen?",
+      "options": [
+        "Es bleibt unverändert, denn nur die Brennweite zählt",
+        "Es verschlechtert sich, weil mehr Beugung auftritt",
+        "Es verbessert sich um den Faktor 4",
+        "Es verbessert sich um den Faktor 2"
+      ],
+      "correct": 3,
+      "explanation": "In $\\alpha_\\mathrm{auf} = 1{,}22\\,\\lambda/D$ steht $D$ im Nenner und geht linear ein: Der doppelte Durchmesser halbiert den Grenzwinkel, zwei Sterne lassen sich also bei halbem Winkelabstand noch trennen. Der Faktor 4 gehört zur gesammelten Lichtmenge, die mit der Fläche wächst — Helligkeit und Auflösung sind zweierlei."
+    },
+    {
+      "id": "pool-30-aufloesungsvermoegen-optischer-instrumente-3",
+      "source": "Skript Kap. 30",
+      "gruppe": "optische-instrumente",
+      "topicId": "30-aufloesungsvermoegen-optischer-instrumente",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zur beugungsbegrenzten Auflösung treffen zu?",
+      "options": [
+        "Das Rayleigh-Kriterium lautet $\\alpha_\\mathrm{auf} = 1{,}22\\,\\lambda/D$",
+        "Eine größere Öffnung verbessert die Auflösung",
+        "Kurzwelliges Licht löst schlechter auf als langwelliges",
+        "Die Grenze folgt aus dem Airy-Muster der kreisförmigen Öffnung"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Zwei Punkte gelten als getrennt, wenn das Maximum des einen auf die erste Nullstelle des Airy-Musters des anderen fällt — daraus folgt $1{,}22\\,\\lambda/D$. Falsch ist die dritte Aussage: $\\lambda$ steht im Zähler, kurzwelliges Licht löst also **besser** auf. Genau darauf beruhen Elektronenmikroskopie und die Belichtung mit immer kürzeren Wellenlängen."
     }
   ],
   "structures": []

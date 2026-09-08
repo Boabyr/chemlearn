@@ -44,7 +44,7 @@ export const course = {
   estimatedHours: 37,
   sprache: "de",
   formelsatz: "chemie",
-  entwurf: true,
+  entwurf: false,
   gruppen: [],
   ordnung: {
     titel: "Schriftliche Prüfung",
