@@ -1148,9 +1148,9 @@
       "type": "mc-single",
       "question": "Warum entstehen am Einzelspalt dunkle Streifen, obwohl nur eine einzige Öffnung vorhanden ist?",
       "options": [
-        "Weil die Spaltränder das Licht absorbieren",
-        "Weil sich die Sekundärwellen aus verschiedenen Spaltbereichen paarweise auslöschen",
-        "Weil das Licht am Spalt teilweise reflektiert wird",
+        "Weil die Spaltränder einen Teil des Lichts absorbieren",
+        "Weil sich Sekundärwellen paarweise auslöschen",
+        "Weil das Licht am Spalt teilweise zurückgeworfen wird",
         "Weil die Wellenfront hinter dem Spalt ihre Frequenz ändert"
       ],
       "correct": 1,
