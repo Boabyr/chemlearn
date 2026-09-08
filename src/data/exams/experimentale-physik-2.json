@@ -1140,21 +1140,279 @@
       "explanation": "Vielfachreflexion zwischen den teildurchlässigen Flächen erzeugt die Strahlfolge, ihr Gangunterschied ist derselbe Ausdruck wie bei der planparallelen Platte, und die Finesse misst gerade die Schärfe der Maxima. Falsch ist die vierte Aussage: Genau die Vielstrahlinterferenz unterscheidet das Gerät von Michelson und Mach-Zehnder."
     },
     {
+      "id": "pool-22-beugung-einzelspalt-1",
+      "source": "Skript Kap. 22",
+      "gruppe": "beugung",
+      "topicId": "22-beugung-einzelspalt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum entstehen am Einzelspalt dunkle Streifen, obwohl nur eine einzige Öffnung vorhanden ist?",
+      "options": [
+        "Weil die Spaltränder das Licht absorbieren",
+        "Weil sich die Sekundärwellen aus verschiedenen Spaltbereichen paarweise auslöschen",
+        "Weil das Licht am Spalt teilweise reflektiert wird",
+        "Weil die Wellenfront hinter dem Spalt ihre Frequenz ändert"
+      ],
+      "correct": 1,
+      "explanation": "Nach dem Huygensschen Prinzip ist jeder Punkt der freigelassenen Wellenfront Ausgangspunkt einer Sekundärwelle. Für bestimmte Winkel findet sich zu jeder Quelle im Spalt eine zweite, deren Weg sich um $\\lambda/2$ unterscheidet — die Beiträge heben sich paarweise auf. Beugung ist damit Interferenz, keine Absorption und keine Reflexion."
+    },
+    {
+      "id": "pool-22-beugung-einzelspalt-2",
+      "source": "Skript Kap. 22",
+      "gruppe": "beugung",
+      "topicId": "22-beugung-einzelspalt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Spalt der Breite $b = 0{,}10\\ \\mathrm{mm}$ wird mit $\\lambda = 600\\ \\mathrm{nm}$ beleuchtet. Unter welchem Winkel liegt das erste Minimum?",
+      "options": [
+        "Etwa $0{,}34^\\circ$",
+        "Etwa $0{,}17^\\circ$",
+        "Etwa $3{,}4^\\circ$",
+        "Etwa $0{,}006^\\circ$"
+      ],
+      "correct": 0,
+      "explanation": "Aus $\\sin\\theta_m = m\\lambda/b$ folgt für $m = 1$: $\\sin\\theta_1 = 600\\cdot10^{-9}/10^{-4} = 6{,}0\\cdot10^{-3}$, also $\\theta_1 \\approx 0{,}34^\\circ$. Der häufigste Fehler ist eine verrutschte Zehnerpotenz beim Umrechnen von Millimetern in Meter; $0{,}17^\\circ$ entstünde durch eine zusätzliche Halbierung."
+    },
+    {
+      "id": "pool-22-beugung-einzelspalt-3",
+      "source": "Skript Kap. 22",
+      "gruppe": "beugung",
+      "topicId": "22-beugung-einzelspalt",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über die Beugung am Einzelspalt treffen zu?",
+      "options": [
+        "Die Intensität folgt $I(\\theta) = I_0\\left(\\frac{\\sin x}{x}\\right)^2$",
+        "Minima liegen bei $\\sin\\theta_m = m\\lambda/b$ für $m \\neq 0$",
+        "Das Hauptmaximum liegt bei $\\theta = 0$",
+        "Auch bei $m = 0$ liegt ein Minimum"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Die Spaltfunktion, die Minimumbedingung und die Lage des Hauptmaximums stehen so im Skript. Falsch ist die vierte Aussage: Für $x \\to 0$ geht $\\sin x / x$ gegen 1, dort liegt gerade das Intensitätsmaximum. $m = 0$ ist deshalb ausdrücklich ausgenommen."
+    },
+    {
+      "id": "pool-23-beugung-reziprozitaet-1",
+      "source": "Skript Kap. 23",
+      "gruppe": "beugung",
+      "topicId": "23-beugung-reziprozitaet",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Unter welcher Bedingung ist am Einzelspalt überhaupt kein Minimum mehr zu beobachten?",
+      "options": [
+        "Wenn die Spaltbreite viel größer als die Wellenlänge ist",
+        "Wenn das Licht nicht monochromatisch ist",
+        "Wenn die Spaltbreite kleiner als die Wellenlänge ist",
+        "Wenn der Schirm zu nah am Spalt steht"
+      ],
+      "correct": 2,
+      "explanation": "Das erste Minimum verlangt $\\sin\\theta_1 = \\lambda/b$. Für $b < \\lambda$ wäre $\\lambda/b > 1$, und es gibt keinen Winkel, der die Bedingung erfüllt — die Beugungsfigur ist so breit geworden, dass kein Minimum mehr in den Halbraum passt. Ein sehr breiter Spalt hat dagegen viele, sehr eng beieinander liegende Minima."
+    },
+    {
+      "id": "pool-23-beugung-reziprozitaet-2",
+      "source": "Skript Kap. 23",
+      "gruppe": "beugung",
+      "topicId": "23-beugung-reziprozitaet",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Spalt der Breite $b = 3{,}0\\ \\mathrm{\\mu m}$ zeigt sein erstes Minimum bei $\\theta = 30^\\circ$. Welche Wellenlänge hat das Licht?",
+      "options": [
+        "$1{,}5\\ \\mathrm{\\mu m}$",
+        "$6{,}0\\ \\mathrm{\\mu m}$",
+        "$0{,}75\\ \\mathrm{\\mu m}$",
+        "$3{,}0\\ \\mathrm{\\mu m}$"
+      ],
+      "correct": 0,
+      "explanation": "Aus $\\sin\\theta_1 = \\lambda/b$ folgt $\\lambda = b\\sin\\theta_1 = 3{,}0\\ \\mathrm{\\mu m} \\cdot 0{,}5 = 1{,}5\\ \\mathrm{\\mu m}$. Wer die Beziehung umdreht, erhält $6{,}0\\ \\mathrm{\\mu m}$ — dann wäre $\\lambda$ größer als der Spalt, und es gäbe gar kein Minimum."
+    },
+    {
+      "id": "pool-23-beugung-reziprozitaet-3",
+      "source": "Skript Kap. 23",
+      "gruppe": "beugung",
+      "topicId": "23-beugung-reziprozitaet",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zur Reziprozität der Beugung treffen zu?",
+      "options": [
+        "Die Breite der Beugungsfigur wächst mit der Spaltbreite",
+        "Ein schmalerer Spalt erzeugt eine breitere Beugungsfigur",
+        "Eine größere Wellenlänge erzeugt eine breitere Beugungsfigur",
+        "Die Winkellage der Minima hängt nur vom Verhältnis $\\lambda/b$ ab"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "In $\\sin\\theta_m = m\\lambda/b$ steht $b$ im Nenner und $\\lambda$ im Zähler; nur ihr Verhältnis zählt. Falsch ist deshalb die erste Aussage: Ein breiterer Spalt macht die Figur **schmaler**, weil er mehr Sekundärquellen enthält, die seitliche Richtungen kräftiger auslöschen."
+    },
+    {
+      "id": "pool-24-beugung-kreisfoermiges-objekt-1",
+      "source": "Skript Kap. 24",
+      "gruppe": "beugung",
+      "topicId": "24-beugung-kreisfoermiges-objekt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Wodurch unterscheidet sich das Airy-Muster einer Kreisblende von der Beugungsfigur eines Spalts?",
+      "options": [
+        "Es besitzt kein zentrales Maximum bei $\\theta = 0$",
+        "Es ist rotationssymmetrisch, erstes Minimum bei $0{,}61\\lambda/R$",
+        "Es zeigt überhaupt keine Minima, nur einen weichen Abfall",
+        "Es hängt nicht von der Wellenlänge des Lichts ab"
+      ],
+      "correct": 1,
+      "explanation": "Weil die Öffnung rotationssymmetrisch ist, ist es auch die Beugungsfigur. Die radiale Struktur beschreibt die Besselfunktion $J_1$, deren erste Nullstelle bei $x \\approx 3{,}83$ liegt und auf $\\sin\\theta_1 = 0{,}61\\,\\lambda/R$ führt — statt des Faktors 1 wie beim Spalt. Ein zentrales Maximum bei $\\theta = 0$ hat auch das Airy-Muster."
+    },
+    {
+      "id": "pool-24-beugung-kreisfoermiges-objekt-2",
+      "source": "Skript Kap. 24",
+      "gruppe": "beugung",
+      "topicId": "24-beugung-kreisfoermiges-objekt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Kreisblende mit Radius $R = 0{,}50\\ \\mathrm{mm}$ wird mit $\\lambda = 550\\ \\mathrm{nm}$ beleuchtet. Unter welchem Winkel liegt das erste Airy-Minimum?",
+      "options": [
+        "Etwa $1{,}1\\cdot10^{-3}\\ \\mathrm{rad}$",
+        "Etwa $3{,}4\\cdot10^{-4}\\ \\mathrm{rad}$",
+        "Etwa $6{,}7\\cdot10^{-7}\\ \\mathrm{rad}$",
+        "Etwa $6{,}7\\cdot10^{-4}\\ \\mathrm{rad}$"
+      ],
+      "correct": 3,
+      "explanation": "Mit $\\sin\\theta_1 = 0{,}61\\,\\lambda/R = 0{,}61 \\cdot 550\\cdot10^{-9}/(0{,}50\\cdot10^{-3}) = 6{,}7\\cdot10^{-4}$ und $\\sin\\theta \\approx \\theta$ für kleine Winkel. Wer den Durchmesser statt des Radius einsetzt, halbiert das Ergebnis; wer den Faktor $0{,}61$ weglässt, kommt auf $1{,}1\\cdot10^{-3}$."
+    },
+    {
+      "id": "pool-24-beugung-kreisfoermiges-objekt-3",
+      "source": "Skript Kap. 24",
+      "gruppe": "beugung",
+      "topicId": "24-beugung-kreisfoermiges-objekt",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über das Airy-Muster treffen zu?",
+      "options": [
+        "Es ist rotationssymmetrisch",
+        "Das erste Minimum liegt bei $\\sin\\theta_1 = 0{,}61\\,\\lambda/R$",
+        "Eine größere Blende erzeugt ein breiteres Airy-Muster",
+        "Die radiale Struktur beschreibt die Besselfunktion $J_1$"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Rotationssymmetrie, Minimumbedingung und Besselfunktion stehen so im Skript. Falsch ist die dritte Aussage: In $\\sin\\theta_1 = 0{,}61\\,\\lambda/R$ steht $R$ im Nenner — eine größere Blende erzeugt ein **schmaleres** Muster. Genau deshalb löst ein großes Teleskop feiner auf als ein kleines."
+    },
+    {
       "id": "pool-25-beugungsgitter-1",
       "source": "Skript Kap. 25",
       "gruppe": "beugung",
       "topicId": "25-beugungsgitter",
       "points": 1.6,
       "type": "mc-single",
-      "question": "Ein Beugungsgitter wird durch eines mit doppelt so vielen Spalten N ersetzt, der Spaltabstand d bleibt gleich. Was passiert mit den Hauptmaxima?",
+      "question": "Ein Beugungsgitter wird durch eines mit doppelt so vielen Spalten $N$ ersetzt, der Spaltabstand $d$ bleibt gleich. Was geschieht mit den Hauptmaxima?",
       "options": [
-        "Sie werden schärfer, also schmaler",
+        "Sie werden schmaler und damit schärfer",
         "Sie werden breiter",
         "Ihre Winkellage verschiebt sich",
         "Es entstehen keine Nebenmaxima mehr"
       ],
       "correct": 0,
-      "explanation": "Die Breite der Hauptmaxima ist umgekehrt proportional zur Spaltzahl N — mehr Spalte bedeuten schärfere, also schmalere Hauptmaxima. Die Winkellage folgt allein aus der Gittergleichung d sinθ_m = mλ und hängt nicht von N ab, sie verschiebt sich also nicht. Zwischen zwei Hauptmaxima liegen weiterhin N−2 Nebenmaxima; sie werden mit wachsendem N schwächer, verschwinden aber nicht."
+      "explanation": "Die Breite der Hauptmaxima ist umgekehrt proportional zur Spaltzahl $N$ — mehr Spalte bedeuten schärfere Maxima. Ihre Winkellage folgt allein aus $d\\sin\\theta_m = m\\lambda$ und hängt nicht von $N$ ab. Zwischen zwei Hauptmaxima liegen weiterhin $N-2$ Nebenmaxima; sie werden schwächer, verschwinden aber nicht."
+    },
+    {
+      "id": "pool-25-beugungsgitter-2",
+      "source": "Skript Kap. 25",
+      "gruppe": "beugung",
+      "topicId": "25-beugungsgitter",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Gitter hat $500$ Striche pro Millimeter und wird mit $\\lambda = 600\\ \\mathrm{nm}$ beleuchtet. Unter welchem Winkel liegt das Hauptmaximum erster Ordnung?",
+      "options": [
+        "Etwa $8{,}6^\\circ$",
+        "Etwa $30^\\circ$",
+        "Etwa $17{,}5^\\circ$",
+        "Etwa $0{,}3^\\circ$"
+      ],
+      "correct": 2,
+      "explanation": "Aus $500$ Strichen pro Millimeter folgt $d = 1/500\\ \\mathrm{mm} = 2{,}0\\ \\mathrm{\\mu m}$. Mit $d\\sin\\theta_1 = \\lambda$ ergibt sich $\\sin\\theta_1 = 600\\cdot10^{-9}/2{,}0\\cdot10^{-6} = 0{,}30$, also $\\theta_1 \\approx 17{,}5^\\circ$. Wer $\\sin\\theta$ mit $\\theta$ im Bogenmaß verwechselt, landet bei $0{,}3$ und liest daraus fälschlich Grad ab."
+    },
+    {
+      "id": "pool-25-beugungsgitter-3",
+      "source": "Skript Kap. 25",
+      "gruppe": "beugung",
+      "topicId": "25-beugungsgitter",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über das Beugungsgitter treffen zu?",
+      "options": [
+        "Die Hauptmaxima liegen bei $d\\sin\\theta_m = m\\lambda$",
+        "Die Winkellage der Hauptmaxima hängt von der Spaltzahl $N$ ab",
+        "Die Einhüllende stammt von der Beugung am Einzelspalt",
+        "Zwischen zwei Hauptmaxima liegen $N-2$ Nebenmaxima"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Das Gittermuster ist das Produkt zweier Faktoren: die Einzelspaltfunktion als Einhüllende und der Interferenzterm der $N$ Spalte mit den scharfen Haupt- und den schwachen Nebenmaxima. Falsch ist die zweite Aussage: $N$ bestimmt Schärfe und Zahl der Nebenmaxima, die Winkellage folgt allein aus $d$ und $\\lambda$."
+    },
+    {
+      "id": "pool-26-fresnel-zonen-1",
+      "source": "Skript Kap. 26",
+      "gruppe": "beugung",
+      "topicId": "26-fresnel-zonen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Blende lässt genau die erste Fresnel-Zone durch und deckt alle weiteren ab. Wie ändert sich die Intensität im Beobachtungspunkt gegenüber der freien Ausbreitung?",
+      "options": [
+        "Sie halbiert sich",
+        "Sie steigt auf das Vierfache",
+        "Sie bleibt unverändert",
+        "Sie sinkt auf ein Viertel"
+      ],
+      "correct": 1,
+      "explanation": "Ohne Blende löschen sich die Beiträge benachbarter Zonen weitgehend aus, sodass nur $E(P) \\approx \\tfrac{1}{2}E_1$ übrig bleibt. Fällt die destruktive Interferenz weg, bleibt $E_1$ vollständig erhalten — die Feldstärke verdoppelt sich, und weil die Intensität quadratisch von der Feldstärke abhängt, steigt sie auf das Vierfache."
+    },
+    {
+      "id": "pool-26-fresnel-zonen-2",
+      "source": "Skript Kap. 26",
+      "gruppe": "beugung",
+      "topicId": "26-fresnel-zonen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine kleine Scheibe deckt genau die erste Fresnel-Zone ab, alle weiteren bleiben frei. Was misst man im Beobachtungspunkt?",
+      "options": [
+        "Vollständige Dunkelheit",
+        "Ein Viertel der ursprünglichen Intensität",
+        "Nahezu dieselbe Intensität wie ohne Scheibe",
+        "Die vierfache Intensität"
+      ],
+      "correct": 2,
+      "explanation": "Nun trägt die zweite Zone allein bei. Sie hätte im ungestörten Fall gerade die erste weitgehend ausgelöscht, ist also betragsmäßig etwa gleich groß — es bleibt praktisch dieselbe Intensität. Dass ausgerechnet hinter einem Hindernis Helligkeit auftritt, ist der berühmte Poissonsche Fleck."
+    },
+    {
+      "id": "pool-26-fresnel-zonen-3",
+      "source": "Skript Kap. 26",
+      "gruppe": "beugung",
+      "topicId": "26-fresnel-zonen",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über Fresnel-Zonen treffen zu?",
+      "options": [
+        "Benachbarte Zonen unterscheiden sich im optischen Weg um $\\lambda/2$",
+        "Die Gesamtfeldstärke beträgt etwa die Hälfte des Beitrags der ersten Zone",
+        "Alle Zonen tragen gleich stark und phasengleich bei",
+        "Das Konzept beschreibt die Beugung im Nahfeld"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Die Zonen sind gerade so konstruiert, dass die Abstände zum Beobachtungspunkt um $\\lambda/2$ wachsen; die zugehörige Phasendifferenz von $\\pi$ lässt benachbarte Zonen destruktiv interferieren, sodass $E(P) \\approx \\tfrac{1}{2}E_1$ übrig bleibt. Falsch ist die dritte Aussage — wären alle Beiträge phasengleich, gäbe es weder Auslöschung noch Beugung."
     },
     {
       "id": "pool-28-fernrohre-kepler-galilei-1",
