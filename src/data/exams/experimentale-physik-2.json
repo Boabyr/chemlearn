@@ -445,10 +445,154 @@
         "Sie stoßen sich ab",
         "Sie ziehen sich an",
         "Sie üben keine Kraft aufeinander aus",
-        "Die Richtung der Kraft hängt von der Leiterlänge ab, nicht vom Strom"
+        "Die Kraftrichtung hängt allein von der Leiterlänge ab"
       ],
       "correct": 1,
-      "explanation": "Fließen die Ströme in gleicher Richtung, ziehen sich die Leiter an — das ist die Grundlage der Ampere-Definition. Abstoßung träte nur bei entgegengesetzten Stromrichtungen auf. Kräftefreiheit widerspricht dem Ørsted-Effekt: Jeder stromdurchflossene Leiter erzeugt ein Magnetfeld, das auf den Strom im Nachbarleiter wirkt. Die Leiterlänge beeinflusst nur die Stärke der Kraft, nicht ihre Richtung — die Richtung folgt allein aus den Stromrichtungen."
+      "explanation": "Fließen die Ströme in gleicher Richtung, ziehen sich die Leiter an — das ist die Grundlage der früheren Ampere-Definition. Abstoßung träte nur bei entgegengesetzten Stromrichtungen auf. Kräftefreiheit widerspricht dem Ørsted-Effekt: Jeder stromdurchflossene Leiter erzeugt ein Magnetfeld, das auf den Strom im Nachbarleiter wirkt. Die Länge beeinflusst nur den Betrag der Kraft, nicht ihre Richtung."
+    },
+    {
+      "id": "pool-09-statische-magnetfelder-2",
+      "source": "Skript Kap. 9",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "09-statische-magnetfelder",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum ändert die Lorentzkraft den Betrag der Geschwindigkeit eines geladenen Teilchens nicht?",
+      "options": [
+        "Weil das Magnetfeld keine Energie besitzt",
+        "Weil die Ladung dabei erhalten bleibt",
+        "Weil die Kraft stets senkrecht zur Geschwindigkeit steht",
+        "Weil sich Kraft und Zentripetalkraft aufheben"
+      ],
+      "correct": 2,
+      "explanation": "In $\\vec{F} = q(\\vec{v} \\times \\vec{B})$ steht die Kraft wegen des Kreuzprodukts immer senkrecht auf $\\vec{v}$, verrichtet also keine Arbeit und ändert nur die Richtung. Genau deshalb entsteht eine Kreisbahn mit $r = mv/(qB)$. Die Aussage, Kraft und Zentripetalkraft höben sich auf, verwechselt beide: Die Lorentzkraft **ist** hier die Zentripetalkraft."
+    },
+    {
+      "id": "pool-09-statische-magnetfelder-3",
+      "source": "Skript Kap. 9",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "09-statische-magnetfelder",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über magnetische Felder treffen zu?",
+      "options": [
+        "Magnetische Feldlinien sind geschlossen und enden nicht an den Polen",
+        "Beim Zerbrechen eines Stabmagneten entstehen wieder zwei Dipole",
+        "Ein einzelner magnetischer Nordpol lässt sich isolieren",
+        "Magnetismus lässt sich als relativistische Folge bewegter Ladungen deuten"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Geschlossene Feldlinien, neue Dipole beim Zerbrechen und die relativistische Deutung sind alle im Skript belegt. Falsch ist die dritte Aussage: Magnetische Monopole gibt es nicht, Nord- und Südpol treten stets gemeinsam auf. Das ist der wesentliche Unterschied zur Elektrostatik, wo sich positive und negative Ladung sehr wohl trennen lassen."
+    },
+    {
+      "id": "pool-10-zeitlich-veraenderliche-felder-1",
+      "source": "Skript Kap. 10",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "10-zeitlich-veraenderliche-felder",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Stabmagnet fällt durch ein senkrecht stehendes Kupferrohr und wird dabei stark abgebremst. Was ist die Ursache?",
+      "options": [
+        "Das Kupfer ist selbst schwach magnetisch und hält den Magneten fest",
+        "Die Luftreibung im engen Rohr bremst den Magneten",
+        "Der Magnet verliert beim Fallen einen Teil seiner Magnetisierung",
+        "Wirbelströme erzeugen ein Feld, das der Flussänderung entgegenwirkt"
+      ],
+      "correct": 3,
+      "explanation": "Der fallende Magnet ändert den Fluss durch die Rohrwand und induziert dort Wirbelströme. Nach der Lenzschen Regel wirkt deren Magnetfeld der Ursache entgegen und bremst die Bewegung — dasselbe Prinzip nutzen Wirbelstrombremsen. Kupfer ist nicht ferromagnetisch, und die Luftreibung wäre um Größenordnungen zu schwach."
+    },
+    {
+      "id": "pool-10-zeitlich-veraenderliche-felder-2",
+      "source": "Skript Kap. 10",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "10-zeitlich-veraenderliche-felder",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Leiterschleife rotiert in einem homogenen Magnetfeld. Die Drehzahl wird verdoppelt. Wie ändert sich die Amplitude der induzierten Spannung?",
+      "options": [
+        "Sie bleibt gleich",
+        "Sie halbiert sich",
+        "Sie verdoppelt sich",
+        "Sie vervierfacht sich"
+      ],
+      "correct": 2,
+      "explanation": "Aus $\\Phi_m(t) = AB\\sin(\\omega t)$ folgt $U_\\mathrm{ind}(t) = -AB\\omega\\cos(\\omega t)$; die Amplitude $AB\\omega$ ist proportional zur Kreisfrequenz. Doppelte Drehzahl heißt doppeltes $\\omega$ und damit doppelte Amplitude. Eine Vervierfachung entstünde nur, wenn $\\omega$ quadratisch einginge — das tut es hier nicht."
+    },
+    {
+      "id": "pool-10-zeitlich-veraenderliche-felder-3",
+      "source": "Skript Kap. 10",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "10-zeitlich-veraenderliche-felder",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zum Induktionsgesetz treffen zu?",
+      "options": [
+        "Eine Spannung entsteht auch, wenn sich nur das Feld zeitlich ändert",
+        "Das induzierte elektrische Feld lässt sich nicht durch ein Potential beschreiben",
+        "Der induzierte Strom verstärkt die Flussänderung, die ihn hervorruft",
+        "Der magnetische Fluss ist das Flächenintegral über $\\vec{B}$"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Es zählt allein die Flussänderung — ob Magnet, Schleife oder Feldstärke sich ändert, ist gleichgültig. Weil $\\oint \\vec{E}\\cdot\\mathrm{d}\\vec{s} \\neq 0$ ist, hängt die Spannung vom Weg ab und es gibt kein Potential. Falsch ist die dritte Aussage: Nach der Lenzschen Regel wirkt der induzierte Strom der Änderung **entgegen** — andernfalls würde sich der Vorgang selbst aufschaukeln und Energie aus dem Nichts liefern."
+    },
+    {
+      "id": "pool-11-elektrotechnische-anwendungen-1",
+      "source": "Skript Kap. 11",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "11-elektrotechnische-anwendungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Die Frequenz einer Wechselspannung wird erhöht. Wie verhalten sich die Beträge der Scheinwiderstände von Spule und Kondensator?",
+      "options": [
+        "Beide steigen",
+        "Der Spulenwiderstand steigt, der Kondensatorwiderstand sinkt",
+        "Beide sinken",
+        "Der Spulenwiderstand sinkt, der Kondensatorwiderstand steigt"
+      ],
+      "correct": 1,
+      "explanation": "Es gilt $|Z_L| = \\omega L$ und $|Z_C| = 1/(\\omega C)$: Die Spule sperrt hohe Frequenzen, der Kondensator niedrige. Weil beide gegenläufig wirken, heben sie sich bei einer bestimmten Frequenz gerade auf — das ist der Resonanzfall, in dem nur noch der ohmsche Anteil übrig bleibt."
+    },
+    {
+      "id": "pool-11-elektrotechnische-anwendungen-2",
+      "source": "Skript Kap. 11",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "11-elektrotechnische-anwendungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Spule mit $L = 0{,}3\\ \\mathrm{H}$ liegt an einer Wechselspannung von $50\\ \\mathrm{Hz}$. Wie groß ist ihr Blindwiderstand?",
+      "options": [
+        "Etwa $15\\ \\Omega$",
+        "Etwa $0{,}3\\ \\Omega$",
+        "Etwa $94\\ \\Omega$",
+        "Etwa $188\\ \\Omega$"
+      ],
+      "correct": 2,
+      "explanation": "$X_L = \\omega L = 2\\pi \\cdot 50\\ \\mathrm{Hz} \\cdot 0{,}3\\ \\mathrm{H} \\approx 94\\ \\Omega$. Wer mit der Frequenz statt der Kreisfrequenz rechnet, erhält $15\\ \\Omega$; wer den Faktor $2\\pi$ doppelt ansetzt, landet bei $188\\ \\Omega$. An Gleichspannung wäre $X_L = 0$, und es bliebe nur der ohmsche Anteil."
+    },
+    {
+      "id": "pool-11-elektrotechnische-anwendungen-3",
+      "source": "Skript Kap. 11",
+      "gruppe": "magnetfelder-und-induktion",
+      "topicId": "11-elektrotechnische-anwendungen",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Warum müssen Großverbraucher Blindenergie bezahlen, obwohl Blindleistung keine Wirkarbeit verrichtet?",
+      "options": [
+        "Weil sie die Netzfrequenz messbar absenkt",
+        "Weil sie in den Zählern als Wärme anfällt",
+        "Weil sie sich in Wirkleistung umwandelt, sobald der Verbraucher abschaltet",
+        "Weil der zugehörige Strom Leitungen und Erzeuger trotzdem belastet"
+      ],
+      "correct": 3,
+      "explanation": "Blindleistung pendelt zwischen Quelle und Verbraucher hin und her, der zugehörige Strom fließt aber wirklich durch Leitungen, Transformatoren und Generatoren und erzeugt dort ohmsche Verluste. Deshalb wird ab einem Leistungsfaktor unter $0{,}9$ abgerechnet. Umwandeln lässt sich Blindleistung nicht, und mit der Netzfrequenz hat sie nichts zu tun."
     },
     {
       "id": "pool-12-elektromagnetische-wellen-1",
