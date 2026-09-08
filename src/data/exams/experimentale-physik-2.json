@@ -811,24 +811,333 @@
       "explanation": "Verschiedene Wellenlängen sehen verschiedene Brechungsindizes und damit verschiedene Brennweiten — das gibt Farbsäume. Achsferne Strahlen treffen sich nicht im selben Punkt wie achsnahe, und schräg einfallende Bündel werden unsymmetrisch abgebildet. Falsch ist die dritte Aussage: Astigmatismus tritt gerade **außerhalb** der optischen Achse auf, wo sagittale und meridionale Ebene verschiedene Brennweiten haben."
     },
     {
+      "id": "pool-16-interferenz-und-kohaerenz-1",
+      "source": "Skript Kap. 16",
+      "gruppe": "interferenz",
+      "topicId": "16-interferenz-und-kohaerenz",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Laser hat die Frequenzbreite $\\Delta\\nu = 1\\ \\mathrm{MHz}$. Wie groß ist seine Kohärenzlänge?",
+      "options": [
+        "Etwa $0{,}3\\ \\mathrm{m}$",
+        "Etwa $300\\ \\mathrm{m}$",
+        "Etwa $3\\ \\mathrm{mm}$",
+        "Etwa $3\\cdot10^{14}\\ \\mathrm{m}$"
+      ],
+      "correct": 1,
+      "explanation": "Die Kohärenzlänge ist $\\Delta s_c = c/\\Delta\\nu = 3\\cdot10^{8}/10^{6} = 300\\ \\mathrm{m}$. Der Zwischenschritt ist die Kohärenzzeit $\\Delta t_c = 1/\\Delta\\nu = 1\\ \\mathrm{\\mu s}$. Die typischen $10^{-3}\\ \\mathrm{m}$ einer Glühbirne zeigen, wie schmalbandig ein Laser dagegen ist."
+    },
+    {
+      "id": "pool-16-interferenz-und-kohaerenz-2",
+      "source": "Skript Kap. 16",
+      "gruppe": "interferenz",
+      "topicId": "16-interferenz-und-kohaerenz",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Mit einer Glühlampe zeigt ein Zweistrahl-Interferometer nur dann Streifen, wenn die beiden Arme fast gleich lang sind. Woran liegt das?",
+      "options": [
+        "Die Glühlampe ist zu lichtschwach für größere Wegunterschiede",
+        "Die Streifen wandern bei ungleichen Armen aus dem Bild heraus",
+        "Weißes Licht besitzt keine feste Wellenlänge und interferiert nie",
+        "Ihre Kohärenzlänge beträgt nur etwa $10^{-3}\\ \\mathrm{m}$"
+      ],
+      "correct": 3,
+      "explanation": "Wegen ihrer großen Frequenzbreite hat eine Glühlampe eine Kohärenzlänge von rund einem Millimeter. Übersteigt der Laufwegunterschied diesen Wert, ist die Phasendifferenz nicht mehr konstant und der Interferenzterm mittelt sich weg. Interferenzfähig ist weißes Licht durchaus — nur eben über sehr kurze Wegunterschiede."
+    },
+    {
+      "id": "pool-16-interferenz-und-kohaerenz-3",
+      "source": "Skript Kap. 16",
+      "gruppe": "interferenz",
+      "topicId": "16-interferenz-und-kohaerenz",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über Kohärenz treffen zu?",
+      "options": [
+        "Die Kohärenzzeit ist der Kehrwert der Frequenzbreite",
+        "Eine größere Frequenzbreite verkürzt die Kohärenzlänge",
+        "Ein Laser hat eine kürzere Kohärenzlänge als eine Glühlampe",
+        "Stabile Interferenz verlangt eine über die Beobachtungszeit feste Phasendifferenz"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Aus $\\Delta\\phi(\\Delta t_c) = 2\\pi$ folgt $\\Delta t_c = 1/\\Delta\\nu$, und mit $\\Delta s_c = c\\,\\Delta t_c$ sinkt die Kohärenzlänge, wenn $\\Delta\\nu$ wächst. Ohne feste Phasendifferenz mittelt sich der Interferenzterm über die Beobachtungszeit weg. Falsch ist die dritte Aussage: Der Laser ist die schmalbandigste der genannten Quellen und hat deshalb die **längste** Kohärenzlänge."
+    },
+    {
       "id": "pool-17-young-doppelspalt-1",
       "source": "Skript Kap. 17",
       "gruppe": "interferenz",
       "topicId": "17-young-doppelspalt",
       "points": 1.6,
       "type": "mc-multi",
-      "question": "Beim Youngschen Doppelspaltversuch wird der Spaltabstand d vergrößert, alle anderen Größen bleiben gleich. Welche Aussagen sind richtig?",
+      "question": "Beim Youngschen Doppelspaltversuch wird der Spaltabstand $d$ vergrößert, alle anderen Größen bleiben gleich. Welche Aussagen sind richtig?",
       "options": [
         "Der Streifenabstand auf dem Schirm wird kleiner",
         "Die Wellenlänge des verwendeten Lichts ändert sich dadurch",
         "Die Interferenzstreifen verschwinden vollständig",
-        "Der Gangunterschied bei festem Beobachtungswinkel θ wird größer, weil Δs ≈ d sinθ"
+        "Der Gangunterschied bei festem Winkel $\\theta$ wird größer, da $\\Delta s \\approx d\\sin\\theta$"
       ],
       "correct": [
         0,
         3
       ],
-      "explanation": "Der Streifenabstand auf dem Schirm ist x = zλ/d — ein größeres d macht x kleiner, die erste Aussage stimmt. Der Gangunterschied Δs ≈ d sinθ wächst bei festem Winkel θ linear mit d, die vierte Aussage stimmt ebenfalls. Die Wellenlänge ist eine Eigenschaft der Lichtquelle und hängt nicht vom Spaltabstand ab. Die Streifen verschwinden nicht durch eine reine Vergrößerung von d, sondern nur bei zu großer Quellausdehnung oder fehlender Kohärenz — hier ändert sich nur die Streifengeometrie."
+      "explanation": "Der Streifenabstand ist $x = z\\lambda/d$ — ein größeres $d$ macht ihn kleiner. Der Gangunterschied $\\Delta s \\approx d\\sin\\theta$ wächst bei festem Winkel linear mit $d$. Die Wellenlänge ist eine Eigenschaft der Quelle und hängt nicht vom Spaltabstand ab. Die Streifen verschwinden nicht durch ein größeres $d$, sondern nur bei zu großer Quellausdehnung oder fehlender Kohärenz."
+    },
+    {
+      "id": "pool-17-young-doppelspalt-2",
+      "source": "Skript Kap. 17",
+      "gruppe": "interferenz",
+      "topicId": "17-young-doppelspalt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Doppelspalt mit $d = 0{,}20\\ \\mathrm{mm}$ wird mit $\\lambda = 600\\ \\mathrm{nm}$ beleuchtet, der Schirm steht $z = 2{,}0\\ \\mathrm{m}$ entfernt. Wie groß ist der Streifenabstand?",
+      "options": [
+        "$6{,}0\\ \\mathrm{mm}$",
+        "$0{,}6\\ \\mathrm{mm}$",
+        "$60\\ \\mathrm{mm}$",
+        "$1{,}7\\ \\mathrm{mm}$"
+      ],
+      "correct": 0,
+      "explanation": "Aus $\\sin\\theta_m = m\\lambda/d$ und $x \\approx z\\theta$ folgt der Streifenabstand $x = z\\lambda/d = 2{,}0 \\cdot 600\\cdot10^{-9}/(0{,}20\\cdot10^{-3}) = 6{,}0\\cdot10^{-3}\\ \\mathrm{m}$. Der häufigste Fehler ist eine verrutschte Zehnerpotenz beim Umrechnen von Millimetern und Nanometern."
+    },
+    {
+      "id": "pool-17-young-doppelspalt-3",
+      "source": "Skript Kap. 17",
+      "gruppe": "interferenz",
+      "topicId": "17-young-doppelspalt",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Der gesamte Doppelspaltaufbau wird in Wasser mit $n = 1{,}33$ getaucht. Was geschieht mit dem Streifenabstand auf dem Schirm?",
+      "options": [
+        "Er bleibt gleich, weil $d$ und $z$ unverändert sind",
+        "Er wird um den Faktor $1{,}33$ größer",
+        "Er wird um den Faktor $1{,}33$ kleiner",
+        "Die Streifen verschwinden, weil Wasser die Kohärenz zerstört"
+      ],
+      "correct": 2,
+      "explanation": "Im Medium gilt $\\lambda_m = \\lambda_0/n$, die Frequenz bleibt dagegen unverändert. Da der Streifenabstand $x = z\\lambda/d$ proportional zur Wellenlänge ist, schrumpft er um denselben Faktor $1{,}33$. Die Geometrie allein entscheidet also nicht — es zählt die Wellenlänge **am Ort des Versuchs**."
+    },
+    {
+      "id": "pool-18-michelson-interferometer-1",
+      "source": "Skript Kap. 18",
+      "gruppe": "interferenz",
+      "topicId": "18-michelson-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Um welche Strecke muss ein Spiegel des Michelson-Interferometers verschoben werden, damit der Detektor genau einen vollen Hell-Dunkel-Hell-Zyklus durchläuft?",
+      "options": [
+        "Um $\\lambda$",
+        "Um $\\lambda/2$",
+        "Um $\\lambda/4$",
+        "Um $2\\lambda$"
+      ],
+      "correct": 1,
+      "explanation": "Jeder Teilstrahl läuft zum Spiegel und zurück, deshalb ist $\\Delta s$ doppelt so groß wie die Verschiebung. Ein voller Zyklus verlangt $\\Delta s = \\lambda$, also eine Verschiebung von $\\lambda/2$. Wer den Hin- und Rückweg vergisst, tippt auf $\\lambda$; $\\lambda/4$ ergäbe nur einen halben Zyklus, also den Wechsel von hell nach dunkel."
+    },
+    {
+      "id": "pool-18-michelson-interferometer-2",
+      "source": "Skript Kap. 18",
+      "gruppe": "interferenz",
+      "topicId": "18-michelson-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Spiegel wird um $0{,}15\\ \\mathrm{mm}$ verschoben; dabei zählt man am Detektor $500$ Maxima. Welche Wellenlänge hat das Licht?",
+      "options": [
+        "$300\\ \\mathrm{nm}$",
+        "$150\\ \\mathrm{nm}$",
+        "$1200\\ \\mathrm{nm}$",
+        "$600\\ \\mathrm{nm}$"
+      ],
+      "correct": 3,
+      "explanation": "Je Maximum wächst $\\Delta s$ um $\\lambda$, und $\\Delta s$ ist doppelt so groß wie die Verschiebung: $\\lambda = 2\\Delta x/m = 2\\cdot0{,}15\\ \\mathrm{mm}/500 = 600\\ \\mathrm{nm}$. Wer den Faktor 2 vergisst, erhält $300\\ \\mathrm{nm}$ — genau dieser Faktor macht das Michelson-Interferometer so empfindlich."
+    },
+    {
+      "id": "pool-18-michelson-interferometer-3",
+      "source": "Skript Kap. 18",
+      "gruppe": "interferenz",
+      "topicId": "18-michelson-interferometer",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über das Michelson-Interferometer treffen zu?",
+      "options": [
+        "Minima treten bei $\\Delta\\phi = 2\\pi m$ auf",
+        "Der Laufwegunterschied ist doppelt so groß wie die Spiegelverschiebung",
+        "Für $R = T = 0{,}5$ gilt $\\langle I \\rangle = \\tfrac{1}{2} I_e(1 + \\cos\\Delta\\phi)$",
+        "Die Sichtbarkeit der Streifen hängt von der Kohärenzlänge der Quelle ab"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Der doppelte Weg, die Intensitätsformel für den halbdurchlässigen Strahlteiler und die Rolle der Kohärenzlänge sind alle im Skript belegt. Falsch ist die erste Aussage: $\\Delta\\phi = 2\\pi m$ ist die Bedingung für **Maxima**; Minima liegen bei $\\Delta\\phi = (2m+1)\\pi$."
+    },
+    {
+      "id": "pool-19-mach-zehnder-interferometer-1",
+      "source": "Skript Kap. 19",
+      "gruppe": "interferenz",
+      "topicId": "19-mach-zehnder-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Worin unterscheidet sich das Mach-Zehnder-Interferometer grundsätzlich vom Michelson-Interferometer?",
+      "options": [
+        "Es arbeitet ohne Strahlteiler",
+        "Es nutzt Vielstrahl- statt Zweistrahlinterferenz",
+        "Es benutzt zwei Strahlteiler, die Arme sind räumlich getrennt",
+        "Es braucht keine kohärente Lichtquelle"
+      ],
+      "correct": 2,
+      "explanation": "Beim Michelson laufen beide Teilstrahlen über denselben Strahlteiler hin und zurück; beim Mach-Zehnder trennt ST1 sie, und ST2 führt sie erst am Ende wieder zusammen. Dadurch sind die Wege vollständig getrennt und ein Arm lässt sich gezielt verändern. Vielstrahlinterferenz kennzeichnet das Fabry-Perot-Interferometer."
+    },
+    {
+      "id": "pool-19-mach-zehnder-interferometer-2",
+      "source": "Skript Kap. 19",
+      "gruppe": "interferenz",
+      "topicId": "19-mach-zehnder-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Arm enthält eine Zelle der Länge $L = 10\\ \\mathrm{cm}$, gemessen wird mit $\\lambda = 500\\ \\mathrm{nm}$. Um wie viel muss sich der Brechungsindex ändern, damit sich das Muster um genau ein Maximum verschiebt?",
+      "options": [
+        "Um $5\\cdot10^{-6}$",
+        "Um $5\\cdot10^{-9}$",
+        "Um $2\\cdot10^{-4}$",
+        "Um $5\\cdot10^{-3}$"
+      ],
+      "correct": 0,
+      "explanation": "Aus $\\Delta\\phi = 2\\pi\\,\\Delta n\\,L/\\lambda$ und der Forderung $\\Delta\\phi = 2\\pi$ folgt $\\Delta n = \\lambda/L = 500\\cdot10^{-9}/0{,}1 = 5\\cdot10^{-6}$. Diese winzige Nachweisgrenze ist der Grund, warum das Mach-Zehnder-Interferometer als Gassensor taugt."
+    },
+    {
+      "id": "pool-19-mach-zehnder-interferometer-3",
+      "source": "Skript Kap. 19",
+      "gruppe": "interferenz",
+      "topicId": "19-mach-zehnder-interferometer",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über das Mach-Zehnder-Interferometer treffen zu?",
+      "options": [
+        "Eine Zelle der Länge $L$ mit Brechungsindex $n$ erzeugt $\\Delta s = (n-1)L$",
+        "Zwischen zwei benachbarten Maxima ändert sich $\\Delta\\phi$ um $2\\pi$",
+        "Beide Teilstrahlen durchlaufen denselben Arm",
+        "Es eignet sich, um Phasenänderungen in nur einem Arm zu messen"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Der Referenzarm enthält Luft mit $n \\approx 1$, deshalb bleibt vom optischen Weg die Differenz $(n-1)L$ übrig; benachbarte Maxima liegen definitionsgemäß $2\\pi$ auseinander. Falsch ist die dritte Aussage: Gerade die räumliche Trennung der Arme macht das Gerät für Messungen an einem Arm brauchbar."
+    },
+    {
+      "id": "pool-20-planparallele-platte-zweistrahl-1",
+      "source": "Skript Kap. 20",
+      "gruppe": "interferenz",
+      "topicId": "20-planparallele-platte-zweistrahl",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Eine Seifenhaut wird so dünn, dass ihre Dicke gegen null geht. Warum erscheint sie im reflektierten Licht schwarz?",
+      "options": [
+        "Weil so dünne Filme das Licht vollständig absorbieren",
+        "Weil das Licht dann ohne Reflexion hindurchgeht",
+        "Weil die beiden Teilstrahlen nicht mehr kohärent sind",
+        "Weil der Gangunterschied verschwindet, der Phasensprung um $\\pi$ aber bleibt"
+      ],
+      "correct": 3,
+      "explanation": "Für $d \\to 0$ geht $\\Delta s = 2nd\\cos\\beta$ gegen null, sodass $\\Delta\\phi = 2\\pi\\Delta s/\\lambda - \\pi$ gegen $-\\pi$ strebt — das ist genau die Bedingung für destruktive Interferenz. Übrig bleibt allein der Phasensprung bei der Reflexion am dichteren Medium. Absorption spielt bei einem so dünnen Film keine Rolle."
+    },
+    {
+      "id": "pool-20-planparallele-platte-zweistrahl-2",
+      "source": "Skript Kap. 20",
+      "gruppe": "interferenz",
+      "topicId": "20-planparallele-platte-zweistrahl",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Ölfilm mit $n = 1{,}4$ und der Dicke $d = 200\\ \\mathrm{nm}$ wird senkrecht beleuchtet. Wie groß ist der optische Gangunterschied der beiden reflektierten Teilstrahlen?",
+      "options": [
+        "$200\\ \\mathrm{nm}$",
+        "$560\\ \\mathrm{nm}$",
+        "$280\\ \\mathrm{nm}$",
+        "$400\\ \\mathrm{nm}$"
+      ],
+      "correct": 1,
+      "explanation": "Bei senkrechtem Einfall ist $\\beta = 0$ und damit $\\Delta s = 2nd = 2 \\cdot 1{,}4 \\cdot 200\\ \\mathrm{nm} = 560\\ \\mathrm{nm}$. $400\\ \\mathrm{nm}$ vergisst den Brechungsindex, $280\\ \\mathrm{nm}$ den Faktor 2 für Hin- und Rückweg. Der Phasensprung um $\\pi$ steckt nicht in $\\Delta s$, sondern kommt erst bei $\\Delta\\phi$ dazu."
+    },
+    {
+      "id": "pool-20-planparallele-platte-zweistrahl-3",
+      "source": "Skript Kap. 20",
+      "gruppe": "interferenz",
+      "topicId": "20-planparallele-platte-zweistrahl",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen zur Interferenz an der planparallelen Platte treffen zu?",
+      "options": [
+        "Bei Reflexion am optisch dichteren Medium springt die Phase um $\\pi$",
+        "Der Gangunterschied $\\Delta s$ wächst mit steigendem Einfallswinkel",
+        "Im transmittierten Licht entfällt dieser Phasensprung",
+        "Bei senkrechtem Einfall gilt $\\Delta s = 2nd$"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Der Phasensprung trifft nur den an der oberen Fläche reflektierten Strahl 1; im transmittierten Licht gibt es ihn nicht, weshalb Reflexions- und Transmissionsbild gerade komplementär sind. Bei $\\alpha = 0$ bleibt von $\\Delta s = 2d\\sqrt{n^2 - \\sin^2\\alpha}$ genau $2nd$ übrig. Falsch ist die zweite Aussage: Unter der Wurzel wird $\\sin^2\\alpha$ **abgezogen**, $\\Delta s$ nimmt mit dem Einfallswinkel also ab."
+    },
+    {
+      "id": "pool-21-fabry-perot-interferometer-1",
+      "source": "Skript Kap. 21",
+      "gruppe": "interferenz",
+      "topicId": "21-fabry-perot-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Worin unterscheidet sich das Fabry-Perot-Interferometer grundsätzlich von Michelson und Mach-Zehnder?",
+      "options": [
+        "Es kommt ganz ohne Interferenz der Teilstrahlen aus",
+        "Es benötigt keine planparallelen Grenzflächen",
+        "Es überlagert viele reflektierte Teilstrahlen",
+        "Es arbeitet ausschließlich im reflektierten Licht"
+      ],
+      "correct": 2,
+      "explanation": "Michelson und Mach-Zehnder sind Zweistrahlgeräte; im Fabry-Perot laufen zwischen zwei teildurchlässigen, planparallelen Flächen unendlich viele Teilstrahlen hin und her und überlagern sich. Genau daraus entstehen die sehr schmalen Transmissionsmaxima, die das Gerät zum Spektralapparat machen. Beobachtet wird sowohl transmittiert als auch reflektiert."
+    },
+    {
+      "id": "pool-21-fabry-perot-interferometer-2",
+      "source": "Skript Kap. 21",
+      "gruppe": "interferenz",
+      "topicId": "21-fabry-perot-interferometer",
+      "points": 1.6,
+      "type": "mc-single",
+      "question": "Ein Fabry-Perot-Interferometer mit Luftspalt ($n = 1$) und $d = 1{,}0\\ \\mathrm{mm}$ wird senkrecht mit $\\lambda = 500\\ \\mathrm{nm}$ durchstrahlt. Welche Ordnung $m$ gehört zum Gangunterschied zweier benachbarter Teilstrahlen?",
+      "options": [
+        "$m = 4000$",
+        "$m = 2000$",
+        "$m = 500$",
+        "$m = 8000$"
+      ],
+      "correct": 0,
+      "explanation": "Bei senkrechtem Einfall ist $\\Delta s = 2d = 2{,}0\\ \\mathrm{mm}$, und die Ordnung folgt aus $\\Delta s = m\\lambda$: $m = 2{,}0\\cdot10^{-3}/500\\cdot10^{-9} = 4000$. Wer den Faktor 2 für Hin- und Rückweg vergisst, kommt auf $2000$. Solch hohe Ordnungen sind der Grund für das enge Spektralbereichsfenster des Geräts."
+    },
+    {
+      "id": "pool-21-fabry-perot-interferometer-3",
+      "source": "Skript Kap. 21",
+      "gruppe": "interferenz",
+      "topicId": "21-fabry-perot-interferometer",
+      "points": 1.6,
+      "type": "mc-multi",
+      "question": "Welche Aussagen über das Fabry-Perot-Interferometer treffen zu?",
+      "options": [
+        "Die Teilstrahlen entstehen durch wiederholte Reflexion zwischen zwei Flächen",
+        "Eine hohe Finesse bedeutet schmale Transmissionsmaxima",
+        "Der Gangunterschied benachbarter Teilstrahlen ist $2d\\sqrt{n^2-\\sin^2\\alpha}$",
+        "An der Interferenz sind genau zwei Teilstrahlen beteiligt"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Vielfachreflexion zwischen den teildurchlässigen Flächen erzeugt die Strahlfolge, ihr Gangunterschied ist derselbe Ausdruck wie bei der planparallelen Platte, und die Finesse misst gerade die Schärfe der Maxima. Falsch ist die vierte Aussage: Genau die Vielstrahlinterferenz unterscheidet das Gerät von Michelson und Mach-Zehnder."
     },
     {
       "id": "pool-25-beugungsgitter-1",
