@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useMastery } from '../hooks/useMastery'
 import { useReviews } from '../hooks/useReviews'
 import { allCourses, loadAllTopics, spracheVon } from '../lib/courseRegistry'
+import { formelnAusThemen } from '../lib/formelsammlung'
 import { examQuestionsFor, examStructuresFor } from '../data/exams'
 import type { Level } from '../lib/learning/mastery'
 
@@ -18,6 +19,8 @@ export default function CoursePage() {
   const { loading } = useAuth()
   const navigate = useNavigate()
   const [topicTitles, setTopicTitles] = useState<Record<string, string>>({})
+  // Die Formelsammlung lebt von denselben Themen — kein zweiter Ladeweg.
+  const [formelZahl, setFormelZahl] = useState(0)
 
   const { topics: mastery } = useMastery(courseId ?? '')
   const { dueCount } = useReviews(courseId)
@@ -32,6 +35,7 @@ export default function CoursePage() {
         if (t?.id && t?.title) titles[t.id] = t.title
       }
       setTopicTitles(titles)
+      setFormelZahl(formelnAusThemen(topics).length)
     }).catch(() => {})
   }, [courseId])
 
@@ -81,6 +85,15 @@ export default function CoursePage() {
               </p>
             </button>
           </div>
+        )}
+
+        {/* Nachschlagewerk — nur dort, wo die Themen überhaupt Formeln tragen. */}
+        {formelZahl > 0 && (
+          <button onClick={() => navigate(`/course/${course.id}/formeln`)}
+            className="w-full text-left bg-raised border border-line hover:border-accent rounded-xl px-5 py-4 mb-8 transition-colors">
+            <p className="font-medium">📐 Formelsammlung</p>
+            <p className="text-subtle text-xs mt-1">{formelZahl} Formeln nach Gebieten sortiert</p>
+          </button>
         )}
 
         <div className="space-y-2">
