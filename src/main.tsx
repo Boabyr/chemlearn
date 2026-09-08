@@ -13,6 +13,7 @@ import ExamSimulator   from './pages/ExamSimulator'
 import LernSession     from './pages/LernSession'
 import Statistik       from './pages/Statistik'
 import Einstellungen   from './pages/Einstellungen'
+import Formelsammlung  from './pages/Formelsammlung'
 import ErrorBoundary   from './components/Shell/ErrorBoundary'
 import RequireAuth     from './components/Shell/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/login'                     element={<LoginPage />} />
               <Route path='/'                          element={geschuetzt(<Dashboard />)} />
               <Route path='/course/:courseId'          element={geschuetzt(<CoursePage />)} />
+              <Route path='/course/:courseId/formeln'  element={geschuetzt(<Formelsammlung />)} />
               <Route path='/course/:courseId/:topicId' element={geschuetzt(<TopicPage />)} />
               <Route path='/tutor'                     element={geschuetzt(<TutorDashboard />)} />
               <Route path='/lernen'                    element={geschuetzt(<LernSession />)} />
